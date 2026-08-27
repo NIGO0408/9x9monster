@@ -3471,13 +3471,21 @@ function setupBattle() {
       ? lakeCurrentHP
       : forestCurrentHP;
 
+  /*
+     ステージ内の連戦ではHPを持ち越す。
+     バトル①の開始時だけ満タンにする。
+  */
+  const shouldStartFullHP =
+    currentBattleNumber === 1 ||
+    currentStageHP <= 0;
+
   battlePlayerHP =
-    Math.min(
-      currentStageHP > 0
-        ? currentStageHP
-        : battlePlayerMaxHP,
-      battlePlayerMaxHP
-    );
+    shouldStartFullHP
+      ? battlePlayerMaxHP
+      : Math.min(
+          currentStageHP,
+          battlePlayerMaxHP
+        );
 
 
   /*
@@ -4563,6 +4571,13 @@ function nextBattle() {
       lakeProgress >=
       next - 1
     ) {
+      lakeCurrentHP =
+        battlePlayerHP;
+      lakeBattleMonsterId =
+        Number(selectedMonsterId);
+      saveAdventureStage("lake");
+      saveGame();
+
       startLakeBattle(next);
     }
   }
@@ -4571,6 +4586,13 @@ function nextBattle() {
       forestProgress >=
       next - 1
     ) {
+      forestCurrentHP =
+        battlePlayerHP;
+      forestBattleMonsterId =
+        Number(selectedMonsterId);
+      saveAdventureStage("forest");
+      saveGame();
+
       startForestBattle(next);
     }
   }
