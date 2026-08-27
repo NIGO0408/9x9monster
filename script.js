@@ -1744,10 +1744,13 @@ function renderMonsterDetail() {
   const detail =
     el("monster-detail");
 
-
   if (!detail) {
     return;
   }
+
+  /* 通常の育成画面に戻す */
+  detail.className =
+    "monster-detail";
 
 
   if (!selectedMonsterId) {
@@ -2043,10 +2046,13 @@ function renderTrainingBattle() {
   const detail =
     el("monster-detail");
 
-
   if (!detail) {
     return;
   }
+
+  /* 特訓中は通常の2列レイアウトを解除 */
+  detail.className =
+    "monster-detail training-mode";
 
 detail.classList.add("training-mode");
    
