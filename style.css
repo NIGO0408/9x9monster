@@ -449,6 +449,7 @@ button {
 
 .answer:hover {
   border-color: #5969d9;
+
   transform: translateY(-1px);
 }
 
@@ -1241,9 +1242,12 @@ button {
 
 /* =========================
    バトル
+   ★ 今回ここを大幅強化
 ========================= */
 
 #battle-screen {
+  padding: 18px;
+
   background:
     linear-gradient(
       #dff5ff,
@@ -1258,33 +1262,40 @@ button {
 
   justify-content: space-between;
 
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+
+  font-size: 15px;
 }
+
+
+/* -------------------------
+   敵エリア
+------------------------- */
 
 .enemy-area {
   width: 100%;
 
   text-align: center;
 
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 .battle-name {
-  font-size: 19px;
+  font-size: 20px;
 
   font-weight: 900;
 }
 
 .battle-level {
-  margin-top: 3px;
+  margin-top: 2px;
 
-  font-size: 12px;
+  font-size: 13px;
 
   color: #777;
 }
 
 .battle-monster-image {
-  height: 150px;
+  height: 125px;
 
   display: flex;
 
@@ -1292,12 +1303,12 @@ button {
 
   justify-content: center;
 
-  margin: 5px 0;
+  margin: 0;
 }
 
 .battle-monster-image img {
-  max-width: 140px;
-  max-height: 140px;
+  max-width: 125px;
+  max-height: 125px;
 
   object-fit: contain;
 }
@@ -1309,14 +1320,14 @@ button {
 
   justify-content: center;
 
-  width: 130px;
-  height: 130px;
+  width: 115px;
+  height: 115px;
 
-  font-size: 95px;
+  font-size: 80px;
 }
 
 .hp-label {
-  width: min(100%, 350px);
+  width: min(100%, 390px);
 
   display: flex;
 
@@ -1324,15 +1335,15 @@ button {
 
   margin: 0 auto 5px;
 
-  font-size: 12px;
+  font-size: 13px;
 
   font-weight: bold;
 }
 
 .battle-hp {
-  width: min(100%, 350px);
+  width: min(100%, 390px);
 
-  height: 12px;
+  height: 14px;
 
   margin: auto;
 
@@ -1340,7 +1351,7 @@ button {
 
   border-radius: 10px;
 
-  background: #ddd;
+  background: #d9d9d9;
 }
 
 .battle-hp-fill {
@@ -1354,8 +1365,13 @@ button {
     width 0.4s;
 }
 
+
+/* -------------------------
+   バトルメッセージ
+------------------------- */
+
 .battle-message {
-  min-height: 45px;
+  min-height: 52px;
 
   display: flex;
 
@@ -1363,13 +1379,15 @@ button {
 
   justify-content: center;
 
-  margin: 15px auto;
+  margin: 12px auto;
 
-  padding: 10px;
+  padding: 10px 15px;
 
   border-radius: 16px;
 
   background: white;
+
+  font-size: 16px;
 
   font-weight: bold;
 
@@ -1377,21 +1395,26 @@ button {
 
   box-shadow:
     0 2px 8px
-    rgba(0,0,0,0.05);
+    rgba(0,0,0,0.06);
 }
+
+
+/* -------------------------
+   味方
+------------------------- */
 
 .player-battle {
   display: flex;
 
   align-items: center;
 
-  gap: 15px;
+  gap: 12px;
 
-  width: min(100%, 420px);
+  width: min(100%, 450px);
 
-  margin: 10px auto 20px;
+  margin: 8px auto 14px;
 
-  padding: 12px;
+  padding: 10px 14px;
 
   border-radius: 20px;
 
@@ -1403,8 +1426,8 @@ button {
 }
 
 .player-monster-image {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
 
   display: flex;
 
@@ -1416,17 +1439,17 @@ button {
 }
 
 .player-monster-image img {
-  max-width: 75px;
-  max-height: 75px;
+  max-width: 70px;
+  max-height: 70px;
 
   object-fit: contain;
 }
 
 .player-monster-image .battle-placeholder {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
 
-  font-size: 60px;
+  font-size: 55px;
 }
 
 .player-battle-info {
@@ -1440,32 +1463,59 @@ button {
 
   gap: 10px;
 
-  margin-bottom: 8px;
+  margin-bottom: 7px;
+
+  font-size: 17px;
 }
 
+
+/* -------------------------
+   ★ 攻撃問題
+------------------------- */
+
 .battle-question-box {
-  padding: 20px;
+  width: 100%;
 
-  border-radius: 22px;
+  padding: 22px 18px 24px;
 
-  background: white;
+  border: 4px solid #5969d9;
+
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      #ffffff,
+      #f3f5ff
+    );
 
   box-shadow:
-    0 3px 12px
-    rgba(0,0,0,0.08);
+    0 5px 18px
+    rgba(59,76,202,0.15);
 
   text-align: center;
 }
 
 .battle-question {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 
-  font-size: 36px;
+  font-size: 48px;
 
-  font-weight: 900;
+  line-height: 1.15;
+
+  font-weight: 1000;
+
+  letter-spacing: 1px;
 
   color: #3b4cca;
+
+  text-shadow:
+    2px 2px 0 white;
 }
+
+
+/* -------------------------
+   ★ 攻撃ボタン
+------------------------- */
 
 .battle-answers {
   display: grid;
@@ -1473,27 +1523,54 @@ button {
   grid-template-columns:
     1fr 1fr;
 
-  gap: 10px;
+  gap: 14px;
 }
 
 .battle-answer {
-  padding: 15px;
+  min-height: 78px;
 
-  border: 3px solid #dce2ef;
+  padding: 12px 8px;
 
-  border-radius: 15px;
+  border: 4px solid #cbd2e5;
+
+  border-radius: 19px;
 
   background: white;
 
-  font-size: 22px;
+  color: #222;
 
-  font-weight: bold;
+  font-size: 30px;
+
+  line-height: 1;
+
+  font-weight: 900;
 
   cursor: pointer;
+
+  box-shadow:
+    0 4px 0 #b5bdcf;
+
+  transition:
+    transform 0.1s,
+    border-color 0.1s,
+    background 0.1s,
+    box-shadow 0.1s;
 }
 
 .battle-answer:hover {
   border-color: #5969d9;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 0 #aab3ca;
+}
+
+.battle-answer:active {
+  transform: translateY(3px);
+
+  box-shadow:
+    0 1px 0 #b5bdcf;
 }
 
 .battle-answer:disabled {
@@ -1504,12 +1581,18 @@ button {
   background: #c8f7d2;
 
   border-color: #39a957;
+
+  box-shadow:
+    0 4px 0 #299044;
 }
 
 .battle-answer.wrong {
   background: #ffd2d2;
 
   border-color: #e34c4c;
+
+  box-shadow:
+    0 4px 0 #c73535;
 }
 
 
@@ -1779,8 +1862,11 @@ button {
 @media (max-width: 500px) {
 
   .screen {
-    padding: 18px;
+    padding: 15px;
   }
+
+
+  /* タイトル */
 
   .logo {
     padding-top: 70px;
@@ -1793,6 +1879,9 @@ button {
   .logo-monster {
     font-size: 80px;
   }
+
+
+  /* 修行 */
 
   .question {
     font-size: 34px;
@@ -1808,6 +1897,9 @@ button {
     font-size: 21px;
   }
 
+
+  /* 結果 */
+
   .result-icon,
   .adventure-icon,
   .battle-result-icon {
@@ -1818,6 +1910,9 @@ button {
   .battle-result h1 {
     font-size: 32px;
   }
+
+
+  /* 育成 */
 
   .monster-party {
     grid-template-columns:
@@ -1853,6 +1948,9 @@ button {
     gap: 5px;
   }
 
+
+  /* マップ */
+
   .world-map {
     grid-template-columns:
       1fr;
@@ -1862,6 +1960,9 @@ button {
     min-height: 130px;
   }
 
+
+  /* 森 */
+
   .forest-header {
     align-items: flex-start;
   }
@@ -1870,13 +1971,123 @@ button {
     font-size: 22px;
   }
 
-  .battle-question {
-    font-size: 32px;
+
+  /* =====================
+     ★ スマホバトル
+  ===================== */
+
+  #battle-screen {
+    padding: 12px;
+  }
+
+  .battle-header {
+    font-size: 13px;
+  }
+
+  .battle-name {
+    font-size: 18px;
+  }
+
+  .battle-monster-image {
+    height: 105px;
+  }
+
+  .battle-monster-image img {
+    max-width: 105px;
+    max-height: 105px;
+  }
+
+  .battle-placeholder {
+    width: 100px;
+    height: 100px;
+
+    font-size: 70px;
+  }
+
+  .battle-hp {
+    height: 13px;
+  }
+
+  .battle-message {
+    min-height: 48px;
+
+    margin: 9px auto;
+
+    padding: 8px 10px;
+
+    font-size: 14px;
   }
 
   .player-battle {
-    gap: 8px;
+    margin:
+      7px auto
+      11px;
+
+    padding: 8px 10px;
   }
+
+  .player-monster-image {
+    width: 65px;
+    height: 65px;
+  }
+
+  .player-monster-image img {
+    max-width: 60px;
+    max-height: 60px;
+  }
+
+  .player-monster-image .battle-placeholder {
+    width: 65px;
+    height: 65px;
+
+    font-size: 50px;
+  }
+
+  .player-battle-info .battle-name {
+    font-size: 15px;
+  }
+
+
+  /* ★ 問題を大きく */
+
+  .battle-question-box {
+    padding:
+      20px 12px
+      22px;
+
+    border-width: 3px;
+
+    border-radius: 22px;
+  }
+
+  .battle-question {
+    margin-bottom: 18px;
+
+    font-size: 43px;
+  }
+
+
+  /* ★ ボタンを大きく */
+
+  .battle-answers {
+    gap: 11px;
+  }
+
+  .battle-answer {
+    min-height: 72px;
+
+    font-size: 29px;
+
+    border-width: 3px;
+
+    border-radius: 17px;
+
+    box-shadow:
+      0 4px 0 #b5bdcf;
+  }
+
+
+  /* 図鑑 */
 
   .monster-card {
     grid-template-columns:
