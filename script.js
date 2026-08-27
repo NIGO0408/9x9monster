@@ -2395,9 +2395,9 @@ function answerTrainingQuestion(
     if (result) {
 
       result.innerHTML = `
-        <div class="training-perfect">
-          ✨ PERFECT！
-        </div>
+<div class="training-perfect">
+  🎉 特訓成功！
+</div>
 
         <div class="training-exp">
           +25 EXP
@@ -2500,9 +2500,9 @@ function answerTrainingQuestion(
     if (result) {
 
       result.innerHTML = `
-        <div class="training-miss">
-          💦 MISS！
-        </div>
+<div class="training-miss">
+  💦 特訓失敗！
+</div>
 
         <div class="training-correct-answer">
           正解は ${trainingAnswer}！
