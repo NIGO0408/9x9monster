@@ -2,11 +2,16 @@
 
 // ========================================
 // 9×9モンスターズ
-// 完全版①
-// モンスター・修行・育成・図鑑・セーブ
+// 完全統合版
+// 修行・セーブ・GET・育成・図鑑・冒険・森・バトル
 // ========================================
 
-const SAVE_KEY = "9x9-monsters-save-v8";
+
+// ========================================
+// セーブ
+// ========================================
+
+const SAVE_KEY = "9x9-monsters-save-v7";
 
 
 // ========================================
@@ -136,6 +141,62 @@ const monsters = [
 
 
 // ========================================
+// 森の敵
+// ========================================
+
+const forestEnemies = [
+
+  {
+    name: "スライム",
+    icon: "🟢",
+    level: 1,
+    hp: 24,
+    attack: 5
+  },
+
+  {
+    name: "きのこモン",
+    icon: "🍄",
+    level: 2,
+    hp: 30,
+    attack: 6
+  },
+
+  {
+    name: "ゴブリン",
+    icon: "👺",
+    level: 2,
+    hp: 36,
+    attack: 7
+  },
+
+  {
+    name: "ウルフ",
+    icon: "🐺",
+    level: 3,
+    hp: 42,
+    attack: 8
+  }
+
+];
+
+
+// ========================================
+// 森のボス
+// ========================================
+
+const forestBoss = {
+
+  name: "森の守護者",
+  icon: "👹",
+  level: 5,
+  hp: 70,
+  attack: 10
+
+};
+
+
+// ========================================
 // ゲームデータ
 // ========================================
 
@@ -150,6 +211,23 @@ let monsterData = {};
 let adventureUnlocked = false;
 
 let battleWins = 0;
+
+let coins = 0;
+
+let playerLevel = 1;
+
+
+// ========================================
+// 森の進行
+// 0 = 未開始
+// 1 = ①クリア
+// 2 = ②クリア
+// 3 = ③クリア
+// 4 = ④クリア
+// 5 = ボス撃破
+// ========================================
+
+let forestProgress = 0;
 
 
 // ========================================
@@ -183,19 +261,74 @@ let levelupMonsterId = null;
 
 
 // ========================================
-// 図鑑から戻る場所
+// バトル
+// ========================================
+
+let currentBattleNumber = 0;
+
+let currentEnemy = null;
+
+let battlePlayerHP = 0;
+
+let battlePlayerMaxHP = 0;
+
+let battleEnemyHP = 0;
+
+let battleEnemyMaxHP = 0;
+
+let battleAnswer = 0;
+
+let battleAnswering = false;
+
+let battleTimer = null;
+
+let battleCombo = 0;
+
+let battleExpReward = 0;
+
+let battleCoinReward = 0;
+
+let battleOldLevel = 1;
+
+let battleLeveledUp = false;
+
+
+// ========================================
+// 図鑑から戻る画面
 // ========================================
 
 let returnScreen = "training-screen";
 
 
 // ========================================
-// DOM取得
+// DOM
 // ========================================
 
 function el(id) {
 
   return document.getElementById(id);
+
+}
+
+
+// ========================================
+// 安全なイベント登録
+// ========================================
+
+function onClick(id, handler) {
+
+  const target = el(id);
+
+  if (!target) {
+
+    return;
+
+  }
+
+  target.addEventListener(
+    "click",
+    handler
+  );
 
 }
 
@@ -210,7 +343,9 @@ function showScreen(id) {
     .querySelectorAll(".screen")
     .forEach(screen => {
 
-      screen.classList.remove("active");
+      screen.classList.remove(
+        "active"
+      );
 
     });
 
@@ -230,7 +365,50 @@ function showScreen(id) {
   }
 
 
-  target.classList.add("active");
+  target.classList.add(
+    "active"
+  );
+
+
+  updateMenu(id);
+
+}
+
+
+// ========================================
+// 下部メニュー
+// ========================================
+
+function updateMenu(screenId) {
+
+  const menu =
+    el("menu");
+
+
+  if (!menu) {
+
+    return;
+
+  }
+
+
+  if (
+    screenId === "title-screen"
+  ) {
+
+    menu.classList.add(
+      "hidden"
+    );
+
+  }
+
+  else {
+
+    menu.classList.remove(
+      "hidden"
+    );
+
+  }
 
 }
 
@@ -239,7 +417,9 @@ function showScreen(id) {
 // モンスター初期データ
 // ========================================
 
-function createMonsterData(monster) {
+function createMonsterData(
+  monster
+) {
 
   return {
 
@@ -261,17 +441,23 @@ function createMonsterData(monster) {
 
 
 // ========================================
-// モンスター情報取得
+// モンスター情報
 // ========================================
 
-function getMonsterData(monsterId) {
+function getMonsterData(
+  monsterId
+) {
 
-  if (!monsterData[monsterId]) {
+  const id =
+    Number(monsterId);
+
+
+  if (!monsterData[id]) {
 
     const monster =
       monsters.find(
         item =>
-          item.id === Number(monsterId)
+          item.id === id
       );
 
 
@@ -282,13 +468,15 @@ function getMonsterData(monsterId) {
     }
 
 
-    monsterData[monsterId] =
-      createMonsterData(monster);
+    monsterData[id] =
+      createMonsterData(
+        monster
+      );
 
   }
 
 
-  return monsterData[monsterId];
+  return monsterData[id];
 
 }
 
@@ -328,7 +516,13 @@ function saveGame() {
 
     adventureUnlocked,
 
-    battleWins
+    battleWins,
+
+    coins,
+
+    playerLevel,
+
+    forestProgress
 
   };
 
@@ -420,14 +614,7 @@ function loadGame() {
 
       caughtMonsters =
         data.caughtMonsters
-          .map(Number)
-          .filter(
-            id =>
-              monsters.some(
-                monster =>
-                  monster.id === id
-              )
-          );
+          .map(Number);
 
     }
 
@@ -450,6 +637,29 @@ function loadGame() {
 
     battleWins =
       Number(data.battleWins) || 0;
+
+
+    coins =
+      Number(data.coins) || 0;
+
+
+    playerLevel =
+      Number(data.playerLevel) || 1;
+
+
+    forestProgress =
+      Number(data.forestProgress) || 0;
+
+
+    // 古いセーブデータ対策
+
+    if (
+      forestProgress > 5
+    ) {
+
+      forestProgress = 5;
+
+    }
 
   }
 
@@ -489,18 +699,12 @@ function updateSaveStatus() {
     status.textContent =
       "💾 セーブデータは自動保存されます";
 
-    status.style.color =
-      "#888";
-
   }
 
   else {
 
     status.textContent =
       `${clearedStages.length}個の段をクリア済み`;
-
-    status.style.color =
-      "#4a8f58";
 
   }
 
@@ -524,13 +728,14 @@ function createStageList() {
   }
 
 
-  list.innerHTML = "";
+  list.innerHTML =
+    "";
 
 
   for (
-    let stageNumber = 1;
-    stageNumber <= 9;
-    stageNumber++
+    let number = 1;
+    number <= 9;
+    number++
   ) {
 
     const button =
@@ -542,26 +747,29 @@ function createStageList() {
     button.type =
       "button";
 
+
     button.className =
       "stage-button";
 
 
     const cleared =
       clearedStages.includes(
-        stageNumber
+        number
       );
 
 
     const unlocked =
-      stageNumber === 1 ||
+      number === 1 ||
       clearedStages.includes(
-        stageNumber - 1
+        number - 1
       );
 
 
     if (!unlocked) {
 
-      button.disabled = true;
+      button.disabled =
+        true;
+
 
       button.classList.add(
         "locked"
@@ -573,7 +781,7 @@ function createStageList() {
         <span>🔒</span>
 
         <strong>
-          ${stageNumber}の段
+          ${number}の段
         </strong>
 
         <small>
@@ -587,9 +795,7 @@ function createStageList() {
     else {
 
       const stars =
-        stageStars[
-          stageNumber
-        ] || "";
+        stageStars[number] || "";
 
 
       button.innerHTML = `
@@ -599,7 +805,7 @@ function createStageList() {
         </span>
 
         <strong>
-          ${stageNumber}の段
+          ${number}の段
         </strong>
 
         <small>
@@ -617,7 +823,7 @@ function createStageList() {
         "click",
         () =>
           startTraining(
-            stageNumber
+            number
           )
       );
 
@@ -640,24 +846,13 @@ function createStageList() {
 // 修行開始
 // ========================================
 
-function startTraining(stageNumber) {
-
-  const unlocked =
-    stageNumber === 1 ||
-    clearedStages.includes(
-      stageNumber - 1
-    );
-
-
-  if (!unlocked) {
-
-    return;
-
-  }
-
+function startTraining(
+  stage
+) {
 
   currentStage =
-    stageNumber;
+    stage;
+
 
   questionNumber = 0;
 
@@ -690,7 +885,7 @@ function startTraining(stageNumber) {
   if (title) {
 
     title.textContent =
-      `${stageNumber}の段 修行`;
+      `${stage}の段 修行`;
 
   }
 
@@ -774,6 +969,13 @@ function createAnswers() {
     el("answers");
 
 
+  if (!container) {
+
+    return;
+
+  }
+
+
   container.innerHTML =
     "";
 
@@ -813,39 +1015,43 @@ function createAnswers() {
       () =>
         Math.random() - 0.5
     )
-    .forEach(value => {
+    .forEach(
+      value => {
 
-      const button =
-        document.createElement(
-          "button"
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "answer";
+
+
+        button.textContent =
+          value;
+
+
+        button.addEventListener(
+          "click",
+          () =>
+            checkAnswer(
+              value,
+              button
+            )
         );
 
 
-      button.type =
-        "button";
+        container.appendChild(
+          button
+        );
 
-      button.className =
-        "answer";
-
-      button.textContent =
-        value;
-
-
-      button.addEventListener(
-        "click",
-        () =>
-          checkAnswer(
-            value,
-            button
-          )
-      );
-
-
-      container.appendChild(
-        button
-      );
-
-    });
+      }
+    );
 
 }
 
@@ -856,7 +1062,7 @@ function createAnswers() {
 
 function checkAnswer(
   answer,
-  selectedButton
+  button
 ) {
 
   if (!answering) {
@@ -874,8 +1080,8 @@ function checkAnswer(
       ".answer"
     )
     .forEach(
-      button =>
-        button.disabled = true
+      item =>
+        item.disabled = true
     );
 
 
@@ -883,9 +1089,9 @@ function checkAnswer(
     answer === currentAnswer
   ) {
 
-    selectedButton
-      .classList
-      .add("correct");
+    button.classList.add(
+      "correct"
+    );
 
 
     correctCount++;
@@ -893,14 +1099,11 @@ function checkAnswer(
     combo++;
 
 
-    if (
-      combo > maxCombo
-    ) {
-
-      maxCombo =
-        combo;
-
-    }
+    maxCombo =
+      Math.max(
+        maxCombo,
+        combo
+      );
 
 
     el("message")
@@ -913,9 +1116,9 @@ function checkAnswer(
 
   else {
 
-    selectedButton
-      .classList
-      .add("wrong");
+    button.classList.add(
+      "wrong"
+    );
 
 
     combo = 0;
@@ -925,22 +1128,24 @@ function checkAnswer(
       .querySelectorAll(
         ".answer"
       )
-      .forEach(button => {
+      .forEach(
+        item => {
 
-        if (
-          Number(
-            button.textContent
-          ) ===
-          currentAnswer
-        ) {
+          if (
+            Number(
+              item.textContent
+            ) ===
+            currentAnswer
+          ) {
 
-          button.classList.add(
-            "correct"
-          );
+            item.classList.add(
+              "correct"
+            );
+
+          }
 
         }
-
-      });
+      );
 
 
     el("message")
@@ -954,7 +1159,8 @@ function checkAnswer(
     setTimeout(
       () => {
 
-        questionTimer = null;
+        questionTimer =
+          null;
 
         createQuestion();
 
@@ -966,10 +1172,12 @@ function checkAnswer(
 
 
 // ========================================
-// 評価
+// 星評価
 // ========================================
 
-function getStars(score) {
+function getStars(
+  score
+) {
 
   if (
     score === 9
@@ -995,10 +1203,12 @@ function getStars(score) {
 
 
 // ========================================
-// 段に対応するモンスター
+// 段のモンスター
 // ========================================
 
-function getMonsterForStage(stage) {
+function getMonsterForStage(
+  stage
+) {
 
   return monsters.find(
     monster =>
@@ -1012,22 +1222,22 @@ function getMonsterForStage(stage) {
 // モンスターGET
 // ========================================
 
-function catchMonster(monsterId) {
+function catchMonster(
+  monsterId
+) {
+
+  const id =
+    Number(monsterId);
+
 
   if (
-    !caughtMonsters.includes(
-      monsterId
-    )
+    !caughtMonsters.includes(id)
   ) {
 
-    caughtMonsters.push(
-      monsterId
-    );
+    caughtMonsters.push(id);
 
 
-    getMonsterData(
-      monsterId
-    );
+    getMonsterData(id);
 
 
     return true;
@@ -1041,7 +1251,7 @@ function catchMonster(monsterId) {
 
 
 // ========================================
-// モンスター表示
+// モンスター画像
 // ========================================
 
 function monsterVisual(
@@ -1080,7 +1290,7 @@ function monsterVisual(
 
 
 // ========================================
-// GET報酬
+// GET表示
 // ========================================
 
 function showReward(
@@ -1152,9 +1362,6 @@ function showReward(
 
 function finishTraining() {
 
-  answering = false;
-
-
   const stars =
     getStars(
       correctCount
@@ -1176,24 +1383,13 @@ function finishTraining() {
       stars;
 
 
-  const rewardBox =
+  const reward =
     el("reward-box");
 
 
-  if (rewardBox) {
-
-    rewardBox.classList.add(
-      "hidden"
-    );
-
-    rewardBox.innerHTML =
-      "";
-
-  }
-
-
-  const nextButton =
-    el("next-stage");
+  reward.classList.add(
+    "hidden"
+  );
 
 
   if (
@@ -1248,16 +1444,6 @@ function finishTraining() {
     }
 
 
-    if (
-      currentStage === 9
-    ) {
-
-      adventureUnlocked =
-        true;
-
-    }
-
-
     const monster =
       getMonsterForStage(
         currentStage
@@ -1280,7 +1466,14 @@ function finishTraining() {
     }
 
 
-    saveGame();
+    if (
+      currentStage === 9
+    ) {
+
+      adventureUnlocked =
+        true;
+
+    }
 
 
     el("result-title")
@@ -1293,22 +1486,23 @@ function finishTraining() {
     el("result-message")
       .textContent =
       currentStage === 9
-        ? "すべての九九を極めた！冒険の扉が開いた！"
+        ? "すべての九九を極めた！"
         : `${currentStage + 1}の段が解放された！`;
 
 
-    if (nextButton) {
+    el("next-stage")
+      .style.display =
+      "inline-block";
 
-      nextButton.style.display =
-        "inline-block";
+
+    el("next-stage")
+      .textContent =
+      currentStage === 9
+        ? "🗺️ 冒険へ進む"
+        : `🥋 ${currentStage + 1}の段へ`;
 
 
-      nextButton.textContent =
-        currentStage === 9
-          ? "🗺️ 冒険へ進む"
-          : `🥋 ${currentStage + 1}の段へ`;
-
-    }
+    saveGame();
 
   }
 
@@ -1324,12 +1518,9 @@ function finishTraining() {
       "8問以上正解すると合格だよ！";
 
 
-    if (nextButton) {
-
-      nextButton.style.display =
-        "none";
-
-    }
+    el("next-stage")
+      .style.display =
+      "none";
 
   }
 
@@ -1365,12 +1556,16 @@ function openMonsterScreen() {
   if (
     !selectedMonsterId ||
     !caughtMonsters.includes(
-      selectedMonsterId
+      Number(
+        selectedMonsterId
+      )
     )
   ) {
 
     selectedMonsterId =
-      caughtMonsters[0];
+      Number(
+        caughtMonsters[0]
+      );
 
   }
 
@@ -1381,7 +1576,7 @@ function openMonsterScreen() {
 
 
   showScreen(
-    "monster-screen"
+    "training-monster-screen"
   );
 
 }
@@ -1447,7 +1642,9 @@ function renderMonsterParty() {
 
 
       if (
-        selectedMonsterId ===
+        Number(
+          selectedMonsterId
+        ) ===
         monster.id
       ) {
 
@@ -1488,6 +1685,7 @@ function renderMonsterParty() {
 
           selectedMonsterId =
             monster.id;
+
 
           renderMonsterParty();
 
@@ -1538,7 +1736,9 @@ function renderMonsterDetail() {
     monsters.find(
       item =>
         item.id ===
-        Number(selectedMonsterId)
+        Number(
+          selectedMonsterId
+        )
     );
 
 
@@ -1629,39 +1829,18 @@ function renderMonsterDetail() {
       <div class="stats-grid">
 
         <div>
-
-          <span>
-            ❤️ HP
-          </span>
-
-          <strong>
-            ${data.hp}
-          </strong>
-
+          <span>❤️ HP</span>
+          <strong>${data.hp}</strong>
         </div>
 
         <div>
-
-          <span>
-            ⚔️ こうげき
-          </span>
-
-          <strong>
-            ${data.attack}
-          </strong>
-
+          <span>⚔️ こうげき</span>
+          <strong>${data.attack}</strong>
         </div>
 
         <div>
-
-          <span>
-            🛡️ ぼうぎょ
-          </span>
-
-          <strong>
-            ${data.defense}
-          </strong>
-
+          <span>🛡️ ぼうぎょ</span>
+          <strong>${data.defense}</strong>
         </div>
 
       </div>
@@ -1670,9 +1849,22 @@ function renderMonsterDetail() {
         ${monster.desc}
       </p>
 
+      <button
+        id="train-monster"
+        class="main-button"
+      >
+        🥋 九九で特訓する
+      </button>
+
     </div>
 
   `;
+
+
+  onClick(
+    "train-monster",
+    trainMonster
+  );
 
 }
 
@@ -1743,7 +1935,130 @@ function gainExp(
 
 
 // ========================================
-// レベルアップ
+// 育成特訓
+// ========================================
+
+function trainMonster() {
+
+  if (!selectedMonsterId) {
+
+    return;
+
+  }
+
+
+  const monster =
+    monsters.find(
+      item =>
+        item.id ===
+        Number(
+          selectedMonsterId
+        )
+    );
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (
+    !monster ||
+    !data
+  ) {
+
+    return;
+
+  }
+
+
+  const b =
+    Math.floor(
+      Math.random() * 9
+    ) + 1;
+
+
+  const answer =
+    monster.stage * b;
+
+
+  const response =
+    prompt(
+      `🥋 ${monster.name}の特訓！\n\n` +
+      `${monster.stage} × ${b} = ?\n\n` +
+      `答えを入力してください。`
+    );
+
+
+  if (
+    response === null
+  ) {
+
+    return;
+
+  }
+
+
+  const userAnswer =
+    Number(
+      response.trim()
+    );
+
+
+  if (
+    userAnswer !== answer
+  ) {
+
+    alert(
+      `💡 正解は ${answer} です！`
+    );
+
+    return;
+
+  }
+
+
+  const oldLevel =
+    data.level;
+
+
+  const leveledUp =
+    gainExp(
+      selectedMonsterId,
+      25
+    );
+
+
+  if (leveledUp) {
+
+    showLevelUp(
+      selectedMonsterId,
+      oldLevel
+    );
+
+  }
+
+  else {
+
+    alert(
+      `✨ 正解！\n\n` +
+      `+25 EXP\n\n` +
+      `${monster.name}は元気に成長中！`
+    );
+
+
+    renderMonsterParty();
+
+    renderMonsterDetail();
+
+  }
+
+}
+
+
+// ========================================
+// レベルアップ画面
 // ========================================
 
 function showLevelUp(
@@ -1752,7 +2067,7 @@ function showLevelUp(
 ) {
 
   levelupMonsterId =
-    monsterId;
+    Number(monsterId);
 
 
   const monster =
@@ -1808,42 +2123,28 @@ function showLevelUp(
     `;
 
 
-  el("levelup-message")
-    .textContent =
-    `${monster.name}はさらに強くなった！`;
-
-
   el("levelup-stats")
     .innerHTML = `
 
       <div>
-
         ❤️ HP
-
         <strong>
           ${data.hp}
         </strong>
-
       </div>
 
       <div>
-
         ⚔️ こうげき
-
         <strong>
           ${data.attack}
         </strong>
-
       </div>
 
       <div>
-
         🛡️ ぼうぎょ
-
         <strong>
           ${data.defense}
         </strong>
-
       </div>
 
     `;
@@ -1852,139 +2153,6 @@ function showLevelUp(
   showScreen(
     "levelup-screen"
   );
-
-}
-
-
-// ========================================
-// 育成用九九
-// ========================================
-
-function trainMonster() {
-
-  if (!selectedMonsterId) {
-
-    openMonsterScreen();
-
-    return;
-
-  }
-
-
-  const monster =
-    monsters.find(
-      item =>
-        item.id ===
-        Number(selectedMonsterId)
-    );
-
-
-  const data =
-    getMonsterData(
-      selectedMonsterId
-    );
-
-
-  if (
-    !monster ||
-    !data
-  ) {
-
-    return;
-
-  }
-
-
-  const a =
-    monster.stage;
-
-
-  const b =
-    Math.floor(
-      Math.random() * 9
-    ) + 1;
-
-
-  const answer =
-    a * b;
-
-
-  const response =
-    prompt(
-      `🥋 ${monster.name}の特訓！\n\n` +
-      `${a} × ${b} = ?\n\n` +
-      `答えを入力してください。`
-    );
-
-
-  if (
-    response === null
-  ) {
-
-    return;
-
-  }
-
-
-  const userAnswer =
-    Number(
-      response.trim()
-    );
-
-
-  if (
-    userAnswer === answer
-  ) {
-
-    const oldLevel =
-      data.level;
-
-
-    const exp =
-      25;
-
-
-    const leveledUp =
-      gainExp(
-        selectedMonsterId,
-        exp
-      );
-
-
-    if (leveledUp) {
-
-      showLevelUp(
-        selectedMonsterId,
-        oldLevel
-      );
-
-    }
-
-    else {
-
-      alert(
-        `✨ 正解！\n\n` +
-        `+${exp} EXP\n\n` +
-        `${monster.name}は元気に成長中！`
-      );
-
-
-      renderMonsterParty();
-
-      renderMonsterDetail();
-
-    }
-
-  }
-
-  else {
-
-    alert(
-      `💡 正解は ${answer} です！\n\n` +
-      `もう一度挑戦してみよう！`
-    );
-
-  }
 
 }
 
@@ -2161,21 +2329,6 @@ function renderMonsterBook() {
     }
   );
 
-
-  const summary =
-    el("book-summary");
-
-
-  if (summary) {
-
-    summary.textContent =
-      `${caughtMonsters.length} / ${monsters.length} 発見`;
-
-  }
-
-
-  updateWorldStats();
-
 }
 
 
@@ -2183,7 +2336,9 @@ function renderMonsterBook() {
 // 図鑑を開く
 // ========================================
 
-function openBook(fromScreen) {
+function openBook(
+  fromScreen
+) {
 
   returnScreen =
     fromScreen;
@@ -2193,7 +2348,7 @@ function openBook(fromScreen) {
 
 
   showScreen(
-    "book-screen"
+    "monster-book-screen"
   );
 
 }
@@ -2205,30 +2360,26 @@ function openBook(fromScreen) {
 
 function updateWorldStats() {
 
-  const count =
-    el("caught-count");
+  const level =
+    el("player-level");
 
 
-  if (count) {
+  if (level) {
 
-    count.textContent =
-      `${caughtMonsters.length} / ${monsters.length}`;
+    level.textContent =
+      `Lv.${playerLevel}`;
 
   }
 
 
-  const percent =
-    el("book-percent");
+  const coin =
+    el("player-coins");
 
 
-  if (percent) {
+  if (coin) {
 
-    percent.textContent =
-      `${Math.round(
-        caughtMonsters.length /
-        monsters.length *
-        100
-      )}%`;
+    coin.textContent =
+      coins;
 
   }
 
@@ -2236,7 +2387,1254 @@ function updateWorldStats() {
 
 
 // ========================================
-// セーブデータリセット
+// 冒険マップ
+// ========================================
+
+function openWorld() {
+
+  updateWorldStats();
+
+  updateForestButton();
+
+
+  showScreen(
+    "world-screen"
+  );
+
+}
+
+
+// ========================================
+// 森ボタン
+// ========================================
+
+function updateForestButton() {
+
+  const button =
+    el("forest-area");
+
+
+  if (!button) {
+
+    return;
+
+  }
+
+
+  button.disabled =
+    caughtMonsters.length === 0;
+
+
+  const small =
+    button.querySelector(
+      "small"
+    );
+
+
+  if (!small) {
+
+    return;
+
+  }
+
+
+  if (
+    caughtMonsters.length === 0
+  ) {
+
+    small.textContent =
+      "1の段をクリアして仲間をGET！";
+
+  }
+
+  else if (
+    forestProgress >= 5
+  ) {
+
+    small.textContent =
+      "🏆 クリア済み";
+
+  }
+
+  else {
+
+    small.textContent =
+      `探索 ${forestProgress} / 5`;
+
+  }
+
+}
+
+
+// ========================================
+// はじまりの森
+// ========================================
+
+function openForest() {
+
+  if (
+    caughtMonsters.length === 0
+  ) {
+
+    alert(
+      "冒険には仲間が必要です！\n\n" +
+      "まず1の段をクリアして\n" +
+      "モンスターを仲間にしよう！"
+    );
+
+    return;
+
+  }
+
+
+  if (!selectedMonsterId) {
+
+    selectedMonsterId =
+      caughtMonsters[0];
+
+  }
+
+
+  updateForestMap();
+
+
+  showScreen(
+    "forest-screen"
+  );
+
+}
+
+
+// ========================================
+// 森マップ更新
+// ========================================
+
+function updateForestMap() {
+
+  const nodes =
+    document.querySelectorAll(
+      ".battle-node"
+    );
+
+
+  nodes.forEach(
+    node => {
+
+      const number =
+        Number(
+          node.dataset.battle
+        );
+
+
+      const unlocked =
+        number === 1 ||
+        forestProgress >=
+        number - 1;
+
+
+      const cleared =
+        forestProgress >=
+        number;
+
+
+      node.disabled =
+        !unlocked;
+
+
+      node.classList.toggle(
+        "locked-node",
+        !unlocked
+      );
+
+
+      node.classList.toggle(
+        "cleared-node",
+        cleared
+      );
+
+
+      const icon =
+        node.querySelector(
+          ".node-icon"
+        );
+
+
+      if (icon) {
+
+        if (cleared) {
+
+          icon.textContent =
+            "⭐";
+
+        }
+
+        else if (
+          number === 5
+        ) {
+
+          icon.textContent =
+            unlocked
+              ? "👹"
+              : "🔒";
+
+        }
+
+        else {
+
+          icon.textContent =
+            unlocked
+              ? "⚔️"
+              : "🔒";
+
+        }
+
+      }
+
+    }
+  );
+
+
+  const goal =
+    document.querySelector(
+      ".goal-node"
+    );
+
+
+  if (goal) {
+
+    goal.classList.toggle(
+      "locked-node",
+      forestProgress < 5
+    );
+
+  }
+
+
+  const fill =
+    el("forest-progress-fill");
+
+
+  if (fill) {
+
+    fill.style.width =
+      `${forestProgress / 5 * 100}%`;
+
+  }
+
+
+  const text =
+    el("forest-progress-text");
+
+
+  if (text) {
+
+    text.textContent =
+      `${forestProgress} / 5 バトルクリア`;
+
+  }
+
+}
+
+
+// ========================================
+// 森バトル開始
+// ========================================
+
+function startForestBattle(
+  number
+) {
+
+  if (
+    number < 1 ||
+    number > 5
+  ) {
+
+    return;
+
+  }
+
+
+  const unlocked =
+    number === 1 ||
+    forestProgress >=
+    number - 1;
+
+
+  if (!unlocked) {
+
+    return;
+
+  }
+
+
+  if (
+    number <= forestProgress
+  ) {
+
+    // クリア済みのバトルは
+    // 現時点では再戦可能にする
+
+  }
+
+
+  currentBattleNumber =
+    number;
+
+
+  if (
+    number === 5
+  ) {
+
+    currentEnemy = {
+
+      ...forestBoss,
+
+      hp: forestBoss.hp
+
+    };
+
+  }
+
+  else {
+
+    const base =
+      forestEnemies[
+        Math.floor(
+          Math.random() *
+          forestEnemies.length
+        )
+      ];
+
+
+    const hpBonus =
+      (number - 1) * 4;
+
+
+    currentEnemy = {
+
+      ...base,
+
+      hp:
+        base.hp +
+        hpBonus
+
+    };
+
+  }
+
+
+  setupBattle();
+
+
+  showScreen(
+    "battle-screen"
+  );
+
+}
+
+
+// ========================================
+// バトル準備
+// ========================================
+
+function setupBattle() {
+
+  if (!selectedMonsterId) {
+
+    selectedMonsterId =
+      caughtMonsters[0];
+
+  }
+
+
+  const monster =
+    monsters.find(
+      item =>
+        item.id ===
+        Number(
+          selectedMonsterId
+        )
+    );
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (
+    !monster ||
+    !data ||
+    !currentEnemy
+  ) {
+
+    return;
+
+  }
+
+
+  battlePlayerMaxHP =
+    data.hp;
+
+
+  battlePlayerHP =
+    data.hp;
+
+
+  battleEnemyMaxHP =
+    currentEnemy.hp;
+
+
+  battleEnemyHP =
+    currentEnemy.hp;
+
+
+  battleCombo = 0;
+
+  battleAnswering =
+    false;
+
+
+  if (battleTimer) {
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer = null;
+
+  }
+
+
+  el("battle-number")
+    .textContent =
+      currentBattleNumber === 5
+        ? "BOSS BATTLE"
+        : `BATTLE ${currentBattleNumber}`;
+
+
+  el("enemy-name")
+    .textContent =
+      currentBattleNumber === 5
+        ? currentEnemy.name
+        : `野生の${currentEnemy.name}`;
+
+
+  el("enemy-level")
+    .textContent =
+      `Lv.${currentEnemy.level}`;
+
+
+  el("enemy-image")
+    .textContent =
+      currentEnemy.icon;
+
+
+  el("player-monster-name")
+    .textContent =
+      monster.name;
+
+
+  el("player-monster-level")
+    .textContent =
+      `Lv.${data.level}`;
+
+
+  el("player-monster-image")
+    .innerHTML =
+      monsterVisual(
+        monster,
+        "battle-monster-image"
+      );
+
+
+  updateBattleHP();
+
+
+  battleMessage(
+    currentBattleNumber === 5
+      ? "⚠️ 森の守護者が現れた！"
+      : "九九に答えて攻撃しよう！"
+  );
+
+
+  setTimeout(
+    createBattleQuestion,
+    400
+  );
+
+}
+
+
+// ========================================
+// バトルメッセージ
+// ========================================
+
+function battleMessage(
+  text
+) {
+
+  const message =
+    el("battle-message");
+
+
+  if (message) {
+
+    message.textContent =
+      text;
+
+  }
+
+}
+
+
+// ========================================
+// HP更新
+// ========================================
+
+function updateBattleHP() {
+
+  const enemyPercent =
+    battleEnemyMaxHP > 0
+      ? Math.max(
+          0,
+          battleEnemyHP /
+          battleEnemyMaxHP *
+          100
+        )
+      : 0;
+
+
+  const playerPercent =
+    battlePlayerMaxHP > 0
+      ? Math.max(
+          0,
+          battlePlayerHP /
+          battlePlayerMaxHP *
+          100
+        )
+      : 0;
+
+
+  const enemyFill =
+    el("enemy-hp-fill");
+
+
+  if (enemyFill) {
+
+    enemyFill.style.width =
+      `${enemyPercent}%`;
+
+  }
+
+
+  const playerFill =
+    el("player-hp-fill");
+
+
+  if (playerFill) {
+
+    playerFill.style.width =
+      `${playerPercent}%`;
+
+  }
+
+
+  const enemyText =
+    el("enemy-hp-text");
+
+
+  if (enemyText) {
+
+    enemyText.textContent =
+      `${Math.max(
+        0,
+        battleEnemyHP
+      )} / ${battleEnemyMaxHP}`;
+
+  }
+
+
+  const playerText =
+    el("player-hp-text");
+
+
+  if (playerText) {
+
+    playerText.textContent =
+      `${Math.max(
+        0,
+        battlePlayerHP
+      )} / ${battlePlayerMaxHP}`;
+
+  }
+
+}
+
+
+// ========================================
+// バトル問題
+// ========================================
+
+function createBattleQuestion() {
+
+  if (
+    battleEnemyHP <= 0 ||
+    battlePlayerHP <= 0
+  ) {
+
+    return;
+
+  }
+
+
+  battleAnswering =
+    true;
+
+
+  const monster =
+    monsters.find(
+      item =>
+        item.id ===
+        Number(
+          selectedMonsterId
+        )
+    );
+
+
+  if (!monster) {
+
+    return;
+
+  }
+
+
+  const a =
+    monster.stage;
+
+
+  const b =
+    Math.floor(
+      Math.random() * 9
+    ) + 1;
+
+
+  battleAnswer =
+    a * b;
+
+
+  el("battle-question")
+    .textContent =
+      `${a} × ${b} = ?`;
+
+
+  createBattleAnswers();
+
+}
+
+
+// ========================================
+// バトル選択肢
+// ========================================
+
+function createBattleAnswers() {
+
+  const container =
+    el("battle-answers");
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    "";
+
+
+  const choices =
+    new Set();
+
+
+  choices.add(
+    battleAnswer
+  );
+
+
+  while (
+    choices.size < 4
+  ) {
+
+    const wrong =
+      Math.max(
+        1,
+        battleAnswer +
+        Math.floor(
+          Math.random() * 9
+        ) - 4
+      );
+
+
+    choices.add(
+      wrong
+    );
+
+  }
+
+
+  [...choices]
+    .sort(
+      () =>
+        Math.random() - 0.5
+    )
+    .forEach(
+      value => {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "battle-answer";
+
+
+        button.textContent =
+          value;
+
+
+        button.addEventListener(
+          "click",
+          () =>
+            checkBattleAnswer(
+              value,
+              button
+            )
+        );
+
+
+        container.appendChild(
+          button
+        );
+
+      }
+    );
+
+}
+
+
+// ========================================
+// バトル回答
+// ========================================
+
+function checkBattleAnswer(
+  answer,
+  button
+) {
+
+  if (
+    !battleAnswering
+  ) {
+
+    return;
+
+  }
+
+
+  battleAnswering =
+    false;
+
+
+  document
+    .querySelectorAll(
+      ".battle-answer"
+    )
+    .forEach(
+      item =>
+        item.disabled = true
+    );
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!data) {
+
+    return;
+
+  }
+
+
+  if (
+    answer === battleAnswer
+  ) {
+
+    button.classList.add(
+      "correct"
+    );
+
+
+    battleCombo++;
+
+
+    let damage =
+      data.attack;
+
+
+    if (
+      battleCombo >= 3
+    ) {
+
+      damage += 5;
+
+    }
+
+
+    battleEnemyHP =
+      Math.max(
+        0,
+        battleEnemyHP -
+        damage
+      );
+
+
+    battleMessage(
+      battleCombo >= 3
+        ? `🔥 ${battleCombo}コンボ！ ${damage}ダメージ！`
+        : `💥 ${damage}ダメージ！`
+    );
+
+
+    updateBattleHP();
+
+
+    if (
+      battleEnemyHP <= 0
+    ) {
+
+      battleTimer =
+        setTimeout(
+          battleWin,
+          900
+        );
+
+
+      return;
+
+    }
+
+
+    battleTimer =
+      setTimeout(
+        enemyAttack,
+        900
+      );
+
+  }
+
+  else {
+
+    button.classList.add(
+      "wrong"
+    );
+
+
+    battleCombo = 0;
+
+
+    document
+      .querySelectorAll(
+        ".battle-answer"
+      )
+      .forEach(
+        item => {
+
+          if (
+            Number(
+              item.textContent
+            ) ===
+            battleAnswer
+          ) {
+
+            item.classList.add(
+              "correct"
+            );
+
+          }
+
+        }
+      );
+
+
+    battleMessage(
+      `💡 正解は ${battleAnswer}！`
+    );
+
+
+    battleTimer =
+      setTimeout(
+        enemyAttack,
+        900
+      );
+
+  }
+
+}
+
+
+// ========================================
+// 敵の攻撃
+// ========================================
+
+function enemyAttack() {
+
+  if (
+    battleEnemyHP <= 0 ||
+    battlePlayerHP <= 0
+  ) {
+
+    return;
+
+  }
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!data) {
+
+    return;
+
+  }
+
+
+  const damage =
+    Math.max(
+      1,
+      currentEnemy.attack -
+      Math.floor(
+        data.defense / 5
+      )
+    );
+
+
+  battlePlayerHP =
+    Math.max(
+      0,
+      battlePlayerHP -
+      damage
+    );
+
+
+  battleMessage(
+    `👹 ${currentEnemy.name}の攻撃！ ${damage}ダメージ！`
+  );
+
+
+  updateBattleHP();
+
+
+  if (
+    battlePlayerHP <= 0
+  ) {
+
+    battleTimer =
+      setTimeout(
+        battleLose,
+        900
+      );
+
+
+    return;
+
+  }
+
+
+  battleTimer =
+    setTimeout(
+      createBattleQuestion,
+      900
+    );
+
+}
+
+
+// ========================================
+// バトル勝利
+// ========================================
+
+function battleWin() {
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!data) {
+
+    return;
+
+  }
+
+
+  battleWins++;
+
+
+  battleExpReward =
+    currentBattleNumber === 5
+      ? 80
+      : 25 +
+        currentBattleNumber * 5;
+
+
+  battleCoinReward =
+    currentBattleNumber === 5
+      ? 30
+      : 5 +
+        currentBattleNumber * 2;
+
+
+  battleOldLevel =
+    data.level;
+
+
+  battleLeveledUp =
+    gainExp(
+      selectedMonsterId,
+      battleExpReward
+    );
+
+
+  coins +=
+    battleCoinReward;
+
+
+  // 森の進行を更新
+
+  if (
+    currentBattleNumber >
+    forestProgress
+  ) {
+
+    forestProgress =
+      currentBattleNumber;
+
+  }
+
+
+  if (
+    currentBattleNumber === 5
+  ) {
+
+    adventureUnlocked =
+      true;
+
+  }
+
+
+  el("battle-result-icon")
+    .textContent =
+      currentBattleNumber === 5
+        ? "🏆"
+        : "⚔️";
+
+
+  el("battle-result-title")
+    .textContent =
+      currentBattleNumber === 5
+        ? "🌳 はじまりの森クリア！"
+        : "🎉 バトル勝利！";
+
+
+  el("battle-result-message")
+    .textContent =
+      currentBattleNumber === 5
+        ? "森の守護者を倒した！"
+        : `${currentEnemy.name}を倒した！`;
+
+
+  el("battle-exp")
+    .textContent =
+      `+${battleExpReward}`;
+
+
+  el("battle-coins")
+    .textContent =
+      `+${battleCoinReward}`;
+
+
+  if (
+    currentBattleNumber === 5
+  ) {
+
+    el("battle-next-button")
+      .textContent =
+      "🗺️ 冒険マップへ";
+
+  }
+
+  else {
+
+    el("battle-next-button")
+      .textContent =
+      `🌳 次のエリアへ`;
+
+  }
+
+
+  saveGame();
+
+
+  showScreen(
+    "battle-result-screen"
+  );
+
+}
+
+
+// ========================================
+// バトル敗北
+// ========================================
+
+function battleLose() {
+
+  el("battle-result-icon")
+    .textContent =
+    "💦";
+
+
+  el("battle-result-title")
+    .textContent =
+    "今回は負けてしまった…";
+
+
+  el("battle-result-message")
+    .textContent =
+    "修行して、もう一度挑戦しよう！";
+
+
+  el("battle-exp")
+    .textContent =
+    "+0";
+
+
+  el("battle-coins")
+    .textContent =
+    "+0";
+
+
+  el("battle-next-button")
+    .textContent =
+    "🔄 もう一度挑戦";
+
+
+  showScreen(
+    "battle-result-screen"
+  );
+
+}
+
+
+// ========================================
+// バトル結果から次へ
+// ========================================
+
+function nextBattle() {
+
+  if (
+    currentBattleNumber === 5
+  ) {
+
+    openWorld();
+
+    return;
+
+  }
+
+
+  startForestBattle(
+    currentBattleNumber + 1
+  );
+
+}
+
+
+// ========================================
+// バトル結果から森へ
+// ========================================
+
+function battleReturnForest() {
+
+  updateForestMap();
+
+
+  showScreen(
+    "forest-screen"
+  );
+
+}
+
+
+// ========================================
+// バトルから森へ戻る
+// ========================================
+
+function battleBackForest() {
+
+  if (battleTimer) {
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer =
+      null;
+
+  }
+
+
+  battleAnswering =
+    false;
+
+
+  updateForestMap();
+
+
+  showScreen(
+    "forest-screen"
+  );
+
+}
+
+
+// ========================================
+// 森クリア判定
+// ========================================
+
+function isForestCleared() {
+
+  return forestProgress >= 5;
+
+}
+
+
+// ========================================
+// リセット
 // ========================================
 
 function resetGame() {
@@ -2245,7 +3643,7 @@ function resetGame() {
     confirm(
       "⚠️ セーブデータを消去します。\n\n" +
       "クリアした段、星評価、モンスター、" +
-      "レベル、経験値、図鑑、冒険記録などが" +
+      "育成データ、コイン、冒険の進行などが" +
       "すべて消えます。\n\n" +
       "本当に最初からプレイしますか？"
     );
@@ -2277,7 +3675,7 @@ function resetGame() {
 
   clearedStages = [];
 
-  stageStars = {};
+  stageStars = [];
 
   caughtMonsters = [];
 
@@ -2287,6 +3685,13 @@ function resetGame() {
     false;
 
   battleWins = 0;
+
+  coins = 0;
+
+  playerLevel = 1;
+
+  forestProgress = 0;
+
 
   currentStage = 1;
 
@@ -2302,9 +3707,28 @@ function resetGame() {
 
   answering = false;
 
-  selectedMonsterId = null;
 
-  levelupMonsterId = null;
+  selectedMonsterId =
+    null;
+
+  levelupMonsterId =
+    null;
+
+
+  currentBattleNumber =
+    0;
+
+  currentEnemy =
+    null;
+
+  battlePlayerHP =
+    0;
+
+  battleEnemyHP =
+    0;
+
+  battleAnswering =
+    false;
 
 
   if (questionTimer) {
@@ -2313,12 +3737,29 @@ function resetGame() {
       questionTimer
     );
 
-    questionTimer = null;
+    questionTimer =
+      null;
+
+  }
+
+
+  if (battleTimer) {
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer =
+      null;
 
   }
 
 
   createStageList();
+
+  updateWorldStats();
+
+  updateForestMap();
 
 
   alert(
@@ -2335,384 +3776,277 @@ function resetGame() {
 
 
 // ========================================
-// ボタン
+// ボタン設定
 // ========================================
 
-function setupButtons() {
 
-  const startButton =
-    el("start-button");
+// タイトル → 修行
 
-  if (startButton) {
+onClick(
+  "start-button",
+  () => {
 
-    startButton.addEventListener(
-      "click",
-      () => {
+    createStageList();
 
-        createStageList();
-
-        showScreen(
-          "training-screen"
-        );
-
-      }
+    showScreen(
+      "training-screen"
     );
 
   }
+);
 
 
-  const backTraining =
-    el("back-training");
+// 修行道場へ戻る
 
-  if (backTraining) {
+onClick(
+  "back-training",
+  () => {
 
-    backTraining.addEventListener(
-      "click",
-      () => {
+    createStageList();
 
-        createStageList();
-
-        showScreen(
-          "training-screen"
-        );
-
-      }
+    showScreen(
+      "training-screen"
     );
 
   }
+);
 
 
-  const retryStage =
-    el("retry-stage");
+// 次の修行
 
-  if (retryStage) {
+onClick(
+  "next-stage",
+  () => {
 
-    retryStage.addEventListener(
-      "click",
-      () => {
+    if (
+      currentStage === 9
+    ) {
 
-        startTraining(
-          currentStage
-        );
+      showScreen(
+        "adventure-screen"
+      );
 
-      }
+    }
+
+    else {
+
+      startTraining(
+        currentStage + 1
+      );
+
+    }
+
+  }
+);
+
+
+// 再挑戦
+
+onClick(
+  "retry-stage",
+  () => {
+
+    startTraining(
+      currentStage
     );
 
   }
+);
 
 
-  const nextStage =
-    el("next-stage");
+// 冒険解禁画面
 
-  if (nextStage) {
+onClick(
+  "adventure-button",
+  openWorld
+);
 
-    nextStage.addEventListener(
-      "click",
-      () => {
 
-        if (
-          currentStage === 9
-        ) {
+// 修行メニュー
 
-          showScreen(
-            "adventure-screen"
+onClick(
+  "training-button",
+  () => {
+
+    createStageList();
+
+    showScreen(
+      "training-screen"
+    );
+
+  }
+);
+
+
+// 冒険メニュー
+
+onClick(
+  "world-button",
+  openWorld
+);
+
+
+// 育成メニュー
+
+onClick(
+  "monster-button",
+  openMonsterScreen
+);
+
+
+// 育成画面から戻る
+
+onClick(
+  "back-world",
+  openWorld
+);
+
+
+// 図鑑を見る
+
+onClick(
+  "monster-book-button",
+  () =>
+    openBook(
+      "result-screen"
+    )
+);
+
+
+// レベルアップOK
+
+onClick(
+  "levelup-button",
+  () => {
+
+    renderMonsterParty();
+
+    renderMonsterDetail();
+
+    showScreen(
+      "training-monster-screen"
+    );
+
+  }
+);
+
+
+// ========================================
+// 冒険マップ
+// ========================================
+
+onClick(
+  "forest-area",
+  openForest
+);
+
+
+// ========================================
+// 森からマップへ
+// ========================================
+
+onClick(
+  "forest-back-button",
+  openWorld
+);
+
+
+// ========================================
+// 森の各バトル
+// ========================================
+
+document
+  .querySelectorAll(
+    ".battle-node"
+  )
+  .forEach(
+    node => {
+
+      node.addEventListener(
+        "click",
+        () => {
+
+          const number =
+            Number(
+              node.dataset.battle
+            );
+
+
+          startForestBattle(
+            number
           );
 
         }
+      );
 
-        else {
+    }
+  );
 
-          startTraining(
-            currentStage + 1
-          );
 
-        }
+// ========================================
+// バトル画面から森へ
+// ========================================
 
-      }
+onClick(
+  "battle-back-button",
+  battleBackForest
+);
+
+
+// ========================================
+// バトル結果 → 次へ
+// ========================================
+
+onClick(
+  "battle-next-button",
+  nextBattle
+);
+
+
+// ========================================
+// バトル結果 → 森
+// ========================================
+
+onClick(
+  "battle-return-forest",
+  battleReturnForest
+);
+
+
+// ========================================
+// 育成画面から戻る
+// ========================================
+
+onClick(
+  "back-world",
+  openWorld
+);
+
+
+// ========================================
+// 図鑑
+// ========================================
+
+onClick(
+  "book-back",
+  () => {
+
+    showScreen(
+      returnScreen
     );
 
   }
+);
 
 
-  const resultMonsters =
-    el("result-monsters");
+// ========================================
+// セーブリセット
+// ========================================
 
-  if (resultMonsters) {
-
-    resultMonsters.addEventListener(
-      "click",
-      openMonsterScreen
-    );
-
-  }
-
-
-  const resultBook =
-    el("result-book");
-
-  if (resultBook) {
-
-    resultBook.addEventListener(
-      "click",
-      () =>
-        openBook(
-          "result-screen"
-        )
-    );
-
-  }
-
-
-  const resultWorld =
-    el("result-world");
-
-  if (resultWorld) {
-
-    resultWorld.addEventListener(
-      "click",
-      () =>
-        showScreen(
-          "world-screen"
-        )
-    );
-
-  }
-
-
-  const openMonstersTraining =
-    el("open-monsters-training");
-
-  if (openMonstersTraining) {
-
-    openMonstersTraining.addEventListener(
-      "click",
-      openMonsterScreen
-    );
-
-  }
-
-
-  const openBookTraining =
-    el("open-book-training");
-
-  if (openBookTraining) {
-
-    openBookTraining.addEventListener(
-      "click",
-      () =>
-        openBook(
-          "training-screen"
-        )
-    );
-
-  }
-
-
-  const openWorldTraining =
-    el("open-world-training");
-
-  if (openWorldTraining) {
-
-    openWorldTraining.addEventListener(
-      "click",
-      () =>
-        showScreen(
-          "world-screen"
-        )
-    );
-
-  }
-
-
-  const trainButton =
-    el("train-monster");
-
-  if (trainButton) {
-
-    trainButton.addEventListener(
-      "click",
-      trainMonster
-    );
-
-  }
-
-
-  const backMonsters =
-    el("back-from-monsters");
-
-  if (backMonsters) {
-
-    backMonsters.addEventListener(
-      "click",
-      () => {
-
-        createStageList();
-
-        showScreen(
-          "training-screen"
-        );
-
-      }
-    );
-
-  }
-
-
-  const levelupOK =
-    el("levelup-ok");
-
-  if (levelupOK) {
-
-    levelupOK.addEventListener(
-      "click",
-      () => {
-
-        renderMonsterParty();
-
-        renderMonsterDetail();
-
-        showScreen(
-          "monster-screen"
-        );
-
-      }
-    );
-
-  }
-
-
-  const adventureButton =
-    el("adventure-button");
-
-  if (adventureButton) {
-
-    adventureButton.addEventListener(
-      "click",
-      () => {
-
-        updateWorldStats();
-
-        showScreen(
-          "world-screen"
-        );
-
-      }
-    );
-
-  }
-
-
-  const adventureMonsters =
-    el("adventure-monsters");
-
-  if (adventureMonsters) {
-
-    adventureMonsters.addEventListener(
-      "click",
-      openMonsterScreen
-    );
-
-  }
-
-
-  const adventureBook =
-    el("adventure-book");
-
-  if (adventureBook) {
-
-    adventureBook.addEventListener(
-      "click",
-      () =>
-        openBook(
-          "adventure-screen"
-        )
-    );
-
-  }
-
-
-  const worldBook =
-    el("world-book");
-
-  if (worldBook) {
-
-    worldBook.addEventListener(
-      "click",
-      () =>
-        openBook(
-          "world-screen"
-        )
-    );
-
-  }
-
-
-  const worldTraining =
-    el("world-training");
-
-  if (worldTraining) {
-
-    worldTraining.addEventListener(
-      "click",
-      () => {
-
-        createStageList();
-
-        showScreen(
-          "training-screen"
-        );
-
-      }
-    );
-
-  }
-
-
-  const worldMonsters =
-    el("world-monsters");
-
-  if (worldMonsters) {
-
-    worldMonsters.addEventListener(
-      "click",
-      openMonsterScreen
-    );
-
-  }
-
-
-  const backBook =
-    el("back-book");
-
-  if (backBook) {
-
-    backBook.addEventListener(
-      "click",
-      () => {
-
-        showScreen(
-          returnScreen
-        );
-
-      }
-    );
-
-  }
-
-
-  const resetButton =
-    el("reset-game");
-
-  if (resetButton) {
-
-    resetButton.addEventListener(
-      "click",
-      resetGame
-    );
-
-  }
-
-}
+onClick(
+  "reset-data",
+  resetGame
+);
 
 
 // ========================================
@@ -2739,70 +4073,13 @@ createStageList();
 
 updateWorldStats();
 
-// ========================================
-// 下部メニュー
-// ========================================
+updateForestMap();
 
-const trainingButton =
-  el("training-button");
+updateForestButton();
 
-if (trainingButton) {
-
-  trainingButton.addEventListener(
-    "click",
-    () => {
-
-      createStageList();
-
-      showScreen(
-        "training-screen"
-      );
-
-    }
-  );
-
-}
-
-
-const worldButton =
-  el("world-button");
-
-if (worldButton) {
-
-  worldButton.addEventListener(
-    "click",
-    () => {
-
-      updateWorldStats();
-
-      showScreen(
-        "world-screen"
-      );
-
-    }
-  );
-
-}
-
-
-const monsterButton =
-  el("monster-button");
-
-if (monsterButton) {
-
-  monsterButton.addEventListener(
-    "click",
-    () => {
-
-      openMonsterScreen();
-
-    }
-  );
-
-}
-
-
-setupButtons();
+showScreen(
+  "title-screen"
+);
 
 
 console.log(
@@ -2815,6 +4092,22 @@ console.log(
 
 console.log(
   "👾 モンスターシステム ONLINE"
+);
+
+console.log(
+  "📖 図鑑システム ONLINE"
+);
+
+console.log(
+  "💪 育成システム ONLINE"
+);
+
+console.log(
+  "🌳 はじまりの森 ONLINE"
+);
+
+console.log(
+  "⚔️ バトルシステム ONLINE"
 );
 
 console.log(
