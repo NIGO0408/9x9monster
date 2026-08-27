@@ -3000,9 +3000,33 @@ function updateWorldStats() {
    ワールドマップ
    ========================================================= */
 
+function updateLakeAreaAvailability() {
+
+  const area = el("lake-area");
+
+  if (!area) {
+    return;
+  }
+
+  const unlocked = forestProgress >= 5;
+
+  area.disabled = !unlocked;
+  area.classList.toggle("locked-area", !unlocked);
+
+  const small = area.querySelector("small");
+
+  if (small) {
+    small.textContent = unlocked
+      ? "湖へ冒険に出よう！"
+      : "はじまりの森クリアで解放";
+  }
+}
+
 function openWorld() {
 
   updateWorldStats();
+  updateLakeAreaAvailability();
+  updateLakeMap();
 
   showScreen(
     "world-screen"
@@ -5385,6 +5409,7 @@ window.addEventListener(
    ========================================================= */
 
 loadGame();
+updateLakeAreaAvailability();
 
 createStageList();
 
