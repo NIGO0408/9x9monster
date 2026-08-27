@@ -2,12 +2,15 @@
   box-sizing: border-box;
 }
 
+
 html {
   min-height: 100%;
 }
 
+
 body {
   margin: 0;
+
   min-height: 100vh;
 
   font-family:
@@ -18,8 +21,10 @@ body {
     sans-serif;
 
   background: #dff3ff;
+
   color: #222;
 }
+
 
 button {
   font-family: inherit;
@@ -28,7 +33,9 @@ button {
 
 .game {
   width: 100%;
+
   max-width: 700px;
+
   min-height: 100vh;
 
   margin: 0 auto;
@@ -41,10 +48,12 @@ button {
   display: none;
 
   width: 100%;
+
   min-height: 100vh;
 
   padding: 24px;
 }
+
 
 .screen.active {
   display: block;
@@ -66,22 +75,28 @@ button {
     );
 }
 
+
 .logo {
   padding-top: 100px;
 }
 
+
 .logo-monster {
   font-size: 100px;
+
   line-height: 1;
 
   animation:
     float 2s infinite ease-in-out;
 }
 
+
 .logo h1 {
-  margin: 25px 0 15px;
+  margin:
+    25px 0 15px;
 
   font-size: 42px;
+
   line-height: 1.2;
 
   color: #3b4cca;
@@ -90,8 +105,10 @@ button {
     3px 3px 0 white;
 }
 
+
 .logo p {
-  margin: 0 0 35px;
+  margin:
+    0 0 35px;
 
   font-weight: bold;
 
@@ -110,7 +127,8 @@ button {
 
   border: none;
 
-  padding: 16px 30px;
+  padding:
+    16px 30px;
 
   border-radius: 30px;
 
@@ -119,6 +137,7 @@ button {
   color: #333;
 
   font-size: 19px;
+
   font-weight: bold;
 
   cursor: pointer;
@@ -131,10 +150,12 @@ button {
     box-shadow .1s;
 }
 
+
 .main-button:hover {
   transform:
     translateY(-2px);
 }
+
 
 .main-button:active {
   transform:
@@ -144,12 +165,15 @@ button {
     0 2px 0 #d79d00;
 }
 
+
 .sub-button {
   display: block;
 
-  margin: 15px auto;
+  margin:
+    15px auto;
 
-  padding: 12px 25px;
+  padding:
+    12px 25px;
 
   border: none;
 
@@ -160,14 +184,18 @@ button {
   color: #555;
 
   font-size: 15px;
+
   font-weight: bold;
 
   cursor: pointer;
 }
 
+
 .sub-button:hover {
-  background: #dfe5ef;
+  background:
+    #dfe5ef;
 }
+
 
 .small-button {
   flex-shrink: 0;
@@ -176,16 +204,57 @@ button {
 
   background: #eef1ff;
 
-  padding: 8px 12px;
+  padding:
+    8px 12px;
 
   border-radius: 12px;
 
   color: #444;
 
   font-size: 14px;
+
   font-weight: bold;
 
   cursor: pointer;
+}
+
+
+/* ========================================
+   最初からプレイ
+======================================== */
+
+.reset-button {
+  display: block;
+
+  margin:
+    28px auto 10px;
+
+  padding:
+    10px 18px;
+
+  border:
+    1px solid #ddd;
+
+  border-radius: 18px;
+
+  background: #fff;
+
+  color: #999;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+
+.reset-button:hover {
+  background:
+    #fff4f4;
+
+  color: #c55;
+
+  border-color:
+    #e6baba;
 }
 
 
@@ -196,24 +265,30 @@ button {
 .page-title {
   text-align: center;
 
-  margin: 5px 0 28px;
+  margin:
+    5px 0 28px;
 
   font-size: 28px;
+
   font-weight: 900;
 
   line-height: 1.3;
 }
 
+
 .page-title p {
-  margin: 10px 0 0;
+  margin:
+    10px 0 0;
 
   font-size: 15px;
+
   font-weight: 600;
 
   line-height: 1.6;
 
   color: #777;
 }
+
 
 .stage-list {
   display: flex;
@@ -223,10 +298,10 @@ button {
   gap: 14px;
 }
 
-.stage-button {
-  position: relative;
 
+.stage-button {
   width: 100%;
+
   min-height: 108px;
 
   display: grid;
@@ -241,9 +316,11 @@ button {
 
   align-items: center;
 
-  padding: 18px 20px;
+  padding:
+    18px 20px;
 
-  border: 3px solid #dce2ef;
+  border:
+    3px solid #dce2ef;
 
   border-radius: 20px;
 
@@ -258,6 +335,7 @@ button {
     border-color .15s,
     box-shadow .15s;
 }
+
 
 .stage-button:hover {
   transform:
@@ -276,40 +354,44 @@ button {
     );
 }
 
-.stage-button:active {
-  transform:
-    translateY(1px);
-}
 
 .stage-button span {
   grid-column: 1;
+
   grid-row: 1 / 3;
 
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   width: 44px;
+
   height: 44px;
 
   font-size: 26px;
 }
 
+
 .stage-button strong {
   grid-column: 2;
+
   grid-row: 1;
 
   display: block;
 
   font-size: 22px;
+
   font-weight: 900;
 
   line-height: 1.3;
 }
 
+
 .stage-button small {
   grid-column: 2;
+
   grid-row: 2;
 
   display: block;
@@ -317,6 +399,7 @@ button {
   margin-top: 3px;
 
   font-size: 14px;
+
   font-weight: 600;
 
   line-height: 1.5;
@@ -328,8 +411,10 @@ button {
   word-break: keep-all;
 }
 
+
 .stage-button::after {
   grid-column: 3;
+
   grid-row: 1 / 3;
 
   content: "›";
@@ -337,21 +422,20 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   font-size: 34px;
-  font-weight: 300;
 
   color: #7b8494;
 }
 
+
 .stage-button.locked {
   opacity: .45;
 
-  background: #f0f2f5;
-
-  border-color:
-    #dce2ef;
+  background:
+    #f0f2f5;
 
   cursor:
     not-allowed;
@@ -359,14 +443,13 @@ button {
   box-shadow: none;
 }
 
+
 .stage-button.locked:hover {
   transform: none;
 
-  border-color:
-    #dce2ef;
-
   box-shadow: none;
 }
+
 
 .save-status {
   text-align: center;
@@ -394,18 +477,23 @@ button {
   margin-bottom: 20px;
 
   font-size: 22px;
+
   font-weight: 900;
 }
+
 
 .progress {
   margin-bottom: 20px;
 
   font-size: 14px;
+
   font-weight: bold;
 }
 
+
 .progress-bar {
   width: 100%;
+
   height: 10px;
 
   margin-top: 7px;
@@ -417,8 +505,10 @@ button {
   overflow: hidden;
 }
 
+
 #progress-fill {
   width: 0;
+
   height: 100%;
 
   background: #5b67d8;
@@ -426,6 +516,7 @@ button {
   transition:
     width .3s ease;
 }
+
 
 .teacher {
   display: flex;
@@ -445,18 +536,21 @@ button {
   font-size: 40px;
 }
 
+
 .teacher strong {
   font-size: 17px;
 }
 
+
 .teacher p {
-  margin: 4px 0 0;
+  margin:
+    4px 0 0;
 
   font-size: 14px;
-  font-weight: normal;
 
   line-height: 1.5;
 }
+
 
 .question-box {
   padding: 25px;
@@ -477,16 +571,19 @@ button {
     );
 }
 
+
 .question {
   margin-bottom: 25px;
 
   font-size: 42px;
+
   font-weight: 900;
 
   line-height: 1.2;
 
   color: #3b4cca;
 }
+
 
 .answers {
   display: grid;
@@ -497,36 +594,36 @@ button {
   gap: 12px;
 }
 
+
 .answer {
   padding: 18px;
 
-  border: 3px solid #dce2ef;
+  border:
+    3px solid #dce2ef;
 
   border-radius: 16px;
 
   background: #fff;
 
   font-size: 24px;
+
   font-weight: bold;
 
   cursor: pointer;
-
-  transition:
-    transform .1s,
-    border-color .1s;
 }
 
-.answer:hover {
-  transform:
-    translateY(-2px);
 
+.answer:hover {
   border-color:
     #5969d9;
 }
 
+
 .answer:disabled {
-  cursor: default;
+  cursor:
+    default;
 }
+
 
 .answer.correct {
   background:
@@ -536,6 +633,7 @@ button {
     #39a957;
 }
 
+
 .answer.wrong {
   background:
     #ffd2d2;
@@ -544,12 +642,14 @@ button {
     #e34c4c;
 }
 
+
 .message {
   min-height: 30px;
 
   margin-top: 18px;
 
   font-size: 16px;
+
   font-weight: bold;
 
   line-height: 1.5;
@@ -564,6 +664,7 @@ button {
   text-align: center;
 }
 
+
 .result-icon {
   margin-top: 50px;
 
@@ -572,14 +673,17 @@ button {
   line-height: 1;
 }
 
+
 #result-screen h1 {
   margin:
     25px 0 10px;
 }
 
+
 #result-screen > p {
   line-height: 1.6;
 }
+
 
 .result-box {
   display: grid;
@@ -589,7 +693,8 @@ button {
 
   gap: 10px;
 
-  margin: 25px 0;
+  margin:
+    25px 0;
 
   padding: 20px;
 
@@ -607,6 +712,7 @@ button {
     );
 }
 
+
 .result-box div {
   display: flex;
 
@@ -619,6 +725,7 @@ button {
   color: #777;
 }
 
+
 .result-box strong {
   font-size: 20px;
 
@@ -627,21 +734,21 @@ button {
 
 
 /* ========================================
-   モンスター報酬
+   モンスターGET
 ======================================== */
 
 .reward-box {
+  max-width: 380px;
+
   margin:
     20px auto 25px;
 
-  padding: 18px;
-
-  max-width: 360px;
+  padding: 20px;
 
   border:
     3px solid #ffd75a;
 
-  border-radius: 22px;
+  border-radius: 24px;
 
   background:
     linear-gradient(
@@ -653,51 +760,98 @@ button {
   text-align: center;
 
   box-shadow:
-    0 5px 15px
+    0 5px 18px
     rgba(
       220,
       170,
       40,
-      .12
+      .15
     );
 }
+
 
 .reward-box.hidden {
   display: none;
 }
 
+
 .reward-title {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+
+  font-size: 18px;
 
   font-weight: 900;
 
   color: #b57900;
 }
 
+
 .reward-monster {
-  margin: 8px 0;
+  width: 190px;
 
-  font-size: 72px;
+  height: 190px;
 
-  line-height: 1;
+  margin:
+    0 auto 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 }
+
+
+.reward-monster-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+}
+
+
+.monster-placeholder {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 150px;
+
+  height: 150px;
+
+  border-radius: 25px;
+
+  background:
+    #eef1ff;
+
+  font-size: 80px;
+}
+
 
 .reward-box > strong {
   display: block;
 
-  font-size: 21px;
+  font-size: 24px;
 }
+
 
 .reward-box > small {
   display: block;
 
-  margin-top: 4px;
+  margin-top: 5px;
 
   color: #777;
 }
 
+
 .reward-box p {
-  margin: 10px 0 0;
+  margin:
+    10px 0 0;
 
   color: #555;
 
@@ -708,7 +862,7 @@ button {
 
 
 /* ========================================
-   冒険
+   冒険解禁
 ======================================== */
 
 #adventure-screen {
@@ -722,15 +876,18 @@ button {
     );
 }
 
+
 .adventure {
   padding-top: 60px;
 }
+
 
 .adventure-icon {
   font-size: 100px;
 
   line-height: 1;
 }
+
 
 .adventure h1 {
   margin:
@@ -741,6 +898,7 @@ button {
   color: #3b4cca;
 }
 
+
 .adventure p {
   font-size: 18px;
 
@@ -748,6 +906,7 @@ button {
 
   line-height: 1.7;
 }
+
 
 .master-message {
   max-width: 400px;
@@ -775,6 +934,7 @@ button {
   text-align: center;
 }
 
+
 .world-header {
   display: flex;
 
@@ -786,9 +946,12 @@ button {
   gap: 10px;
 }
 
+
 .world-header h1 {
-  margin: 5px 0;
+  margin:
+    5px 0;
 }
+
 
 .player-stats {
   display: grid;
@@ -798,8 +961,10 @@ button {
 
   gap: 10px;
 
-  margin: 20px 0;
+  margin:
+    20px 0;
 }
+
 
 .player-stats div {
   padding: 14px;
@@ -818,10 +983,12 @@ button {
     );
 }
 
+
 .player-stats span,
 .player-stats strong {
   display: block;
 }
+
 
 .player-stats span {
   font-size: 12px;
@@ -829,11 +996,13 @@ button {
   color: #777;
 }
 
+
 .player-stats strong {
   margin-top: 4px;
 
   font-size: 20px;
 }
+
 
 .world-map {
   display: grid;
@@ -845,6 +1014,7 @@ button {
 
   margin-top: 20px;
 }
+
 
 .map-area {
   min-height: 160px;
@@ -873,13 +1043,16 @@ button {
     );
 }
 
+
 .map-area span {
   font-size: 55px;
 }
 
+
 .map-area strong {
   font-size: 18px;
 }
+
 
 .map-area small {
   font-size: 11px;
@@ -887,20 +1060,24 @@ button {
   color: #999;
 }
 
+
 .forest {
   background:
     #dff5d5;
 }
+
 
 .lake {
   background:
     #d9f2ff;
 }
 
+
 .mountain {
   background:
     #eee6d8;
 }
+
 
 .castle {
   background:
@@ -909,7 +1086,7 @@ button {
 
 
 /* ========================================
-   モンスター図鑑
+   図鑑
 ======================================== */
 
 .book-header {
@@ -922,19 +1099,23 @@ button {
   margin-bottom: 20px;
 }
 
+
 .book-header h1 {
   margin: 0;
 
   font-size: 26px;
 }
 
+
 .book-header p {
-  margin: 5px 0 0;
+  margin:
+    5px 0 0;
 
   color: #777;
 
   font-size: 13px;
 }
+
 
 .monster-list {
   display: flex;
@@ -944,11 +1125,12 @@ button {
   gap: 12px;
 }
 
+
 .monster-card {
   display: grid;
 
   grid-template-columns:
-    42px 76px 1fr;
+    42px 100px 1fr;
 
   gap: 12px;
 
@@ -956,12 +1138,12 @@ button {
 
   padding: 15px;
 
+  border:
+    3px solid #e0e5ef;
+
   border-radius: 20px;
 
   background: #fff;
-
-  border:
-    3px solid #e0e5ef;
 
   box-shadow:
     0 3px 10px
@@ -972,6 +1154,7 @@ button {
       .05
     );
 }
+
 
 .monster-card.caught {
   border-color:
@@ -985,9 +1168,11 @@ button {
     );
 }
 
+
 .monster-card.unknown {
   opacity: .65;
 }
+
 
 .monster-number {
   font-size: 12px;
@@ -997,29 +1182,46 @@ button {
   font-weight: bold;
 }
 
+
 .monster-icon {
+  width: 100px;
+
+  height: 100px;
+
   display: flex;
 
   align-items: center;
 
   justify-content: center;
 
-  width: 70px;
-  height: 70px;
-
   border-radius: 18px;
 
   background:
     #eef4ff;
 
-  font-size: 45px;
+  overflow: hidden;
 }
 
-.monster-card.unknown
-.monster-icon {
-  background:
-    #eef0f3;
+
+.book-monster-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
 }
+
+
+.unknown-monster {
+  font-size: 55px;
+
+  font-weight: 900;
+
+  color: #8d939c;
+}
+
 
 .monster-info h2 {
   margin:
@@ -1028,6 +1230,7 @@ button {
   font-size: 19px;
 }
 
+
 .monster-meta {
   display: flex;
 
@@ -1035,6 +1238,7 @@ button {
 
   gap: 6px;
 }
+
 
 .monster-meta span {
   padding:
@@ -1053,6 +1257,7 @@ button {
   font-weight: bold;
 }
 
+
 .monster-info p {
   margin:
     7px 0;
@@ -1063,6 +1268,7 @@ button {
 
   line-height: 1.5;
 }
+
 
 .monster-info small {
   color: #999;
@@ -1101,17 +1307,21 @@ button {
     padding: 18px;
   }
 
+
   .logo {
     padding-top: 70px;
   }
+
 
   .logo h1 {
     font-size: 32px;
   }
 
+
   .logo-monster {
     font-size: 80px;
   }
+
 
   .page-title {
     font-size: 25px;
@@ -1119,7 +1329,6 @@ button {
 
 
   .stage-button {
-
     min-height: 96px;
 
     grid-template-columns:
@@ -1131,26 +1340,27 @@ button {
       15px 14px;
   }
 
-  .stage-button span {
 
+  .stage-button span {
     width: 38px;
+
     height: 38px;
 
     font-size: 23px;
-
   }
+
 
   .stage-button strong {
     font-size: 20px;
   }
 
-  .stage-button small {
 
+  .stage-button small {
     font-size: 13px;
 
     line-height: 1.4;
-
   }
+
 
   .stage-button::after {
     font-size: 30px;
@@ -1161,17 +1371,24 @@ button {
     font-size: 34px;
   }
 
+
   .answers {
     gap: 9px;
   }
 
-  .answer {
 
+  .answer {
     padding:
       16px 10px;
 
     font-size: 21px;
+  }
 
+
+  .reward-monster {
+    width: 160px;
+
+    height: 160px;
   }
 
 
@@ -1187,28 +1404,26 @@ button {
 
 
   .monster-card {
-
     grid-template-columns:
-      32px 62px 1fr;
+      32px 75px 1fr;
 
     gap: 8px;
 
     padding: 11px;
-
   }
+
 
   .monster-icon {
+    width: 75px;
 
-    width: 58px;
-    height: 58px;
-
-    font-size: 36px;
-
+    height: 75px;
   }
+
 
   .monster-info h2 {
     font-size: 16px;
   }
+
 
   .monster-info p {
     font-size: 12px;
