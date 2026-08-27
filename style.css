@@ -3815,3 +3815,184 @@ button {
   }
 
 }
+/* =========================================================
+   モンスター特訓 親レイアウト修正
+========================================================= */
+
+.monster-detail.training-mode {
+  display: block !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin: 0 0 25px !important;
+  padding: 20px !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* 特訓画面そのもの */
+
+.monster-detail.training-mode .training-battle {
+  display: block !important;
+
+  width: 100% !important;
+  max-width: 520px !important;
+
+  margin: 0 auto !important;
+  padding: 10px 8px 28px !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* タイトル */
+
+.monster-detail.training-mode .training-header {
+  display: flex !important;
+
+  width: 100% !important;
+
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 auto 18px !important;
+
+  text-align: center !important;
+}
+
+.monster-detail.training-mode .training-title {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 27px !important;
+  line-height: 1.4 !important;
+  font-weight: 900 !important;
+
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.monster-detail.training-mode .training-subtitle {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin: 5px 0 0 !important;
+  padding: 0 !important;
+
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+  font-weight: 800 !important;
+
+  text-align: center !important;
+}
+
+
+/* モンスターカード */
+
+.monster-detail.training-mode .training-monster-card {
+  display: flex !important;
+
+  width: 100% !important;
+
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 18px !important;
+
+  margin: 0 auto 16px !important;
+  padding: 12px 18px !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* 問題 */
+
+.monster-detail.training-mode .training-question {
+  display: flex !important;
+
+  width: 100% !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 auto 18px !important;
+
+  box-sizing: border-box !important;
+
+  text-align: center !important;
+}
+
+
+/* 4択 */
+
+.monster-detail.training-mode .training-answers {
+  display: grid !important;
+
+  width: 100% !important;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+
+  margin: 0 auto !important;
+}
+
+.monster-detail.training-mode .training-answer {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+
+/* =========================================================
+   スマホ
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .monster-detail.training-mode {
+    padding: 12px !important;
+  }
+
+  .monster-detail.training-mode .training-battle {
+    padding: 6px 2px 24px !important;
+  }
+
+  .monster-detail.training-mode .training-title {
+    font-size: 25px !important;
+  }
+
+  .monster-detail.training-mode .training-subtitle {
+    font-size: 16px !important;
+  }
+
+  .monster-detail.training-mode .training-monster-card {
+    gap: 14px !important;
+
+    padding: 10px 14px !important;
+  }
+
+  .monster-detail.training-mode .training-question {
+    font-size: 32px !important;
+  }
+
+  .monster-detail.training-mode .training-answers {
+    gap: 10px !important;
+  }
+
+  .monster-detail.training-mode .training-answer {
+    min-height: 74px !important;
+    font-size: 26px !important;
+  }
+
+}
