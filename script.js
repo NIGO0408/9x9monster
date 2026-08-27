@@ -4694,3 +4694,96 @@ console.log(
 console.log(
   "📱 画面切り替え時：最上部へ"
 );
+/* =========================================================
+   GitHub 最終更新日時
+========================================================= */
+
+async function showLastUpdate() {
+
+  const updateTime =
+    document.getElementById("update-time");
+
+  if (!updateTime) {
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        "https://api.github.com/repos/nigo0408/9x9monster/commits?per_page=1"
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "GitHub API error"
+      );
+    }
+
+    const commits =
+      await response.json();
+
+    if (
+      !commits.length ||
+      !commits[0].commit
+    ) {
+
+      throw new Error(
+        "更新日時を取得できませんでした"
+      );
+
+    }
+
+    const date =
+      new Date(
+        commits[0].commit.author.date
+      );
+
+
+    /*
+       日本時間で
+       月/日 時:分
+       に変換
+    */
+
+    const month =
+      date.getMonth() + 1;
+
+    const day =
+      date.getDate();
+
+    const hours =
+      String(
+        date.getHours()
+      ).padStart(2, "0");
+
+    const minutes =
+      String(
+        date.getMinutes()
+      ).padStart(2, "0");
+
+
+    updateTime.textContent =
+      `Last Update　${month}/${day} ${hours}:${minutes}`;
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "最終更新日時の取得に失敗しました:",
+      error
+    );
+
+    updateTime.textContent =
+      "Last Update　---";
+
+  }
+}
+
+
+/*
+   ゲーム起動時に取得
+*/
+
+showLastUpdate();
