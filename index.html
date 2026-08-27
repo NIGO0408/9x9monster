@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>9×9モンスターズ</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,31 +13,53 @@
 
 <div class="game">
 
+  <!-- =========================
+       タイトル
+  ========================== -->
+
   <section id="title-screen" class="screen active">
 
     <div class="logo">
-      <div class="logo-monster">🦊</div>
 
-      <h1>9×9モンスターズ</h1>
+      <div class="logo-monster">
+        🦊
+      </div>
+
+      <h1>
+        9×9モンスターズ
+      </h1>
 
       <p>
         九九を修行して<br>
         モンスターを集めよう！
       </p>
+
     </div>
 
-    <button id="start-button" class="main-button">
+    <button
+      id="start-button"
+      class="main-button"
+    >
       🥋 修行をはじめる
     </button>
 
   </section>
 
 
-  <section id="training-screen" class="screen">
+  <!-- =========================
+       修行道場
+  ========================== -->
+
+  <section
+    id="training-screen"
+    class="screen"
+  >
 
     <div class="page-title">
 
-      <div>🥋 9×9修行道場</div>
+      <div>
+        🥋 九九修行道場
+      </div>
 
       <p>
         1の段から順番に<br>
@@ -44,11 +68,20 @@
 
     </div>
 
-    <div id="stage-list" class="stage-list"></div>
 
-    <p id="save-status" class="save-status">
+    <div
+      id="stage-list"
+      class="stage-list"
+    ></div>
+
+
+    <p
+      id="save-status"
+      class="save-status"
+    >
       💾 セーブデータは自動保存されます
     </p>
+
 
     <button
       id="open-book-training"
@@ -57,10 +90,25 @@
       📖 モンスター図鑑
     </button>
 
+
+    <button
+      id="reset-game"
+      class="reset-button"
+    >
+      🗑️ 最初からプレイ
+    </button>
+
   </section>
 
 
-  <section id="quiz-screen" class="screen">
+  <!-- =========================
+       クイズ
+  ========================== -->
+
+  <section
+    id="quiz-screen"
+    class="screen"
+  >
 
     <div class="training-header">
 
@@ -85,7 +133,9 @@
       </span>
 
       <div class="progress-bar">
+
         <div id="progress-fill"></div>
+
       </div>
 
     </div>
@@ -101,7 +151,7 @@
           修行師匠
         </strong>
 
-        <p id="teacher-message">
+        <p>
           集中して答えるのじゃ！
         </p>
 
@@ -119,10 +169,12 @@
         1 × 1 = ?
       </div>
 
+
       <div
         id="answers"
         class="answers"
       ></div>
+
 
       <div
         id="message"
@@ -134,15 +186,24 @@
   </section>
 
 
-  <section id="result-screen" class="screen">
+  <!-- =========================
+       結果
+  ========================== -->
+
+  <section
+    id="result-screen"
+    class="screen"
+  >
 
     <div class="result-icon">
       🏆
     </div>
 
+
     <h1 id="result-title">
       修行完了！
     </h1>
+
 
     <p id="result-message">
       よく頑張った！
@@ -153,17 +214,28 @@
 
       <div>
         正解数
-        <strong id="result-correct">0</strong>
+
+        <strong id="result-correct">
+          0 / 9
+        </strong>
       </div>
+
 
       <div>
         コンボ
-        <strong id="result-combo">0</strong>
+
+        <strong id="result-combo">
+          0
+        </strong>
       </div>
+
 
       <div>
         評価
-        <strong id="result-stars">☆☆☆</strong>
+
+        <strong id="result-stars">
+          ☆☆☆
+        </strong>
       </div>
 
     </div>
@@ -182,12 +254,14 @@
       次の修行へ
     </button>
 
+
     <button
       id="retry-stage"
       class="sub-button"
     >
       もう一度修行する
     </button>
+
 
     <button
       id="result-book"
@@ -199,7 +273,14 @@
   </section>
 
 
-  <section id="adventure-screen" class="screen">
+  <!-- =========================
+       冒険解禁
+  ========================== -->
+
+  <section
+    id="adventure-screen"
+    class="screen"
+  >
 
     <div class="adventure">
 
@@ -207,18 +288,22 @@
         🗺️
       </div>
 
+
       <h1>
         9×9マスター！
       </h1>
+
 
       <p>
         すべての九九を<br>
         極めたぞ！
       </p>
 
+
       <div class="master-message">
         「ここからが本当の冒険じゃ！」
       </div>
+
 
       <button
         id="adventure-button"
@@ -226,6 +311,7 @@
       >
         🗺️ 冒険へ出発！
       </button>
+
 
       <button
         id="adventure-book"
@@ -239,7 +325,14 @@
   </section>
 
 
-  <section id="world-screen" class="screen">
+  <!-- =========================
+       冒険
+  ========================== -->
+
+  <section
+    id="world-screen"
+    class="screen"
+  >
 
     <div class="world-header">
 
@@ -260,17 +353,28 @@
     <div class="player-stats">
 
       <div>
-        <span>捕まえた数</span>
+
+        <span>
+          捕まえた数
+        </span>
+
         <strong id="caught-count">
           0 / 9
         </strong>
+
       </div>
 
+
       <div>
-        <span>図鑑達成率</span>
+
+        <span>
+          図鑑達成率
+        </span>
+
         <strong id="book-percent">
           0%
         </strong>
+
       </div>
 
     </div>
@@ -279,27 +383,62 @@
     <div class="world-map">
 
       <div class="map-area forest">
+
         <span>🌳</span>
-        <strong>はじまりの森</strong>
-        <small>準備中</small>
+
+        <strong>
+          はじまりの森
+        </strong>
+
+        <small>
+          準備中
+        </small>
+
       </div>
+
 
       <div class="map-area lake">
+
         <span>🌊</span>
-        <strong>九九の湖</strong>
-        <small>準備中</small>
+
+        <strong>
+          九九の湖
+        </strong>
+
+        <small>
+          準備中
+        </small>
+
       </div>
+
 
       <div class="map-area mountain">
+
         <span>🗻</span>
-        <strong>かけ算山</strong>
-        <small>準備中</small>
+
+        <strong>
+          かけ算山
+        </strong>
+
+        <small>
+          準備中
+        </small>
+
       </div>
 
+
       <div class="map-area castle">
+
         <span>🏰</span>
-        <strong>九九王城</strong>
-        <small>準備中</small>
+
+        <strong>
+          九九王城
+        </strong>
+
+        <small>
+          準備中
+        </small>
+
       </div>
 
     </div>
@@ -307,7 +446,14 @@
   </section>
 
 
-  <section id="book-screen" class="screen">
+  <!-- =========================
+       モンスター図鑑
+  ========================== -->
+
+  <section
+    id="book-screen"
+    class="screen"
+  >
 
     <div class="book-header">
 
@@ -317,6 +463,7 @@
       >
         ← 戻る
       </button>
+
 
       <div>
 
