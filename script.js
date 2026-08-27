@@ -315,16 +315,17 @@ function syncAdventureState(stageId = currentAdventureStage) {
 }
 
 function saveAdventureStage(stageId = currentAdventureStage) {
-  const stage = getAdventureStage(stageId);
-  if (stageId === "forest") {
-    forestProgress = stage.progress;
-    forestCurrentHP = stage.currentHP;
-    forestBattleMonsterId = stage.battleMonsterId;
-  } else {
-    lakeProgress = stage.progress;
-    lakeCurrentHP = stage.currentHP;
-    lakeBattleMonsterId = stage.battleMonsterId;
-  }
+  /*
+     現在のライブ状態を adventureStages に同期する。
+
+     以前は逆方向（staleな adventureStages → live変数）に
+     コピーしていたため、湖のバトル後に
+       lakeProgress
+       lakeCurrentHP
+       lakeBattleMonsterId
+     が初期値へ戻ってしまっていた。
+  */
+  syncAdventureState(stageId);
 }
 
 function getAdventureQuestion(stageId = currentAdventureStage) {
@@ -490,6 +491,9 @@ function requiredExp(level) {
    ========================================================= */
 
 function saveGame() {
+
+  syncAdventureState("forest");
+  syncAdventureState("lake");
 
   const data = {
 
@@ -4915,6 +4919,20 @@ function resetGame() {
     0;
 
   forestBattleMonsterId =
+    null;
+
+
+  /*
+     湖
+  */
+
+  lakeProgress =
+    0;
+
+  lakeCurrentHP =
+    0;
+
+  lakeBattleMonsterId =
     null;
 
 
