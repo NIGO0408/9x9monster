@@ -2048,6 +2048,9 @@ function renderTrainingBattle() {
     return;
   }
 
+detail.classList.add("training-mode");
+   
+     detail.classList.remove("training-mode");
 
   const monster =
     monsters.find(
