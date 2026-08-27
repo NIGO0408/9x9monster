@@ -2,11 +2,9 @@
   box-sizing: border-box;
 }
 
-
 html {
   min-height: 100%;
 }
-
 
 body {
   margin: 0;
@@ -25,11 +23,9 @@ body {
   color: #222;
 }
 
-
 button {
   font-family: inherit;
 }
-
 
 .game {
   width: 100%;
@@ -43,7 +39,6 @@ button {
   background: #f8fbff;
 }
 
-
 .screen {
   display: none;
 
@@ -53,7 +48,6 @@ button {
 
   padding: 24px;
 }
-
 
 .screen.active {
   display: block;
@@ -75,11 +69,9 @@ button {
     );
 }
 
-
 .logo {
   padding-top: 100px;
 }
-
 
 .logo-monster {
   font-size: 100px;
@@ -89,7 +81,6 @@ button {
   animation:
     float 2s infinite ease-in-out;
 }
-
 
 .logo h1 {
   margin:
@@ -104,7 +95,6 @@ button {
   text-shadow:
     3px 3px 0 white;
 }
-
 
 .logo p {
   margin:
@@ -150,12 +140,10 @@ button {
     box-shadow .1s;
 }
 
-
 .main-button:hover {
   transform:
     translateY(-2px);
 }
-
 
 .main-button:active {
   transform:
@@ -164,7 +152,6 @@ button {
   box-shadow:
     0 2px 0 #d79d00;
 }
-
 
 .sub-button {
   display: block;
@@ -190,12 +177,10 @@ button {
   cursor: pointer;
 }
 
-
 .sub-button:hover {
   background:
     #dfe5ef;
 }
-
 
 .small-button {
   flex-shrink: 0;
@@ -220,7 +205,7 @@ button {
 
 
 /* ========================================
-   最初からプレイ
+   リセット
 ======================================== */
 
 .reset-button {
@@ -246,7 +231,6 @@ button {
   cursor: pointer;
 }
 
-
 .reset-button:hover {
   background:
     #fff4f4;
@@ -259,7 +243,7 @@ button {
 
 
 /* ========================================
-   修行道場
+   タイトル系
 ======================================== */
 
 .page-title {
@@ -275,7 +259,6 @@ button {
   line-height: 1.3;
 }
 
-
 .page-title p {
   margin:
     10px 0 0;
@@ -290,6 +273,10 @@ button {
 }
 
 
+/* ========================================
+   ステージ
+======================================== */
+
 .stage-list {
   display: flex;
 
@@ -297,7 +284,6 @@ button {
 
   gap: 14px;
 }
-
 
 .stage-button {
   width: 100%;
@@ -336,7 +322,6 @@ button {
     box-shadow .15s;
 }
 
-
 .stage-button:hover {
   transform:
     translateY(-2px);
@@ -353,7 +338,6 @@ button {
       .12
     );
 }
-
 
 .stage-button span {
   grid-column: 1;
@@ -373,7 +357,6 @@ button {
   font-size: 26px;
 }
 
-
 .stage-button strong {
   grid-column: 2;
 
@@ -387,7 +370,6 @@ button {
 
   line-height: 1.3;
 }
-
 
 .stage-button small {
   grid-column: 2;
@@ -411,7 +393,6 @@ button {
   word-break: keep-all;
 }
 
-
 .stage-button::after {
   grid-column: 3;
 
@@ -430,7 +411,6 @@ button {
   color: #7b8494;
 }
 
-
 .stage-button.locked {
   opacity: .45;
 
@@ -443,13 +423,11 @@ button {
   box-shadow: none;
 }
 
-
 .stage-button.locked:hover {
   transform: none;
 
   box-shadow: none;
 }
-
 
 .save-status {
   text-align: center;
@@ -481,7 +459,6 @@ button {
   font-weight: 900;
 }
 
-
 .progress {
   margin-bottom: 20px;
 
@@ -489,7 +466,6 @@ button {
 
   font-weight: bold;
 }
-
 
 .progress-bar {
   width: 100%;
@@ -505,7 +481,6 @@ button {
   overflow: hidden;
 }
 
-
 #progress-fill {
   width: 0;
 
@@ -516,7 +491,6 @@ button {
   transition:
     width .3s ease;
 }
-
 
 .teacher {
   display: flex;
@@ -536,11 +510,9 @@ button {
   font-size: 40px;
 }
 
-
 .teacher strong {
   font-size: 17px;
 }
-
 
 .teacher p {
   margin:
@@ -550,7 +522,6 @@ button {
 
   line-height: 1.5;
 }
-
 
 .question-box {
   padding: 25px;
@@ -571,7 +542,6 @@ button {
     );
 }
 
-
 .question {
   margin-bottom: 25px;
 
@@ -584,7 +554,6 @@ button {
   color: #3b4cca;
 }
 
-
 .answers {
   display: grid;
 
@@ -593,7 +562,6 @@ button {
 
   gap: 12px;
 }
-
 
 .answer {
   padding: 18px;
@@ -612,18 +580,15 @@ button {
   cursor: pointer;
 }
 
-
 .answer:hover {
   border-color:
     #5969d9;
 }
 
-
 .answer:disabled {
   cursor:
     default;
 }
-
 
 .answer.correct {
   background:
@@ -633,7 +598,6 @@ button {
     #39a957;
 }
 
-
 .answer.wrong {
   background:
     #ffd2d2;
@@ -641,7 +605,6 @@ button {
   border-color:
     #e34c4c;
 }
-
 
 .message {
   min-height: 30px;
@@ -664,7 +627,6 @@ button {
   text-align: center;
 }
 
-
 .result-icon {
   margin-top: 50px;
 
@@ -673,17 +635,14 @@ button {
   line-height: 1;
 }
 
-
 #result-screen h1 {
   margin:
     25px 0 10px;
 }
 
-
 #result-screen > p {
   line-height: 1.6;
 }
-
 
 .result-box {
   display: grid;
@@ -712,7 +671,6 @@ button {
     );
 }
 
-
 .result-box div {
   display: flex;
 
@@ -725,7 +683,6 @@ button {
   color: #777;
 }
 
-
 .result-box strong {
   font-size: 20px;
 
@@ -734,7 +691,7 @@ button {
 
 
 /* ========================================
-   モンスターGET
+   GET
 ======================================== */
 
 .reward-box {
@@ -769,11 +726,9 @@ button {
     );
 }
 
-
 .reward-box.hidden {
   display: none;
 }
-
 
 .reward-title {
   margin-bottom: 12px;
@@ -784,7 +739,6 @@ button {
 
   color: #b57900;
 }
-
 
 .reward-monster {
   width: 190px;
@@ -801,7 +755,6 @@ button {
   justify-content: center;
 }
 
-
 .reward-monster-image {
   width: 100%;
 
@@ -812,33 +765,11 @@ button {
   image-rendering: pixelated;
 }
 
-
-.monster-placeholder {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 150px;
-
-  height: 150px;
-
-  border-radius: 25px;
-
-  background:
-    #eef1ff;
-
-  font-size: 80px;
-}
-
-
 .reward-box > strong {
   display: block;
 
   font-size: 24px;
 }
-
 
 .reward-box > small {
   display: block;
@@ -847,7 +778,6 @@ button {
 
   color: #777;
 }
-
 
 .reward-box p {
   margin:
@@ -862,7 +792,467 @@ button {
 
 
 /* ========================================
-   冒険解禁
+   モンスター仮表示
+======================================== */
+
+.monster-placeholder {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 20px;
+
+  background:
+    #eef1ff;
+
+  font-size: 70px;
+}
+
+
+/* ========================================
+   モンスター育成
+======================================== */
+
+.monster-party {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        110px,
+        1fr
+      )
+    );
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.party-monster {
+  padding: 10px;
+
+  border:
+    3px solid #dce2ef;
+
+  border-radius: 18px;
+
+  background: #fff;
+
+  cursor: pointer;
+
+  transition:
+    .15s;
+}
+
+.party-monster:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    #5969d9;
+}
+
+.party-monster.selected {
+  border-color:
+    #ffca28;
+
+  background:
+    #fff9df;
+
+  box-shadow:
+    0 0 0 2px
+    rgba(
+      255,
+      202,
+      40,
+      .2
+    );
+}
+
+.party-image {
+  width: 75px;
+
+  height: 75px;
+
+  margin:
+    0 auto 7px;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  background:
+    #eef4ff;
+}
+
+.party-monster-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+}
+
+.party-monster strong,
+.party-monster small {
+  display: block;
+
+  text-align: center;
+}
+
+.party-monster strong {
+  font-size: 14px;
+}
+
+.party-monster small {
+  margin-top: 3px;
+
+  color: #777;
+}
+
+
+.monster-detail {
+  display: grid;
+
+  grid-template-columns:
+    180px 1fr;
+
+  gap: 20px;
+
+  align-items: center;
+
+  margin-bottom: 25px;
+
+  padding: 20px;
+
+  border-radius: 24px;
+
+  background: #fff;
+
+  box-shadow:
+    0 3px 12px
+    rgba(
+      0,
+      0,
+      0,
+      .08
+    );
+}
+
+.detail-image {
+  width: 180px;
+
+  height: 180px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 24px;
+
+  background:
+    #eef4ff;
+
+  overflow: hidden;
+}
+
+.detail-monster-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+}
+
+.detail-title {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 10px;
+}
+
+.detail-title h2 {
+  margin: 0;
+
+  font-size: 28px;
+}
+
+.detail-title span {
+  color:
+    #b57900;
+
+  font-weight:
+    bold;
+}
+
+.monster-type {
+  margin:
+    5px 0 15px;
+
+  color:
+    #5969d9;
+
+  font-weight:
+    bold;
+}
+
+.level-line {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  margin-bottom: 6px;
+}
+
+.level-line strong {
+  font-size: 20px;
+}
+
+.level-line span {
+  font-size: 12px;
+
+  color: #777;
+}
+
+.exp-bar {
+  width: 100%;
+
+  height: 12px;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  background:
+    #e5e8ef;
+}
+
+.exp-bar div {
+  height: 100%;
+
+  border-radius: 20px;
+
+  background:
+    #6ac36f;
+
+  transition:
+    width .3s;
+}
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin-top: 15px;
+}
+
+.stats-grid div {
+  padding:
+    10px 5px;
+
+  border-radius: 14px;
+
+  background:
+    #f4f6fa;
+
+  text-align: center;
+}
+
+.stats-grid span,
+.stats-grid strong {
+  display: block;
+}
+
+.stats-grid span {
+  font-size: 11px;
+
+  color: #777;
+}
+
+.stats-grid strong {
+  margin-top: 3px;
+
+  font-size: 18px;
+}
+
+.monster-desc {
+  margin:
+    15px 0 0;
+
+  color: #555;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   レベルアップ
+======================================== */
+
+#levelup-screen {
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff5bd,
+      #e6f7ff
+    );
+}
+
+.levelup {
+  padding-top: 50px;
+}
+
+.levelup-icon {
+  font-size: 100px;
+
+  line-height: 1;
+
+  animation:
+    float 1.2s infinite ease-in-out;
+}
+
+.levelup h1 {
+  margin:
+    20px 0;
+
+  font-size: 38px;
+
+  color:
+    #d58a00;
+}
+
+.levelup-monster {
+  max-width: 300px;
+
+  margin:
+    0 auto 20px;
+
+  padding: 20px;
+
+  border-radius: 25px;
+
+  background: #fff;
+
+  box-shadow:
+    0 5px 20px
+    rgba(
+      0,
+      0,
+      0,
+      .08
+    );
+}
+
+.levelup-image {
+  width: 160px;
+
+  height: 160px;
+
+  margin:
+    0 auto 10px;
+}
+
+.levelup-monster-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+}
+
+.levelup-monster strong {
+  display: block;
+
+  font-size: 24px;
+}
+
+.level-change {
+  margin-top: 8px;
+
+  font-size: 22px;
+
+  font-weight: 900;
+
+  color:
+    #5969d9;
+}
+
+#levelup-message {
+  font-size: 17px;
+
+  font-weight: bold;
+}
+
+.levelup-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+  max-width: 400px;
+
+  margin:
+    20px auto 30px;
+}
+
+.levelup-stats div {
+  padding: 12px;
+
+  border-radius: 15px;
+
+  background: #fff;
+
+  font-size: 12px;
+
+  color: #777;
+}
+
+.levelup-stats strong {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 20px;
+
+  color: #222;
+}
+
+
+/* ========================================
+   冒険
 ======================================== */
 
 #adventure-screen {
@@ -876,11 +1266,9 @@ button {
     );
 }
 
-
 .adventure {
   padding-top: 60px;
 }
-
 
 .adventure-icon {
   font-size: 100px;
@@ -888,16 +1276,15 @@ button {
   line-height: 1;
 }
 
-
 .adventure h1 {
   margin:
     25px 0 15px;
 
   font-size: 38px;
 
-  color: #3b4cca;
+  color:
+    #3b4cca;
 }
-
 
 .adventure p {
   font-size: 18px;
@@ -906,7 +1293,6 @@ button {
 
   line-height: 1.7;
 }
-
 
 .master-message {
   max-width: 400px;
@@ -934,7 +1320,6 @@ button {
   text-align: center;
 }
 
-
 .world-header {
   display: flex;
 
@@ -946,12 +1331,10 @@ button {
   gap: 10px;
 }
 
-
 .world-header h1 {
   margin:
     5px 0;
 }
-
 
 .player-stats {
   display: grid;
@@ -964,7 +1347,6 @@ button {
   margin:
     20px 0;
 }
-
 
 .player-stats div {
   padding: 14px;
@@ -983,12 +1365,10 @@ button {
     );
 }
 
-
 .player-stats span,
 .player-stats strong {
   display: block;
 }
-
 
 .player-stats span {
   font-size: 12px;
@@ -996,13 +1376,11 @@ button {
   color: #777;
 }
 
-
 .player-stats strong {
   margin-top: 4px;
 
   font-size: 20px;
 }
-
 
 .world-map {
   display: grid;
@@ -1014,7 +1392,6 @@ button {
 
   margin-top: 20px;
 }
-
 
 .map-area {
   min-height: 160px;
@@ -1043,16 +1420,13 @@ button {
     );
 }
 
-
 .map-area span {
   font-size: 55px;
 }
 
-
 .map-area strong {
   font-size: 18px;
 }
-
 
 .map-area small {
   font-size: 11px;
@@ -1060,24 +1434,20 @@ button {
   color: #999;
 }
 
-
 .forest {
   background:
     #dff5d5;
 }
-
 
 .lake {
   background:
     #d9f2ff;
 }
 
-
 .mountain {
   background:
     #eee6d8;
 }
-
 
 .castle {
   background:
@@ -1099,13 +1469,11 @@ button {
   margin-bottom: 20px;
 }
 
-
 .book-header h1 {
   margin: 0;
 
   font-size: 26px;
 }
-
 
 .book-header p {
   margin:
@@ -1116,7 +1484,6 @@ button {
   font-size: 13px;
 }
 
-
 .monster-list {
   display: flex;
 
@@ -1124,7 +1491,6 @@ button {
 
   gap: 12px;
 }
-
 
 .monster-card {
   display: grid;
@@ -1155,7 +1521,6 @@ button {
     );
 }
 
-
 .monster-card.caught {
   border-color:
     #d8c36b;
@@ -1168,11 +1533,9 @@ button {
     );
 }
 
-
 .monster-card.unknown {
   opacity: .65;
 }
-
 
 .monster-number {
   font-size: 12px;
@@ -1181,7 +1544,6 @@ button {
 
   font-weight: bold;
 }
-
 
 .monster-icon {
   width: 100px;
@@ -1202,7 +1564,6 @@ button {
   overflow: hidden;
 }
 
-
 .book-monster-image {
   width: 100%;
 
@@ -1213,7 +1574,6 @@ button {
   image-rendering: pixelated;
 }
 
-
 .unknown-monster {
   font-size: 55px;
 
@@ -1222,14 +1582,12 @@ button {
   color: #8d939c;
 }
 
-
 .monster-info h2 {
   margin:
     0 0 6px;
 
   font-size: 19px;
 }
-
 
 .monster-meta {
   display: flex;
@@ -1238,7 +1596,6 @@ button {
 
   gap: 6px;
 }
-
 
 .monster-meta span {
   padding:
@@ -1257,7 +1614,6 @@ button {
   font-weight: bold;
 }
 
-
 .monster-info p {
   margin:
     7px 0;
@@ -1268,7 +1624,6 @@ button {
 
   line-height: 1.5;
 }
-
 
 .monster-info small {
   color: #999;
@@ -1307,26 +1662,21 @@ button {
     padding: 18px;
   }
 
-
   .logo {
     padding-top: 70px;
   }
-
 
   .logo h1 {
     font-size: 32px;
   }
 
-
   .logo-monster {
     font-size: 80px;
   }
 
-
   .page-title {
     font-size: 25px;
   }
-
 
   .stage-button {
     min-height: 96px;
@@ -1340,7 +1690,6 @@ button {
       15px 14px;
   }
 
-
   .stage-button span {
     width: 38px;
 
@@ -1349,11 +1698,9 @@ button {
     font-size: 23px;
   }
 
-
   .stage-button strong {
     font-size: 20px;
   }
-
 
   .stage-button small {
     font-size: 13px;
@@ -1361,21 +1708,17 @@ button {
     line-height: 1.4;
   }
 
-
   .stage-button::after {
     font-size: 30px;
   }
-
 
   .question {
     font-size: 34px;
   }
 
-
   .answers {
     gap: 9px;
   }
-
 
   .answer {
     padding:
@@ -1384,24 +1727,50 @@ button {
     font-size: 21px;
   }
 
-
   .reward-monster {
     width: 160px;
 
     height: 160px;
   }
 
+  .monster-detail {
+    grid-template-columns:
+      1fr;
+  }
+
+  .detail-image {
+    width: 160px;
+
+    height: 160px;
+
+    margin:
+      0 auto;
+  }
+
+  .detail-title h2 {
+    font-size: 24px;
+  }
+
+  .stats-grid {
+    gap: 5px;
+  }
+
+  .stats-grid span {
+    font-size: 10px;
+  }
+
+  .stats-grid strong {
+    font-size: 16px;
+  }
 
   .world-map {
     grid-template-columns:
       1fr;
   }
 
-
   .result-box {
     padding: 15px;
   }
-
 
   .monster-card {
     grid-template-columns:
@@ -1412,18 +1781,15 @@ button {
     padding: 11px;
   }
 
-
   .monster-icon {
     width: 75px;
 
     height: 75px;
   }
 
-
   .monster-info h2 {
     font-size: 16px;
   }
-
 
   .monster-info p {
     font-size: 12px;
