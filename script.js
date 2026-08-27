@@ -1987,7 +1987,17 @@ function gainExp(
 
 /* =========================================================
    モンスター特訓
-   ========================================================= */
+   4択ミニバトル版
+========================================================= */
+
+let trainingQuestion = 0;
+let trainingAnswer = 0;
+let trainingAnswering = false;
+
+
+/*
+   特訓開始
+*/
 
 function trainMonster() {
 
@@ -2000,9 +2010,7 @@ function trainMonster() {
     monsters.find(
       item =>
         item.id ===
-        Number(
-          selectedMonsterId
-        )
+        Number(selectedMonsterId)
     );
 
 
@@ -2012,13 +2020,187 @@ function trainMonster() {
     );
 
 
-  if (
-    !monster ||
-    !data
-  ) {
+  if (!monster || !data) {
     return;
   }
 
+
+  trainingQuestion = 0;
+  trainingAnswer = 0;
+  trainingAnswering = false;
+
+
+  renderTrainingBattle();
+}
+
+
+/* =========================================================
+   特訓画面
+========================================================= */
+
+function renderTrainingBattle() {
+
+  const detail =
+    el("monster-detail");
+
+
+  if (!detail) {
+    return;
+  }
+
+
+  const monster =
+    monsters.find(
+      item =>
+        item.id ===
+        Number(selectedMonsterId)
+    );
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!monster || !data) {
+    return;
+  }
+
+
+  detail.innerHTML = `
+
+    <div class="training-battle">
+
+      <div class="training-header">
+        <div class="training-title">
+          🥋 モンスター特訓！
+        </div>
+
+        <div class="training-subtitle">
+          ${monster.name}の力を鍛えよう！
+        </div>
+      </div>
+
+
+      <div class="training-monster-card">
+
+        <div class="training-monster-image">
+
+          ${
+            monsterVisual(
+              monster,
+              "training-monster-image-inner"
+            )
+          }
+
+        </div>
+
+
+        <div class="training-monster-info">
+
+          <strong>
+            ${monster.name}
+          </strong>
+
+          <span>
+            Lv.${data.level}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="training-message">
+        九九でパワーアップ！
+      </div>
+
+
+      <div
+        id="training-question"
+        class="training-question"
+      >
+        問題を準備中...
+      </div>
+
+
+      <div
+        id="training-answers"
+        class="training-answers"
+      >
+      </div>
+
+
+      <div
+        id="training-result"
+        class="training-result"
+      >
+      </div>
+
+
+      <button
+        type="button"
+        id="training-cancel"
+        class="training-cancel"
+      >
+        ← 育成画面に戻る
+      </button>
+
+    </div>
+
+  `;
+
+
+  const cancelButton =
+    el("training-cancel");
+
+
+  if (cancelButton) {
+
+    cancelButton.addEventListener(
+      "click",
+      () => {
+
+        renderMonsterParty();
+        renderMonsterDetail();
+
+      }
+    );
+
+  }
+
+
+  createTrainingQuestion();
+}
+
+
+/* =========================================================
+   特訓問題作成
+========================================================= */
+
+function createTrainingQuestion() {
+
+  const monster =
+    monsters.find(
+      item =>
+        item.id ===
+        Number(selectedMonsterId)
+    );
+
+
+  if (!monster) {
+    return;
+  }
+
+
+  trainingQuestion++;
+  trainingAnswering = true;
+
+
+  /*
+     モンスターが覚えている段を使用
+  */
 
   const a =
     monster.stage;
@@ -2030,81 +2212,334 @@ function trainMonster() {
     ) + 1;
 
 
-  const answer =
+  trainingAnswer =
     a * b;
 
 
-  const response =
-    prompt(
-      `🥋 ${monster.name}の特訓！\n\n` +
-      `${a} × ${b} = ?\n\n` +
-      `答えを入力してください。`
-    );
+  const question =
+    el("training-question");
 
 
-  if (
-    response === null
-  ) {
+  if (question) {
+
+    question.textContent =
+      `${a} × ${b} = ?`;
+
+  }
+
+
+  createTrainingAnswers();
+}
+
+
+/* =========================================================
+   特訓選択肢
+========================================================= */
+
+function createTrainingAnswers() {
+
+  const container =
+    el("training-answers");
+
+
+  if (!container) {
     return;
   }
 
 
-  const userAnswer =
-    Number(
-      response.trim()
-    );
+  container.innerHTML = "";
 
 
-  if (
-    userAnswer !== answer
+  const choices =
+    new Set();
+
+
+  choices.add(
+    trainingAnswer
+  );
+
+
+  /*
+     間違い選択肢
+  */
+
+  while (
+    choices.size < 4
   ) {
 
-    alert(
-      `💡 正解は ${answer} です！\n\n` +
-      "もう一度挑戦してみよう！"
-    );
+    const offset =
+      Math.floor(
+        Math.random() * 13
+      ) - 6;
 
+
+    const wrong =
+      trainingAnswer +
+      offset;
+
+
+    if (wrong > 0) {
+
+      choices.add(
+        wrong
+      );
+
+    }
+
+  }
+
+
+  /*
+     シャッフル
+  */
+
+  [...choices]
+    .sort(
+      () =>
+        Math.random() - 0.5
+    )
+    .forEach(
+      value => {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "training-answer";
+
+
+        button.textContent =
+          value;
+
+
+        button.addEventListener(
+          "click",
+          () =>
+            answerTrainingQuestion(
+              value,
+              button
+            )
+        );
+
+
+        container.appendChild(
+          button
+        );
+
+      }
+    );
+}
+
+
+/* =========================================================
+   特訓回答
+========================================================= */
+
+function answerTrainingQuestion(
+  answer,
+  button
+) {
+
+  if (!trainingAnswering) {
     return;
+  }
+
+
+  trainingAnswering =
+    false;
+
+
+  const container =
+    el("training-answers");
+
+
+  if (container) {
+
+    container
+      .querySelectorAll(
+        "button"
+      )
+      .forEach(
+        item =>
+          item.disabled = true
+      );
 
   }
 
 
-  const oldLevel =
-    data.level;
+  const result =
+    el("training-result");
 
 
-  const leveledUp =
-    gainExp(
-      selectedMonsterId,
-      25
+  /*
+     正解
+  */
+
+  if (
+    Number(answer) ===
+    Number(trainingAnswer)
+  ) {
+
+    button.classList.add(
+      "correct"
     );
 
 
-  if (leveledUp) {
+    if (result) {
 
-    showLevelUp(
-      selectedMonsterId,
-      oldLevel
+      result.innerHTML = `
+        <div class="training-perfect">
+          ✨ PERFECT！
+        </div>
+
+        <div class="training-exp">
+          +25 EXP
+        </div>
+      `;
+
+    }
+
+
+    const oldLevel =
+      getMonsterData(
+        selectedMonsterId
+      ).level;
+
+
+    const leveledUp =
+      gainExp(
+        selectedMonsterId,
+        25
+      );
+
+
+    /*
+       レベルアップ
+    */
+
+    if (leveledUp) {
+
+      setTimeout(
+        () => {
+
+          showLevelUp(
+            selectedMonsterId,
+            oldLevel
+          );
+
+        },
+        650
+      );
+
+
+      return;
+    }
+
+
+    /*
+       通常の特訓成功
+    */
+
+    setTimeout(
+      () => {
+
+        renderMonsterParty();
+        renderMonsterDetail();
+
+      },
+      700
     );
 
   }
+
+
+  /*
+     不正解
+  */
 
   else {
 
-    alert(
-      `✨ 正解！\n\n` +
-      `+25 EXP\n\n` +
-      `${monster.name}は元気に成長中！`
+    button.classList.add(
+      "wrong"
     );
 
 
-    renderMonsterParty();
+    document
+      .querySelectorAll(
+        ".training-answer"
+      )
+      .forEach(
+        item => {
 
-    renderMonsterDetail();
+          if (
+            Number(
+              item.textContent
+            ) ===
+            Number(
+              trainingAnswer
+            )
+          ) {
+
+            item.classList.add(
+              "correct"
+            );
+
+          }
+
+        }
+      );
+
+
+    if (result) {
+
+      result.innerHTML = `
+        <div class="training-miss">
+          💦 MISS！
+        </div>
+
+        <div class="training-correct-answer">
+          正解は ${trainingAnswer}！
+        </div>
+
+        <button
+          type="button"
+          class="training-retry"
+          id="training-retry"
+        >
+          🔄 もう一度特訓する
+        </button>
+      `;
+
+    }
+
+
+    const retryButton =
+      el("training-retry");
+
+
+    if (retryButton) {
+
+      retryButton.addEventListener(
+        "click",
+        () => {
+
+          createTrainingQuestion();
+
+        }
+      );
+
+    }
 
   }
-}
 
+}
 
 /* =========================================================
    レベルアップ
