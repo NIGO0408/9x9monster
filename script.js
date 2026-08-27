@@ -11,45 +11,539 @@
    セーブ
    ========================================================= */
 
-function syncLegacyForestState() {
-  forestProgress = adventureProgress.forest;
-  forestCurrentHP = adventureCurrentHP.forest;
-  forestBattleMonsterId = adventureBattleMonsterId.forest;
+const SAVE_KEY = "9x9-monsters-save-v7";
+
+
+/* =========================================================
+   モンスター
+   ========================================================= */
+
+const monsters = [
+  {
+    id: 1,
+    stage: 1,
+    name: "トロール",
+    image: null,
+    type: "いわタイプ",
+    desc: "のんびりしているが力持ち。",
+    rare: "★",
+    baseHP: 30,
+    baseAttack: 12,
+    baseDefense: 15
+  },
+
+  {
+    id: 2,
+    stage: 2,
+    name: "スライム",
+    image: null,
+    type: "みずタイプ",
+    desc: "ぷるぷるしている不思議な仲間。",
+    rare: "★",
+    baseHP: 25,
+    baseAttack: 10,
+    baseDefense: 12
+  },
+
+  {
+    id: 3,
+    stage: 3,
+    name: "ピヨコ",
+    image: null,
+    type: "ひかりタイプ",
+    desc: "小さな体で元気いっぱい。",
+    rare: "★",
+    baseHP: 22,
+    baseAttack: 13,
+    baseDefense: 10
+  },
+
+  {
+    id: 4,
+    stage: 4,
+    name: "ゴブリン",
+    image: null,
+    type: "やみタイプ",
+    desc: "ちょっといたずら好きなモンスター。",
+    rare: "★",
+    baseHP: 35,
+    baseAttack: 15,
+    baseDefense: 13
+  },
+
+  {
+    id: 5,
+    stage: 5,
+    name: "ロックン",
+    image: null,
+    type: "いわタイプ",
+    desc: "全身が岩でできている。",
+    rare: "★★",
+    baseHP: 45,
+    baseAttack: 18,
+    baseDefense: 22
+  },
+
+  {
+    id: 6,
+    stage: 6,
+    name: "ウルフ",
+    image: null,
+    type: "かぜタイプ",
+    desc: "素早さが自慢のモンスター。",
+    rare: "★★",
+    baseHP: 38,
+    baseAttack: 22,
+    baseDefense: 15
+  },
+
+  {
+    id: 7,
+    stage: 7,
+    name: "ファントム",
+    image: null,
+    type: "やみタイプ",
+    desc: "夜の森に現れる謎のモンスター。",
+    rare: "★★",
+    baseHP: 42,
+    baseAttack: 24,
+    baseDefense: 18
+  },
+
+  {
+    id: 8,
+    stage: 8,
+    name: "ドラゴン",
+    image: null,
+    type: "ほのおタイプ",
+    desc: "強大な力を持つドラゴン。",
+    rare: "★★★",
+    baseHP: 60,
+    baseAttack: 30,
+    baseDefense: 25
+  },
+
+  {
+    id: 9,
+    stage: 9,
+    name: "キングドラゴン",
+    image: null,
+    type: "ほのおタイプ",
+    desc: "九九を極めた者だけが出会える王。",
+    rare: "★★★",
+    baseHP: 80,
+    baseAttack: 40,
+    baseDefense: 35
+  }
+];
+
+
+/* =========================================================
+   はじまりの森の敵
+   ========================================================= */
+
+const forestEnemies = [
+  {
+    name: "スライム",
+    image: null,
+    level: 1,
+    hp: 20,
+    attack: 5
+  },
+
+  {
+    name: "きのこモン",
+    image: null,
+    level: 2,
+    hp: 24,
+    attack: 6
+  },
+
+  {
+    name: "ゴブリン",
+    image: null,
+    level: 2,
+    hp: 28,
+    attack: 7
+  }
+];
+
+
+/* =========================================================
+   はじまりの森 ボス
+   ========================================================= */
+
+const forestBoss = {
+  name: "森の守護者",
+  image: null,
+  level: 5,
+  hp: 45,
+  attack: 8
+};
+
+
+/* =========================================================
+   ゲームデータ
+   ========================================================= */
+
+let clearedStages = [];
+let stageStars = {};
+let caughtMonsters = [];
+let monsterData = {};
+
+let adventureUnlocked = false;
+let battleWins = 0;
+
+
+/* =========================================================
+   修行状態
+   ========================================================= */
+
+let currentStage = 1;
+let questionNumber = 0;
+let correctCount = 0;
+let combo = 0;
+let maxCombo = 0;
+let currentAnswer = 0;
+let answering = false;
+let questionTimer = null;
+
+
+/* =========================================================
+   モンスター状態
+   ========================================================= */
+
+let selectedMonsterId = null;
+let levelupMonsterId = null;
+
+
+/* =========================================================
+   冒険ステージ共通状態
+   ========================================================= */
+
+const adventureStages = {
+  forest: {
+    id: "forest",
+    name: "はじまりの森",
+    progress: 0,
+    currentHP: 0,
+    battleMonsterId: null,
+    questionMin: 1,
+    questionMax: 3,
+    enemies: [
+      { name: "スライム", image: null, level: 1, hp: 20, attack: 5 },
+      { name: "きのこモン", image: null, level: 2, hp: 24, attack: 6 },
+      { name: "ゴブリン", image: null, level: 2, hp: 28, attack: 7 }
+    ],
+    boss: { name: "森の守護者", image: null, level: 5, hp: 45, attack: 8 }
+  },
+
+  lake: {
+    id: "lake",
+    name: "九九の湖",
+    progress: 0,
+    currentHP: 0,
+    battleMonsterId: null,
+    questionMin: 3,
+    questionMax: 5,
+    enemies: [
+      { name: "あわモン", image: null, level: 3, hp: 24, attack: 6 },
+      { name: "ウォータースライム", image: null, level: 4, hp: 29, attack: 7 },
+      { name: "ツノザカナ", image: null, level: 4, hp: 33, attack: 8 },
+      { name: "シンカイモン", image: null, level: 5, hp: 38, attack: 9 }
+    ],
+    boss: { name: "湖底の主", image: null, level: 7, hp: 58, attack: 11 }
+  }
+};
+
+let forestProgress = 0;
+let forestCurrentHP = 0;
+let forestBattleMonsterId = null;
+
+let lakeProgress = 0;
+let lakeCurrentHP = 0;
+let lakeBattleMonsterId = null;
+
+let currentAdventureStage = "forest";
+
+/* =========================================================
+   バトル状態
+   ========================================================= */
+
+let currentBattleNumber = 0;
+
+let currentWildMonster = null;
+
+let battlePlayerHP = 0;
+let battlePlayerMaxHP = 0;
+
+let battleEnemyHP = 0;
+let battleEnemyMaxHP = 0;
+
+let battleAnswer = 0;
+let battleAnswering = false;
+
+let battleTimer = null;
+let battleCombo = 0;
+
+let battleExpReward = 0;
+
+let returnScreen = "training-screen";
+
+
+
+/* =========================================================
+   冒険ステージ共通ヘルパー
+   ========================================================= */
+
+function getAdventureStage(stageId = currentAdventureStage) {
+  return adventureStages[stageId] || adventureStages.forest;
 }
+
+function syncAdventureState(stageId = currentAdventureStage) {
+  const stage = getAdventureStage(stageId);
+  if (stageId === "forest") {
+    stage.progress = forestProgress;
+    stage.currentHP = forestCurrentHP;
+    stage.battleMonsterId = forestBattleMonsterId;
+  } else {
+    stage.progress = lakeProgress;
+    stage.currentHP = lakeCurrentHP;
+    stage.battleMonsterId = lakeBattleMonsterId;
+  }
+  return stage;
+}
+
+function saveAdventureStage(stageId = currentAdventureStage) {
+  const stage = getAdventureStage(stageId);
+  if (stageId === "forest") {
+    forestProgress = stage.progress;
+    forestCurrentHP = stage.currentHP;
+    forestBattleMonsterId = stage.battleMonsterId;
+  } else {
+    lakeProgress = stage.progress;
+    lakeCurrentHP = stage.currentHP;
+    lakeBattleMonsterId = stage.battleMonsterId;
+  }
+}
+
+function getAdventureQuestion(stageId = currentAdventureStage) {
+  const stage = getAdventureStage(stageId);
+  const table = [];
+  for (let n = stage.questionMin; n <= stage.questionMax; n++) table.push(n);
+  const multiplier = table[Math.floor(Math.random() * table.length)];
+  const factor = Math.floor(Math.random() * 9) + 1;
+  return {
+    multiplier,
+    factor,
+    answer: multiplier * factor
+  };
+}
+
+function isForestCleared() {
+  return forestProgress >= 5;
+}
+
+function isLakeUnlocked() {
+  return isForestCleared();
+}
+
+function isLakeCleared() {
+  return lakeProgress >= 5;
+}
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+function el(id) {
+  return document.getElementById(id);
+}
+
+
+/* =========================================================
+   画面切り替え
+   ========================================================= */
+
+function showScreen(id) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
+      screen.classList.remove("active");
+    });
+
+
+  const target = el(id);
+
+
+  if (!target) {
+    console.error(
+      "画面が見つかりません:",
+      id
+    );
+    return;
+  }
+
+
+  target.classList.add("active");
+
+
+  /*
+     ★重要
+     画面を切り替えたら
+     必ずページ最上部へ戻す。
+  */
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto"
+  });
+
+
+  updateBottomMenu(id);
+}
+
+
+/* =========================================================
+   下部メニュー
+   ========================================================= */
+
+function updateBottomMenu(screenId) {
+
+  const menu = el("menu");
+
+  if (!menu) {
+    return;
+  }
+
+
+  if (screenId === "title-screen") {
+    menu.classList.add("hidden");
+  }
+  else {
+    menu.classList.remove("hidden");
+  }
+}
+
+
+/* =========================================================
+   モンスター初期データ
+   ========================================================= */
+
+function createMonsterData(monster) {
+
+  return {
+    id: monster.id,
+    level: 1,
+    exp: 0,
+    hp: monster.baseHP,
+    attack: monster.baseAttack,
+    defense: monster.baseDefense
+  };
+}
+
+
+/* =========================================================
+   モンスター情報取得
+   ========================================================= */
+
+function getMonsterData(monsterId) {
+
+  const id = Number(monsterId);
+
+
+  if (!monsterData[id]) {
+
+    const monster =
+      monsters.find(
+        item => item.id === id
+      );
+
+
+    if (!monster) {
+      return null;
+    }
+
+
+    monsterData[id] =
+      createMonsterData(monster);
+  }
+
+
+  return monsterData[id];
+}
+
+
+/* =========================================================
+   必要EXP
+   ========================================================= */
+
+function requiredExp(level) {
+  return level * 100;
+}
+
+
+/* =========================================================
+   セーブ
+   ========================================================= */
 
 function saveGame() {
 
-  syncLegacyForestState();
-
   const data = {
-    version: 11,
-    clearedStages: [...clearedStages],
-    stageStars: {...stageStars},
-    caughtMonsters: [...caughtMonsters],
-    monsterData: {...monsterData},
+
+    version: 10,
+
+    clearedStages: [
+      ...clearedStages
+    ],
+
+    stageStars: {
+      ...stageStars
+    },
+
+    caughtMonsters: [
+      ...caughtMonsters
+    ],
+
+    monsterData: {
+      ...monsterData
+    },
+
     adventureUnlocked,
+
     battleWins,
 
-    /* 新しい共通冒険データ */
-    adventureProgress: {...adventureProgress},
-    adventureCurrentHP: {...adventureCurrentHP},
-    adventureBattleMonsterId: {...adventureBattleMonsterId},
-
-    /* 旧データ互換 */
     forestProgress,
+
     forestCurrentHP,
-    forestBattleMonsterId
+
+    forestBattleMonsterId,
+    lakeProgress,
+    lakeCurrentHP,
+    lakeBattleMonsterId
   };
 
+
   try {
+
     localStorage.setItem(
       SAVE_KEY,
       JSON.stringify(data)
     );
+
     updateSaveStatus();
+
   }
+
   catch (error) {
-    console.error("セーブ失敗:", error);
+
+    console.error(
+      "セーブ失敗:",
+      error
+    );
+
   }
 }
 
@@ -61,67 +555,137 @@ function saveGame() {
 function loadGame() {
 
   try {
-    const saved = localStorage.getItem(SAVE_KEY);
-    if (!saved) return;
 
-    const data = JSON.parse(saved);
+    const saved =
+      localStorage.getItem(
+        SAVE_KEY
+      );
 
-    if (Array.isArray(data.clearedStages)) {
-      clearedStages = data.clearedStages
-        .map(Number)
-        .filter(stage => stage >= 1 && stage <= 9);
+
+    if (!saved) {
+      return;
     }
 
-    if (data.stageStars && typeof data.stageStars === "object") {
-      stageStars = data.stageStars;
+
+    const data =
+      JSON.parse(saved);
+
+
+    if (
+      Array.isArray(
+        data.clearedStages
+      )
+    ) {
+
+      clearedStages =
+        data.clearedStages
+          .map(Number)
+          .filter(
+            stage =>
+              stage >= 1 &&
+              stage <= 9
+          );
     }
 
-    if (Array.isArray(data.caughtMonsters)) {
-      caughtMonsters = data.caughtMonsters
-        .map(Number)
-        .filter(id => monsters.some(monster => monster.id === id));
+
+    if (
+      data.stageStars &&
+      typeof data.stageStars === "object"
+    ) {
+
+      stageStars =
+        data.stageStars;
     }
 
-    if (data.monsterData && typeof data.monsterData === "object") {
-      monsterData = data.monsterData;
+
+    if (
+      Array.isArray(
+        data.caughtMonsters
+      )
+    ) {
+
+      caughtMonsters =
+        data.caughtMonsters
+          .map(Number)
+          .filter(
+            id =>
+              monsters.some(
+                monster =>
+                  monster.id === id
+              )
+          );
     }
 
-    adventureUnlocked = data.adventureUnlocked === true;
-    battleWins = Number(data.battleWins) || 0;
 
-    /* 新形式 */
-    if (data.adventureProgress && typeof data.adventureProgress === "object") {
-      adventureProgress.forest = Math.max(0, Math.min(5, Number(data.adventureProgress.forest) || 0));
-      adventureProgress.lake = Math.max(0, Math.min(5, Number(data.adventureProgress.lake) || 0));
-    }
-    else {
-      /* 旧形式から森だけ移行 */
-      adventureProgress.forest = Math.max(0, Math.min(5, Number(data.forestProgress) || 0));
-      adventureProgress.lake = 0;
+    if (
+      data.monsterData &&
+      typeof data.monsterData === "object"
+    ) {
+
+      monsterData =
+        data.monsterData;
     }
 
-    if (data.adventureCurrentHP && typeof data.adventureCurrentHP === "object") {
-      adventureCurrentHP.forest = Math.max(0, Number(data.adventureCurrentHP.forest) || 0);
-      adventureCurrentHP.lake = Math.max(0, Number(data.adventureCurrentHP.lake) || 0);
-    }
-    else {
-      adventureCurrentHP.forest = Math.max(0, Number(data.forestCurrentHP) || 0);
-      adventureCurrentHP.lake = 0;
-    }
 
-    if (data.adventureBattleMonsterId && typeof data.adventureBattleMonsterId === "object") {
-      adventureBattleMonsterId.forest = data.adventureBattleMonsterId.forest ? Number(data.adventureBattleMonsterId.forest) : null;
-      adventureBattleMonsterId.lake = data.adventureBattleMonsterId.lake ? Number(data.adventureBattleMonsterId.lake) : null;
-    }
-    else {
-      adventureBattleMonsterId.forest = data.forestBattleMonsterId ? Number(data.forestBattleMonsterId) : null;
-      adventureBattleMonsterId.lake = null;
-    }
+    adventureUnlocked =
+      data.adventureUnlocked === true;
 
-    syncLegacyForestState();
+
+    battleWins =
+      Number(
+        data.battleWins
+      ) || 0;
+
+
+    forestProgress =
+      Number(
+        data.forestProgress
+      ) || 0;
+
+
+    forestProgress =
+      Math.max(
+        0,
+        Math.min(
+          5,
+          forestProgress
+        )
+      );
+
+
+    forestCurrentHP =
+      Number(
+        data.forestCurrentHP
+      ) || 0;
+
+
+    forestBattleMonsterId =
+      data.forestBattleMonsterId
+        ? Number(
+            data.forestBattleMonsterId
+          )
+        : null;
+
+    lakeProgress =
+      Math.max(0, Math.min(5, Number(data.lakeProgress) || 0));
+
+    lakeCurrentHP =
+      Number(data.lakeCurrentHP) || 0;
+
+    lakeBattleMonsterId =
+      data.lakeBattleMonsterId
+        ? Number(data.lakeBattleMonsterId)
+        : null;
+
   }
+
   catch (error) {
-    console.error("ロード失敗:", error);
+
+    console.error(
+      "ロード失敗:",
+      error
+    );
+
   }
 }
 
@@ -2437,210 +3001,389 @@ function updateWorldStats() {
    ========================================================= */
 
 function openWorld() {
+
   updateWorldStats();
-  updateAdventureMap("forest");
-  updateAdventureMap("lake");
-  showScreen("world-screen");
+
+  showScreen(
+    "world-screen"
+  );
 }
 
 
 /* =========================================================
-   冒険ステージ共通
+   はじまりの森を開く
    ========================================================= */
 
-function getAdventureConfig(key) {
-  return adventureStages[key] || null;
-}
+function openForest() {
 
-function isAdventureUnlocked(key) {
-  const config = getAdventureConfig(key);
-  return !!config && config.unlock();
-}
+  if (
+    caughtMonsters.length === 0
+  ) {
 
-function getAdventureProgress(key) {
-  return adventureProgress[key] || 0;
-}
-
-function setAdventureProgress(key, value) {
-  adventureProgress[key] = Math.max(0, Math.min(5, Number(value) || 0));
-  syncLegacyForestState();
-}
-
-function openAdventureStage(key) {
-
-  const config = getAdventureConfig(key);
-  if (!config) return;
-
-  if (!isAdventureUnlocked(key)) {
-    if (key === "lake") {
-      alert("🌊 九九の湖はまだ閉ざされている！\n\nまず「はじまりの森」をクリアしよう！");
-    }
-    return;
-  }
-
-  if (caughtMonsters.length === 0) {
     alert(
       "冒険には仲間が必要です！\n\n" +
       "まず1の段をクリアして\n" +
       "モンスターを仲間にしよう！"
     );
+
+    return;
+
+  }
+
+
+  if (
+    !selectedMonsterId ||
+    !caughtMonsters.includes(
+      Number(selectedMonsterId)
+    )
+  ) {
+
+    selectedMonsterId =
+      Number(
+        caughtMonsters[0]
+      );
+
+  }
+
+
+  updateForestMap();
+
+
+  showScreen(
+    "forest-screen"
+  );
+}
+
+
+/* =========================================================
+   森マップ更新
+   ========================================================= */
+
+function updateForestMap() {
+
+  const nodes =
+    document.querySelectorAll(
+      "#forest-screen .battle-node, " +
+      "#forest-screen .boss-node"
+    );
+
+
+  nodes.forEach(
+    node => {
+
+      const number =
+        Number(
+          node.dataset.battle
+        );
+
+
+      const unlocked =
+        number === 1 ||
+        forestProgress >=
+        number - 1;
+
+
+      const cleared =
+        forestProgress >=
+        number;
+
+
+      node.disabled =
+        !unlocked;
+
+
+      node.classList.toggle(
+        "locked-node",
+        !unlocked
+      );
+
+
+      node.classList.toggle(
+        "cleared-node",
+        cleared
+      );
+
+
+      const icon =
+        node.querySelector(
+          ".node-icon"
+        );
+
+
+      if (!icon) {
+        return;
+      }
+
+
+      if (cleared) {
+
+        icon.textContent =
+          "⭐";
+
+      }
+
+      else if (
+        number === 5
+      ) {
+
+        icon.textContent =
+          unlocked
+            ? "👹"
+            : "🔒";
+
+      }
+
+      else {
+
+        icon.textContent =
+          unlocked
+            ? "⚔️"
+            : "🔒";
+
+      }
+
+    }
+  );
+
+
+  const goal =
+    document.querySelector(
+      "#forest-screen .goal-node"
+    );
+
+
+  if (goal) {
+
+    goal.classList.toggle(
+      "locked-node",
+      forestProgress < 5
+    );
+
+
+    if (
+      forestProgress >= 5
+    ) {
+
+      const icon =
+        goal.querySelector(
+          ".node-icon"
+        );
+
+
+      if (icon) {
+
+        icon.textContent =
+          "🏆";
+
+      }
+
+    }
+
+  }
+
+
+  const fill =
+    el("forest-progress-fill");
+
+
+  if (fill) {
+
+    fill.style.width =
+      `${
+        forestProgress /
+        5 *
+        100
+      }%`;
+
+  }
+
+
+  const text =
+    el("forest-progress-text");
+
+
+  if (text) {
+
+    text.textContent =
+      `${forestProgress} / 5 バトルクリア`;
+
+  }
+}
+
+
+/* =========================================================
+   森のバトル開始
+   ========================================================= */
+
+function startForestBattle(
+  battleNumber
+) {
+
+  const number =
+    Number(
+      battleNumber
+    );
+
+
+  if (
+    number < 1 ||
+    number > 5
+  ) {
     return;
   }
 
-  if (!selectedMonsterId || !caughtMonsters.includes(Number(selectedMonsterId))) {
-    selectedMonsterId = Number(caughtMonsters[0]);
-  }
 
-  currentAdventureKey = key;
-  updateAdventureMap(key);
+  /*
+     未解放なら開始不可
+  */
 
-  /* ステージ画面を共通HTMLに描画 */
-  const title = el("adventure-stage-title");
-  const sub = el("adventure-stage-subtitle");
-  const art = el("adventure-stage-art");
-  const introTitle = el("adventure-stage-intro-title");
-  const introText = el("adventure-stage-intro-text");
-  const progressTitle = el("adventure-progress-title");
-
-  if (title) title.textContent = `${config.icon} ${config.name}`;
-  if (sub) sub.textContent = "全5バトル";
-  if (art) art.textContent = config.introIcon;
-  if (introTitle) introTitle.textContent = config.introTitle;
-  if (introText) introText.textContent = config.introText;
-  if (progressTitle) progressTitle.textContent = `${config.name}の攻略状況`;
-
-  const currentHP = adventureCurrentHP[key];
-  const data = getMonsterData(selectedMonsterId);
-  const partyName = el("adventure-party-name");
-  if (partyName && data) {
-    const monster = monsters.find(m => m.id === Number(selectedMonsterId));
-    if (monster) partyName.textContent = `${monster.name} Lv.${data.level}`;
-  }
-
-  const hpText = el("adventure-party-hp");
-  if (hpText && data) {
-    hpText.textContent = currentHP > 0 ? `HP ${currentHP} / ${data.hp}` : `HP ${data.hp} / ${data.hp}`;
-  }
-
-  showScreen(key === "lake" ? "lake-screen" : "forest-screen");
-}
-
-function openForest() {
-  openAdventureStage("forest");
-}
-
-function openLake() {
-  openAdventureStage("lake");
-}
-
-function updateAdventureMap(key) {
-
-  const progress = getAdventureProgress(key);
-  const config = getAdventureConfig(key);
-  if (!config) return;
-
-  const screenId = key === "lake" ? "lake-screen" : "forest-screen";
-  const screen = el(screenId);
-  if (screen && currentAdventureKey === key) {
-    const nodes = screen.querySelectorAll(".adventure-battle-node, .adventure-boss-node, .battle-node, .boss-node");
-    nodes.forEach(node => {
-      const number = Number(node.dataset.battle);
-      const unlocked = number === 1 || progress >= number - 1;
-      const cleared = progress >= number;
-      node.disabled = !unlocked;
-      node.classList.toggle("locked-node", !unlocked);
-      node.classList.toggle("cleared-node", cleared);
-      const icon = node.querySelector(".node-icon");
-      if (!icon) return;
-      if (cleared) icon.textContent = "⭐";
-      else if (number === 5) icon.textContent = unlocked ? "👹" : "🔒";
-      else icon.textContent = unlocked ? "⚔️" : "🔒";
-    });
-
-    const goal = screen.querySelector(".adventure-goal-node, .goal-node");
-    if (goal) {
-      goal.classList.toggle("locked-node", progress < 5);
-      const icon = goal.querySelector(".node-icon");
-      if (icon) icon.textContent = progress >= 5 ? "🏆" : "🔒";
-    }
-
-    const fill = el(`${key}-progress-fill`);
-    if (fill) fill.style.width = `${progress / 5 * 100}%`;
-
-    const text = el(`${key}-progress-text`);
-    if (text) text.textContent = `${progress} / 5 バトルクリア`;
-  }
-
-  /* ワールドマップ側 */
-  const mapArea = el(`${key}-area`);
-  if (mapArea) {
-    const unlocked = isAdventureUnlocked(key);
-    mapArea.disabled = !unlocked;
-    mapArea.classList.toggle("locked-area", !unlocked);
-    const small = mapArea.querySelector("small");
-    if (small) {
-      small.textContent = unlocked
-        ? (progress >= 5 ? "クリア済み・再挑戦可能" : "冒険へ出発")
-        : (key === "lake" ? "はじまりの森クリアで解放" : "ロック中");
-    }
-  }
-}
-
-function startForestBattle(number) {
-  startAdventureBattle("forest", number);
-}
-
-function startLakeBattle(number) {
-  startAdventureBattle("lake", number);
-}
-
-function startAdventureBattle(key, battleNumber) {
-
-  const config = getAdventureConfig(key);
-  const number = Number(battleNumber);
-
-  if (!config || number < 1 || number > 5 || !isAdventureUnlocked(key)) return;
-  if (number > 1 && getAdventureProgress(key) < number - 1) return;
-
-  if (caughtMonsters.length === 0) {
-    openAdventureStage(key);
+  if (
+    number > 1 &&
+    forestProgress <
+    number - 1
+  ) {
     return;
   }
 
-  if (!selectedMonsterId || !caughtMonsters.includes(Number(selectedMonsterId))) {
-    selectedMonsterId = Number(caughtMonsters[0]);
+
+  if (
+    caughtMonsters.length === 0
+  ) {
+
+    openForest();
+
+    return;
+
   }
 
-  currentAdventureKey = key;
-  currentBattleNumber = number;
 
-  const selectedId = Number(selectedMonsterId);
-  const monsterChanged = adventureBattleMonsterId[key] !== selectedId;
+  if (
+    !selectedMonsterId ||
+    !caughtMonsters.includes(
+      Number(selectedMonsterId)
+    )
+  ) {
 
-  /* ①・モンスター変更時・HP切れは満タン。それ以外は前戦HPを持ち越す。 */
-  if (number === 1 || monsterChanged || adventureCurrentHP[key] <= 0) {
-    const data = getMonsterData(selectedId);
-    if (!data) return;
-    adventureCurrentHP[key] = data.hp;
-    adventureBattleMonsterId[key] = selectedId;
+    selectedMonsterId =
+      Number(
+        caughtMonsters[0]
+      );
+
   }
 
-  /* 敵決定 */
-  if (number === 5) {
-    currentWildMonster = { ...config.boss, hp: config.boss.hp, maxHp: config.boss.hp };
+
+  currentBattleNumber =
+    number;
+
+
+  /*
+     モンスターが変わった場合は
+     新しいモンスターのHPを使用
+  */
+
+  const selectedId =
+    Number(
+      selectedMonsterId
+    );
+
+
+  const monsterChanged =
+    forestBattleMonsterId !==
+    selectedId;
+
+
+  /*
+     初戦または
+     モンスター変更時は満タン。
+
+     ②～⑤では前戦のHPを持ち越す。
+  */
+
+  if (
+    number === 1 ||
+    monsterChanged ||
+    forestCurrentHP <= 0
+  ) {
+
+    const data =
+      getMonsterData(
+        selectedId
+      );
+
+
+    if (!data) {
+      return;
+    }
+
+
+    forestCurrentHP =
+      data.hp;
+
+
+    forestBattleMonsterId =
+      selectedId;
+
   }
-  else {
-    const base = config.enemies[Math.floor(Math.random() * config.enemies.length)];
+
+
+  /*
+     敵決定
+  */
+
+  if (
+    number === 5
+  ) {
+
     currentWildMonster = {
-      ...base,
-      hp: base.hp + (number - 1) * 4,
-      maxHp: base.hp + (number - 1) * 4,
-      attack: base.attack + (number - 1)
+      ...forestBoss,
+      hp: forestBoss.hp
     };
+
   }
+
+  else {
+
+    const base =
+      forestEnemies[
+        Math.floor(
+          Math.random() *
+          forestEnemies.length
+        )
+      ];
+
+
+    currentWildMonster = {
+
+      ...base,
+
+      /*
+         バトルが進むほど
+         少しずつ強くする
+      */
+
+      hp:
+        base.hp +
+        (
+          number - 1
+        ) * 4,
+
+      attack:
+        base.attack +
+        (
+          number - 1
+        )
+
+    };
+
+  }
+
 
   setupBattle();
-  showScreen("battle-screen");
+
+
+  showScreen(
+    "battle-screen"
+  );
 }
 
 
@@ -2650,66 +3393,232 @@ function startAdventureBattle(key, battleNumber) {
 
 function setupBattle() {
 
-  const monster = monsters.find(item => item.id === Number(selectedMonsterId));
-  const data = getMonsterData(selectedMonsterId);
-  const config = getAdventureConfig(currentAdventureKey);
+  const monster =
+    monsters.find(
+      item =>
+        item.id ===
+        Number(
+          selectedMonsterId
+        )
+    );
 
-  if (!monster || !data || !currentWildMonster || !config) return;
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (
+    !monster ||
+    !data ||
+    !currentWildMonster
+  ) {
+
+    return;
+
+  }
+
 
   if (battleTimer) {
-    clearTimeout(battleTimer);
-    battleTimer = null;
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer =
+      null;
+
   }
 
-  battlePlayerMaxHP = data.hp;
-  battlePlayerHP = Math.min(adventureCurrentHP[currentAdventureKey], battlePlayerMaxHP);
-  battleEnemyMaxHP = currentWildMonster.maxHp || currentWildMonster.hp;
-  battleEnemyHP = currentWildMonster.hp;
-  battleCombo = 0;
-  battleAnswering = false;
 
-  const battleNumber = el("battle-number");
+  /*
+     味方HP
+
+     ★ここがHP持ち越しの核心。
+  */
+
+  battlePlayerMaxHP =
+    data.hp;
+
+
+  battlePlayerHP =
+    Math.min(
+      forestCurrentHP,
+      battlePlayerMaxHP
+    );
+
+
+  /*
+     敵HP
+  */
+
+  battleEnemyMaxHP =
+    currentWildMonster.hp;
+
+
+  battleEnemyHP =
+    currentWildMonster.hp;
+
+
+  battleCombo =
+    0;
+
+
+  battleAnswering =
+    false;
+
+
+  /*
+     ヘッダー
+  */
+
+  const battleNumber =
+    el("battle-number");
+
+
   if (battleNumber) {
-    battleNumber.textContent = currentBattleNumber === 5
-      ? `👹 ${config.name}・BOSS BATTLE`
-      : `⚔️ ${config.name}・BATTLE ${currentBattleNumber}`;
+
+    battleNumber.textContent =
+      currentBattleNumber === 5
+        ? "👹 BOSS BATTLE"
+        : `⚔️ BATTLE ${currentBattleNumber}`;
+
   }
 
-  const battleBack = el("battle-back-button");
-  if (battleBack) battleBack.textContent = `← ${config.name}へ戻る`;
 
-  const battleReturn = el("battle-return-forest");
-  if (battleReturn) battleReturn.textContent = `${config.icon} ${config.name}のマップへ`;
+  /*
+     敵
+  */
 
-  const enemyName = el("enemy-name");
-  const enemyLevel = el("enemy-level");
-  const enemyImage = el("enemy-image");
-  if (enemyName) enemyName.textContent = currentBattleNumber === 5 ? currentWildMonster.name : `野生の${currentWildMonster.name}`;
-  if (enemyLevel) enemyLevel.textContent = `Lv.${currentWildMonster.level}`;
+  const enemyName =
+    el("enemy-name");
+
+
+  const enemyLevel =
+    el("enemy-level");
+
+
+  const enemyImage =
+    el("enemy-image");
+
+
+  if (enemyName) {
+
+    enemyName.textContent =
+      currentBattleNumber === 5
+        ? currentWildMonster.name
+        : `野生の${currentWildMonster.name}`;
+
+  }
+
+
+  if (enemyLevel) {
+
+    enemyLevel.textContent =
+      `Lv.${currentWildMonster.level}`;
+
+  }
+
+
   if (enemyImage) {
-    if (currentWildMonster.image) {
-      enemyImage.innerHTML = `<img src="${currentWildMonster.image}" alt="${currentWildMonster.name}">`;
-    } else {
-      enemyImage.textContent = currentBattleNumber === 5 ? "👹" : (currentAdventureKey === "lake" ? "🌊" : "👾");
+
+    if (
+      currentWildMonster.image
+    ) {
+
+      enemyImage.innerHTML = `
+
+        <img
+          src="${currentWildMonster.image}"
+          alt="${currentWildMonster.name}"
+        >
+
+      `;
+
     }
+
+    else {
+
+      enemyImage.textContent =
+        currentBattleNumber === 5
+          ? "👹"
+          : "👾";
+
+    }
+
   }
 
-  const playerName = el("player-monster-name");
-  const playerLevel = el("player-monster-level");
-  const playerImage = el("player-monster-image");
-  if (playerName) playerName.textContent = monster.name;
-  if (playerLevel) playerLevel.textContent = `Lv.${data.level}`;
-  if (playerImage) playerImage.innerHTML = monsterVisual(monster, "battle-monster-image");
+
+  /*
+     味方
+  */
+
+  const playerName =
+    el("player-monster-name");
+
+
+  const playerLevel =
+    el("player-monster-level");
+
+
+  const playerImage =
+    el("player-monster-image");
+
+
+  if (playerName) {
+
+    playerName.textContent =
+      monster.name;
+
+  }
+
+
+  if (playerLevel) {
+
+    playerLevel.textContent =
+      `Lv.${data.level}`;
+
+  }
+
+
+  if (playerImage) {
+
+    playerImage.innerHTML =
+      monsterVisual(
+        monster,
+        "battle-monster-image"
+      );
+
+  }
+
 
   updateBattleHP();
-  battleMessage(currentBattleNumber === 5
-    ? `⚠️ ${currentWildMonster.name}が現れた！`
-    : `⚔️ ${config.name}・バトル${currentBattleNumber}！九九で攻撃しよう！`);
 
-  battleTimer = setTimeout(() => {
-    battleTimer = null;
-    createBattleQuestion();
-  }, 250);
+
+  battleMessage(
+    currentBattleNumber === 5
+      ? "⚠️ 森の守護者が現れた！"
+      : `⚔️ バトル${currentBattleNumber}！九九で攻撃しよう！`
+  );
+
+
+  /*
+     問題開始は0.25秒後
+  */
+
+  battleTimer =
+    setTimeout(
+      () => {
+
+        battleTimer =
+          null;
+
+        createBattleQuestion();
+
+      },
+      250
+    );
 }
 
 
@@ -2718,8 +3627,17 @@ function setupBattle() {
    ========================================================= */
 
 function battleMessage(text) {
-  const message = el("battle-message");
-  if (message) message.textContent = text;
+
+  const message =
+    el("battle-message");
+
+
+  if (message) {
+
+    message.textContent =
+      text;
+
+  }
 }
 
 
@@ -2728,58 +3646,240 @@ function battleMessage(text) {
    ========================================================= */
 
 function updateBattleHP() {
-  const enemyPercent = battleEnemyMaxHP > 0 ? Math.max(0, battleEnemyHP / battleEnemyMaxHP * 100) : 0;
-  const playerPercent = battlePlayerMaxHP > 0 ? Math.max(0, battlePlayerHP / battlePlayerMaxHP * 100) : 0;
-  const enemyFill = el("enemy-hp-fill");
-  const playerFill = el("player-hp-fill");
-  const enemyText = el("enemy-hp-text");
-  const playerText = el("player-hp-text");
-  if (enemyFill) enemyFill.style.width = `${enemyPercent}%`;
-  if (playerFill) playerFill.style.width = `${playerPercent}%`;
-  if (enemyText) enemyText.textContent = `${Math.max(0, battleEnemyHP)} / ${battleEnemyMaxHP}`;
-  if (playerText) playerText.textContent = `${Math.max(0, battlePlayerHP)} / ${battlePlayerMaxHP}`;
+
+  const enemyPercent =
+    battleEnemyMaxHP > 0
+      ? Math.max(
+          0,
+          battleEnemyHP /
+          battleEnemyMaxHP *
+          100
+        )
+      : 0;
+
+
+  const playerPercent =
+    battlePlayerMaxHP > 0
+      ? Math.max(
+          0,
+          battlePlayerHP /
+          battlePlayerMaxHP *
+          100
+        )
+      : 0;
+
+
+  const enemyFill =
+    el("enemy-hp-fill");
+
+
+  const playerFill =
+    el("player-hp-fill");
+
+
+  const enemyText =
+    el("enemy-hp-text");
+
+
+  const playerText =
+    el("player-hp-text");
+
+
+  if (enemyFill) {
+
+    enemyFill.style.width =
+      `${enemyPercent}%`;
+
+  }
+
+
+  if (playerFill) {
+
+    playerFill.style.width =
+      `${playerPercent}%`;
+
+  }
+
+
+  if (enemyText) {
+
+    enemyText.textContent =
+      `${Math.max(
+        0,
+        battleEnemyHP
+      )} / ${battleEnemyMaxHP}`;
+
+  }
+
+
+  if (playerText) {
+
+    playerText.textContent =
+      `${Math.max(
+        0,
+        battlePlayerHP
+      )} / ${battlePlayerMaxHP}`;
+
+  }
 }
 
 
 /* =========================================================
-   ステージ別・九九問題
+   ★★★ 森の九九問題 ★★★
    ========================================================= */
 
 function createBattleQuestion() {
-  if (battleEnemyHP <= 0 || battlePlayerHP <= 0) return;
 
-  const config = getAdventureConfig(currentAdventureKey);
-  if (!config) return;
+  /*
+     戦闘終了後は問題を出さない
+  */
 
-  battleAnswering = true;
+  if (
+    battleEnemyHP <= 0 ||
+    battlePlayerHP <= 0
+  ) {
 
-  const a = Math.floor(Math.random() * (config.questionMax - config.questionMin + 1)) + config.questionMin;
-  const b = Math.floor(Math.random() * 9) + 1;
-  battleAnswer = a * b;
+    return;
 
-  const question = el("battle-question");
-  if (question) question.textContent = `${a} × ${b} = ?`;
+  }
+
+
+  battleAnswering =
+    true;
+
+
+  /*
+     ★重要
+
+     はじまりの森は
+     1～3の段だけ。
+
+     モンスターの段は関係ない。
+  */
+
+  const a =
+    Math.floor(
+      Math.random() * 3
+    ) + 1;
+
+
+  const b =
+    Math.floor(
+      Math.random() * 9
+    ) + 1;
+
+
+  battleAnswer =
+    a * b;
+
+
+  const question =
+    el("battle-question");
+
+
+  if (question) {
+
+    question.textContent =
+      `${a} × ${b} = ?`;
+
+  }
+
 
   createBattleAnswers();
 }
 
+
+/* =========================================================
+   バトル選択肢
+   ========================================================= */
+
 function createBattleAnswers() {
-  const container = el("battle-answers");
-  if (!container) return;
-  container.innerHTML = "";
-  const choices = new Set([battleAnswer]);
-  while (choices.size < 4) {
-    const wrong = Math.max(1, battleAnswer + Math.floor(Math.random() * 11) - 5);
-    choices.add(wrong);
+
+  const container =
+    el("battle-answers");
+
+
+  if (!container) {
+    return;
   }
-  [...choices].sort(() => Math.random() - 0.5).forEach(value => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "battle-answer";
-    button.textContent = value;
-    button.addEventListener("click", () => checkBattleAnswer(value, button));
-    container.appendChild(button);
-  });
+
+
+  container.innerHTML =
+    "";
+
+
+  const choices =
+    new Set();
+
+
+  choices.add(
+    battleAnswer
+  );
+
+
+  while (
+    choices.size < 4
+  ) {
+
+    const wrong =
+      Math.max(
+        1,
+        battleAnswer +
+        Math.floor(
+          Math.random() * 11
+        ) - 5
+      );
+
+
+    choices.add(
+      wrong
+    );
+
+  }
+
+
+  [...choices]
+    .sort(
+      () =>
+        Math.random() - 0.5
+    )
+    .forEach(
+      value => {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "battle-answer";
+
+
+        button.textContent =
+          value;
+
+
+        button.addEventListener(
+          "click",
+          () =>
+            checkBattleAnswer(
+              value,
+              button
+            )
+        );
+
+
+        container.appendChild(
+          button
+        );
+
+      }
+    );
 }
 
 
@@ -2787,38 +3887,206 @@ function createBattleAnswers() {
    バトル回答
    ========================================================= */
 
-function checkBattleAnswer(answer, button) {
-  if (!battleAnswering) return;
-  battleAnswering = false;
-  document.querySelectorAll(".battle-answer").forEach(item => item.disabled = true);
+function checkBattleAnswer(
+  answer,
+  button
+) {
 
-  const data = getMonsterData(selectedMonsterId);
-  if (!data) return;
+  if (
+    !battleAnswering
+  ) {
+    return;
+  }
 
-  if (Number(answer) === Number(battleAnswer)) {
-    button.classList.add("correct");
+
+  battleAnswering =
+    false;
+
+
+  document
+    .querySelectorAll(
+      ".battle-answer"
+    )
+    .forEach(
+      item =>
+        item.disabled = true
+    );
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!data) {
+    return;
+  }
+
+
+  /*
+     正解
+  */
+
+  if (
+    Number(answer) ===
+    Number(battleAnswer)
+  ) {
+
+    button.classList.add(
+      "correct"
+    );
+
+
     battleCombo++;
-    let damage = data.attack;
-    if (battleCombo >= 3) damage += 5;
-    battleEnemyHP = Math.max(0, battleEnemyHP - damage);
-    battleMessage(battleCombo >= 3 ? `🔥 ${battleCombo}コンボ！ ${damage}ダメージ！` : `💥 ${damage}ダメージ！`);
-    updateBattleHP();
 
-    if (battleEnemyHP <= 0) {
-      battleTimer = setTimeout(() => { battleTimer = null; battleWin(); }, 500);
-      return;
+
+    let damage =
+      data.attack;
+
+
+    /*
+       3コンボ以上なら
+       ボーナス攻撃
+    */
+
+    if (
+      battleCombo >= 3
+    ) {
+
+      damage += 5;
+
     }
 
-    battleTimer = setTimeout(() => { battleTimer = null; enemyAttack(); }, 400);
+
+    battleEnemyHP =
+      Math.max(
+        0,
+        battleEnemyHP -
+        damage
+      );
+
+
+    battleMessage(
+      battleCombo >= 3
+        ? `🔥 ${battleCombo}コンボ！ ${damage}ダメージ！`
+        : `💥 ${damage}ダメージ！`
+    );
+
+
+    updateBattleHP();
+
+
+    /*
+       敵撃破
+    */
+
+    if (
+      battleEnemyHP <= 0
+    ) {
+
+      battleTimer =
+        setTimeout(
+          () => {
+
+            battleTimer =
+              null;
+
+            battleWin();
+
+          },
+          500
+        );
+
+
+      return;
+
+    }
+
+
+    /*
+       敵の反撃
+    */
+
+    battleTimer =
+      setTimeout(
+        () => {
+
+          battleTimer =
+            null;
+
+          enemyAttack();
+
+        },
+        400
+      );
+
   }
+
+
+  /*
+     不正解
+  */
+
   else {
-    button.classList.add("wrong");
-    battleCombo = 0;
-    document.querySelectorAll(".battle-answer").forEach(item => {
-      if (Number(item.textContent) === Number(battleAnswer)) item.classList.add("correct");
-    });
-    battleMessage(`💡 正解は ${battleAnswer}！`);
-    battleTimer = setTimeout(() => { battleTimer = null; enemyAttack(); }, 450);
+
+    button.classList.add(
+      "wrong"
+    );
+
+
+    battleCombo =
+      0;
+
+
+    /*
+       正解を光らせる
+    */
+
+    document
+      .querySelectorAll(
+        ".battle-answer"
+      )
+      .forEach(
+        item => {
+
+          if (
+            Number(
+              item.textContent
+            ) ===
+            Number(
+              battleAnswer
+            )
+          ) {
+
+            item.classList.add(
+              "correct"
+            );
+
+          }
+
+        }
+      );
+
+
+    battleMessage(
+      `💡 正解は ${battleAnswer}！`
+    );
+
+
+    battleTimer =
+      setTimeout(
+        () => {
+
+          battleTimer =
+            null;
+
+          enemyAttack();
+
+        },
+        450
+      );
+
   }
 }
 
@@ -2828,24 +4096,114 @@ function checkBattleAnswer(answer, button) {
    ========================================================= */
 
 function enemyAttack() {
-  if (battleEnemyHP <= 0 || battlePlayerHP <= 0) return;
-  const data = getMonsterData(selectedMonsterId);
-  if (!data) return;
 
-  const damage = Math.max(1, currentWildMonster.attack - Math.floor(data.defense / 5));
-  battlePlayerHP = Math.max(0, battlePlayerHP - damage);
-  adventureCurrentHP[currentAdventureKey] = battlePlayerHP;
-  syncLegacyForestState();
-  battleMessage(`👹 ${currentWildMonster.name}の攻撃！ ${damage}ダメージ！`);
-  updateBattleHP();
-  saveGame();
+  if (
+    battleEnemyHP <= 0 ||
+    battlePlayerHP <= 0
+  ) {
 
-  if (battlePlayerHP <= 0) {
-    battleTimer = setTimeout(() => { battleTimer = null; battleLose(); }, 500);
+    return;
+
+  }
+
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!data) {
     return;
   }
 
-  battleTimer = setTimeout(() => { battleTimer = null; createBattleQuestion(); }, 300);
+
+  const damage =
+    Math.max(
+      1,
+      currentWildMonster.attack -
+      Math.floor(
+        data.defense / 5
+      )
+    );
+
+
+  battlePlayerHP =
+    Math.max(
+      0,
+      battlePlayerHP -
+      damage
+    );
+
+
+  /*
+     ★HP持ち越し
+  */
+
+  forestCurrentHP =
+    battlePlayerHP;
+
+
+  battleMessage(
+    `👹 ${
+      currentWildMonster.name
+    }の攻撃！ ${damage}ダメージ！`
+  );
+
+
+  updateBattleHP();
+
+
+  /*
+     戦闘中HPを保存
+  */
+
+  saveGame();
+
+
+  /*
+     味方が倒れた
+  */
+
+  if (
+    battlePlayerHP <= 0
+  ) {
+
+    battleTimer =
+      setTimeout(
+        () => {
+
+          battleTimer =
+            null;
+
+          battleLose();
+
+        },
+        500
+      );
+
+
+    return;
+
+  }
+
+
+  /*
+     次の問題
+  */
+
+  battleTimer =
+    setTimeout(
+      () => {
+
+        battleTimer =
+          null;
+
+        createBattleQuestion();
+
+      },
+      300
+    );
 }
 
 
@@ -2854,44 +4212,208 @@ function enemyAttack() {
    ========================================================= */
 
 function battleWin() {
-  const data = getMonsterData(selectedMonsterId);
-  const config = getAdventureConfig(currentAdventureKey);
-  if (!data || !config) return;
+
+  const data =
+    getMonsterData(
+      selectedMonsterId
+    );
+
+
+  if (!data) {
+    return;
+  }
+
 
   battleWins++;
-  battleExpReward = currentBattleNumber === 5 ? 100 : 20 + currentBattleNumber * 5;
-  const oldLevel = data.level;
-  const leveledUp = gainExp(selectedMonsterId, battleExpReward);
 
-  adventureCurrentHP[currentAdventureKey] = battlePlayerHP;
-  setAdventureProgress(currentAdventureKey, Math.max(getAdventureProgress(currentAdventureKey), currentBattleNumber));
 
-  const isBoss = currentBattleNumber === 5;
-  const icon = el("battle-result-icon");
-  const title = el("battle-result-title");
-  const message = el("battle-result-message");
-  const exp = el("battle-exp");
-  const coins = el("battle-coins");
-  const next = el("battle-next-button");
+  /*
+     報酬
+  */
 
-  if (icon) icon.textContent = isBoss ? "🏆" : "⚔️";
-  if (title) title.textContent = isBoss ? `${config.icon} ${config.name}クリア！` : "🎉 バトル勝利！";
-  if (message) {
-    message.textContent = isBoss
-      ? `${config.boss.name}を倒した！`
-      : `バトル${currentBattleNumber}クリア！\n残りHP ${battlePlayerHP} / ${battlePlayerMaxHP}`;
+  battleExpReward =
+    currentBattleNumber === 5
+      ? 100
+      : 20 +
+        currentBattleNumber *
+        5;
+
+
+  const oldLevel =
+    data.level;
+
+
+  const leveledUp =
+    gainExp(
+      selectedMonsterId,
+      battleExpReward
+    );
+
+
+  /*
+     ★現在HPを保存
+  */
+
+  forestCurrentHP =
+    battlePlayerHP;
+
+
+  /*
+     ★森の進行を更新
+  */
+
+  if (
+    currentBattleNumber >
+    forestProgress
+  ) {
+
+    forestProgress =
+      currentBattleNumber;
+
   }
-  if (exp) exp.textContent = `+${battleExpReward}`;
-  if (coins) coins.textContent = `+${currentBattleNumber * 5}`;
-  if (next) next.textContent = isBoss ? "🗺️ 冒険マップへ" : `⚔️ バトル${currentBattleNumber + 1}へ`;
+
+
+  /*
+     ボス撃破
+  */
+
+  if (
+    currentBattleNumber === 5
+  ) {
+
+    adventureUnlocked =
+      true;
+
+  }
+
+
+  /*
+     結果画面
+  */
+
+  const icon =
+    el("battle-result-icon");
+
+
+  const title =
+    el("battle-result-title");
+
+
+  const message =
+    el("battle-result-message");
+
+
+  const exp =
+    el("battle-exp");
+
+
+  const coins =
+    el("battle-coins");
+
+
+  const next =
+    el("battle-next-button");
+
+
+  if (icon) {
+
+    icon.textContent =
+      currentBattleNumber === 5
+        ? "🏆"
+        : "⚔️";
+
+  }
+
+
+  if (title) {
+
+    title.textContent =
+      currentBattleNumber === 5
+        ? "🌳 はじまりの森クリア！"
+        : "🎉 バトル勝利！";
+
+  }
+
+
+  if (message) {
+
+    if (
+      currentBattleNumber === 5
+    ) {
+
+      message.textContent =
+        "森の守護者を倒した！";
+
+    }
+
+    else {
+
+      message.textContent =
+        `バトル${currentBattleNumber}クリア！\n` +
+        `残りHP ${battlePlayerHP} / ${battlePlayerMaxHP}`;
+
+    }
+
+  }
+
+
+  if (exp) {
+
+    exp.textContent =
+      `+${battleExpReward}`;
+
+  }
+
+
+  if (coins) {
+
+    coins.textContent =
+      `+${currentBattleNumber * 5}`;
+
+  }
+
+
+  if (next) {
+
+    next.textContent =
+      currentBattleNumber === 5
+        ? "🗺️ 冒険マップへ"
+        : `⚔️ バトル${currentBattleNumber + 1}へ`;
+
+  }
+
 
   saveGame();
-  updateAdventureMap(currentAdventureKey);
+
+
+  updateForestMap();
+
   updateWorldStats();
-  showScreen("battle-result-screen");
+
+
+  showScreen(
+    "battle-result-screen"
+  );
+
+
+  /*
+     レベルアップ
+  */
 
   if (leveledUp) {
-    setTimeout(() => showLevelUp(selectedMonsterId, oldLevel), 700);
+
+    setTimeout(
+      () => {
+
+        showLevelUp(
+          selectedMonsterId,
+          oldLevel
+        );
+
+      },
+      700
+    );
+
   }
 }
 
@@ -2901,26 +4423,102 @@ function battleWin() {
    ========================================================= */
 
 function battleLose() {
-  const config = getAdventureConfig(currentAdventureKey);
-  const icon = el("battle-result-icon");
-  const title = el("battle-result-title");
-  const message = el("battle-result-message");
-  const exp = el("battle-exp");
-  const coins = el("battle-coins");
-  const next = el("battle-next-button");
 
-  if (icon) icon.textContent = "💦";
-  if (title) title.textContent = "今回は負けてしまった…";
-  if (message) message.textContent = `${config ? config.name : "冒険"}をやり直そう！`;
-  if (exp) exp.textContent = "+0";
-  if (coins) coins.textContent = "+0";
-  if (next) next.textContent = "🔄 最初から挑戦";
+  const icon =
+    el("battle-result-icon");
 
-  adventureCurrentHP[currentAdventureKey] = 0;
-  adventureBattleMonsterId[currentAdventureKey] = null;
-  syncLegacyForestState();
+
+  const title =
+    el("battle-result-title");
+
+
+  const message =
+    el("battle-result-message");
+
+
+  const exp =
+    el("battle-exp");
+
+
+  const coins =
+    el("battle-coins");
+
+
+  const next =
+    el("battle-next-button");
+
+
+  if (icon) {
+
+    icon.textContent =
+      "💦";
+
+  }
+
+
+  if (title) {
+
+    title.textContent =
+      "今回は負けてしまった…";
+
+  }
+
+
+  if (message) {
+
+    message.textContent =
+      "もっと育成して、もう一度挑戦しよう！";
+
+  }
+
+
+  if (exp) {
+
+    exp.textContent =
+      "+0";
+
+  }
+
+
+  if (coins) {
+
+    coins.textContent =
+      "+0";
+
+  }
+
+
+  if (next) {
+
+    next.textContent =
+      "🔄 最初から挑戦";
+
+  }
+
+
+  /*
+     敗北したら
+     次回は①から満タン。
+  */
+
+  forestCurrentHP =
+    0;
+
+
+  forestBattleMonsterId =
+    null;
+
+  lakeProgress = 0;
+  lakeCurrentHP = 0;
+  lakeBattleMonsterId = null;
+
+
   saveGame();
-  showScreen("battle-result-screen");
+
+
+  showScreen(
+    "battle-result-screen"
+  );
 }
 
 
@@ -2929,54 +4527,169 @@ function battleLose() {
    ========================================================= */
 
 function nextBattle() {
-  const key = currentAdventureKey;
 
-  if (battlePlayerHP <= 0) {
-    startAdventureBattle(key, 1);
+  /*
+     敗北
+  */
+
+  if (
+    battlePlayerHP <= 0
+  ) {
+
+    startForestBattle(
+      1
+    );
+
     return;
+
   }
 
-  if (currentBattleNumber === 5) {
-    adventureCurrentHP[key] = 0;
-    adventureBattleMonsterId[key] = null;
-    syncLegacyForestState();
+
+  /*
+     ボス撃破
+  */
+
+  if (
+    currentBattleNumber === 5
+  ) {
+
+    /*
+       今回の冒険終了。
+
+       次回は①から
+       満タンで再挑戦。
+    */
+
+    forestCurrentHP =
+      0;
+
+
+    forestBattleMonsterId =
+      null;
+
+
     saveGame();
+
+
     openWorld();
+
+
     return;
+
   }
 
-  const next = currentBattleNumber + 1;
-  if (getAdventureProgress(key) >= next - 1) {
-    startAdventureBattle(key, next);
+
+  /*
+     次のバトル
+  */
+
+  const next =
+    currentBattleNumber + 1;
+
+
+  if (
+    forestProgress >=
+    next - 1
+  ) {
+
+    startForestBattle(
+      next
+    );
+
   }
+
 }
 
 
 /* =========================================================
-   バトルからステージマップへ
+   森へ戻る
    ========================================================= */
 
-function battleReturnAdventure() {
-  if (battleTimer) {
-    clearTimeout(battleTimer);
-    battleTimer = null;
-  }
-  battleAnswering = false;
+function battleReturnForest() {
 
-  if (battlePlayerMaxHP > 0) {
-    adventureCurrentHP[currentAdventureKey] = battlePlayerHP;
+  if (battleTimer) {
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer =
+      null;
+
   }
-  syncLegacyForestState();
+
+
+  battleAnswering =
+    false;
+
+
+  /*
+     HPを保存
+  */
+
+  if (
+    battlePlayerMaxHP > 0
+  ) {
+
+    forestCurrentHP =
+      battlePlayerHP;
+
+  }
+
+
   saveGame();
-  openAdventureStage(currentAdventureKey);
+
+
+  updateForestMap();
+
+
+  showScreen(
+    "forest-screen"
+  );
 }
+
+
+/* =========================================================
+   バトル画面から森へ
+   ========================================================= */
 
 function battleBackForest() {
-  battleReturnAdventure();
-}
 
-function battleReturnForest() {
-  battleReturnAdventure();
+  if (battleTimer) {
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer =
+      null;
+
+  }
+
+
+  battleAnswering =
+    false;
+
+
+  if (
+    battlePlayerMaxHP > 0
+  ) {
+
+    forestCurrentHP =
+      battlePlayerHP;
+
+  }
+
+
+  saveGame();
+
+
+  updateForestMap();
+
+
+  showScreen(
+    "forest-screen"
+  );
 }
 
 
@@ -2986,74 +4699,373 @@ function battleReturnForest() {
 
 function resetGame() {
 
-  const answer = confirm(
-    "⚠️ セーブデータをすべて消去します。\n\n" +
-    "・九九のクリア状況\n" +
-    "・星評価\n" +
-    "・仲間モンスター\n" +
-    "・育成データ\n" +
-    "・冒険記録\n" +
-    "・はじまりの森の進行\n" +
-    "・九九の湖の進行\n\n" +
-    "すべて最初からになります。\n\n" +
-    "本当に消去しますか？"
-  );
+  const answer =
+    confirm(
+      "⚠️ セーブデータをすべて消去します。\n\n" +
+      "・九九のクリア状況\n" +
+      "・星評価\n" +
+      "・仲間モンスター\n" +
+      "・育成データ\n" +
+      "・冒険記録\n" +
+      "・はじまりの森の進行\n\n" +
+      "すべて最初からになります。\n\n" +
+      "本当に消去しますか？"
+    );
 
-  if (!answer) return;
+
+  if (!answer) {
+    return;
+  }
+
 
   try {
-    localStorage.removeItem(SAVE_KEY);
+
+    localStorage.removeItem(
+      SAVE_KEY
+    );
+
   }
+
   catch (error) {
-    console.error(error);
+
+    console.error(
+      error
+    );
+
   }
+
+
+  /*
+     ゲームデータ初期化
+  */
 
   clearedStages = [];
   stageStars = {};
   caughtMonsters = [];
   monsterData = {};
-  adventureUnlocked = false;
-  battleWins = 0;
 
-  currentStage = 1;
-  questionNumber = 0;
-  correctCount = 0;
-  combo = 0;
-  maxCombo = 0;
-  currentAnswer = 0;
-  answering = false;
-  selectedMonsterId = null;
-  levelupMonsterId = null;
+  adventureUnlocked =
+    false;
 
-  adventureProgress = { forest: 0, lake: 0 };
-  adventureCurrentHP = { forest: 0, lake: 0 };
-  adventureBattleMonsterId = { forest: null, lake: null };
-  currentAdventureKey = "forest";
+  battleWins =
+    0;
 
-  forestProgress = 0;
-  forestCurrentHP = 0;
-  forestBattleMonsterId = null;
 
-  currentBattleNumber = 0;
-  currentWildMonster = null;
-  battlePlayerHP = 0;
-  battlePlayerMaxHP = 0;
-  battleEnemyHP = 0;
-  battleEnemyMaxHP = 0;
-  battleAnswer = 0;
-  battleAnswering = false;
-  battleCombo = 0;
+  /*
+     修行
+  */
 
-  if (questionTimer) { clearTimeout(questionTimer); questionTimer = null; }
-  if (battleTimer) { clearTimeout(battleTimer); battleTimer = null; }
+  currentStage =
+    1;
+
+  questionNumber =
+    0;
+
+  correctCount =
+    0;
+
+  combo =
+    0;
+
+  maxCombo =
+    0;
+
+  currentAnswer =
+    0;
+
+  answering =
+    false;
+
+
+  /*
+     モンスター
+  */
+
+  selectedMonsterId =
+    null;
+
+  levelupMonsterId =
+    null;
+
+
+  /*
+     森
+  */
+
+  forestProgress =
+    0;
+
+  forestCurrentHP =
+    0;
+
+  forestBattleMonsterId =
+    null;
+
+
+  /*
+     バトル
+  */
+
+  currentBattleNumber =
+    0;
+
+  currentWildMonster =
+    null;
+
+  battlePlayerHP =
+    0;
+
+  battlePlayerMaxHP =
+    0;
+
+  battleEnemyHP =
+    0;
+
+  battleEnemyMaxHP =
+    0;
+
+  battleAnswer =
+    0;
+
+  battleAnswering =
+    false;
+
+  battleCombo =
+    0;
+
+
+  /*
+     タイマー停止
+  */
+
+  if (questionTimer) {
+
+    clearTimeout(
+      questionTimer
+    );
+
+    questionTimer =
+      null;
+
+  }
+
+
+  if (battleTimer) {
+
+    clearTimeout(
+      battleTimer
+    );
+
+    battleTimer =
+      null;
+
+  }
+
 
   createStageList();
-  updateAdventureMap("forest");
-  updateAdventureMap("lake");
+
+  updateForestMap();
+
   updateWorldStats();
 
-  alert("✨ セーブデータをリセットしました！\n\n1の段から新しい冒険を始めよう！");
-  showScreen("training-screen");
+
+  alert(
+    "✨ セーブデータをリセットしました！\n\n" +
+    "1の段から新しい冒険を始めよう！"
+  );
+
+
+  showScreen(
+    "training-screen"
+  );
+}
+
+
+
+/* =========================================================
+   九九の湖
+   ========================================================= */
+
+function openLake() {
+  if (!isLakeUnlocked()) {
+    alert("九九の湖は、はじまりの森をクリアすると解放されます！");
+    return;
+  }
+
+  if (caughtMonsters.length === 0) {
+    alert("冒険には仲間が必要です！\n\nまず修行してモンスターを仲間にしよう！");
+    return;
+  }
+
+  if (!selectedMonsterId || !caughtMonsters.includes(Number(selectedMonsterId))) {
+    selectedMonsterId = Number(caughtMonsters[0]);
+  }
+
+  updateLakeMap();
+  showScreen("lake-screen");
+}
+
+function updateLakeMap() {
+  const nodes = document.querySelectorAll(
+    "#lake-screen .battle-node, #lake-screen .boss-node"
+  );
+
+  nodes.forEach(node => {
+    const number = Number(node.dataset.battle);
+    const unlocked = number === 1 || lakeProgress >= number - 1;
+    const cleared = lakeProgress >= number;
+
+    node.disabled = !unlocked;
+    node.classList.toggle("locked-node", !unlocked);
+    node.classList.toggle("cleared-node", cleared);
+
+    const icon = node.querySelector(".node-icon");
+    if (!icon) return;
+
+    if (cleared) icon.textContent = "⭐";
+    else if (number === 5) icon.textContent = unlocked ? "👑" : "🔒";
+    else icon.textContent = unlocked ? "⚔️" : "🔒";
+  });
+
+  const fill = el("lake-progress-fill");
+  if (fill) fill.style.width = `${lakeProgress / 5 * 100}%`;
+
+  const progress = el("lake-progress-text");
+  if (progress) progress.textContent = `${lakeProgress} / 5 バトルクリア`;
+}
+
+function startLakeBattle(battleNumber) {
+  const number = Number(battleNumber);
+  if (number < 1 || number > 5) return;
+  if (number > 1 && lakeProgress < number - 1) return;
+
+  if (!selectedMonsterId || !caughtMonsters.includes(Number(selectedMonsterId))) {
+    selectedMonsterId = Number(caughtMonsters[0]);
+  }
+
+  const data = getMonsterData(selectedMonsterId);
+  if (!data) return;
+
+  currentAdventureStage = "lake";
+  currentBattleNumber = number;
+  currentWildMonster = number === 5
+    ? { ...adventureStages.lake.boss }
+    : { ...adventureStages.lake.enemies[Math.floor(Math.random() * adventureStages.lake.enemies.length)] };
+
+  battlePlayerMaxHP = data.baseHP || 1;
+  battlePlayerHP = lakeCurrentHP > 0 ? Math.min(lakeCurrentHP, battlePlayerMaxHP) : battlePlayerMaxHP;
+  battleEnemyMaxHP = currentWildMonster.hp;
+  battleEnemyHP = battleEnemyMaxHP;
+  battleAnswering = true;
+  battleCombo = 0;
+  lakeBattleMonsterId = Number(selectedMonsterId);
+
+  saveAdventureStage("lake");
+  showScreen("battle-screen");
+  createLakeBattleQuestion();
+}
+
+function createLakeBattleQuestion() {
+  const q = getAdventureQuestion("lake");
+  battleAnswer = q.answer;
+
+  const question = el("battle-question");
+  if (question) question.textContent = `${q.multiplier} × ${q.factor} = ?`;
+
+  const choices = new Set([battleAnswer]);
+  while (choices.size < 4) {
+    const wrong = Math.max(1, battleAnswer + Math.floor(Math.random() * 13) - 6);
+    choices.add(wrong);
+  }
+
+  const container = el("battle-answers");
+  if (!container) return;
+  container.innerHTML = "";
+
+  [...choices].sort(() => Math.random() - 0.5).forEach(value => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "answer";
+    button.textContent = value;
+    button.addEventListener("click", () => answerLakeBattle(value, button));
+    container.appendChild(button);
+  });
+
+  updateLakeBattleUI();
+}
+
+function updateLakeBattleUI() {
+  const monster = getMonsterData(selectedMonsterId);
+  const playerHP = el("battle-player-hp");
+  const enemyHP = el("battle-enemy-hp");
+
+  if (playerHP && monster) playerHP.textContent = `${Math.max(0, battlePlayerHP)} / ${battlePlayerMaxHP}`;
+  if (enemyHP) enemyHP.textContent = `${Math.max(0, battleEnemyHP)} / ${battleEnemyMaxHP}`;
+
+  const playerFill = el("battle-player-hp-fill");
+  const enemyFill = el("battle-enemy-hp-fill");
+  if (playerFill) playerFill.style.width = `${Math.max(0, battlePlayerHP) / battlePlayerMaxHP * 100}%`;
+  if (enemyFill) enemyFill.style.width = `${Math.max(0, battleEnemyHP) / battleEnemyMaxHP * 100}%`;
+}
+
+function answerLakeBattle(value, button) {
+  if (!battleAnswering) return;
+  battleAnswering = false;
+
+  if (Number(value) === Number(battleAnswer)) {
+    battleEnemyHP = Math.max(0, battleEnemyHP - 10);
+    battleCombo++;
+    if (button) button.classList.add("correct");
+
+    if (battleEnemyHP <= 0) {
+      finishLakeBattle();
+      return;
+    }
+  } else {
+    battleCombo = 0;
+    battlePlayerHP = Math.max(0, battlePlayerHP - currentWildMonster.attack);
+    if (button) button.classList.add("wrong");
+
+    if (battlePlayerHP <= 0) {
+      failLakeBattle();
+      return;
+    }
+  }
+
+  updateLakeBattleUI();
+  setTimeout(() => {
+    battleAnswering = true;
+    createLakeBattleQuestion();
+  }, 180);
+}
+
+function finishLakeBattle() {
+  lakeCurrentHP = battlePlayerHP;
+  lakeBattleMonsterId = Number(selectedMonsterId);
+  lakeProgress = Math.max(lakeProgress, currentBattleNumber);
+  saveAdventureStage("lake");
+  saveGame();
+
+  if (currentBattleNumber >= 5) {
+    updateLakeMap();
+    showScreen("battle-result-screen");
+    const title = el("battle-result-title");
+    if (title) title.textContent = "🎉 湖底の主を撃破！";
+    const message = el("battle-result-message");
+    if (message) message.textContent = "九九の湖を制覇した！";
+  } else {
+    updateLakeMap();
+    showScreen("lake-screen");
+  }
+}
+
+function failLakeBattle() {
+  lakeCurrentHP = 0;
+  lakeBattleMonsterId = null;
+  saveAdventureStage("lake");
+  saveGame();
+  alert("力尽きてしまった……。\n九九の湖の最初から再挑戦しよう！");
+  openLake();
 }
 
 
@@ -3061,92 +5073,298 @@ function resetGame() {
    ボタン接続
    ========================================================= */
 
+
 /* タイトル → 修行 */
-el("start-button")?.addEventListener("click", () => {
-  createStageList();
-  showScreen("training-screen");
-});
+
+el("start-button")?.addEventListener(
+  "click",
+  () => {
+
+    createStageList();
+
+    showScreen(
+      "training-screen"
+    );
+
+  }
+);
+
 
 /* 修行クイズ → 修行道場 */
-el("back-training")?.addEventListener("click", () => {
-  createStageList();
-  showScreen("training-screen");
-});
+
+el("back-training")?.addEventListener(
+  "click",
+  () => {
+
+    createStageList();
+
+    showScreen(
+      "training-screen"
+    );
+
+  }
+);
+
 
 /* 修行結果 → 次 */
-el("next-stage")?.addEventListener("click", () => {
-  if (currentStage === 9) showScreen("adventure-screen");
-  else startTraining(currentStage + 1);
-});
+
+el("next-stage")?.addEventListener(
+  "click",
+  () => {
+
+    if (
+      currentStage === 9
+    ) {
+
+      showScreen(
+        "adventure-screen"
+      );
+
+    }
+
+    else {
+
+      startTraining(
+        currentStage + 1
+      );
+
+    }
+
+  }
+);
+
 
 /* 修行結果 → 再挑戦 */
-el("retry-stage")?.addEventListener("click", () => startTraining(currentStage));
+
+el("retry-stage")?.addEventListener(
+  "click",
+  () => {
+
+    startTraining(
+      currentStage
+    );
+
+  }
+);
+
 
 /* 修行結果 → 図鑑 */
-el("monster-book-button")?.addEventListener("click", () => openBook("result-screen"));
-el("result-book")?.addEventListener("click", () => openBook("result-screen"));
+
+el("monster-book-button")?.addEventListener(
+  "click",
+  () => {
+
+    openBook(
+      "result-screen"
+    );
+
+  }
+);
+
 
 /* 冒険解禁画面 → ワールド */
-el("adventure-button")?.addEventListener("click", openWorld);
+
+el("adventure-button")?.addEventListener(
+  "click",
+  openWorld
+);
+
 
 /* ワールド → 戻る */
-el("world-back-button")?.addEventListener("click", () => showScreen("training-screen"));
 
-/* ワールド → 森 / 湖 */
-el("forest-area")?.addEventListener("click", openForest);
-el("lake-area")?.addEventListener("click", openLake);
+el("world-back-button")?.addEventListener(
+  "click",
+  () => {
 
-/* 森・湖 → ワールド */
-el("forest-back-button")?.addEventListener("click", openWorld);
-el("lake-back-button")?.addEventListener("click", openWorld);
+    showScreen(
+      "training-screen"
+    );
 
-/* 森・湖のバトルノード */
-document.querySelectorAll("#forest-screen .battle-node, #forest-screen .boss-node, #lake-screen .battle-node, #lake-screen .boss-node").forEach(node => {
-  node.addEventListener("click", () => {
-    const number = Number(node.dataset.battle);
-    startAdventureBattle(currentAdventureKey, number);
+  }
+);
+
+
+/* ワールド → 森 */
+
+el("forest-area")?.addEventListener(
+  "click",
+  openForest
+);
+
+/* ワールド → 湖 */
+el("lake-area")?.addEventListener(
+  "click",
+  openLake
+);
+
+/* 湖のバトルノード */
+document
+  .querySelectorAll(
+    "#lake-screen .battle-node, #lake-screen .boss-node"
+  )
+  .forEach(node => {
+    node.addEventListener("click", () => {
+      startLakeBattle(Number(node.dataset.battle));
+    });
   });
-});
 
-/* バトル → 冒険ステージ */
-el("battle-back-button")?.addEventListener("click", battleBackForest);
+/* 湖 → ワールド */
+el("lake-back-button")?.addEventListener(
+  "click",
+  openWorld
+);
+
+
+/* 森 → ワールド */
+
+el("forest-back-button")?.addEventListener(
+  "click",
+  openWorld
+);
+
+
+/* 森のバトルノード */
+
+document
+  .querySelectorAll(
+    "#forest-screen .battle-node, " +
+    "#forest-screen .boss-node"
+  )
+  .forEach(
+    node => {
+
+      node.addEventListener(
+        "click",
+        () => {
+
+          const number =
+            Number(
+              node.dataset.battle
+            );
+
+
+          startForestBattle(
+            number
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* バトル → 森 */
+
+el("battle-back-button")?.addEventListener(
+  "click",
+  battleBackForest
+);
+
 
 /* バトル結果 → 次 */
-el("battle-next-button")?.addEventListener("click", nextBattle);
 
-/* バトル結果 → 冒険ステージ */
-el("battle-return-forest")?.addEventListener("click", battleReturnForest);
+el("battle-next-button")?.addEventListener(
+  "click",
+  nextBattle
+);
+
+
+/* バトル結果 → 森 */
+
+el("battle-return-forest")?.addEventListener(
+  "click",
+  battleReturnForest
+);
+
 
 /* 育成 → 開く */
-el("monster-button")?.addEventListener("click", openMonsterScreen);
+
+el("monster-button")?.addEventListener(
+  "click",
+  openMonsterScreen
+);
+
 
 /* 育成 → 冒険 */
-el("back-world")?.addEventListener("click", openWorld);
+
+el("back-world")?.addEventListener(
+  "click",
+  openWorld
+);
+
 
 /* レベルアップ → 育成 */
-el("levelup-button")?.addEventListener("click", () => {
-  renderMonsterParty();
-  renderMonsterDetail();
-  showScreen("training-monster-screen");
-});
+
+el("levelup-button")?.addEventListener(
+  "click",
+  () => {
+
+    renderMonsterParty();
+
+    renderMonsterDetail();
+
+    showScreen(
+      "training-monster-screen"
+    );
+
+  }
+);
+
 
 /* 図鑑 → 戻る */
-el("book-back")?.addEventListener("click", () => showScreen(returnScreen));
+
+el("book-back")?.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      returnScreen
+    );
+
+  }
+);
+
 
 /* リセット */
-el("reset-data")?.addEventListener("click", resetGame);
+
+el("reset-data")?.addEventListener(
+  "click",
+  resetGame
+);
+
 
 /* 下部メニュー → 修行 */
-el("training-button")?.addEventListener("click", () => {
-  createStageList();
-  showScreen("training-screen");
-});
+
+el("training-button")?.addEventListener(
+  "click",
+  () => {
+
+    createStageList();
+
+    showScreen(
+      "training-screen"
+    );
+
+  }
+);
+
 
 /* 下部メニュー → 冒険 */
-el("world-button")?.addEventListener("click", openWorld);
+
+el("world-button")?.addEventListener(
+  "click",
+  openWorld
+);
+
 
 /* 下部メニュー → 育成 */
-el("monster-button")?.addEventListener("click", openMonsterScreen);
+
+el("monster-button")?.addEventListener(
+  "click",
+  openMonsterScreen
+);
+
 
 /* =========================================================
    ページ終了時セーブ
@@ -3170,8 +5388,7 @@ loadGame();
 
 createStageList();
 
-updateAdventureMap("forest");
-updateAdventureMap("lake");
+updateForestMap();
 
 updateWorldStats();
 
@@ -3218,15 +5435,11 @@ console.log(
 );
 
 console.log(
-  "🌊 九九の湖 ONLINE"
-);
-
-console.log(
   "⚔️ 5連戦バトル ONLINE"
 );
 
 console.log(
-  "🧮 森：1～3の段 / 湖：3～5の段"
+  "🧮 森の出題範囲：1～3の段"
 );
 
 console.log(
@@ -3329,3 +5542,11 @@ async function showLastUpdate() {
 */
 
 showLastUpdate();
+
+
+/* =========================================================
+   起動時の安全処理
+   ========================================================= */
+window.addEventListener("error", event => {
+  console.error("9×9モンスターズ:", event.error || event.message);
+});
