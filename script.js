@@ -2054,10 +2054,6 @@ function renderTrainingBattle() {
   detail.className =
     "monster-detail training-mode";
 
-detail.classList.add("training-mode");
-   
-     detail.classList.remove("training-mode");
-
   const monster =
     monsters.find(
       item =>
