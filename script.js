@@ -2176,11 +2176,16 @@ function renderTrainingBattle() {
   }
 
 
-  createTrainingQuestion();
+ createTrainingQuestion();
 
-window.scrollTo({
-  top: 0,
-  behavior: "instant"
+requestAnimationFrame(() => {
+  window.scrollTo(0, 0);
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, 100);
 });
    
 }
