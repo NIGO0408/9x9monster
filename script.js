@@ -2277,7 +2277,7 @@ function trainMonster() {
 
   const b =
     Math.floor(
-      Math.random() * 9
+      Math.random() * 3
     ) + 1;
 
 
