@@ -1,1 +1,1217 @@
+* {
+  box-sizing: border-box;
+}
 
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #dff3ff;
+  color: #222;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+.game {
+  width: 100%;
+  max-width: 700px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+
+  background: #f8fbff;
+}
+
+
+.screen {
+  display: none;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 24px;
+}
+
+.screen.active {
+  display: block;
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+#title-screen {
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #bde9ff 0%,
+      #eaffd8 100%
+    );
+}
+
+.logo {
+  padding-top: 100px;
+}
+
+.logo-monster {
+  font-size: 100px;
+  line-height: 1;
+
+  animation:
+    float 2s infinite ease-in-out;
+}
+
+.logo h1 {
+  margin: 25px 0 15px;
+
+  font-size: 42px;
+  line-height: 1.2;
+
+  color: #3b4cca;
+
+  text-shadow:
+    3px 3px 0 white;
+}
+
+.logo p {
+  margin: 0 0 35px;
+
+  font-weight: bold;
+
+  line-height: 1.7;
+
+  color: #555;
+}
+
+
+/* ========================================
+   ボタン
+======================================== */
+
+.main-button {
+  display: inline-block;
+
+  border: none;
+
+  padding: 16px 30px;
+
+  border-radius: 30px;
+
+  background: #ffca28;
+
+  color: #333;
+
+  font-size: 19px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 0 #d79d00;
+
+  transition:
+    transform .1s,
+    box-shadow .1s;
+}
+
+.main-button:hover {
+  transform:
+    translateY(-2px);
+}
+
+.main-button:active {
+  transform:
+    translateY(3px);
+
+  box-shadow:
+    0 2px 0 #d79d00;
+}
+
+.sub-button {
+  display: block;
+
+  margin: 15px auto;
+
+  padding: 12px 25px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background: #e8edf5;
+
+  color: #555;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.sub-button:hover {
+  background: #dfe5ef;
+}
+
+.small-button {
+  flex-shrink: 0;
+
+  border: none;
+
+  background: #eef1ff;
+
+  padding: 8px 12px;
+
+  border-radius: 12px;
+
+  color: #444;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+
+/* ========================================
+   修行道場
+======================================== */
+
+.page-title {
+  text-align: center;
+
+  margin: 5px 0 28px;
+
+  font-size: 28px;
+  font-weight: 900;
+
+  line-height: 1.3;
+}
+
+.page-title p {
+  margin: 10px 0 0;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  line-height: 1.6;
+
+  color: #777;
+}
+
+.stage-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.stage-button {
+  position: relative;
+
+  width: 100%;
+  min-height: 108px;
+
+  display: grid;
+
+  grid-template-columns:
+    52px 1fr 30px;
+
+  grid-template-rows:
+    auto auto;
+
+  column-gap: 12px;
+
+  align-items: center;
+
+  padding: 18px 20px;
+
+  border: 3px solid #dce2ef;
+
+  border-radius: 20px;
+
+  background: #fff;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform .15s,
+    border-color .15s,
+    box-shadow .15s;
+}
+
+.stage-button:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    #5969d9;
+
+  box-shadow:
+    0 5px 14px
+    rgba(
+      60,
+      80,
+      150,
+      .12
+    );
+}
+
+.stage-button:active {
+  transform:
+    translateY(1px);
+}
+
+.stage-button span {
+  grid-column: 1;
+  grid-row: 1 / 3;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  font-size: 26px;
+}
+
+.stage-button strong {
+  grid-column: 2;
+  grid-row: 1;
+
+  display: block;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  line-height: 1.3;
+}
+
+.stage-button small {
+  grid-column: 2;
+  grid-row: 2;
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  color: #777;
+
+  white-space: normal;
+
+  word-break: keep-all;
+}
+
+.stage-button::after {
+  grid-column: 3;
+  grid-row: 1 / 3;
+
+  content: "›";
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 34px;
+  font-weight: 300;
+
+  color: #7b8494;
+}
+
+.stage-button.locked {
+  opacity: .45;
+
+  background: #f0f2f5;
+
+  border-color:
+    #dce2ef;
+
+  cursor:
+    not-allowed;
+
+  box-shadow: none;
+}
+
+.stage-button.locked:hover {
+  transform: none;
+
+  border-color:
+    #dce2ef;
+
+  box-shadow: none;
+}
+
+.save-status {
+  text-align: center;
+
+  margin:
+    20px 0 10px;
+
+  font-size: 13px;
+
+  color: #888;
+}
+
+
+/* ========================================
+   クイズ
+======================================== */
+
+.training-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.progress {
+  margin-bottom: 20px;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+
+  margin-top: 7px;
+
+  background: #ddd;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+#progress-fill {
+  width: 0;
+  height: 100%;
+
+  background: #5b67d8;
+
+  transition:
+    width .3s ease;
+}
+
+.teacher {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 15px;
+
+  margin-bottom: 15px;
+
+  background: #fff4cf;
+
+  border-radius: 18px;
+
+  font-size: 40px;
+}
+
+.teacher strong {
+  font-size: 17px;
+}
+
+.teacher p {
+  margin: 4px 0 0;
+
+  font-size: 14px;
+  font-weight: normal;
+
+  line-height: 1.5;
+}
+
+.question-box {
+  padding: 25px;
+
+  background: #fff;
+
+  border-radius: 22px;
+
+  text-align: center;
+
+  box-shadow:
+    0 3px 12px
+    rgba(
+      0,
+      0,
+      0,
+      .08
+    );
+}
+
+.question {
+  margin-bottom: 25px;
+
+  font-size: 42px;
+  font-weight: 900;
+
+  line-height: 1.2;
+
+  color: #3b4cca;
+}
+
+.answers {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 12px;
+}
+
+.answer {
+  padding: 18px;
+
+  border: 3px solid #dce2ef;
+
+  border-radius: 16px;
+
+  background: #fff;
+
+  font-size: 24px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+    transform .1s,
+    border-color .1s;
+}
+
+.answer:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    #5969d9;
+}
+
+.answer:disabled {
+  cursor: default;
+}
+
+.answer.correct {
+  background:
+    #c8f7d2;
+
+  border-color:
+    #39a957;
+}
+
+.answer.wrong {
+  background:
+    #ffd2d2;
+
+  border-color:
+    #e34c4c;
+}
+
+.message {
+  min-height: 30px;
+
+  margin-top: 18px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   結果
+======================================== */
+
+#result-screen {
+  text-align: center;
+}
+
+.result-icon {
+  margin-top: 50px;
+
+  font-size: 100px;
+
+  line-height: 1;
+}
+
+#result-screen h1 {
+  margin:
+    25px 0 10px;
+}
+
+#result-screen > p {
+  line-height: 1.6;
+}
+
+.result-box {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+  margin: 25px 0;
+
+  padding: 20px;
+
+  background: #fff;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 3px 12px
+    rgba(
+      0,
+      0,
+      0,
+      .06
+    );
+}
+
+.result-box div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  font-size: 13px;
+
+  color: #777;
+}
+
+.result-box strong {
+  font-size: 20px;
+
+  color: #222;
+}
+
+
+/* ========================================
+   モンスター報酬
+======================================== */
+
+.reward-box {
+  margin:
+    20px auto 25px;
+
+  padding: 18px;
+
+  max-width: 360px;
+
+  border:
+    3px solid #ffd75a;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffdf0,
+      #fff
+    );
+
+  text-align: center;
+
+  box-shadow:
+    0 5px 15px
+    rgba(
+      220,
+      170,
+      40,
+      .12
+    );
+}
+
+.reward-box.hidden {
+  display: none;
+}
+
+.reward-title {
+  margin-bottom: 8px;
+
+  font-weight: 900;
+
+  color: #b57900;
+}
+
+.reward-monster {
+  margin: 8px 0;
+
+  font-size: 72px;
+
+  line-height: 1;
+}
+
+.reward-box > strong {
+  display: block;
+
+  font-size: 21px;
+}
+
+.reward-box > small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #777;
+}
+
+.reward-box p {
+  margin: 10px 0 0;
+
+  color: #555;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   冒険
+======================================== */
+
+#adventure-screen {
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #c8edff 0%,
+      #e7ffd0 100%
+    );
+}
+
+.adventure {
+  padding-top: 60px;
+}
+
+.adventure-icon {
+  font-size: 100px;
+
+  line-height: 1;
+}
+
+.adventure h1 {
+  margin:
+    25px 0 15px;
+
+  font-size: 38px;
+
+  color: #3b4cca;
+}
+
+.adventure p {
+  font-size: 18px;
+
+  font-weight: bold;
+
+  line-height: 1.7;
+}
+
+.master-message {
+  max-width: 400px;
+
+  margin:
+    25px auto;
+
+  padding: 20px;
+
+  background: #fff;
+
+  border-radius: 20px;
+
+  font-weight: bold;
+
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   冒険マップ
+======================================== */
+
+#world-screen {
+  text-align: center;
+}
+
+.world-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 10px;
+}
+
+.world-header h1 {
+  margin: 5px 0;
+}
+
+.player-stats {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+
+  margin: 20px 0;
+}
+
+.player-stats div {
+  padding: 14px;
+
+  border-radius: 18px;
+
+  background: #fff;
+
+  box-shadow:
+    0 3px 10px
+    rgba(
+      0,
+      0,
+      0,
+      .06
+    );
+}
+
+.player-stats span,
+.player-stats strong {
+  display: block;
+}
+
+.player-stats span {
+  font-size: 12px;
+
+  color: #777;
+}
+
+.player-stats strong {
+  margin-top: 4px;
+
+  font-size: 20px;
+}
+
+.world-map {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.map-area {
+  min-height: 160px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  border-radius: 25px;
+
+  background: #fff;
+
+  box-shadow:
+    0 3px 10px
+    rgba(
+      0,
+      0,
+      0,
+      .08
+    );
+}
+
+.map-area span {
+  font-size: 55px;
+}
+
+.map-area strong {
+  font-size: 18px;
+}
+
+.map-area small {
+  font-size: 11px;
+
+  color: #999;
+}
+
+.forest {
+  background:
+    #dff5d5;
+}
+
+.lake {
+  background:
+    #d9f2ff;
+}
+
+.mountain {
+  background:
+    #eee6d8;
+}
+
+.castle {
+  background:
+    #e8e0ff;
+}
+
+
+/* ========================================
+   モンスター図鑑
+======================================== */
+
+.book-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.book-header h1 {
+  margin: 0;
+
+  font-size: 26px;
+}
+
+.book-header p {
+  margin: 5px 0 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+.monster-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.monster-card {
+  display: grid;
+
+  grid-template-columns:
+    42px 76px 1fr;
+
+  gap: 12px;
+
+  align-items: center;
+
+  padding: 15px;
+
+  border-radius: 20px;
+
+  background: #fff;
+
+  border:
+    3px solid #e0e5ef;
+
+  box-shadow:
+    0 3px 10px
+    rgba(
+      0,
+      0,
+      0,
+      .05
+    );
+}
+
+.monster-card.caught {
+  border-color:
+    #d8c36b;
+
+  background:
+    linear-gradient(
+      100deg,
+      #fffdf0,
+      #fff
+    );
+}
+
+.monster-card.unknown {
+  opacity: .65;
+}
+
+.monster-number {
+  font-size: 12px;
+
+  color: #999;
+
+  font-weight: bold;
+}
+
+.monster-icon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 70px;
+  height: 70px;
+
+  border-radius: 18px;
+
+  background:
+    #eef4ff;
+
+  font-size: 45px;
+}
+
+.monster-card.unknown
+.monster-icon {
+  background:
+    #eef0f3;
+}
+
+.monster-info h2 {
+  margin:
+    0 0 6px;
+
+  font-size: 19px;
+}
+
+.monster-meta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.monster-meta span {
+  padding:
+    3px 7px;
+
+  border-radius: 10px;
+
+  background:
+    #eef1ff;
+
+  color:
+    #5969d9;
+
+  font-size: 11px;
+
+  font-weight: bold;
+}
+
+.monster-info p {
+  margin:
+    7px 0;
+
+  color: #555;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.monster-info small {
+  color: #999;
+
+  font-size: 11px;
+}
+
+
+/* ========================================
+   アニメーション
+======================================== */
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-12px);
+  }
+
+}
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 500px) {
+
+  .screen {
+    padding: 18px;
+  }
+
+  .logo {
+    padding-top: 70px;
+  }
+
+  .logo h1 {
+    font-size: 32px;
+  }
+
+  .logo-monster {
+    font-size: 80px;
+  }
+
+  .page-title {
+    font-size: 25px;
+  }
+
+
+  .stage-button {
+
+    min-height: 96px;
+
+    grid-template-columns:
+      44px 1fr 26px;
+
+    column-gap: 8px;
+
+    padding:
+      15px 14px;
+  }
+
+  .stage-button span {
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 23px;
+
+  }
+
+  .stage-button strong {
+    font-size: 20px;
+  }
+
+  .stage-button small {
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+  }
+
+  .stage-button::after {
+    font-size: 30px;
+  }
+
+
+  .question {
+    font-size: 34px;
+  }
+
+  .answers {
+    gap: 9px;
+  }
+
+  .answer {
+
+    padding:
+      16px 10px;
+
+    font-size: 21px;
+
+  }
+
+
+  .world-map {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .result-box {
+    padding: 15px;
+  }
+
+
+  .monster-card {
+
+    grid-template-columns:
+      32px 62px 1fr;
+
+    gap: 8px;
+
+    padding: 11px;
+
+  }
+
+  .monster-icon {
+
+    width: 58px;
+    height: 58px;
+
+    font-size: 36px;
+
+  }
+
+  .monster-info h2 {
+    font-size: 16px;
+  }
+
+  .monster-info p {
+    font-size: 12px;
+  }
+
+}
