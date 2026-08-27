@@ -3485,3 +3485,333 @@ button {
   }
 
 }
+/* =========================================================
+   モンスター特訓 レイアウト崩れ修正版
+========================================================= */
+
+.training-battle {
+  display: block !important;
+  width: 100% !important;
+  max-width: 520px !important;
+  min-width: 0 !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  padding: 10px 12px 28px !important;
+  box-sizing: border-box !important;
+
+  text-align: center !important;
+}
+
+
+/* タイトル部分を完全に縦並び */
+
+.training-battle .training-header {
+  display: flex !important;
+  flex-direction: column !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  margin: 0 auto 18px !important;
+  padding: 0 !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+}
+
+.training-battle .training-title {
+  display: block !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 27px !important;
+  line-height: 1.4 !important;
+  font-weight: 900 !important;
+
+  text-align: center !important;
+
+  white-space: nowrap !important;
+}
+
+.training-battle .training-subtitle {
+  display: block !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  margin: 5px 0 0 !important;
+  padding: 0 !important;
+
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+  font-weight: 800 !important;
+
+  text-align: center !important;
+}
+
+
+/* モンスターカード */
+
+.training-battle .training-monster-card {
+  display: flex !important;
+
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+
+  min-height: 110px !important;
+
+  margin: 0 auto 16px !important;
+  padding: 12px 18px !important;
+
+  box-sizing: border-box !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  flex-direction: row !important;
+
+  gap: 18px !important;
+
+  border-radius: 20px !important;
+}
+
+
+/* モンスター画像 */
+
+.training-battle .training-monster-image {
+  width: 78px !important;
+  height: 78px !important;
+
+  min-width: 78px !important;
+  max-width: 78px !important;
+
+  flex: 0 0 78px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.training-battle .training-monster-image-inner {
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: 100% !important;
+
+  object-fit: contain !important;
+}
+
+
+/* モンスター名前 */
+
+.training-battle .training-monster-info {
+  display: flex !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+
+  flex-direction: column !important;
+
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  gap: 2px !important;
+}
+
+.training-battle .training-monster-info strong {
+  font-size: 22px !important;
+  white-space: nowrap !important;
+}
+
+.training-battle .training-monster-info span {
+  font-size: 17px !important;
+}
+
+
+/* パワーアップ */
+
+.training-battle .training-message {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin: 12px 0 !important;
+  padding: 0 !important;
+
+  text-align: center !important;
+
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+
+
+/* 問題 */
+
+.training-battle .training-question {
+  display: flex !important;
+
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+
+  min-height: 78px !important;
+
+  margin: 0 auto 18px !important;
+  padding: 10px !important;
+
+  box-sizing: border-box !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  font-size: 34px !important;
+  font-weight: 900 !important;
+
+  letter-spacing: 2px !important;
+}
+
+
+/* 4択 */
+
+.training-battle .training-answers {
+  display: grid !important;
+
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+
+  margin: 0 auto !important;
+}
+
+.training-battle .training-answer {
+  display: flex !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  min-height: 76px !important;
+
+  margin: 0 !important;
+  padding: 10px !important;
+
+  box-sizing: border-box !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-size: 27px !important;
+}
+
+
+/* 結果 */
+
+.training-battle .training-result {
+  width: 100% !important;
+  min-width: 0 !important;
+
+  min-height: 90px !important;
+
+  margin-top: 18px !important;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+}
+
+
+/* 戻る */
+
+.training-battle .training-cancel {
+  display: block !important;
+
+  margin: 20px auto 0 !important;
+}
+
+
+/* =========================================================
+   スマホ
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .training-battle {
+    width: 100% !important;
+
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .training-battle .training-title {
+    font-size: 25px !important;
+  }
+
+  .training-battle .training-subtitle {
+    font-size: 16px !important;
+  }
+
+  .training-battle .training-monster-card {
+    min-height: 105px !important;
+
+    gap: 14px !important;
+
+    padding: 10px 14px !important;
+  }
+
+  .training-battle .training-monster-image {
+    width: 70px !important;
+    height: 70px !important;
+
+    min-width: 70px !important;
+    max-width: 70px !important;
+
+    flex-basis: 70px !important;
+  }
+
+  .training-battle .training-monster-info strong {
+    font-size: 20px !important;
+  }
+
+  .training-battle .training-monster-info span {
+    font-size: 16px !important;
+  }
+
+  .training-battle .training-question {
+    min-height: 76px !important;
+
+    font-size: 32px !important;
+  }
+
+  .training-battle .training-answers {
+    gap: 10px !important;
+  }
+
+  .training-battle .training-answer {
+    min-height: 74px !important;
+
+    font-size: 26px !important;
+  }
+
+}
