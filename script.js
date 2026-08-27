@@ -3243,6 +3243,8 @@ function startForestBattle(
   battleNumber
 ) {
 
+  currentAdventureStage = "forest";
+
   const number =
     Number(
       battleNumber
@@ -3635,11 +3637,38 @@ function setupBattle() {
   updateBattleHP();
 
 
+  const isLake =
+    currentAdventureStage === "lake";
+
   battleMessage(
     currentBattleNumber === 5
-      ? "⚠️ 森の守護者が現れた！"
+      ? (
+          isLake
+            ? "⚠️ 湖底の主が現れた！"
+            : "⚠️ 森の守護者が現れた！"
+        )
       : `⚔️ バトル${currentBattleNumber}！九九で攻撃しよう！`
   );
+
+  const battleBackButton =
+    el("battle-back-button");
+
+  if (battleBackButton) {
+    battleBackButton.textContent =
+      isLake
+        ? "← 湖のマップへ"
+        : "← 森のマップへ";
+  }
+
+  const battleReturnButton =
+    el("battle-return-forest");
+
+  if (battleReturnButton) {
+    battleReturnButton.textContent =
+      isLake
+        ? "🌊 湖のマップへ"
+        : "🌳 森のマップへ";
+  }
 
 
   /*
@@ -4405,6 +4434,16 @@ function battleWin() {
         : `⚔️ バトル${currentBattleNumber + 1}へ`;
   }
 
+  const returnButton =
+    el("battle-return-forest");
+
+  if (returnButton) {
+    returnButton.textContent =
+      isLake
+        ? "🌊 湖のマップへ"
+        : "🌳 森のマップへ";
+  }
+
   if (isLake) {
     updateLakeMap();
   }
@@ -4489,6 +4528,16 @@ function battleLose() {
       "🔄 最初から挑戦";
   }
 
+  const returnButton =
+    el("battle-return-forest");
+
+  if (returnButton) {
+    returnButton.textContent =
+      currentAdventureStage === "lake"
+        ? "🌊 湖のマップへ"
+        : "🌳 森のマップへ";
+  }
+
   if (
     currentAdventureStage === "lake"
   ) {
@@ -4526,22 +4575,32 @@ function nextBattle() {
     currentAdventureStage === "lake";
 
   /*
-     敗北
+     敗北後は、そのステージの①から再挑戦。
   */
   if (
     battlePlayerHP <= 0
   ) {
+
     if (isLake) {
+      lakeProgress = 0;
+      lakeCurrentHP = 0;
+      lakeBattleMonsterId = null;
+      saveGame();
       startLakeBattle(1);
     }
     else {
+      forestProgress = 0;
+      forestCurrentHP = 0;
+      forestBattleMonsterId = null;
+      saveGame();
       startForestBattle(1);
     }
+
     return;
   }
 
   /*
-     ボス撃破
+     ボス撃破後はワールドマップへ。
   */
   if (
     currentBattleNumber === 5
@@ -4550,15 +4609,14 @@ function nextBattle() {
     if (isLake) {
       lakeCurrentHP = 0;
       lakeBattleMonsterId = null;
-      saveGame();
-      openWorld();
     }
     else {
       forestCurrentHP = 0;
       forestBattleMonsterId = null;
-      saveGame();
-      openWorld();
     }
+
+    saveGame();
+    openWorld();
 
     return;
   }
@@ -4566,35 +4624,53 @@ function nextBattle() {
   const next =
     currentBattleNumber + 1;
 
+  /*
+     今のバトル終了時HPを必ず保存してから
+     次のバトルを開始する。
+  */
   if (isLake) {
-    if (
-      lakeProgress >=
-      next - 1
-    ) {
-      lakeCurrentHP =
-        battlePlayerHP;
-      lakeBattleMonsterId =
-        Number(selectedMonsterId);
-      saveAdventureStage("lake");
-      saveGame();
 
-      startLakeBattle(next);
-    }
+    lakeCurrentHP =
+      battlePlayerHP;
+
+    lakeBattleMonsterId =
+      Number(selectedMonsterId);
+
+    /*
+       現在のバトルは勝利済みなので、
+       次の番号をそのまま開始する。
+       進行度の判定に依存しない。
+    */
+    lakeProgress =
+      Math.max(
+        lakeProgress,
+        currentBattleNumber
+      );
+
+    saveAdventureStage("lake");
+    saveGame();
+
+    startLakeBattle(next);
+
   }
   else {
-    if (
-      forestProgress >=
-      next - 1
-    ) {
-      forestCurrentHP =
-        battlePlayerHP;
-      forestBattleMonsterId =
-        Number(selectedMonsterId);
-      saveAdventureStage("forest");
-      saveGame();
 
-      startForestBattle(next);
-    }
+    forestCurrentHP =
+      battlePlayerHP;
+
+    forestBattleMonsterId =
+      Number(selectedMonsterId);
+
+    forestProgress =
+      Math.max(
+        forestProgress,
+        currentBattleNumber
+      );
+
+    saveAdventureStage("forest");
+    saveGame();
+
+    startForestBattle(next);
   }
 }
 
@@ -4603,11 +4679,13 @@ function nextBattle() {
    森へ戻る
 
 
+
+
 /* =========================================================
    森へ戻る
    ========================================================= */
 
-function battleReturnForest() {
+function battleReturnAdventure() {
 
   if (battleTimer) {
 
@@ -4673,7 +4751,7 @@ function battleReturnForest() {
    バトル画面から森へ
    ========================================================= */
 
-function battleBackForest() {
+function battleBackAdventure() {
 
   if (battleTimer) {
 
@@ -5091,70 +5169,6 @@ function startLakeBattle(battleNumber) {
 }
 
 
-/* =========================================================
-   湖専用の古いバトル関数は使用しない。
-   共通バトルエンジンを使用する。
-   ========================================================= */
-
-function createLakeBattleQuestion() {
-  createBattleQuestion();
-}
-
-
-function createLakeBattleQuestion() {
-  const q = getAdventureQuestion("lake");
-  battleAnswer = q.answer;
-
-  const question = el("battle-question");
-  if (question) question.textContent = `${q.multiplier} × ${q.factor} = ?`;
-
-  const choices = new Set([battleAnswer]);
-  while (choices.size < 4) {
-    const wrong = Math.max(1, battleAnswer + Math.floor(Math.random() * 13) - 6);
-    choices.add(wrong);
-  }
-
-  const container = el("battle-answers");
-  if (!container) return;
-  container.innerHTML = "";
-
-  [...choices].sort(() => Math.random() - 0.5).forEach(value => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "answer";
-    button.textContent = value;
-    button.addEventListener("click", () => answerLakeBattle(value, button));
-    container.appendChild(button);
-  });
-
-  updateLakeBattleUI();
-}
-
-function updateLakeBattleUI() {
-  const monster = getMonsterData(selectedMonsterId);
-  const playerHP = el("battle-player-hp");
-  const enemyHP = el("battle-enemy-hp");
-
-  if (playerHP && monster) playerHP.textContent = `${Math.max(0, battlePlayerHP)} / ${battlePlayerMaxHP}`;
-  if (enemyHP) enemyHP.textContent = `${Math.max(0, battleEnemyHP)} / ${battleEnemyMaxHP}`;
-
-  const playerFill = el("battle-player-hp-fill");
-  const enemyFill = el("battle-enemy-hp-fill");
-  if (playerFill) playerFill.style.width = `${Math.max(0, battlePlayerHP) / battlePlayerMaxHP * 100}%`;
-  if (enemyFill) enemyFill.style.width = `${Math.max(0, battleEnemyHP) / battleEnemyMaxHP * 100}%`;
-}
-
-function answerLakeBattle(value, button) {
-  checkBattleAnswer(value, button);
-}
-
-function finishLakeBattle() {
-  battleWin();
-}
-
-function failLakeBattle() {
-  battleLose();
-}
 
 
 /* =========================================================
@@ -5346,7 +5360,7 @@ document
 
 el("battle-back-button")?.addEventListener(
   "click",
-  battleBackForest
+  battleBackAdventure
 );
 
 
@@ -5362,7 +5376,7 @@ el("battle-next-button")?.addEventListener(
 
 el("battle-return-forest")?.addEventListener(
   "click",
-  battleReturnForest
+  battleReturnAdventure
 );
 
 
