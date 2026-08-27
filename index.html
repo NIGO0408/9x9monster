@@ -15,6 +15,18 @@
     rel="stylesheet"
     href="style.css"
   >
+
+  <style>
+    #lake-screen {
+      background: linear-gradient(#d7f3ff, #eefbff);
+    }
+    #lake-screen .forest-route::before {
+      background: #a9d8e8;
+    }
+    #lake-screen .forest-node .node-icon {
+      background: #e2f6ff;
+    }
+  </style>
 </head>
 
 
@@ -42,8 +54,6 @@
         9×9モンスターズ
       </h1>
 
-      <div class="version" id="update-time">Last Update　読み込み中...</div>
-      
       <p>
         九九を修行して<br>
         モンスターを集めよう！
@@ -435,6 +445,7 @@
       <!-- 九九の湖 -->
 
       <button
+        id="lake-area"
         class="map-area lake locked-area"
         disabled
       >
@@ -783,6 +794,295 @@
 
 
       <small id="forest-progress-text">
+        0 / 5 バトルクリア
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <section
+    id="lake-screen"
+    class="screen forest-screen lake-screen"
+  >
+
+    <div class="forest-header">
+
+      <button
+        id="lake-back-button"
+        class="small-button"
+      >
+        ← マップ
+      </button>
+
+
+      <div>
+
+        <h1>
+          🌊 九九の湖
+        </h1>
+
+        <small>
+          全5バトル
+        </small>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="forest-intro">
+
+      <div class="forest-art">
+        🌊💧🌊
+      </div>
+
+
+      <h2>
+        湖を進もう！
+      </h2>
+
+
+      <p>
+        九九を使って<br>
+        水のモンスターたちを倒しながら<br>
+        湖底を目指そう！
+      </p>
+
+    </div>
+
+
+
+    <!-- =================================
+         探索ルート
+    ================================= -->
+
+    <div class="forest-route">
+
+
+      <!-- START -->
+
+      <div
+        class="forest-node start-node"
+      >
+
+        <div class="node-icon">
+          🏕️
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            湖畔
+          </strong>
+
+          <small>
+            START
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="route-line"></div>
+
+
+      <!-- BATTLE 1 -->
+
+      <button
+        class="forest-node battle-node"
+        data-battle="1"
+      >
+
+        <div class="node-icon">
+          ⚔️
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            湖畔の浅瀬
+          </strong>
+
+          <small>
+            バトル①
+          </small>
+
+        </div>
+
+      </button>
+
+
+      <div class="route-line"></div>
+
+
+      <!-- BATTLE 2 -->
+
+      <button
+        class="forest-node battle-node locked-node"
+        data-battle="2"
+        disabled
+      >
+
+        <div class="node-icon">
+          🔒
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            水草の迷路
+          </strong>
+
+          <small>
+            バトル②
+          </small>
+
+        </div>
+
+      </button>
+
+
+      <div class="route-line"></div>
+
+
+      <!-- BATTLE 3 -->
+
+      <button
+        class="forest-node battle-node locked-node"
+        data-battle="3"
+        disabled
+      >
+
+        <div class="node-icon">
+          🔒
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            青の洞窟
+          </strong>
+
+          <small>
+            バトル③
+          </small>
+
+        </div>
+
+      </button>
+
+
+      <div class="route-line"></div>
+
+
+      <!-- BATTLE 4 -->
+
+      <button
+        class="forest-node battle-node locked-node"
+        data-battle="4"
+        disabled
+      >
+
+        <div class="node-icon">
+          🔒
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            深き湖底
+          </strong>
+
+          <small>
+            バトル④
+          </small>
+
+        </div>
+
+      </button>
+
+
+      <div class="route-line"></div>
+
+
+      <!-- BOSS -->
+
+      <button
+        class="forest-node boss-node locked-node"
+        data-battle="5"
+        disabled
+      >
+
+        <div class="node-icon">
+          👹
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            湖底・ボスの間
+          </strong>
+
+          <small>
+            BOSS BATTLE
+          </small>
+
+        </div>
+
+      </button>
+
+
+      <div class="route-line"></div>
+
+
+      <!-- GOAL -->
+
+      <div
+        class="forest-node goal-node locked-node"
+      >
+
+        <div class="node-icon">
+          🏆
+        </div>
+
+        <div class="node-info">
+
+          <strong>
+            九九の湖クリア
+          </strong>
+
+          <small>
+            ボスを倒すと到達！
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="forest-progress">
+
+      <strong>
+        湖の攻略状況
+      </strong>
+
+
+      <div class="forest-progress-bar">
+
+        <div
+          id="lake-progress-fill"
+        ></div>
+
+      </div>
+
+
+      <small id="lake-progress-text">
         0 / 5 バトルクリア
       </small>
 
