@@ -2739,6 +2739,69 @@ createStageList();
 
 updateWorldStats();
 
+// ========================================
+// 下部メニュー
+// ========================================
+
+const trainingButton =
+  el("training-button");
+
+if (trainingButton) {
+
+  trainingButton.addEventListener(
+    "click",
+    () => {
+
+      createStageList();
+
+      showScreen(
+        "training-screen"
+      );
+
+    }
+  );
+
+}
+
+
+const worldButton =
+  el("world-button");
+
+if (worldButton) {
+
+  worldButton.addEventListener(
+    "click",
+    () => {
+
+      updateWorldStats();
+
+      showScreen(
+        "world-screen"
+      );
+
+    }
+  );
+
+}
+
+
+const monsterButton =
+  el("monster-button");
+
+if (monsterButton) {
+
+  monsterButton.addEventListener(
+    "click",
+    () => {
+
+      openMonsterScreen();
+
+    }
+  );
+
+}
+
+
 setupButtons();
 
 
