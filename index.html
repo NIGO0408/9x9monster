@@ -1,1 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9×9モンスターズ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<div class="game">
+
+  <section id="title-screen" class="screen active">
+
+    <div class="logo">
+      <div class="logo-monster">🦊</div>
+
+      <h1>9×9モンスターズ</h1>
+
+      <p>
+        九九を修行して<br>
+        モンスターを集めよう！
+      </p>
+    </div>
+
+    <button id="start-button" class="main-button">
+      🥋 修行をはじめる
+    </button>
+
+  </section>
+
+
+  <section id="training-screen" class="screen">
+
+    <div class="page-title">
+
+      <div>🥋 9×9修行道場</div>
+
+      <p>
+        1の段から順番に<br>
+        九九を極めよう！
+      </p>
+
+    </div>
+
+    <div id="stage-list" class="stage-list"></div>
+
+    <p id="save-status" class="save-status">
+      💾 セーブデータは自動保存されます
+    </p>
+
+    <button
+      id="open-book-training"
+      class="sub-button"
+    >
+      📖 モンスター図鑑
+    </button>
+
+  </section>
+
+
+  <section id="quiz-screen" class="screen">
+
+    <div class="training-header">
+
+      <button
+        id="back-training"
+        class="small-button"
+      >
+        ← 修行道場
+      </button>
+
+      <div id="training-title">
+        1の段 修行
+      </div>
+
+    </div>
+
+
+    <div class="progress">
+
+      <span id="progress-text">
+        第1問 / 9問
+      </span>
+
+      <div class="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+
+    </div>
+
+
+    <div class="teacher">
+
+      🥋
+
+      <div>
+
+        <strong>
+          修行師匠
+        </strong>
+
+        <p id="teacher-message">
+          集中して答えるのじゃ！
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="question-box">
+
+      <div
+        id="question"
+        class="question"
+      >
+        1 × 1 = ?
+      </div>
+
+      <div
+        id="answers"
+        class="answers"
+      ></div>
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <section id="result-screen" class="screen">
+
+    <div class="result-icon">
+      🏆
+    </div>
+
+    <h1 id="result-title">
+      修行完了！
+    </h1>
+
+    <p id="result-message">
+      よく頑張った！
+    </p>
+
+
+    <div class="result-box">
+
+      <div>
+        正解数
+        <strong id="result-correct">0</strong>
+      </div>
+
+      <div>
+        コンボ
+        <strong id="result-combo">0</strong>
+      </div>
+
+      <div>
+        評価
+        <strong id="result-stars">☆☆☆</strong>
+      </div>
+
+    </div>
+
+
+    <div
+      id="reward-box"
+      class="reward-box hidden"
+    ></div>
+
+
+    <button
+      id="next-stage"
+      class="main-button"
+    >
+      次の修行へ
+    </button>
+
+    <button
+      id="retry-stage"
+      class="sub-button"
+    >
+      もう一度修行する
+    </button>
+
+    <button
+      id="result-book"
+      class="sub-button"
+    >
+      📖 図鑑を見る
+    </button>
+
+  </section>
+
+
+  <section id="adventure-screen" class="screen">
+
+    <div class="adventure">
+
+      <div class="adventure-icon">
+        🗺️
+      </div>
+
+      <h1>
+        9×9マスター！
+      </h1>
+
+      <p>
+        すべての九九を<br>
+        極めたぞ！
+      </p>
+
+      <div class="master-message">
+        「ここからが本当の冒険じゃ！」
+      </div>
+
+      <button
+        id="adventure-button"
+        class="main-button"
+      >
+        🗺️ 冒険へ出発！
+      </button>
+
+      <button
+        id="adventure-book"
+        class="sub-button"
+      >
+        📖 モンスター図鑑
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <section id="world-screen" class="screen">
+
+    <div class="world-header">
+
+      <h1>
+        🌍 9×9モンスターズ
+      </h1>
+
+      <button
+        id="world-book"
+        class="small-button"
+      >
+        📖 図鑑
+      </button>
+
+    </div>
+
+
+    <div class="player-stats">
+
+      <div>
+        <span>捕まえた数</span>
+        <strong id="caught-count">
+          0 / 9
+        </strong>
+      </div>
+
+      <div>
+        <span>図鑑達成率</span>
+        <strong id="book-percent">
+          0%
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="world-map">
+
+      <div class="map-area forest">
+        <span>🌳</span>
+        <strong>はじまりの森</strong>
+        <small>準備中</small>
+      </div>
+
+      <div class="map-area lake">
+        <span>🌊</span>
+        <strong>九九の湖</strong>
+        <small>準備中</small>
+      </div>
+
+      <div class="map-area mountain">
+        <span>🗻</span>
+        <strong>かけ算山</strong>
+        <small>準備中</small>
+      </div>
+
+      <div class="map-area castle">
+        <span>🏰</span>
+        <strong>九九王城</strong>
+        <small>準備中</small>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section id="book-screen" class="screen">
+
+    <div class="book-header">
+
+      <button
+        id="back-book"
+        class="small-button"
+      >
+        ← 戻る
+      </button>
+
+      <div>
+
+        <h1>
+          📖 モンスター図鑑
+        </h1>
+
+        <p id="book-summary">
+          0 / 9 発見
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="monster-list"
+      class="monster-list"
+    ></div>
+
+  </section>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
