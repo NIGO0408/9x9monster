@@ -1,117 +1,162 @@
+"use strict";
+
 // ========================================
 // 9×9モンスターズ
 // 九九修行 + モンスター図鑑 + セーブ
 // ========================================
 
-"use strict";
 
-const SAVE_KEY = "9x9-monsters-save-v3";
+// ========================================
+// セーブデータの名前
+// ========================================
 
-const OLD_SAVE_KEYS = [
-  "9x9-monsters-save-v2",
-  "9x9-monsters-save-v1"
-];
+const SAVE_KEY = "9x9-monsters-save-v5";
+
+
+// ========================================
+// ステージ
+// ========================================
 
 const stages = [
-  1, 2, 3, 4, 5,
-  6, 7, 8, 9
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
 ];
 
+
+// ========================================
+// モンスター
+// ========================================
 
 const monsters = [
 
   {
     id: 1,
     stage: 1,
-    name: "かけるタマゴ",
-    icon: "🥚",
-    type: "はじまり",
-    desc: "九九の世界から生まれた小さなタマゴ。",
+    name: "トロール",
+
+    // 後で画像を決めたらここに入れる
+    // 例：
+    // image: "images/troll.png"
+
+    image: null,
+
+    type: "いわタイプ",
+
+    desc:
+      "のんびりしているが力持ち。",
+
     rare: "★"
   },
+
 
   {
     id: 2,
     stage: 2,
-    name: "カケルネズミ",
-    icon: "🐭",
-    type: "すばやさ",
-    desc: "計算が速い。2の段を覚えると仲間になる。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "まだ誰も見たことのないモンスター。",
     rare: "★"
   },
+
 
   {
     id: 3,
     stage: 3,
-    name: "サンスウガエル",
-    icon: "🐸",
-    type: "みず",
-    desc: "九九を唱えると元気になるカエル。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "九九の森の奥にいるらしい……。",
     rare: "★"
   },
+
 
   {
     id: 4,
     stage: 4,
-    name: "ヨンヨンウサギ",
-    icon: "🐰",
-    type: "もり",
-    desc: "耳をピンと立てて答えを聞き分ける。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "まだ秘密のモンスター。",
     rare: "★"
   },
+
 
   {
     id: 5,
     stage: 5,
-    name: "ゴゴゴゴーレム",
-    icon: "🗿",
-    type: "いわ",
-    desc: "5の段を極めた者だけに心を開く。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "強い力を持っているらしい。",
     rare: "★★"
   },
+
 
   {
     id: 6,
     stage: 6,
-    name: "ロックロク",
-    icon: "🐺",
-    type: "かぜ",
-    desc: "6の段の問題を風のように解く。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "素早く動くモンスターらしい。",
     rare: "★★"
   },
+
 
   {
     id: 7,
     stage: 7,
-    name: "ナナホシドラ",
-    icon: "🐲",
-    type: "ほのお",
-    desc: "7の段を守る小さなドラゴン。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "7の段の奥に秘密がある。",
     rare: "★★"
   },
+
 
   {
     id: 8,
     stage: 8,
-    name: "ハチハチビー",
-    icon: "🐝",
-    type: "でんき",
-    desc: "8の段を覚えると羽が光る。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "かなり珍しいモンスターらしい。",
     rare: "★★★"
   },
+
 
   {
     id: 9,
     stage: 9,
-    name: "キュウキュウドラゴン",
-    icon: "🐉",
-    type: "でんせつ",
-    desc: "九九のすべてを極めた者の相棒。",
+    name: "？？？？",
+    image: null,
+    type: "？？？",
+    desc:
+      "九九を極めた者だけが出会えるという。",
     rare: "★★★"
   }
 
 ];
 
+
+// ========================================
+// ゲーム状態
+// ========================================
 
 let clearedStages = [];
 
@@ -142,7 +187,7 @@ let returnScreen = "training-screen";
 
 
 // ========================================
-// DOM
+// DOM取得
 // ========================================
 
 function el(id) {
@@ -153,18 +198,20 @@ function el(id) {
 
 
 // ========================================
-// 画面
+// 画面切り替え
 // ========================================
 
 function showScreen(id) {
 
   document
     .querySelectorAll(".screen")
-    .forEach(
-      screen => {
-        screen.classList.remove("active");
-      }
-    );
+    .forEach(screen => {
+
+      screen.classList.remove(
+        "active"
+      );
+
+    });
 
 
   const target = el(id);
@@ -177,42 +224,14 @@ function showScreen(id) {
       id
     );
 
-    return false;
-
-  }
-
-
-  target.classList.add("active");
-
-  return true;
-
-}
-
-
-// ========================================
-// セーブ表示
-// ========================================
-
-function showSaveStatus(
-  text,
-  success = true
-) {
-
-  const status =
-    el("save-status");
-
-
-  if (!status) {
     return;
+
   }
 
 
-  status.textContent = text;
-
-  status.style.color =
-    success
-      ? "#4a8f58"
-      : "#c44";
+  target.classList.add(
+    "active"
+  );
 
 }
 
@@ -225,7 +244,7 @@ function saveGame() {
 
   const data = {
 
-    version: 3,
+    version: 5,
 
     clearedStages: [
       ...clearedStages
@@ -249,64 +268,27 @@ function saveGame() {
 
   try {
 
-    const json =
-      JSON.stringify(data);
-
-
     localStorage.setItem(
       SAVE_KEY,
-      json
+      JSON.stringify(data)
     );
-
-
-    const verification =
-      localStorage.getItem(
-        SAVE_KEY
-      );
-
-
-    if (
-      verification !== json
-    ) {
-
-      throw new Error(
-        "保存確認に失敗しました"
-      );
-
-    }
 
 
     console.log(
-      "💾 セーブしました",
-      data
+      "💾 セーブしました"
     );
 
 
-    showSaveStatus(
-      "💾 セーブしました！",
-      true
-    );
-
-
-    return true;
+    updateSaveStatus();
 
   }
 
   catch (error) {
 
     console.error(
-      "💾 セーブ失敗:",
+      "セーブに失敗しました:",
       error
     );
-
-
-    showSaveStatus(
-      "⚠️ セーブできませんでした",
-      false
-    );
-
-
-    return false;
 
   }
 
@@ -321,29 +303,10 @@ function loadGame() {
 
   try {
 
-    let saved =
+    const saved =
       localStorage.getItem(
         SAVE_KEY
       );
-
-
-    if (!saved) {
-
-      for (
-        const key of OLD_SAVE_KEYS
-      ) {
-
-        saved =
-          localStorage.getItem(key);
-
-
-        if (saved) {
-          break;
-        }
-
-      }
-
-    }
 
 
     if (!saved) {
@@ -371,7 +334,8 @@ function loadGame() {
         data.clearedStages
           .map(Number)
           .filter(
-            n => stages.includes(n)
+            stage =>
+              stages.includes(stage)
           );
 
     }
@@ -399,10 +363,10 @@ function loadGame() {
         data.caughtMonsters
           .map(Number)
           .filter(
-            n =>
+            id =>
               monsters.some(
                 monster =>
-                  monster.id === n
+                  monster.id === id
               )
           );
 
@@ -410,46 +374,11 @@ function loadGame() {
 
 
     adventureUnlocked =
-      data.adventureUnlocked === true
-      ||
-      clearedStages.includes(9);
-
-
-    // 旧セーブから補完
-    clearedStages.forEach(
-      stage => {
-
-        const monster =
-          monsters.find(
-            m => m.stage === stage
-          );
-
-
-        if (
-          monster &&
-          !caughtMonsters.includes(
-            monster.id
-          )
-        ) {
-
-          caughtMonsters.push(
-            monster.id
-          );
-
-        }
-
-      }
-    );
+      data.adventureUnlocked === true;
 
 
     console.log(
-      "💾 セーブデータを読み込みました",
-      {
-        clearedStages,
-        stageStars,
-        caughtMonsters,
-        adventureUnlocked
-      }
+      "💾 セーブデータを読み込みました"
     );
 
   }
@@ -457,18 +386,9 @@ function loadGame() {
   catch (error) {
 
     console.error(
-      "⚠️ セーブデータ読み込み失敗:",
+      "ロードに失敗しました:",
       error
     );
-
-
-    clearedStages = [];
-
-    stageStars = {};
-
-    caughtMonsters = [];
-
-    adventureUnlocked = false;
 
   }
 
@@ -476,7 +396,7 @@ function loadGame() {
 
 
 // ========================================
-// セーブ状態
+// セーブ状態表示
 // ========================================
 
 function updateSaveStatus() {
@@ -542,7 +462,8 @@ function createStageList() {
         );
 
 
-      button.type = "button";
+      button.type =
+        "button";
 
       button.className =
         "stage-button";
@@ -564,7 +485,8 @@ function createStageList() {
 
       if (!unlocked) {
 
-        button.disabled = true;
+        button.disabled =
+          true;
 
         button.classList.add(
           "locked"
@@ -573,7 +495,9 @@ function createStageList() {
 
         button.innerHTML = `
 
-          <span>🔒</span>
+          <span>
+            🔒
+          </span>
 
           <strong>
             ${stageNumber}の段
@@ -618,9 +542,10 @@ function createStageList() {
 
         button.addEventListener(
           "click",
-          () => startTraining(
-            stageNumber
-          )
+          () =>
+            startTraining(
+              stageNumber
+            )
         );
 
       }
@@ -682,21 +607,15 @@ function startTraining(
       questionTimer
     );
 
-    questionTimer = null;
+    questionTimer =
+      null;
 
   }
 
 
-  const title =
-    el("training-title");
-
-
-  if (title) {
-
-    title.textContent =
+  el("training-title")
+    .textContent =
       `${stageNumber}の段 修行`;
-
-  }
 
 
   showScreen(
@@ -710,7 +629,7 @@ function startTraining(
 
 
 // ========================================
-// 問題
+// 問題作成
 // ========================================
 
 function createQuestion() {
@@ -737,39 +656,33 @@ function createQuestion() {
     questionNumber;
 
 
-  if (el("question")) {
-
-    el("question").textContent =
+  el("question")
+    .textContent =
       `${currentStage} × ${questionNumber} = ?`;
 
-  }
 
-
-  if (el("progress-text")) {
-
-    el("progress-text").textContent =
+  el("progress-text")
+    .textContent =
       `第${questionNumber}問 / 9問`;
 
-  }
 
-
-  if (el("progress-fill")) {
-
-    el("progress-fill").style.width =
-      `${((questionNumber - 1) / 9) * 100}%`;
-
-  }
+  el("progress-fill")
+    .style.width =
+      `${
+        (
+          (questionNumber - 1)
+          / 9
+          * 100
+        )
+      }%`;
 
 
   createAnswers();
 
 
-  if (el("message")) {
-
-    el("message").textContent =
+  el("message")
+    .textContent =
       "正しい答えを選んでね！";
-
-  }
 
 }
 
@@ -784,35 +697,36 @@ function createAnswers() {
     el("answers");
 
 
-  if (!container) {
-    return;
-  }
-
-
   container.innerHTML = "";
 
 
   const choices =
-    new Set([
-      currentAnswer
-    ]);
+    new Set();
+
+
+  choices.add(
+    currentAnswer
+  );
 
 
   while (
     choices.size < 4
   ) {
 
-    const offset =
-      Math.floor(
-        Math.random() * 11
-      ) - 5;
+    const wrong =
+      Math.max(
+        1,
+        currentAnswer
+        +
+        Math.floor(
+          Math.random() * 11
+        )
+        - 5
+      );
 
 
     choices.add(
-      Math.max(
-        1,
-        currentAnswer + offset
-      )
+      wrong
     );
 
   }
@@ -882,10 +796,15 @@ function checkAnswer(
 
 
   document
-    .querySelectorAll(".answer")
+    .querySelectorAll(
+      ".answer"
+    )
     .forEach(
       button => {
-        button.disabled = true;
+
+        button.disabled =
+          true;
+
       }
     );
 
@@ -894,9 +813,11 @@ function checkAnswer(
     answer === currentAnswer
   ) {
 
-    selectedButton.classList.add(
-      "correct"
-    );
+    selectedButton
+      .classList
+      .add(
+        "correct"
+      );
 
 
     correctCount++;
@@ -914,41 +835,46 @@ function checkAnswer(
     }
 
 
-    if (el("message")) {
-
-      el("message").textContent =
-        combo >= 3
-          ? `🔥 ${combo}コンボ！すごい！`
-          : "✨ 正解！";
-
-    }
+    el("message")
+      .textContent =
+      combo >= 3
+        ? `🔥 ${combo}コンボ！すごい！`
+        : "✨ 正解！";
 
   }
 
   else {
 
-    selectedButton.classList.add(
-      "wrong"
-    );
+    selectedButton
+      .classList
+      .add(
+        "wrong"
+      );
 
 
     combo = 0;
 
 
     document
-      .querySelectorAll(".answer")
+      .querySelectorAll(
+        ".answer"
+      )
       .forEach(
         button => {
 
           if (
             Number(
               button.textContent
-            ) === currentAnswer
+            )
+            ===
+            currentAnswer
           ) {
 
-            button.classList.add(
-              "correct"
-            );
+            button
+              .classList
+              .add(
+                "correct"
+              );
 
           }
 
@@ -956,12 +882,9 @@ function checkAnswer(
       );
 
 
-    if (el("message")) {
-
-      el("message").textContent =
-        `💡 正解は ${currentAnswer}！`;
-
-    }
+    el("message")
+      .textContent =
+      `💡 正解は ${currentAnswer}！`;
 
   }
 
@@ -970,7 +893,8 @@ function checkAnswer(
     setTimeout(
       () => {
 
-        questionTimer = null;
+        questionTimer =
+          null;
 
         createQuestion();
 
@@ -982,18 +906,28 @@ function checkAnswer(
 
 
 // ========================================
-// 評価
+// 星評価
 // ========================================
 
 function getStars(score) {
 
-  if (score === 9) {
+  if (
+    score === 9
+  ) {
+
     return "⭐⭐⭐";
+
   }
 
-  if (score >= 8) {
+
+  if (
+    score >= 8
+  ) {
+
     return "⭐⭐☆";
+
   }
+
 
   return "⭐☆☆";
 
@@ -1004,7 +938,9 @@ function getStars(score) {
 // モンスター取得
 // ========================================
 
-function getMonsterForStage(stage) {
+function getMonsterForStage(
+  stage
+) {
 
   return monsters.find(
     monster =>
@@ -1014,7 +950,9 @@ function getMonsterForStage(stage) {
 }
 
 
-function catchMonster(monsterId) {
+function catchMonster(
+  monsterId
+) {
 
   if (
     !caughtMonsters.includes(
@@ -1037,7 +975,46 @@ function catchMonster(monsterId) {
 
 
 // ========================================
-// モンスター報酬
+// モンスター画像
+// ========================================
+
+function monsterImageHTML(
+  monster,
+  className
+) {
+
+  if (
+    monster.image
+  ) {
+
+    return `
+
+      <img
+        class="${className}"
+        src="${monster.image}"
+        alt="${monster.name}"
+      >
+
+    `;
+
+  }
+
+
+  return `
+
+    <div
+      class="${className} monster-placeholder"
+    >
+      👾
+    </div>
+
+  `;
+
+}
+
+
+// ========================================
+// GET報酬表示
 // ========================================
 
 function showReward(
@@ -1049,11 +1026,6 @@ function showReward(
     el("reward-box");
 
 
-  if (!box) {
-    return;
-  }
-
-
   box.classList.remove(
     "hidden"
   );
@@ -1062,24 +1034,37 @@ function showReward(
   box.innerHTML = `
 
     <div class="reward-title">
+
       ${
         isNew
           ? "🎉 新しい仲間をGET！"
           : "✨ 仲間と再会！"
       }
+
     </div>
 
+
     <div class="reward-monster">
-      ${monster.icon}
+
+      ${monsterImageHTML(
+        monster,
+        "reward-monster-image"
+      )}
+
     </div>
+
 
     <strong>
       ${monster.name}
     </strong>
 
+
     <small>
-      ${monster.type} / ${monster.rare}
+      ${monster.type}
+      ／
+      ${monster.rare}
     </small>
+
 
     <p>
       ${monster.desc}
@@ -1105,7 +1090,8 @@ function finishTraining() {
       questionTimer
     );
 
-    questionTimer = null;
+    questionTimer =
+      null;
 
   }
 
@@ -1116,60 +1102,41 @@ function finishTraining() {
     );
 
 
-  if (el("result-correct")) {
-
-    el("result-correct").textContent =
-      `${correctCount} / 9`;
-
-  }
+  el("result-correct")
+    .textContent =
+    `${correctCount} / 9`;
 
 
-  if (el("result-combo")) {
-
-    el("result-combo").textContent =
-      maxCombo;
-
-  }
+  el("result-combo")
+    .textContent =
+    maxCombo;
 
 
-  if (el("result-stars")) {
-
-    el("result-stars").textContent =
-      stars;
-
-  }
-
-
-  const resultTitle =
-    el("result-title");
-
-
-  const resultMessage =
-    el("result-message");
-
-
-  const nextButton =
-    el("next-stage");
+  el("result-stars")
+    .textContent =
+    stars;
 
 
   const rewardBox =
     el("reward-box");
 
 
-  if (rewardBox) {
-
-    rewardBox.classList.add(
-      "hidden"
-    );
-
-    rewardBox.innerHTML = "";
-
-  }
+  rewardBox.classList.add(
+    "hidden"
+  );
 
 
-  // ------------------------------------
+  rewardBox.innerHTML =
+    "";
+
+
+  const nextButton =
+    el("next-stage");
+
+
+  // ======================================
   // 合格
-  // ------------------------------------
+  // ======================================
 
   if (
     correctCount >= 8
@@ -1194,31 +1161,26 @@ function finishTraining() {
       ] || "";
 
 
-    const rank =
-      value => {
+    const starValue =
+      stars === "⭐⭐⭐"
+        ? 3
+        : stars === "⭐⭐☆"
+          ? 2
+          : 1;
 
-        if (
-          value === "⭐⭐⭐"
-        ) {
-          return 3;
-        }
 
-        if (
-          value === "⭐⭐☆"
-        ) {
-          return 2;
-        }
-
-        return 1;
-
-      };
+    const oldValue =
+      oldStars === "⭐⭐⭐"
+        ? 3
+        : oldStars === "⭐⭐☆"
+          ? 2
+          : oldStars === "⭐☆☆"
+            ? 1
+            : 0;
 
 
     if (
-      !oldStars
-      ||
-      rank(stars) >
-      rank(oldStars)
+      starValue > oldValue
     ) {
 
       stageStars[
@@ -1244,39 +1206,13 @@ function finishTraining() {
       );
 
 
-    const isNew =
-      monster
-        ? catchMonster(
-            monster.id
-          )
-        : false;
-
-
-    // ★ セーブ
-    saveGame();
-
-
-    if (resultTitle) {
-
-      resultTitle.textContent =
-        currentStage === 9
-          ? "🏆 9×9マスター！"
-          : "🥋 修行完了！";
-
-    }
-
-
-    if (resultMessage) {
-
-      resultMessage.textContent =
-        currentStage === 9
-          ? "すべての九九を極めた！冒険の扉が開いた！"
-          : `${currentStage + 1}の段が解放された！`;
-
-    }
-
-
     if (monster) {
+
+      const isNew =
+        catchMonster(
+          monster.id
+        );
+
 
       showReward(
         monster,
@@ -1286,50 +1222,63 @@ function finishTraining() {
     }
 
 
-    if (nextButton) {
-
-      nextButton.style.display =
-        "inline-block";
+    saveGame();
 
 
-      nextButton.textContent =
-        currentStage === 9
-          ? "🗺️ 冒険へ進む"
-          : `🥋 ${currentStage + 1}の段へ`;
+    if (
+      currentStage === 9
+    ) {
+
+      el("result-title")
+        .textContent =
+        "🏆 9×9マスター！";
+
+
+      el("result-message")
+        .textContent =
+        "すべての九九を極めた！冒険の扉が開いた！";
 
     }
+
+    else {
+
+      el("result-title")
+        .textContent =
+        "🥋 修行完了！";
+
+
+      el("result-message")
+        .textContent =
+        `${currentStage + 1}の段が解放された！`;
+
+    }
+
+
+    nextButton.style.display =
+      "inline-block";
+
+
+    nextButton.textContent =
+      currentStage === 9
+        ? "🗺️ 冒険へ進む"
+        : `🥋 ${currentStage + 1}の段へ`;
 
   }
 
-
-  // ------------------------------------
-  // 不合格
-  // ------------------------------------
-
   else {
 
-    if (resultTitle) {
-
-      resultTitle.textContent =
-        "もう少し修行じゃ！";
-
-    }
+    el("result-title")
+      .textContent =
+      "もう少し修行じゃ！";
 
 
-    if (resultMessage) {
-
-      resultMessage.textContent =
-        "8問以上正解すると合格だよ！";
-
-    }
+    el("result-message")
+      .textContent =
+      "8問以上正解すると合格だよ！";
 
 
-    if (nextButton) {
-
-      nextButton.style.display =
-        "none";
-
-    }
+    nextButton.style.display =
+      "none";
 
   }
 
@@ -1345,47 +1294,10 @@ function finishTraining() {
 // 図鑑
 // ========================================
 
-function updateWorldStats() {
-
-  const count =
-    el("caught-count");
-
-
-  const percent =
-    el("book-percent");
-
-
-  if (count) {
-
-    count.textContent =
-      `${caughtMonsters.length} / ${monsters.length}`;
-
-  }
-
-
-  if (percent) {
-
-    percent.textContent =
-      `${Math.round(
-        caughtMonsters.length /
-        monsters.length *
-        100
-      )}%`;
-
-  }
-
-}
-
-
 function renderMonsterBook() {
 
   const list =
     el("monster-list");
-
-
-  if (!list) {
-    return;
-  }
 
 
   list.innerHTML = "";
@@ -1427,18 +1339,29 @@ function renderMonsterBook() {
           <div class="monster-number">
             #${String(
               monster.id
-            ).padStart(3, "0")}
+            ).padStart(
+              3,
+              "0"
+            )}
           </div>
 
+
           <div class="monster-icon">
-            ${monster.icon}
+
+            ${monsterImageHTML(
+              monster,
+              "book-monster-image"
+            )}
+
           </div>
+
 
           <div class="monster-info">
 
             <h2>
               ${monster.name}
             </h2>
+
 
             <div class="monster-meta">
 
@@ -1456,9 +1379,11 @@ function renderMonsterBook() {
 
             </div>
 
+
             <p>
               ${monster.desc}
             </p>
+
 
             <small>
               ${monster.stage}の段クリアで仲間になる
@@ -1477,18 +1402,28 @@ function renderMonsterBook() {
           <div class="monster-number">
             #${String(
               monster.id
-            ).padStart(3, "0")}
+            ).padStart(
+              3,
+              "0"
+            )}
           </div>
 
+
           <div class="monster-icon">
-            ❓
+
+            <div class="unknown-monster">
+              ?
+            </div>
+
           </div>
+
 
           <div class="monster-info">
 
             <h2>
               ？？？？
             </h2>
+
 
             <div class="monster-meta">
 
@@ -1498,9 +1433,12 @@ function renderMonsterBook() {
 
             </div>
 
+
             <p>
-              このモンスターを見つけるには、修行を進めよう。
+              このモンスターを見つけるには、
+              修行を進めよう。
             </p>
+
 
             <small>
               ${monster.stage}の段に秘密がある……
@@ -1521,18 +1459,19 @@ function renderMonsterBook() {
   );
 
 
-  if (el("book-summary")) {
-
-    el("book-summary").textContent =
-      `${caughtMonsters.length} / ${monsters.length} 発見`;
-
-  }
+  el("book-summary")
+    .textContent =
+    `${caughtMonsters.length} / ${monsters.length} 発見`;
 
 
   updateWorldStats();
 
 }
 
+
+// ========================================
+// 図鑑を開く
+// ========================================
 
 function openBook(
   fromScreen
@@ -1553,16 +1492,137 @@ function openBook(
 
 
 // ========================================
+// 冒険ステータス
+// ========================================
+
+function updateWorldStats() {
+
+  el("caught-count")
+    .textContent =
+    `${caughtMonsters.length} / ${monsters.length}`;
+
+
+  el("book-percent")
+    .textContent =
+    `${Math.round(
+      caughtMonsters.length
+      /
+      monsters.length
+      *
+      100
+    )}%`;
+
+}
+
+
+// ========================================
+// セーブデータ消去
+// ========================================
+
+function resetGame() {
+
+  const answer =
+    confirm(
+      "⚠️ セーブデータを消去します。\n\n" +
+      "クリアした段、星評価、モンスター図鑑などがすべて消えます。\n\n" +
+      "本当に最初からプレイしますか？"
+    );
+
+
+  if (!answer) {
+
+    return;
+
+  }
+
+
+  try {
+
+    localStorage.removeItem(
+      SAVE_KEY
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "セーブデータ削除失敗:",
+      error
+    );
+
+  }
+
+
+  // ======================================
+  // ゲーム状態を初期化
+  // ======================================
+
+  clearedStages = [];
+
+  stageStars = {};
+
+  caughtMonsters = [];
+
+  adventureUnlocked =
+    false;
+
+
+  currentStage = 1;
+
+  questionNumber = 0;
+
+  correctCount = 0;
+
+  combo = 0;
+
+  maxCombo = 0;
+
+  currentAnswer = 0;
+
+  answering = false;
+
+
+  if (questionTimer) {
+
+    clearTimeout(
+      questionTimer
+    );
+
+    questionTimer =
+      null;
+
+  }
+
+
+  createStageList();
+
+
+  alert(
+    "✨ セーブデータをリセットしました！\n\n" +
+    "1の段から冒険を始めよう！"
+  );
+
+
+  showScreen(
+    "training-screen"
+  );
+
+
+  console.log(
+    "🗑️ セーブデータをリセットしました"
+  );
+
+}
+
+
+// ========================================
 // ボタン
 // ========================================
 
-const startButton =
-  el("start-button");
 
-
-if (startButton) {
-
-  startButton.addEventListener(
+el("start-button")
+  .addEventListener(
     "click",
     () => {
 
@@ -1575,16 +1635,9 @@ if (startButton) {
     }
   );
 
-}
 
-
-const backTraining =
-  el("back-training");
-
-
-if (backTraining) {
-
-  backTraining.addEventListener(
+el("back-training")
+  .addEventListener(
     "click",
     () => {
 
@@ -1597,16 +1650,9 @@ if (backTraining) {
     }
   );
 
-}
 
-
-const retryButton =
-  el("retry-stage");
-
-
-if (retryButton) {
-
-  retryButton.addEventListener(
+el("retry-stage")
+  .addEventListener(
     "click",
     () => {
 
@@ -1617,16 +1663,9 @@ if (retryButton) {
     }
   );
 
-}
 
-
-const nextStageButton =
-  el("next-stage");
-
-
-if (nextStageButton) {
-
-  nextStageButton.addEventListener(
+el("next-stage")
+  .addEventListener(
     "click",
     () => {
 
@@ -1651,16 +1690,9 @@ if (nextStageButton) {
     }
   );
 
-}
 
-
-const adventureButton =
-  el("adventure-button");
-
-
-if (adventureButton) {
-
-  adventureButton.addEventListener(
+el("adventure-button")
+  .addEventListener(
     "click",
     () => {
 
@@ -1673,16 +1705,9 @@ if (adventureButton) {
     }
   );
 
-}
 
-
-const trainingBookButton =
-  el("open-book-training");
-
-
-if (trainingBookButton) {
-
-  trainingBookButton.addEventListener(
+el("open-book-training")
+  .addEventListener(
     "click",
     () => {
 
@@ -1693,16 +1718,9 @@ if (trainingBookButton) {
     }
   );
 
-}
 
-
-const resultBookButton =
-  el("result-book");
-
-
-if (resultBookButton) {
-
-  resultBookButton.addEventListener(
+el("result-book")
+  .addEventListener(
     "click",
     () => {
 
@@ -1713,16 +1731,9 @@ if (resultBookButton) {
     }
   );
 
-}
 
-
-const adventureBookButton =
-  el("adventure-book");
-
-
-if (adventureBookButton) {
-
-  adventureBookButton.addEventListener(
+el("adventure-book")
+  .addEventListener(
     "click",
     () => {
 
@@ -1733,16 +1744,9 @@ if (adventureBookButton) {
     }
   );
 
-}
 
-
-const worldBookButton =
-  el("world-book");
-
-
-if (worldBookButton) {
-
-  worldBookButton.addEventListener(
+el("world-book")
+  .addEventListener(
     "click",
     () => {
 
@@ -1753,16 +1757,9 @@ if (worldBookButton) {
     }
   );
 
-}
 
-
-const backBook =
-  el("back-book");
-
-
-if (backBook) {
-
-  backBook.addEventListener(
+el("back-book")
+  .addEventListener(
     "click",
     () => {
 
@@ -1790,11 +1787,16 @@ if (backBook) {
     }
   );
 
-}
+
+el("reset-game")
+  .addEventListener(
+    "click",
+    resetGame
+  );
 
 
 // ========================================
-// ページ終了時セーブ
+// ページ終了時にも保存
 // ========================================
 
 window.addEventListener(
@@ -1816,21 +1818,21 @@ window.addEventListener(
 
 
 // ========================================
-// 起動
+// ゲーム起動
 // ========================================
 
 loadGame();
 
+createStageList();
+
 
 console.log(
-  "9×9モンスターズ 起動しました！"
+  "🎮 9×9モンスターズ 起動しました！"
 );
-
 
 console.log(
   "💾 セーブシステム: ONLINE"
 );
-
 
 console.log(
   `📖 図鑑: ${
