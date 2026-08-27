@@ -1235,6 +1235,441 @@ button {
   font-size: 20px;
 }
 
+/* ==================================================
+   はじまりの森
+   探索ルートノード
+================================================== */
+
+.forest-map {
+  width: min(100%, 460px);
+  margin: 25px auto;
+  padding: 10px 0 30px;
+}
+
+
+/* -------------------------
+   森のルートボタン共通
+------------------------- */
+
+.forest-node,
+.battle-node,
+.boss-node,
+.goal-node {
+  width: min(100%, 360px);
+  min-height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 14px;
+
+  margin: 12px auto;
+
+  padding: 14px 18px;
+
+  border: 3px solid #c8d9c2;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  color: #263426;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 0 #a9bda2,
+    0 8px 14px rgba(60, 100, 55, 0.10);
+
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s,
+    border-color 0.12s,
+    background 0.12s;
+}
+
+
+/* -------------------------
+   アイコン
+------------------------- */
+
+.forest-node .node-icon,
+.battle-node .node-icon,
+.boss-node .node-icon,
+.goal-node .node-icon {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #e8f5df;
+
+  font-size: 27px;
+}
+
+
+/* -------------------------
+   ボタン文字
+------------------------- */
+
+.forest-node strong,
+.battle-node strong,
+.boss-node strong,
+.goal-node strong {
+  display: block;
+
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.forest-node small,
+.battle-node small,
+.boss-node small,
+.goal-node small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #7b8877;
+
+  font-size: 12px;
+}
+
+
+/* -------------------------
+   タップ・ホバー
+------------------------- */
+
+.forest-node:hover,
+.battle-node:hover,
+.boss-node:hover,
+.goal-node:hover {
+  transform: translateY(-2px);
+
+  border-color: #79a96e;
+
+  box-shadow:
+    0 7px 0 #91ad89,
+    0 11px 18px rgba(60, 100, 55, 0.14);
+}
+
+
+.forest-node:active,
+.battle-node:active,
+.boss-node:active,
+.goal-node:active {
+  transform: translateY(4px);
+
+  box-shadow:
+    0 2px 0 #a9bda2;
+}
+
+
+/* ==================================================
+   通常バトル
+================================================== */
+
+.battle-node {
+  border-color: #b9d5b0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f3faef
+    );
+}
+
+
+/* ==================================================
+   クリア済み
+================================================== */
+
+.battle-node.cleared-node {
+  border-color: #e2bd42;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf0,
+      #fff8d5
+    );
+
+  box-shadow:
+    0 5px 0 #c9a737,
+    0 8px 14px rgba(180, 145, 35, 0.12);
+}
+
+
+.battle-node.cleared-node .node-icon {
+  background: #fff0a8;
+}
+
+
+/* ==================================================
+   未解放
+================================================== */
+
+.battle-node.locked-node,
+.boss-node.locked-node {
+  opacity: 0.48;
+
+  border-color: #cbd0ca;
+
+  background: #eef0ee;
+
+  cursor: not-allowed;
+
+  box-shadow:
+    0 3px 0 #c7cbc6;
+}
+
+
+.battle-node.locked-node:hover,
+.boss-node.locked-node:hover {
+  transform: none;
+
+  border-color: #cbd0ca;
+
+  box-shadow:
+    0 3px 0 #c7cbc6;
+}
+
+
+/* ==================================================
+   ボス
+================================================== */
+
+.boss-node {
+  border-color: #c98d8d;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffafa,
+      #ffeaea
+    );
+
+  box-shadow:
+    0 5px 0 #b87373,
+    0 8px 16px rgba(150, 65, 65, 0.12);
+}
+
+
+.boss-node .node-icon {
+  background: #ffd5d5;
+
+  font-size: 30px;
+}
+
+
+.boss-node strong {
+  color: #9d3535;
+}
+
+
+.boss-node:hover {
+  border-color: #c75b5b;
+
+  box-shadow:
+    0 7px 0 #aa6464,
+    0 11px 18px rgba(150, 65, 65, 0.16);
+}
+
+
+/* ==================================================
+   ボス撃破済み
+================================================== */
+
+.boss-node.cleared-node {
+  border-color: #d7ad32;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf1,
+      #fff3bd
+    );
+
+  box-shadow:
+    0 5px 0 #bd962d,
+    0 8px 16px rgba(190, 145, 30, 0.14);
+}
+
+
+.boss-node.cleared-node strong {
+  color: #805d00;
+}
+
+
+/* ==================================================
+   森クリア
+================================================== */
+
+.goal-node {
+  margin-top: 24px;
+
+  border-color: #e2bd42;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf1,
+      #fff4b9
+    );
+
+  box-shadow:
+    0 5px 0 #c7a431,
+    0 9px 18px rgba(190, 145, 30, 0.15);
+}
+
+
+.goal-node .node-icon {
+  background: #ffe98b;
+
+  font-size: 29px;
+}
+
+
+.goal-node strong {
+  color: #795c00;
+}
+
+
+/* ==================================================
+   森の進行ライン
+================================================== */
+
+.forest-route {
+  position: relative;
+
+  width: 100%;
+
+  padding: 2px 0;
+}
+
+
+.forest-route::before {
+  content: "";
+
+  position: absolute;
+
+  top: 40px;
+  bottom: 40px;
+
+  left: 50%;
+
+  width: 5px;
+
+  transform: translateX(-50%);
+
+  border-radius: 5px;
+
+  background: #c7ddbf;
+
+  z-index: 0;
+}
+
+
+.forest-route > * {
+  position: relative;
+
+  z-index: 1;
+}
+
+
+/* ==================================================
+   スマホ用
+================================================== */
+
+@media (max-width: 500px) {
+
+  .forest-map {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding-bottom: 25px;
+  }
+
+
+  .forest-node,
+  .battle-node,
+  .boss-node,
+  .goal-node {
+    width: 100%;
+
+    min-height: 76px;
+
+    gap: 11px;
+
+    margin: 10px auto;
+
+    padding: 11px 13px;
+
+    border-width: 3px;
+
+    border-radius: 18px;
+  }
+
+
+  .forest-node .node-icon,
+  .battle-node .node-icon,
+  .boss-node .node-icon,
+  .goal-node .node-icon {
+    width: 43px;
+    height: 43px;
+
+    flex-basis: 43px;
+
+    border-radius: 13px;
+
+    font-size: 24px;
+  }
+
+
+  .forest-node strong,
+  .battle-node strong,
+  .boss-node strong,
+  .goal-node strong {
+    font-size: 17px;
+  }
+
+
+  .forest-node small,
+  .battle-node small,
+  .boss-node small,
+  .goal-node small {
+    font-size: 11px;
+  }
+
+
+  .boss-node .node-icon {
+    font-size: 27px;
+  }
+
+
+  .goal-node .node-icon {
+    font-size: 27px;
+  }
+
+
+  .forest-route::before {
+    width: 4px;
+
+    top: 36px;
+    bottom: 36px;
+  }
+
+}
 
 /* ==================================================
    BATTLE
