@@ -3055,3 +3055,433 @@ button {
   }
 
 }
+/* =========================================================
+   モンスター特訓 UI 改良版
+========================================================= */
+
+.training-battle {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 10px 8px 28px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+
+/* -----------------------------------------
+   タイトル
+----------------------------------------- */
+
+.training-header {
+  width: 100%;
+  margin: 0 auto 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.training-title {
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.35;
+
+  text-align: center;
+  white-space: nowrap;
+}
+
+.training-subtitle {
+  width: 100%;
+
+  margin-top: 5px;
+
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+
+  text-align: center;
+
+  opacity: 0.8;
+}
+
+
+/* -----------------------------------------
+   モンスターカード
+----------------------------------------- */
+
+.training-monster-card {
+  width: 100%;
+  min-height: 110px;
+
+  margin: 0 auto 16px;
+  padding: 12px 18px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.09);
+}
+
+.training-monster-image {
+  width: 78px;
+  height: 78px;
+
+  flex: 0 0 78px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.training-monster-image-inner {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.training-monster-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 2px;
+}
+
+.training-monster-info strong {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.training-monster-info span {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* -----------------------------------------
+   九九でパワーアップ
+----------------------------------------- */
+
+.training-message {
+  margin: 12px 0;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+
+/* -----------------------------------------
+   問題
+----------------------------------------- */
+
+.training-question {
+  width: 100%;
+  min-height: 78px;
+
+  margin: 0 auto 18px;
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.09);
+
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+
+  text-align: center;
+}
+
+
+/* -----------------------------------------
+   4択ボタン
+----------------------------------------- */
+
+.training-answers {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin: 0 auto;
+}
+
+.training-answer {
+  width: 100%;
+  min-height: 76px;
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  border: 2px solid rgba(40, 120, 220, 0.22);
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  font-size: 27px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 0 rgba(0, 0, 0, 0.10);
+
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s,
+    opacity 0.2s;
+}
+
+.training-answer:active {
+  transform: translateY(4px);
+
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.10);
+}
+
+.training-answer:disabled {
+  cursor: default;
+}
+
+
+/* 正解 */
+
+.training-answer.correct {
+  border-color: #45b85a;
+
+  box-shadow:
+    0 0 0 3px rgba(69, 184, 90, 0.22),
+    0 5px 0 rgba(0, 0, 0, 0.08);
+
+  transform: scale(1.02);
+}
+
+
+/* 不正解 */
+
+.training-answer.wrong {
+  border-color: #4b91df;
+
+  opacity: 0.55;
+}
+
+
+/* -----------------------------------------
+   結果表示
+----------------------------------------- */
+
+.training-result {
+  min-height: 90px;
+
+  margin-top: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* 特訓成功 */
+
+.training-perfect {
+  font-size: 28px;
+  font-weight: 900;
+
+  color: #2e9b4b;
+}
+
+
+/* EXP */
+
+.training-exp {
+  margin-top: 5px;
+
+  font-size: 19px;
+  font-weight: 900;
+}
+
+
+/* 特訓失敗 */
+
+.training-miss {
+  font-size: 28px;
+  font-weight: 900;
+
+  color: #2879d2;
+}
+
+
+/* 正解 */
+
+.training-correct-answer {
+  margin-top: 5px;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+
+/* -----------------------------------------
+   もう一度特訓
+----------------------------------------- */
+
+.training-retry {
+  min-height: 52px;
+
+  margin-top: 12px;
+  padding: 10px 24px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: #2879d2;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.training-retry:active {
+  transform: translateY(3px);
+
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+
+/* -----------------------------------------
+   育成画面へ戻る
+----------------------------------------- */
+
+.training-cancel {
+  min-height: 48px;
+
+  margin-top: 20px;
+  padding: 10px 22px;
+
+  border: none;
+  border-radius: 15px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   スマホ
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .training-battle {
+    padding: 8px 6px 24px;
+  }
+
+  .training-header {
+    margin-bottom: 16px;
+  }
+
+  .training-title {
+    font-size: 25px;
+    white-space: nowrap;
+  }
+
+  .training-subtitle {
+    margin-top: 4px;
+
+    font-size: 16px;
+  }
+
+  .training-monster-card {
+    min-height: 105px;
+
+    gap: 14px;
+
+    padding: 10px 14px;
+  }
+
+  .training-monster-image {
+    width: 70px;
+    height: 70px;
+
+    flex-basis: 70px;
+  }
+
+  .training-monster-info strong {
+    font-size: 20px;
+  }
+
+  .training-monster-info span {
+    font-size: 16px;
+  }
+
+  .training-message {
+    font-size: 17px;
+  }
+
+  .training-question {
+    min-height: 76px;
+
+    font-size: 32px;
+  }
+
+  .training-answers {
+    gap: 10px;
+  }
+
+  .training-answer {
+    min-height: 74px;
+
+    font-size: 26px;
+  }
+
+  .training-perfect,
+  .training-miss {
+    font-size: 27px;
+  }
+
+}
