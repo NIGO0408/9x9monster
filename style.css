@@ -2664,3 +2664,76 @@ button {
   letter-spacing: 1px;
   text-align: center;
 }
+/* ==================================================
+   メインメニュー
+   修行・冒険・育成
+================================================== */
+
+#menu {
+  padding: 12px 10px 18px;
+}
+
+
+#menu button {
+  min-height: 64px;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  border-radius: 18px;
+
+  padding: 10px 14px;
+
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.12);
+
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+
+/* アイコンを少し大きく */
+
+#menu button .icon,
+#menu button span:first-child {
+  font-size: 25px;
+}
+
+
+/* タップしたとき */
+
+#menu button:active {
+  transform: translateY(3px);
+
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+
+/* スマホ */
+
+@media (max-width: 500px) {
+
+  #menu {
+    padding: 10px 8px 16px;
+  }
+
+
+  #menu button {
+    min-height: 68px;
+
+    font-size: 18px;
+
+    padding: 11px 10px;
+
+    border-radius: 18px;
+  }
+
+
+  #menu button .icon,
+  #menu button span:first-child {
+    font-size: 27px;
+  }
+
+}
