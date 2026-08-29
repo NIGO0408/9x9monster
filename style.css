@@ -4037,3 +4037,26 @@ button {
     object-fit: contain;
     vertical-align: middle;
 }
+
+/* タイトル・師匠アイコン配置 */
+.page-title > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    width: fit-content !important;
+    margin: 0 auto !important;
+}
+
+.page-title > div img.dojo-master-icon {
+    position: static !important;
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+}
+
+.page-title > div span {
+    display: inline-block !important;
+}
