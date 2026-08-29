@@ -3588,13 +3588,13 @@ button {
 /* モンスター画像 */
 
 .training-battle .training-monster-image {
-  width: 78px !important;
-  height: 78px !important;
+  width: 88px !important;
+  height: 88px !important;
 
-  min-width: 78px !important;
-  max-width: 78px !important;
+  min-width: 88px !important;
+  max-width: 88px !important;
 
-  flex: 0 0 78px !important;
+  flex: 0 0 88px !important;
 
   display: flex !important;
 
