@@ -21,19 +21,6 @@ const SAVE_KEY = "9x9-monsters-save-v7";
 const monsters = [
   {
     id: 1,
-    stage: 2,
-    name: "トロール",
-    image: null,
-    type: "いわタイプ",
-    desc: "のんびりしているが力持ち。",
-    rare: "★",
-    baseHP: 30,
-    baseAttack: 12,
-    baseDefense: 15
-  },
-
-  {
-    id: 2,
     stage: 1,
     name: "スライム",
     image: "slime_32.png",
@@ -42,101 +29,140 @@ const monsters = [
     rare: "★",
     baseHP: 25,
     baseAttack: 10,
-    baseDefense: 12
+    baseDefense: 12,
+    hpGrowth: 3,
+    attackGrowth: 1,
+    defenseGrowth: 1
+  },
+
+  {
+    id: 2,
+    stage: 2,
+    name: "キノコン",
+    image: null,
+    type: "いわタイプ",
+    desc: "のんびりしているが力持ち。",
+    rare: "★",
+    baseHP: 28,
+    baseAttack: 10,
+    baseDefense: 15,
+    hpGrowth: 3,
+    attackGrowth: 1,
+    defenseGrowth: 2
   },
 
   {
     id: 3,
     stage: 3,
-    name: "ピヨコ",
+    name: "ゴブリン",
     image: null,
     type: "ひかりタイプ",
     desc: "小さな体で元気いっぱい。",
     rare: "★",
-    baseHP: 22,
-    baseAttack: 13,
-    baseDefense: 10
+    baseHP: 34,
+    baseAttack: 12,
+    baseDefense: 16,
+    hpGrowth: 4,
+    attackGrowth: 1,
+    defenseGrowth: 2
   },
 
   {
     id: 4,
     stage: 4,
-    name: "ゴブリン",
+    name: "ゴースト",
     image: null,
     type: "やみタイプ",
-    desc: "ちょっといたずら好きなモンスター。",
+    desc: "夜の森に現れる謎のモンスター。",
     rare: "★",
-    baseHP: 35,
+    baseHP: 40,
     baseAttack: 15,
-    baseDefense: 13
+    baseDefense: 18,
+    hpGrowth: 4,
+    attackGrowth: 2,
+    defenseGrowth: 2
   },
 
   {
     id: 5,
     stage: 5,
-    name: "ロックン",
+    name: "ワーウルフ",
     image: null,
-    type: "いわタイプ",
-    desc: "全身が岩でできている。",
+    type: "かぜタイプ",
+    desc: "素早さが自慢のモンスター。",
     rare: "★★",
-    baseHP: 45,
-    baseAttack: 18,
-    baseDefense: 22
+    baseHP: 43,
+    baseAttack: 21,
+    baseDefense: 19,
+    hpGrowth: 5,
+    attackGrowth: 3,
+    defenseGrowth: 2
   },
 
   {
     id: 6,
     stage: 6,
-    name: "ウルフ",
+    name: "イエティ",
     image: null,
-    type: "かぜタイプ",
-    desc: "素早さが自慢のモンスター。",
+    type: "こおりタイプ",
+    desc: "大きな体と力を持つモンスター。",
     rare: "★★",
-    baseHP: 38,
-    baseAttack: 22,
-    baseDefense: 15
+    baseHP: 52,
+    baseAttack: 24,
+    baseDefense: 20,
+    hpGrowth: 6,
+    attackGrowth: 3,
+    defenseGrowth: 2
   },
 
   {
     id: 7,
     stage: 7,
-    name: "ファントム",
+    name: "ミノタウロス",
     image: null,
-    type: "やみタイプ",
-    desc: "夜の森に現れる謎のモンスター。",
+    type: "いわタイプ",
+    desc: "強大な力を持つ怪物。",
     rare: "★★",
-    baseHP: 42,
-    baseAttack: 24,
-    baseDefense: 18
+    baseHP: 58,
+    baseAttack: 29,
+    baseDefense: 25,
+    hpGrowth: 6,
+    attackGrowth: 4,
+    defenseGrowth: 3
   },
 
   {
     id: 8,
     stage: 8,
-    name: "ドラゴン",
+    name: "ゴーレム",
     image: null,
-    type: "ほのおタイプ",
-    desc: "強大な力を持つドラゴン。",
+    type: "いわタイプ",
+    desc: "圧倒的な防御力を誇る巨人。",
     rare: "★★★",
-    baseHP: 60,
-    baseAttack: 30,
-    baseDefense: 25
+    baseHP: 72,
+    baseAttack: 25,
+    baseDefense: 38,
+    hpGrowth: 8,
+    attackGrowth: 3,
+    defenseGrowth: 5
   },
 
   {
     id: 9,
     stage: 9,
-    name: "キングドラゴン",
+    name: "ドラゴン",
     image: null,
     type: "ほのおタイプ",
     desc: "九九を極めた者だけが出会える王。",
     rare: "★★★",
-    baseHP: 80,
-    baseAttack: 40,
-    baseDefense: 35
+    baseHP: 85,
+    baseAttack: 35,
+    baseDefense: 35,
+    hpGrowth: 8,
+    attackGrowth: 4,
+    defenseGrowth: 4
   }
 ];
-
 
 /* =========================================================
    はじまりの森の敵
