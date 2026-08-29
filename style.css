@@ -3996,3 +3996,10 @@ button {
   }
 
 }
+
+.master-icon {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: contain;
+  vertical-align: middle;
+}
