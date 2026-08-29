@@ -4545,7 +4545,6 @@ function battleLose() {
   if (
     currentAdventureStage === "lake"
   ) {
-    lakeProgress = 0;
     lakeCurrentHP = 0;
     lakeBattleMonsterId = null;
     updateLakeMap();
