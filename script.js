@@ -21,7 +21,7 @@ const SAVE_KEY = "9x9-monsters-save-v7";
 const monsters = [
   {
     id: 1,
-    stage: 1,
+    stage: 2,
     name: "トロール",
     image: null,
     type: "いわタイプ",
@@ -34,9 +34,9 @@ const monsters = [
 
   {
     id: 2,
-    stage: 2,
+    stage: 1,
     name: "スライム",
-    image: null,
+    image: "slime_32.png",
     type: "みずタイプ",
     desc: "ぷるぷるしている不思議な仲間。",
     rare: "★",
