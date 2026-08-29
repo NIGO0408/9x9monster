@@ -199,16 +199,22 @@ button {
 }
 
 .page-title > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0px;
-    width: fit-content;
-    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.page-title > div span {
+    display: inline-block;
+    position: relative;
 }
 
 .page-title > div img {
-    margin-right: -20px;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 10px;
 }
 
 /* =========================
