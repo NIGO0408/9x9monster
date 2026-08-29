@@ -507,8 +507,20 @@ function getMonsterData(monsterId) {
    必要EXP
    ========================================================= */
 
-function requiredExp(level) {
-  return level * 100;
+function requiredExp(level, stage) {
+  const stageRate = {
+    1: 80,
+    2: 90,
+    3: 100,
+    4: 120,
+    5: 130,
+    6: 140,
+    7: 160,
+    8: 180,
+    9: 200
+  };
+
+  return level * (stageRate[stage] || 100);
 }
 
 
@@ -1914,9 +1926,10 @@ function renderMonsterDetail() {
 
 
   const required =
-    requiredExp(
-      data.level
-    );
+  requiredExp(
+    data.level,
+    monster.stage
+  );
 
 
   const percent =
@@ -2080,23 +2093,23 @@ function gainExp(
   while (
     data.exp >=
     requiredExp(
-      data.level
-    )
+  data.level,
+  monster.stage
+)
   ) {
 
     data.exp -=
       requiredExp(
-        data.level
-      );
+  data.level,
+  monster.stage
+);
 
 
     data.level++;
 
-    data.hp += 5;
-
-    data.attack += 2;
-
-    data.defense += 2;
+    data.hp += monster.hpGrowth;
+　　data.attack += monster.attackGrowth;
+　　data.defense += monster.defenseGrowth;
 
 
     leveledUp =
