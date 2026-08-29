@@ -2081,6 +2081,16 @@ function gainExp(
     return false;
   }
 
+  const monster =
+  monsters.find(
+    item =>
+      item.id ===
+      Number(monsterId)
+  );
+
+if (!monster) {
+  return false;
+} 
 
   data.exp +=
     Number(amount);
