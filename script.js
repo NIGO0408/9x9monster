@@ -3301,7 +3301,7 @@ function updateForestMap() {
 
 
     if (
-      forestProgress >= 
+      forestProgress >= 6
     ) {
 
       const icon =
