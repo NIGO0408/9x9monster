@@ -3185,13 +3185,11 @@ function openForest() {
 
   }
 
+   showScreen("forest-screen");
 
   updateForestMap();
 
-
-  showScreen(
-    "forest-screen"
-  );
+  
 }
 
 
