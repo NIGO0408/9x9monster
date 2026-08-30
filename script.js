@@ -3369,7 +3369,7 @@ function startForestBattle(
 
   if (
     number < 1 ||
-    number > 5
+    number > 6
   ) {
     return;
   }
@@ -3491,7 +3491,8 @@ if (number === 6) {
   };
 
 }
-
+}
+   
 /* =========================================================
    バトル準備
    ========================================================= */
@@ -3600,7 +3601,7 @@ function setupBattle() {
   if (battleNumber) {
 
     battleNumber.textContent =
-      currentBattleNumber === 5
+      currentBattleNumber === 6
         ? "👹 BOSS BATTLE"
         : `⚔️ BATTLE ${currentBattleNumber}`;
 
@@ -3626,7 +3627,7 @@ function setupBattle() {
   if (enemyName) {
 
     enemyName.textContent =
-      currentBattleNumber === 5
+      currentBattleNumber === 6
         ? currentWildMonster.name
         : `野生の${currentWildMonster.name}`;
 
@@ -3661,7 +3662,7 @@ function setupBattle() {
     else {
 
       enemyImage.textContent =
-        currentBattleNumber === 5
+        currentBattleNumber === 6
           ? "👹"
           : "👾";
 
@@ -3720,7 +3721,7 @@ function setupBattle() {
     currentAdventureStage === "lake";
 
   battleMessage(
-    currentBattleNumber === 5
+    currentBattleNumber === 6
       ? (
           isLake
             ? "⚠️ 湖底の主が現れた！"
@@ -4391,7 +4392,7 @@ function battleWin() {
   battleWins++;
 
   battleExpReward =
-    currentBattleNumber === 5
+    currentBattleNumber === 6
       ? 100
       : 20 +
         currentBattleNumber *
@@ -4464,14 +4465,14 @@ function battleWin() {
 
   if (icon) {
     icon.textContent =
-      currentBattleNumber === 5
+      currentBattleNumber === 6
         ? "🏆"
         : "⚔️";
   }
 
   if (title) {
     title.textContent =
-      currentBattleNumber === 5
+      currentBattleNumber === 6
         ? (
             isLake
               ? "🌊 九九の湖クリア！"
@@ -4482,7 +4483,7 @@ function battleWin() {
 
   if (message) {
     if (
-      currentBattleNumber === 5
+      currentBattleNumber === 6
     ) {
       message.textContent =
         isLake
@@ -4508,7 +4509,7 @@ function battleWin() {
 
   if (next) {
     next.textContent =
-      currentBattleNumber === 5
+      currentBattleNumber === 6
         ? "🗺️ 冒険マップへ"
         : `⚔️ バトル${currentBattleNumber + 1}へ`;
   }
@@ -4681,7 +4682,7 @@ function nextBattle() {
      ボス撃破後はワールドマップへ。
   */
   if (
-    currentBattleNumber === 5
+    currentBattleNumber === 6
   ) {
 
     if (isLake) {
@@ -5149,7 +5150,7 @@ function startLakeBattle(battleNumber) {
 
   if (
     number < 1 ||
-    number > 5
+    number > 6
   ) {
     return;
   }
