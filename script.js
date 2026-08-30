@@ -4373,7 +4373,7 @@ function battleWin() {
 
   const oldLevel =
     data.level;
-
+  
   const leveledUp =
     gainExp(
       selectedMonsterId,
