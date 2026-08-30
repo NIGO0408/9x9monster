@@ -394,6 +394,19 @@ function el(id) {
 
 function showScreen(id) {
 
+  /*
+     クリックしたボタンのフォーカスを外す。
+     フォーカスされたボタンの位置へ
+     ブラウザが戻そうとするのを防ぐ。
+  */
+  if (
+    document.activeElement &&
+    typeof document.activeElement.blur === "function"
+  ) {
+    document.activeElement.blur();
+  }
+
+
   document
     .querySelectorAll(".screen")
     .forEach(screen => {
@@ -417,16 +430,26 @@ function showScreen(id) {
 
 
   /*
-     ★重要
-     画面を切り替えたら
-     必ずページ最上部へ戻す。
+     画面切り替え直後に最上部へ。
   */
-
-window.scrollTo({
+  window.scrollTo({
     top: 0,
     left: 0,
-    behavior: "auto"
-});
+    behavior: "instant"
+  });
+
+
+  /*
+     ブラウザのフォーカス処理が終わった後にも
+     もう一度最上部を指定する。
+  */
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant"
+    });
+  });
 
 
   updateBottomMenu(id);
