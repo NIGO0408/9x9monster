@@ -3296,7 +3296,7 @@ function updateForestMap() {
 
     goal.classList.toggle(
       "locked-node",
-      forestProgress < 
+      forestProgress < 6
     );
 
 
