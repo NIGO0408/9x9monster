@@ -2344,10 +2344,22 @@ function renderTrainingBattle() {
 
   createTrainingQuestion();
 
-window.scrollTo({
-  top: 0,
-  behavior: "instant"
-});
+setTimeout(() => {
+  const question = el("training-question");
+
+  if (question) {
+    const y =
+      question.getBoundingClientRect().top +
+      window.scrollY -
+      510;
+
+    window.scrollTo({
+      top: y,
+      left: 0,
+      behavior: "instant"
+    });
+  }
+}, 50);
    
 }
 
