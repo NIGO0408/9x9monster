@@ -422,30 +422,11 @@ function showScreen(id) {
      必ずページ最上部へ戻す。
   */
 
-if (id === "training-screen") {
-    setTimeout(() => {
-        const question = el("training-question");
-
-        if (question) {
-            question.scrollIntoView({
-                block: "start",
-                behavior: "auto"
-            });
-
-            window.scrollBy({
-                top: -520,
-                left: 0,
-                behavior: "auto"
-            });
-        }
-    }, 300);
-} else {
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto"
-    });
-}
+window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto"
+});
 
 
   updateBottomMenu(id);
@@ -5260,16 +5241,16 @@ function startLakeBattle(battleNumber) {
 /* タイトル → 修行 */
 
 el("start-button")?.addEventListener(
-  "click",
-  () => {
+    "click",
+    () => {
 
-    createStageList();
+        createStageList();
 
-    showScreen(
-      "training-screen"
-    );
+        showScreen(
+            "training-screen"
+        );
 
-  }
+    }
 );
 
 
