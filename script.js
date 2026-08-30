@@ -427,12 +427,15 @@ if (id === "training-screen") {
         const question = el("training-question");
 
         if (question) {
-            const rect = question.getBoundingClientRect();
+            question.scrollIntoView({
+                block: "start",
+                behavior: "auto"
+            });
 
-            window.scrollTo({
-                top: window.scrollY + rect.top - 520,
+            window.scrollBy({
+                top: -520,
                 left: 0,
-                behavior: "instant"
+                behavior: "auto"
             });
         }
     }, 300);
@@ -440,7 +443,7 @@ if (id === "training-screen") {
     window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "instant"
+        behavior: "auto"
     });
 }
 
