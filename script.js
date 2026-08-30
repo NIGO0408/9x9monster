@@ -2349,10 +2349,10 @@ function renderTrainingBattle() {
  createTrainingQuestion();
 
 requestAnimationFrame(() => {
-  const question = el("training-question");
+  const monsterCard = document.querySelector(".training-monster-card");
 
-  if (question) {
-    question.scrollIntoView({
+  if (monsterCard) {
+    monsterCard.scrollIntoView({
       behavior: "instant",
       block: "start"
     });
