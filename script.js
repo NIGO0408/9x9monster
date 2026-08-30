@@ -536,11 +536,11 @@ function requiredExp(level, stage) {
     2: 90,
     3: 100,
     4: 120,
-    5: 130,
-    6: 140,
-    7: 160,
-    8: 180,
-    9: 200
+    5: 140,
+    6: 160,
+    7: 180,
+    8: 210,
+    9: 240
   };
 
   return level * (stageRate[stage] || 100);
