@@ -3263,7 +3263,7 @@ function updateForestMap() {
       }
 
       else if (
-        number === 5
+        number === 6
       ) {
 
         icon.textContent =
@@ -3296,12 +3296,12 @@ function updateForestMap() {
 
     goal.classList.toggle(
       "locked-node",
-      forestProgress < 5
+      forestProgress < 
     );
 
 
     if (
-      forestProgress >= 5
+      forestProgress >= 
     ) {
 
       const icon =
@@ -3331,7 +3331,7 @@ function updateForestMap() {
     fill.style.width =
       `${
         forestProgress /
-        5 *
+        6 *
         100
       }%`;
 
@@ -3345,7 +3345,7 @@ function updateForestMap() {
   if (text) {
 
     text.textContent =
-      `${forestProgress} / 5 バトルクリア`;
+      `${forestProgress} / 6 バトルクリア`;
 
   }
 }
