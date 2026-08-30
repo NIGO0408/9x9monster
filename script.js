@@ -179,30 +179,45 @@ const monsters = [
 
 const forestEnemies = [
   {
-    name: "スライム",
-    image: null,
+    name: "野生のスライム",
+    image: "images/yasei_slime.png",
     level: 1,
-    hp: 20,
-    attack: 5
+    hp: 12,
+    attack: 4
   },
 
   {
-    name: "きのこモン",
-    image: null,
+    name: "ワルキノコ",
+    image: "images/warukinoko.png",
     level: 2,
-    hp: 24,
+    hp: 18,
     attack: 6
   },
 
   {
-    name: "ゴブリン",
-    image: null,
-    level: 2,
-    hp: 28,
+    name: "オバケバナ",
+    image: "images/obakebana.png",
+    level: 3,
+    hp: 24,
     attack: 7
+  },
+
+  {
+    name: "ゴブリンリーダー",
+    image: "images/goburin_rida.png",
+    level: 4,
+    hp: 30,
+    attack: 9
+  },
+
+  {
+    name: "ウッドラー",
+    image: "images/uddora.png",
+    level: 5,
+    hp: 38,
+    attack: 8
   }
 ];
-
 
 /* =========================================================
    はじまりの森 ボス
@@ -210,10 +225,10 @@ const forestEnemies = [
 
 const forestBoss = {
   name: "森の守護者",
-  image: null,
-  level: 5,
-  hp: 45,
-  attack: 8
+  image: "images/morinosyugosya.png",
+  level: 7,
+  hp: 55,
+  attack: 11
 };
 
 
