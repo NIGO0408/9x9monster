@@ -2109,58 +2109,68 @@ function gainExp(
       monsterId
     );
 
-
   if (!data) {
     return false;
   }
 
   const monster =
-  monsters.find(
-    item =>
-      item.id ===
-      Number(monsterId)
-  );
+    monsters.find(
+      item =>
+        item.id ===
+        Number(monsterId)
+    );
 
-if (!monster) {
-  return false;
-} 
+  if (!monster) {
+    return false;
+  }
 
   data.exp +=
     Number(amount);
 
-
   let leveledUp =
     false;
 
-
   while (
+    data.level < monster.maxLevel &&
     data.exp >=
     requiredExp(
-  data.level,
-  monster.stage
-)
+      data.level,
+      monster.stage
+    )
   ) {
 
     data.exp -=
       requiredExp(
-  data.level,
-  monster.stage
-);
+        data.level,
+        monster.stage
+      );
 
+    data.level++;
 
-    if (data.level < monster.maxLevel) {
-  data.level++;
+    data.hp +=
+      monster.hpGrowth;
 
-  data.hp += monster.hpGrowth;
-  data.attack += monster.attackGrowth;
-  data.defense += monster.defenseGrowth;
+    data.attack +=
+      monster.attackGrowth;
 
-  leveledUp = true;
-}
+    data.defense +=
+      monster.defenseGrowth;
 
+    leveledUp =
+      true;
+  }
+
+  if (
+    data.level >=
+    monster.maxLevel
+  ) {
+    data.level =
+      monster.maxLevel;
+
+    data.exp = 0;
+  }
 
   saveGame();
-
 
   return leveledUp;
 }
