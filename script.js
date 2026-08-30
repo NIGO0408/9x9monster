@@ -27,10 +27,10 @@ const monsters = [
     type: "みずタイプ",
     desc: "ぷるぷるしている不思議な仲間。",
     rare: "★",
-    baseHP: 25,
-    baseAttack: 10,
-    baseDefense: 12,
-    hpGrowth: 3,
+    baseHP: 15,
+    baseAttack: 6,
+    baseDefense: 7,
+    hpGrowth: 2,
     attackGrowth: 1,
     defenseGrowth: 1
   },
@@ -43,12 +43,12 @@ const monsters = [
     type: "いわタイプ",
     desc: "のんびりしているが力持ち。",
     rare: "★",
-    baseHP: 28,
-    baseAttack: 10,
-    baseDefense: 15,
-    hpGrowth: 3,
+    baseHP: 18,
+    baseAttack: 7,
+    baseDefense: 9,
+    hpGrowth: 2,
     attackGrowth: 1,
-    defenseGrowth: 2
+    defenseGrowth: 1
   },
 
   {
@@ -59,12 +59,12 @@ const monsters = [
     type: "ひかりタイプ",
     desc: "小さな体で元気いっぱい。",
     rare: "★",
-    baseHP: 34,
-    baseAttack: 12,
-    baseDefense: 16,
-    hpGrowth: 4,
-    attackGrowth: 1,
-    defenseGrowth: 2
+    baseHP: 21,
+    baseAttack: 8,
+    baseDefense: 10,
+    hpGrowth: 2,
+    attackGrowth: 2,
+    defenseGrowth: 1
   },
 
   {
@@ -75,11 +75,11 @@ const monsters = [
     type: "やみタイプ",
     desc: "夜の森に現れる謎のモンスター。",
     rare: "★",
-    baseHP: 40,
-    baseAttack: 15,
-    baseDefense: 18,
-    hpGrowth: 4,
-    attackGrowth: 2,
+    baseHP: 25,
+    baseAttack: 10,
+    baseDefense: 11,
+    hpGrowth: 3,
+    attackGrowth: 1,
     defenseGrowth: 2
   },
 
@@ -91,12 +91,12 @@ const monsters = [
     type: "かぜタイプ",
     desc: "素早さが自慢のモンスター。",
     rare: "★★",
-    baseHP: 43,
-    baseAttack: 21,
-    baseDefense: 19,
-    hpGrowth: 5,
-    attackGrowth: 3,
-    defenseGrowth: 2
+    baseHP: 28,
+    baseAttack: 13,
+    baseDefense: 12,
+    hpGrowth: 3,
+    attackGrowth: 2,
+    defenseGrowth: 1
   },
 
   {
@@ -107,11 +107,11 @@ const monsters = [
     type: "こおりタイプ",
     desc: "大きな体と力を持つモンスター。",
     rare: "★★",
-    baseHP: 52,
-    baseAttack: 24,
-    baseDefense: 20,
-    hpGrowth: 6,
-    attackGrowth: 3,
+    baseHP: 32,
+    baseAttack: 15,
+    baseDefense: 13,
+    hpGrowth: 3,
+    attackGrowth: 1,
     defenseGrowth: 2
   },
 
@@ -123,12 +123,12 @@ const monsters = [
     type: "いわタイプ",
     desc: "強大な力を持つ怪物。",
     rare: "★★",
-    baseHP: 58,
-    baseAttack: 29,
-    baseDefense: 25,
-    hpGrowth: 6,
-    attackGrowth: 4,
-    defenseGrowth: 3
+    baseHP: 36,
+    baseAttack: 18,
+    baseDefense: 16,
+    hpGrowth: 4,
+    attackGrowth: 3,
+    defenseGrowth: 1
   },
 
   {
@@ -139,12 +139,12 @@ const monsters = [
     type: "いわタイプ",
     desc: "圧倒的な防御力を誇る巨人。",
     rare: "★★★",
-    baseHP: 72,
-    baseAttack: 25,
-    baseDefense: 38,
-    hpGrowth: 8,
-    attackGrowth: 3,
-    defenseGrowth: 5
+    baseHP: 42,
+    baseAttack: 16,
+    baseDefense: 23,
+    hpGrowth: 4,
+    attackGrowth: 2,
+    defenseGrowth: 3
   },
 
   {
@@ -155,12 +155,12 @@ const monsters = [
     type: "ほのおタイプ",
     desc: "九九を極めた者だけが出会える王。",
     rare: "★★★",
-    baseHP: 85,
-    baseAttack: 35,
-    baseDefense: 35,
-    hpGrowth: 8,
-    attackGrowth: 4,
-    defenseGrowth: 4
+    baseHP: 48,
+    baseAttack: 21,
+    baseDefense: 21,
+    hpGrowth: 5,
+    attackGrowth: 2,
+    defenseGrowth: 2
   }
 ];
 
