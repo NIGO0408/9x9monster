@@ -2348,13 +2348,16 @@ function renderTrainingBattle() {
 
  createTrainingQuestion();
 
-  requestAnimationFrame(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant"
+requestAnimationFrame(() => {
+  const question = el("training-question");
+
+  if (question) {
+    question.scrollIntoView({
+      behavior: "instant",
+      block: "start"
     });
-  });
+  }
+});
 }
 
 
