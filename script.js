@@ -883,7 +883,7 @@ function createStageList() {
       button.innerHTML = `
 
         <span>
-          ${cleared ? "⭐" : '<img src="sisyou.png" class="master-icon">'}
+          ${cleared ? "⭐" : '<img src="images/sisyou.png" class="master-icon">'}
         </span>
 
         <strong>
