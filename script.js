@@ -422,11 +422,30 @@ function showScreen(id) {
      必ずページ最上部へ戻す。
   */
 
+  if (id === "training-screen") {
+  setTimeout(() => {
+    const question = el("training-question");
+
+    if (question) {
+      const y =
+        question.getBoundingClientRect().top +
+        window.scrollY -
+        680;
+
+      window.scrollTo({
+        top: y,
+        left: 0,
+        behavior: "auto"
+      });
+    }
+  }, 50);
+} else {
   window.scrollTo({
     top: 0,
     left: 0,
     behavior: "auto"
   });
+}
 
 
   updateBottomMenu(id);
