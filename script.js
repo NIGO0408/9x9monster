@@ -1965,14 +1965,16 @@ function renderMonsterDetail() {
 
 
   const percent =
-    Math.min(
-      100,
-      Math.round(
-        data.exp /
-        required *
-        100
-      )
-    );
+  data.level >= monster.maxLevel
+    ? 100
+    : Math.min(
+        100,
+        Math.round(
+          data.exp /
+          required *
+          100
+        )
+      );
 
 
   detail.innerHTML = `
