@@ -430,7 +430,7 @@ function showScreen(id) {
       const y =
         question.getBoundingClientRect().top +
         window.scrollY -
-        680;
+        520;
 
       window.scrollTo({
         top: y,
