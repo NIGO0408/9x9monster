@@ -27,6 +27,7 @@ const monsters = [
     type: "みずタイプ",
     desc: "ぷるぷるしている不思議な仲間。",
     rare: "★",
+   　maxLevel: 30,
     baseHP: 15,
     baseAttack: 6,
     baseDefense: 7,
@@ -43,6 +44,7 @@ const monsters = [
     type: "いわタイプ",
     desc: "のんびりしているが力持ち。",
     rare: "★",
+     maxLevel: 30,
     baseHP: 18,
     baseAttack: 7,
     baseDefense: 9,
@@ -59,6 +61,7 @@ const monsters = [
     type: "ひかりタイプ",
     desc: "小さな体で元気いっぱい。",
     rare: "★",
+     maxLevel: 30,
     baseHP: 21,
     baseAttack: 8,
     baseDefense: 10,
@@ -75,6 +78,7 @@ const monsters = [
     type: "やみタイプ",
     desc: "夜の森に現れる謎のモンスター。",
     rare: "★",
+     maxLevel: 20,
     baseHP: 25,
     baseAttack: 10,
     baseDefense: 11,
@@ -91,6 +95,7 @@ const monsters = [
     type: "かぜタイプ",
     desc: "素早さが自慢のモンスター。",
     rare: "★★",
+     maxLevel: 20,
     baseHP: 28,
     baseAttack: 13,
     baseDefense: 12,
@@ -107,6 +112,7 @@ const monsters = [
     type: "こおりタイプ",
     desc: "大きな体と力を持つモンスター。",
     rare: "★★",
+     maxLevel: 20,
     baseHP: 32,
     baseAttack: 15,
     baseDefense: 13,
@@ -123,6 +129,7 @@ const monsters = [
     type: "いわタイプ",
     desc: "強大な力を持つ怪物。",
     rare: "★★",
+     maxLevel: 15,
     baseHP: 36,
     baseAttack: 18,
     baseDefense: 16,
@@ -139,6 +146,7 @@ const monsters = [
     type: "いわタイプ",
     desc: "圧倒的な防御力を誇る巨人。",
     rare: "★★★",
+     maxLevel: 15,
     baseHP: 42,
     baseAttack: 16,
     baseDefense: 23,
@@ -155,6 +163,7 @@ const monsters = [
     type: "ほのおタイプ",
     desc: "九九を極めた者だけが出会える王。",
     rare: "★★★",
+     maxLevel: 15,
     baseHP: 48,
     baseAttack: 21,
     baseDefense: 21,
@@ -2004,11 +2013,10 @@ function renderMonsterDetail() {
         </strong>
 
         <span>
-          EXP
-          ${data.exp}
-          /
-          ${required}
-        </span>
+  ${data.level >= monster.maxLevel
+    ? "EXP MAX"
+    : `EXP ${data.exp} / ${required}`}
+</span>
 
       </div>
 
@@ -2138,17 +2146,15 @@ if (!monster) {
 );
 
 
-    data.level++;
+    if (data.level < monster.maxLevel) {
+  data.level++;
 
-    data.hp += monster.hpGrowth;
-　　data.attack += monster.attackGrowth;
-　　data.defense += monster.defenseGrowth;
+  data.hp += monster.hpGrowth;
+  data.attack += monster.attackGrowth;
+  data.defense += monster.defenseGrowth;
 
-
-    leveledUp =
-      true;
-
-  }
+  leveledUp = true;
+}
 
 
   saveGame();
