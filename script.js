@@ -5261,7 +5261,7 @@ setTimeout(() => {
     const y =
       question.getBoundingClientRect().top +
       window.scrollY -
-      520;
+      380;
 
     window.scrollTo({
       top: y,
