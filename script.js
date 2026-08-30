@@ -3469,65 +3469,28 @@ function startForestBattle(
 
 
   /*
-     敵決定
-  */
+   敵決定
+*/
 
-  if (
-    number === 5
-  ) {
+if (number === 6) {
 
-    currentWildMonster = {
-      ...forestBoss,
-      hp: forestBoss.hp
-    };
+  currentWildMonster = {
+    ...forestBoss,
+    hp: forestBoss.hp
+  };
 
-  }
+} else {
 
-  else {
+  const base =
+    forestEnemies[number - 1];
 
-    const base =
-      forestEnemies[
-        Math.floor(
-          Math.random() *
-          forestEnemies.length
-        )
-      ];
+  currentWildMonster = {
+    ...base,
+    hp: base.hp,
+    attack: base.attack
+  };
 
-
-    currentWildMonster = {
-
-      ...base,
-
-      /*
-         バトルが進むほど
-         少しずつ強くする
-      */
-
-      hp:
-        base.hp +
-        (
-          number - 1
-        ) * 4,
-
-      attack:
-        base.attack +
-        (
-          number - 1
-        )
-
-    };
-
-  }
-
-
-  setupBattle();
-
-
-  showScreen(
-    "battle-screen"
-  );
 }
-
 
 /* =========================================================
    バトル準備
