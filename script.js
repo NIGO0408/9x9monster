@@ -5254,6 +5254,23 @@ el("start-button")?.addEventListener(
       "training-screen"
     );
 
+setTimeout(() => {
+  const question = el("training-question");
+
+  if (question) {
+    const y =
+      question.getBoundingClientRect().top +
+      window.scrollY -
+      520;
+
+    window.scrollTo({
+      top: y,
+      left: 0,
+      behavior: "auto"
+    });
+  }
+}, 50);
+     
   }
 );
 
