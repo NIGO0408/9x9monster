@@ -3294,12 +3294,12 @@ function updateForestMap() {
 
     goal.classList.toggle(
       "locked-node",
-      forestProgress < 6
+      forestProgress < 5
     );
 
 
     if (
-      forestProgress >= 6
+      forestProgress >= 5
     ) {
 
       const icon =
