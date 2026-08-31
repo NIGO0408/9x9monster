@@ -5283,19 +5283,34 @@ function startLakeBattle(battleNumber) {
 
 /* タイトル → 修行 */
 
-el("start-button")?.addEventListener(
-    "click",
-    () => {
+el("title-training-button")?.addEventListener(
+  "click",
+  () => {
 
-        createStageList();
+    createStageList();
 
-        showScreen(
-            "training-screen"
-        );
+    showScreen(
+      "training-screen"
+    );
 
-    }
+  }
 );
 
+
+/* タイトル → 冒険 */
+
+el("title-world-button")?.addEventListener(
+  "click",
+  openWorld
+);
+
+
+/* タイトル → 育成 */
+
+el("title-monster-button")?.addEventListener(
+  "click",
+  openMonsterScreen
+);
 
 /* 修行クイズ → 修行道場 */
 
