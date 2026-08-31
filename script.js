@@ -3261,7 +3261,7 @@ function updateForestMap() {
       }
 
       else if (
-        number === 6
+        number === 5
       ) {
 
         icon.textContent =
@@ -3329,7 +3329,7 @@ function updateForestMap() {
     fill.style.width =
       `${
         forestProgress /
-        6 *
+        5 *
         100
       }%`;
 
@@ -3343,7 +3343,7 @@ function updateForestMap() {
   if (text) {
 
     text.textContent =
-      `${forestProgress} / 6 バトルクリア`;
+      `${forestProgress} / 5 バトルクリア`;
 
   }
 }
