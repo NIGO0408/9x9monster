@@ -5757,3 +5757,18 @@ showLastUpdate();
 window.addEventListener("error", event => {
   console.error("9×9モンスターズ:", event.error || event.message);
 });
+
+document.addEventListener("click", () => {
+
+  const opBgm = el("op-bgm");
+
+  if (
+    opBgm &&
+    document
+      .getElementById("title-screen")
+      ?.classList.contains("active")
+  ) {
+    opBgm.play();
+  }
+
+});
