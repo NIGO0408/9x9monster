@@ -179,7 +179,7 @@ const monsters = [
 
 const forestEnemies = [
   {
-    name: "野生のスライム",
+    name: "ノラスライム",
     image: "images/yasei_slime.png",
     level: 1,
     hp: 30,
@@ -187,7 +187,7 @@ const forestEnemies = [
   },
 
   {
-    name: "ワルキノコ",
+    name: "ドクキノコン",
     image: "images/warukinoko.png",
     level: 2,
     hp: 42,
@@ -195,7 +195,7 @@ const forestEnemies = [
   },
 
   {
-    name: "オバケバナ",
+    name: "オバケバーナ",
     image: "images/obakebana.png",
     level: 3,
     hp: 55,
@@ -203,7 +203,7 @@ const forestEnemies = [
   },
 
   {
-    name: "ゴブリンリーダー",
+    name: "ゴブリーダー",
     image: "images/goburin_rida.png",
     level: 4,
     hp: 70,
@@ -211,7 +211,7 @@ const forestEnemies = [
   },
 
   {
-    name: "ウッドラー",
+    name: "ジュモーク",
     image: "images/uddora.png",
     level: 5,
     hp: 70,
@@ -224,7 +224,7 @@ const forestEnemies = [
    ========================================================= */
 
 const forestBoss = {
-  name: "森の守護者",
+  name: "森の王ナックルベア",
   image: "images/morinosyugosya.png",
   level: 7,
   hp: 100,
