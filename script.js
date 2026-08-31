@@ -183,7 +183,7 @@ const forestEnemies = [
     image: "images/yasei_slime.png",
     level: 1,
     hp: 30,
-    attack: 6
+    attack: 5
   },
 
   {
@@ -191,7 +191,7 @@ const forestEnemies = [
     image: "images/warukinoko.png",
     level: 2,
     hp: 42,
-    attack: 8
+    attack: 6
   },
 
   {
@@ -199,7 +199,7 @@ const forestEnemies = [
     image: "images/obakebana.png",
     level: 3,
     hp: 55,
-    attack: 10
+    attack: 7
   },
 
   {
@@ -207,7 +207,7 @@ const forestEnemies = [
     image: "images/goburin_rida.png",
     level: 4,
     hp: 70,
-    attack: 12
+    attack: 8
   },
 
   {
@@ -215,7 +215,7 @@ const forestEnemies = [
     image: "images/uddora.png",
     level: 5,
     hp: 70,
-    attack: 15
+    attack: 9
   }
 ];
 
@@ -228,7 +228,7 @@ const forestBoss = {
   image: "images/morinosyugosya.png",
   level: 7,
   hp: 100,
-  attack: 15
+  attack: 10
 };
 
 
