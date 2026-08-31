@@ -4055,3 +4055,17 @@ button {
     vertical-align: middle;
 }
 
+/* タイトル画面・メインメニューボタン */
+
+.main-menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.main-menu-buttons .main-button {
+  width: 90%;
+  max-width: 320px;
+}
