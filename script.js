@@ -3735,7 +3735,7 @@ function setupBattle() {
       ? (
           isLake
             ? "⚠️ 湖底の主が現れた！"
-            : "⚠️ 森の守護者が現れた！"
+            : "⚠️ 森のボスが現れた！"
         )
       : `⚔️ バトル${currentBattleNumber}！九九で攻撃しよう！`
   );
@@ -4498,7 +4498,7 @@ function battleWin() {
       message.textContent =
         isLake
           ? "湖底の主を倒した！"
-          : "森の守護者を倒した！";
+          : "森のボスを倒した！";
     }
     else {
       message.textContent =
