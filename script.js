@@ -454,7 +454,18 @@ function showScreen(id) {
 
   target.classList.add("active");
 
+const opBgm = el("op-bgm");
 
+  if (opBgm) {
+    if (id === "title-screen") {
+      opBgm.currentTime = 0;
+      opBgm.play();
+    } else {
+      opBgm.pause();
+      opBgm.currentTime = 0;
+    }
+  }
+   
   /*
      画面切り替え直後に最上部へ。
   */
