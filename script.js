@@ -3261,7 +3261,7 @@ function updateForestMap() {
       }
 
       else if (
-        number === 5
+        number === 6
       ) {
 
         icon.textContent =
@@ -3294,7 +3294,7 @@ function updateForestMap() {
 
     goal.classList.toggle(
       "locked-node",
-      forestProgress < 5
+      forestProgress < 6
     );
 
 
