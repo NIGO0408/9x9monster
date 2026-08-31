@@ -3639,9 +3639,7 @@ function setupBattle() {
   if (enemyName) {
 
     enemyName.textContent =
-      currentBattleNumber === 6
-        ? currentWildMonster.name
-        : `野生の${currentWildMonster.name}`;
+  currentWildMonster.name;
 
   }
 
