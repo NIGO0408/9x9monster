@@ -281,13 +281,13 @@ const adventureStages = {
     questionMin: 1,
     questionMax: 3,
    enemies: [
-      { name: "野生のスライム", image: "images/yasei_slime.png", level: 1, hp: 12, attack: 4 },
-      { name: "ワルキノコ", image: "images/warukinoko.png", level: 2, hp: 18, attack: 6 },
-      { name: "オバケバナ", image: "images/obakebana.png", level: 3, hp: 24, attack: 7 },
-      { name: "ゴブリンリーダー", image: "images/goburin_rida.png", level: 4, hp: 30, attack: 9 },
-      { name: "ウッドラー", image: "images/uddora.png", level: 5, hp: 38, attack: 8 }
+      { name: "ノラスライム", image: "images/yasei_slime.png", level: 1, hp: 12, attack: 4 },
+      { name: "ドクキノコン", image: "images/warukinoko.png", level: 2, hp: 18, attack: 6 },
+      { name: "オバケバーナ", image: "images/obakebana.png", level: 3, hp: 24, attack: 7 },
+      { name: "ゴブリーダー", image: "images/goburin_rida.png", level: 4, hp: 30, attack: 9 },
+      { name: "ジュモーク", image: "images/uddora.png", level: 5, hp: 38, attack: 8 }
     ],
-    boss: { name: "森の守護者", image: "images/morinosyugosya.png", level: 7, hp: 55, attack: 11 }
+    boss: { name: "森の王ナックルベア", image: "images/morinosyugosya.png", level: 7, hp: 55, attack: 11 }
   },
 
   lake: {
