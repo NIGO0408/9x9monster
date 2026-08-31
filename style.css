@@ -4069,3 +4069,15 @@ button {
   width: 90%;
   max-width: 320px;
 }
+
+.main-menu-buttons .main-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 48px;
+  text-align: left;
+}
+
+.main-menu-buttons .main-button small {
+  margin-left: 8px;
+}
