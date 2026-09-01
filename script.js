@@ -23,6 +23,24 @@ let bgmEnabled =
   localStorage.getItem(BGM_ENABLED_KEY) !== "off";
 
 /* =========================================================
+   BGM一覧
+   ========================================================= */
+
+const BGM_LIST = {
+  title: "audio/op.mp3",
+  world: "audio/world.mp3",
+
+  forest: "audio/forest.mp3",
+  forestBattle: "audio/forest_battle.mp3",
+  forestBoss: "audio/forest_boss.mp3",
+
+  lake: "audio/lake.mp3",
+  lakeBattle: "audio/lake_battle.mp3",
+  lakeBoss: "audio/lake_boss.mp3"
+};
+
+
+/* =========================================================
    BGM共通管理
    ========================================================= */
 
