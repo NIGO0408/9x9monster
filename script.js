@@ -5832,21 +5832,17 @@ document.addEventListener("click", () => {
 const bgmToggle = el("bgm-toggle");
 
 if (bgmToggle) {
+
+  bgmToggle.textContent =
+    bgmEnabled
+      ? "🔊 BGM ON"
+      : "🔇 BGM OFF";
+
   bgmToggle.addEventListener("click", (event) => {
 
     event.stopPropagation();
 
-    const opBgm = el("op-bgm");
-
-    if (!opBgm) return;
-
-    if (opBgm.paused) {
-      opBgm.play();
-      bgmToggle.textContent = "🔊 BGM ON";
-    } else {
-      opBgm.pause();
-      bgmToggle.textContent = "🔇 BGM OFF";
-    }
+    setBgmEnabled(!bgmEnabled);
 
   });
 }
