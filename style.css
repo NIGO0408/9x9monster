@@ -4124,8 +4124,8 @@ button {
 
 /* BGMボタンの表示サイズを固定 */
 #bgm-toggle {
-  width: 42px !important;
-  height: 42px !important;
+  width: 30px !important;
+  height: 35px !important;
   padding: 0 !important;
   margin: 0 !important;
 
