@@ -44,6 +44,37 @@ const BGM_LIST = {
    BGM共通管理
    ========================================================= */
 
+let currentBgmKey = "title";
+
+function playBgm(key) {
+
+  const opBgm = document.getElementById("op-bgm");
+
+  if (!opBgm) return;
+
+  const bgmPath = BGM_LIST[key];
+
+  if (!bgmPath) return;
+
+  currentBgmKey = key;
+
+  if (!bgmEnabled) {
+    opBgm.pause();
+    return;
+  }
+
+  if (opBgm.src !== new URL(bgmPath, location.href).href) {
+    opBgm.src = bgmPath;
+    opBgm.currentTime = 0;
+  }
+
+  opBgm.volume = 0.2;
+  opBgm.loop = true;
+
+  opBgm.play().catch(() => {});
+}
+
+
 function setBgmEnabled(enabled) {
 
   bgmEnabled = enabled;
@@ -53,14 +84,16 @@ function setBgmEnabled(enabled) {
     enabled ? "on" : "off"
   );
 
-  const opBgm = document.getElementById("op-bgm");
-
-  if (!opBgm) return;
-
   if (enabled) {
-    opBgm.play();
+    playBgm(currentBgmKey);
   } else {
-    opBgm.pause();
+
+    const opBgm =
+      document.getElementById("op-bgm");
+
+    if (opBgm) {
+      opBgm.pause();
+    }
   }
 
   const bgmToggle =
