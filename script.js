@@ -23,6 +23,40 @@ let bgmEnabled =
   localStorage.getItem(BGM_ENABLED_KEY) !== "off";
 
 /* =========================================================
+   BGM共通管理
+   ========================================================= */
+
+function setBgmEnabled(enabled) {
+
+  bgmEnabled = enabled;
+
+  localStorage.setItem(
+    BGM_ENABLED_KEY,
+    enabled ? "on" : "off"
+  );
+
+  const opBgm = document.getElementById("op-bgm");
+
+  if (!opBgm) return;
+
+  if (enabled) {
+    opBgm.play();
+  } else {
+    opBgm.pause();
+  }
+
+  const bgmToggle =
+    document.getElementById("bgm-toggle");
+
+  if (bgmToggle) {
+    bgmToggle.textContent =
+      enabled
+        ? "🔊 BGM ON"
+        : "🔇 BGM OFF";
+  }
+}
+
+/* =========================================================
    モンスター
    ========================================================= */
 
