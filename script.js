@@ -457,7 +457,7 @@ function showScreen(id) {
 const opBgm = el("op-bgm");
 
   if (opBgm) {
-     opBgm.volume = 0.3;
+     opBgm.volume = 0.2;
     if (id === "title-screen") {
       opBgm.currentTime = 0;
       opBgm.play();
