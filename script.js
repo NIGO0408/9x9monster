@@ -5884,10 +5884,10 @@ const bgmToggle = el("bgm-toggle");
 
 if (bgmToggle) {
 
-  bgmToggle.textContent =
-    bgmEnabled
-      ? "🔊 BGM ON"
-      : "🔇 BGM OFF";
+  bgmToggle.innerHTML =
+  bgmEnabled
+    ? "🔊<br>ON"
+    : "🔇<br>OFF";
 
   bgmToggle.addEventListener("click", (event) => {
 
