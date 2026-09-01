@@ -13,6 +13,14 @@
 
 const SAVE_KEY = "9x9-monsters-save-v7";
 
+/* =========================================================
+   BGM設定
+   ========================================================= */
+
+const BGM_ENABLED_KEY = "9x9-monsters-bgm-enabled";
+
+let bgmEnabled =
+  localStorage.getItem(BGM_ENABLED_KEY) !== "off";
 
 /* =========================================================
    モンスター
