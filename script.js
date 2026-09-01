@@ -100,10 +100,10 @@ function setBgmEnabled(enabled) {
     document.getElementById("bgm-toggle");
 
   if (bgmToggle) {
-    bgmToggle.innerHTML =
+   bgmToggle.innerHTML =
   enabled
-    ? "🔊<br>ON"
-    : "🔇<br>OFF";
+    ? '<span class="bgm-icon">🔊</span><span class="bgm-label">ON</span>'
+    : '<span class="bgm-icon">🔇</span><span class="bgm-label">OFF</span>';
   }
 }
 
