@@ -4150,3 +4150,15 @@ button {
   font-size: 11px !important;
   line-height: 11px !important;
 }
+/* BGMボタンの起動時・タップ後のサイズを完全統一 */
+#bgm-toggle .bgm-icon {
+  display: block !important;
+  font-size: 15px !important;
+  line-height: 15px !important;
+}
+
+#bgm-toggle .bgm-label {
+  display: block !important;
+  font-size: 11px !important;
+  line-height: 11px !important;
+}
