@@ -4100,3 +4100,12 @@ button {
   font-size: 12px;
   cursor: pointer;
 }
+
+#bgm-toggle {
+  width: 54px;
+  height: 54px;
+  padding: 4px;
+  font-size: 14px;
+  line-height: 1.1;
+  white-space: normal;
+}
