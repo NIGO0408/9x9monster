@@ -466,25 +466,7 @@ const opBgm = el("op-bgm");
       opBgm.currentTime = 0;
     }
   }
-
-const bgmToggle = el("bgm-toggle");
-
-if (bgmToggle && opBgm) {
-  bgmToggle.addEventListener("click", (event) => {
-
-    event.stopPropagation();
-
-    if (opBgm.paused) {
-      opBgm.play();
-      bgmToggle.textContent = "🔊 BGM ON";
-    } else {
-      opBgm.pause();
-      bgmToggle.textContent = "🔇 BGM OFF";
-    }
-
-  });
-}
-   
+ 
   /*
      画面切り替え直後に最上部へ。
   */
