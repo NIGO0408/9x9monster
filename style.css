@@ -4090,13 +4090,13 @@ button {
   right: 12px !important;
   z-index: 9999 !important;
 
-  width: 48px !important;
-  height: 48px !important;
+  width: 36px !important;
+  height: 36px !important;
   padding: 0 !important;
   margin: 0 !important;
 
   border: none !important;
-  border-radius: 50% !important;
+  border-radius: 10px !important;
 
   background: rgba(255, 255, 255, 0.9) !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -4105,22 +4105,19 @@ button {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 3px !important;
+  gap: 1px !important;
 
-  font-size: 12px !important;
-  line-height: 1 !important;
-  white-space: normal !important;
   cursor: pointer;
 }
 
 .bgm-icon {
   display: block !important;
-  font-size: 17px !important;
-  line-height: 17px !important;
+  font-size: 13px !important;
+  line-height: 13px !important;
 }
 
 .bgm-label {
   display: block !important;
-  font-size: 11px !important;
-  line-height: 11px !important;
+  font-size: 10px !important;
+  line-height: 10px !important;
 }
