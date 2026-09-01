@@ -4121,3 +4121,32 @@ button {
   font-size: 11px !important;
   line-height: 11px !important;
 }
+
+/* BGMボタンの表示サイズを固定 */
+#bgm-toggle {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1px !important;
+
+  border: none !important;
+  border-radius: 10px !important;
+}
+
+#bgm-toggle .bgm-icon {
+  display: block !important;
+  font-size: 15px !important;
+  line-height: 15px !important;
+}
+
+#bgm-toggle .bgm-label {
+  display: block !important;
+  font-size: 11px !important;
+  line-height: 11px !important;
+}
