@@ -4102,10 +4102,10 @@ button {
 }
 
 #bgm-toggle {
-  width: 54px;
-  height: 54px;
-  padding: 4px;
-  font-size: 14px;
-  line-height: 1.1;
+  width: 44px;
+  height: 44px;
+  padding: 2px;
+  font-size: 12px;
+  line-height: 1;
   white-space: normal;
 }
