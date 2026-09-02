@@ -22,6 +22,8 @@ let bgmEnabled = false;
 
 const BGM_LIST = {
   title: "audio/op.mp3",
+   training: "audio/training.mp3",
+   trainingMonster: "audio/training_monster.mp3",
   world: "audio/world.mp3",
   forest: "audio/forest.mp3",
   forestBattle: "audio/forest_battle.mp3",
@@ -37,6 +39,8 @@ function getBgmKeyForScreen(screenId) {
   switch (screenId) {
     case "title-screen": return "title";
     case "world-screen": return "world";
+     case "training-screen": return "training";
+      case "training-monster-screen": return "trainingMonster";  
     case "forest-screen": return "forest";
     case "lake-screen": return "lake";
     case "battle-screen":
