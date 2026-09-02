@@ -14,47 +14,59 @@
 const SAVE_KEY = "9x9-monsters-save-v7";
 
 /* =========================================================
-   BGM設定
+   BGM管理
    ========================================================= */
 
-const BGM_ENABLED_KEY = "9x9-monsters-bgm-enabled";
-
-let bgmEnabled =
-  localStorage.getItem(BGM_ENABLED_KEY) !== "off";
-
-/* =========================================================
-   BGM一覧
-   ========================================================= */
+/* ゲーム起動時は必ずOFF。画面移動中だけこの状態を引き継ぐ。 */
+let bgmEnabled = false;
 
 const BGM_LIST = {
   title: "audio/op.mp3",
   world: "audio/world.mp3",
-
   forest: "audio/forest.mp3",
   forestBattle: "audio/forest_battle.mp3",
   forestBoss: "audio/forest_boss.mp3",
-
   lake: "audio/lake.mp3",
   lakeBattle: "audio/lake_battle.mp3",
   lakeBoss: "audio/lake_boss.mp3"
 };
 
+let currentBgmKey = null;
 
-/* =========================================================
-   BGM共通管理
-   ========================================================= */
+function getBgmKeyForScreen(screenId) {
+  switch (screenId) {
+    case "title-screen": return "title";
+    case "world-screen": return "world";
+    case "forest-screen": return "forest";
+    case "lake-screen": return "lake";
+    case "battle-screen":
+    case "battle-result-screen":
+      if (currentAdventureStage === "lake") {
+        return currentBattleNumber === 5 ? "lakeBoss" : "lakeBattle";
+      }
+      return currentBattleNumber === 6 ? "forestBoss" : "forestBattle";
+    default: return null;
+  }
+}
 
-let currentBgmKey = "title";
+function renderBgmToggle() {
+  const bgmToggle = document.getElementById("bgm-toggle");
+  if (!bgmToggle) return;
+
+  bgmToggle.innerHTML = bgmEnabled
+    ? '<span class="bgm-icon">🔊</span><span class="bgm-label">ON</span>'
+    : '<span class="bgm-icon">🔇</span><span class="bgm-label">OFF</span>';
+}
 
 function playBgm(key) {
-
   const opBgm = document.getElementById("op-bgm");
-
   if (!opBgm) return;
 
   const bgmPath = BGM_LIST[key];
-
-  if (!bgmPath) return;
+  if (!bgmPath) {
+    opBgm.pause();
+    return;
+  }
 
   currentBgmKey = key;
 
@@ -63,48 +75,41 @@ function playBgm(key) {
     return;
   }
 
-  if (opBgm.src !== new URL(bgmPath, location.href).href) {
+  const fullPath = new URL(bgmPath, location.href).href;
+  if (opBgm.src !== fullPath) {
     opBgm.src = bgmPath;
     opBgm.currentTime = 0;
   }
 
   opBgm.volume = 0.2;
   opBgm.loop = true;
-
   opBgm.play().catch(() => {});
 }
 
+function updateBgmForScreen(screenId) {
+  const key = getBgmKeyForScreen(screenId);
+  currentBgmKey = key;
+
+  if (!bgmEnabled) {
+    const opBgm = document.getElementById("op-bgm");
+    if (opBgm) opBgm.pause();
+    return;
+  }
+
+  if (key) {
+    playBgm(key);
+  } else {
+    const opBgm = document.getElementById("op-bgm");
+    if (opBgm) opBgm.pause();
+  }
+}
 
 function setBgmEnabled(enabled) {
-
   bgmEnabled = enabled;
+  renderBgmToggle();
 
-  localStorage.setItem(
-    BGM_ENABLED_KEY,
-    enabled ? "on" : "off"
-  );
-
-  if (enabled) {
-    playBgm(currentBgmKey);
-  } else {
-
-    const opBgm =
-      document.getElementById("op-bgm");
-
-    if (opBgm) {
-      opBgm.pause();
-    }
-  }
-
-  const bgmToggle =
-    document.getElementById("bgm-toggle");
-
-  if (bgmToggle) {
-   bgmToggle.innerHTML =
-  enabled
-    ? '<span class="bgm-icon">🔊</span><span class="bgm-label">ON</span>'
-    : '<span class="bgm-icon">🔇</span><span class="bgm-label">OFF</span>';
-  }
+  const activeScreen = document.querySelector(".screen.active");
+  updateBgmForScreen(activeScreen ? activeScreen.id : "title-screen");
 }
 
 /* =========================================================
@@ -547,18 +552,7 @@ function showScreen(id) {
 
   target.classList.add("active");
 
-const opBgm = el("op-bgm");
-
-  if (opBgm) {
-     opBgm.volume = 0.2;
-    if (id === "title-screen") {
-      opBgm.currentTime = 0;
-      opBgm.play();
-    } else {
-      opBgm.pause();
-      opBgm.currentTime = 0;
-    }
-  }
+updateBgmForScreen(id)
  
   /*
      画面切り替え直後に最上部へ。
@@ -5865,35 +5859,13 @@ window.addEventListener("error", event => {
   console.error("9×9モンスターズ:", event.error || event.message);
 });
 
-document.addEventListener("click", () => {
-
-  const opBgm = el("op-bgm");
-
-  if (
-    opBgm &&
-    document
-      .getElementById("title-screen")
-      ?.classList.contains("active")
-  ) {
-    opBgm.play();
-  }
-
-});
-
 const bgmToggle = el("bgm-toggle");
 
 if (bgmToggle) {
-
-  bgmToggle.innerHTML =
-    bgmEnabled
-      ? '<span class="bgm-icon">🔊</span><span class="bgm-label">ON</span>'
-      : '<span class="bgm-icon">🔇</span><span class="bgm-label">OFF</span>';
+  renderBgmToggle();
 
   bgmToggle.addEventListener("click", (event) => {
-
     event.stopPropagation();
-
     setBgmEnabled(!bgmEnabled);
-
   });
 }
