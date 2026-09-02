@@ -842,7 +842,7 @@ function loadGame() {
       Math.max(
         0,
         Math.min(
-          5,
+          6,
           forestProgress
         )
       );
