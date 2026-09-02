@@ -4082,83 +4082,38 @@ button {
   margin-left: 8px;
 }
 
-/* BGM ON / OFF ボタン */
-
-#bgm-toggle {
-  position: fixed !important;
-  top: 12px !important;
-  right: 12px !important;
-  z-index: 9999 !important;
-
-  width: 30px !important;
-  height: 35px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-
-  border: none !important;
-  border-radius: 10px !important;
-
-  background: rgba(255, 255, 255, 0.9) !important;
+/* =========================
+   BGM ON / OFF ボタン
+========================= */
+.bgm-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+  width: 30px;
+  height: 35px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 1px !important;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
   cursor: pointer;
 }
 
 .bgm-icon {
-  display: block !important;
-  font-size: 15px !important;
-  line-height: 15px !important;
+  display: block;
+  font-size: 15px;
+  line-height: 15px;
 }
 
 .bgm-label {
-  display: block !important;
-  font-size: 11px !important;
-  line-height: 11px !important;
-}
-
-/* BGMボタンの表示サイズを固定 */
-#bgm-toggle {
-  width: 30px !important;
-  height: 35px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 1px !important;
-
-  border: none !important;
-  border-radius: 10px !important;
-}
-
-#bgm-toggle .bgm-icon {
-  display: block !important;
-  font-size: 15px !important;
-  line-height: 15px !important;
-}
-
-#bgm-toggle .bgm-label {
-  display: block !important;
-  font-size: 11px !important;
-  line-height: 11px !important;
-}
-/* BGMボタンの起動時・タップ後のサイズを完全統一 */
-#bgm-toggle .bgm-icon {
-  display: block !important;
-  font-size: 15px !important;
-  line-height: 15px !important;
-}
-
-#bgm-toggle .bgm-label {
-  display: block !important;
-  font-size: 11px !important;
-  line-height: 11px !important;
+  display: block;
+  font-size: 11px;
+  line-height: 11px;
 }
