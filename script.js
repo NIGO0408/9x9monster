@@ -39,7 +39,7 @@ function getBgmKeyForScreen(screenId) {
   switch (screenId) {
     case "title-screen": return "title";
     case "world-screen": return "world";
-     case "training-screen": return "training";
+     case "quiz-screen": return "training";
       case "training-monster-screen": return "trainingMonster";  
     case "forest-screen": return "forest";
     case "lake-screen": return "lake";
