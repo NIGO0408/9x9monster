@@ -497,7 +497,7 @@ function getAdventureQuestion(stageId = currentAdventureStage) {
 }
 
 function isForestCleared() {
-  return forestProgress >= 5;
+  return forestProgress >= 6;
 }
 
 function isLakeUnlocked() {
