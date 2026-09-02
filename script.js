@@ -3228,7 +3228,7 @@ function updateLakeAreaAvailability() {
     return;
   }
 
-  const unlocked = forestProgress >= 5;
+  const unlocked = isForestCleared();
 
   area.disabled = !unlocked;
   area.classList.toggle("locked-area", !unlocked);
