@@ -26,7 +26,7 @@ const BGM_LIST = {
    trainingMonster: "audio/training_monster.mp3",
   world: "audio/world.mp3",
   forest: "audio/forest.mp3",
-  forestBattle: "audio/forest_battle.mp3",
+  forestBattle: "audio/forest.mp3",
   forestBoss: "audio/forest_boss.mp3",
   lake: "audio/lake.mp3",
   lakeBattle: "audio/lake_battle.mp3",
