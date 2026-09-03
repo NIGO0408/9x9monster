@@ -3612,6 +3612,45 @@ if (number === 6) {
    バトル準備
    ========================================================= */
 
+function showBossWarning() {
+  const warning = document.createElement("div");
+
+  warning.className = "boss-warning";
+  warning.textContent = "⚠️ WARNING ⚠️";
+
+  document.body.appendChild(warning);
+
+  warning.animate(
+    [
+      {
+        opacity: 0,
+        transform: "scale(0.7)"
+      },
+      {
+        opacity: 1,
+        transform: "scale(1.1)"
+      },
+      {
+        opacity: 1,
+        transform: "scale(1)"
+      },
+      {
+        opacity: 0,
+        transform: "scale(1)"
+      }
+    ],
+    {
+      duration: 900,
+      easing: "ease-out",
+      fill: "forwards"
+    }
+  );
+
+  setTimeout(() => {
+    warning.remove();
+  }, 900);
+}
+
 function playBossEntrance() {
   const enemyImage = el("enemy-image");
   if (!enemyImage) return;
@@ -3643,7 +3682,7 @@ function playBossEntrance() {
       }
     ],
     {
-      duration: 1600,
+      duration: 2000,
       easing: "ease-out",
       fill: "forwards"
     }
@@ -3821,10 +3860,12 @@ function setupBattle() {
 
   }
 
-   if (currentBattleNumber === 6) {
+  if (currentBattleNumber === 6) {
+  showBossWarning();
+
   setTimeout(() => {
     playBossEntrance();
-  }, 50);
+  }, 900);
 }
 
   /*
