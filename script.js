@@ -5896,53 +5896,153 @@ showLastUpdate();
 
 function activateDeveloperMode() {
 
-  monsters.forEach(monster => {
+  const choice = prompt(
+    "🔧 開発者メニュー\n\n" +
+    "1：全開放＋全員MAX\n" +
+    "2：全モンスター仲間入り\n" +
+    "3：冒険を解放\n" +
+    "4：森をクリア状態にする\n" +
+    "5：湖を解放\n\n" +
+    "キャンセル：終了"
+  );
 
-    const data =
+  if (choice === null) {
+    return;
+  }
+
+  /* 全開放＋全員MAX */
+  if (choice === "1") {
+
+    monsters.forEach(monster => {
+
+      const data =
+        getMonsterData(monster.id);
+
+      if (!data) return;
+
+      if (
+        !caughtMonsters.includes(
+          monster.id
+        )
+      ) {
+        caughtMonsters.push(
+          monster.id
+        );
+      }
+
+      data.level =
+        monster.maxLevel;
+
+      data.exp = 0;
+
+      data.hp =
+        monster.baseHP +
+        monster.hpGrowth *
+        (monster.maxLevel - 1);
+
+      data.attack =
+        monster.baseAttack +
+        monster.attackGrowth *
+        (monster.maxLevel - 1);
+
+      data.defense =
+        monster.baseDefense +
+        monster.defenseGrowth *
+        (monster.maxLevel - 1);
+    });
+
+    adventureUnlocked = true;
+    forestProgress = 6;
+    forestCurrentHP = 0;
+    lakeProgress = 0;
+
+    saveGame();
+
+    alert(
+      "🚀 全開放しました！\n\n" +
+      "全モンスター仲間入り\n" +
+      "全モンスターMAXレベル\n" +
+      "森クリア\n" +
+      "湖解放"
+    );
+
+    return;
+  }
+
+  /* 全モンスター仲間入り */
+  if (choice === "2") {
+
+    monsters.forEach(monster => {
+
+      if (
+        !caughtMonsters.includes(
+          monster.id
+        )
+      ) {
+        caughtMonsters.push(
+          monster.id
+        );
+      }
+
       getMonsterData(monster.id);
+    });
 
-    if (!data) return;
+    saveGame();
 
-    if (
-      !caughtMonsters.includes(
-        monster.id
-      )
-    ) {
-      caughtMonsters.push(
-        monster.id
-      );
-    }
+    alert(
+      "🐉 全モンスターを仲間にしました！"
+    );
 
-    data.level =
-      monster.maxLevel;
+    return;
+  }
 
-    data.exp = 0;
+  /* 冒険を解放 */
+  if (choice === "3") {
 
-    data.hp =
-      monster.baseHP +
-      monster.hpGrowth *
-      (monster.maxLevel - 1);
+    adventureUnlocked = true;
 
-    data.attack =
-      monster.baseAttack +
-      monster.attackGrowth *
-      (monster.maxLevel - 1);
+    saveGame();
 
-    data.defense =
-      monster.baseDefense +
-      monster.defenseGrowth *
-      (monster.maxLevel - 1);
-  });
+    alert(
+      "🗺️ 冒険を解放しました！"
+    );
 
-  adventureUnlocked = true;
+    return;
+  }
 
-  saveGame();
+  /* 森をクリア状態にする */
+  if (choice === "4") {
+
+    adventureUnlocked = true;
+    forestProgress = 6;
+
+    saveGame();
+
+    alert(
+      "🌳 はじまりの森を\n" +
+      "クリア状態にしました！"
+    );
+
+    return;
+  }
+
+  /* 湖を解放 */
+  if (choice === "5") {
+
+    adventureUnlocked = true;
+    forestProgress = 6;
+
+    saveGame();
+
+    alert(
+      "🌊 九九の湖を解放しました！"
+    );
+
+    return;
+  }
 
   alert(
-    "🔧 開発者モードON！\n\n" +
-    "全モンスターを仲間にしました。\n" +
-    "全モンスターをMAXレベルにしました。\n" +
-    "冒険を解放しました。"
+    "❌ 無効な番号です。"
   );
 }
 
@@ -5978,11 +6078,18 @@ if (devLogo) {
     }, 1500);
 
     if (devTapCount >= 5) {
-      devTapCount = 0;
-      clearTimeout(devTapTimer);
+  devTapCount = 0;
+  clearTimeout(devTapTimer);
 
-      activateDeveloperMode();
-    }
+  const password =
+    prompt("🔐 開発者モード\nパスワードを入力してください");
+
+  if (password === "9x9dev") {
+    activateDeveloperMode();
+  } else if (password !== null) {
+    alert("❌ パスワードが違います");
+  }
+}
   });
 }
 
