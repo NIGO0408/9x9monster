@@ -3860,7 +3860,13 @@ function setupBattle() {
 
   }
 
-  if (currentBattleNumber === 6) {
+ if (currentBattleNumber === 6) {
+  const bossTarget =
+    enemyImage.querySelector("img") || enemyImage;
+
+  bossTarget.style.opacity = "0";
+  bossTarget.style.transform = "scale(0.2)";
+
   showBossWarning();
 
   setTimeout(() => {
