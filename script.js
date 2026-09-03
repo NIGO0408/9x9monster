@@ -4644,6 +4644,10 @@ function battleWin() {
     "battle-result-screen"
   );
 
+  if (currentBattleNumber === 6) {
+  playBossClearFanfare();
+} 
+
   if (leveledUp) {
     setTimeout(
       () => {
@@ -4657,6 +4661,35 @@ function battleWin() {
   }
 }
 
+function playBossClearFanfare() {
+  const opBgm = document.getElementById("op-bgm");
+  if (!opBgm || !bgmEnabled) return;
+
+  const returnScreen = "battle-result-screen";
+
+  opBgm.onended = null;
+  opBgm.src = "audio/boss_clear.mp3";
+  opBgm.currentTime = 0;
+  opBgm.volume = 0.2;
+  opBgm.loop = false;
+
+  opBgm.onended = () => {
+    opBgm.onended = null;
+
+    const activeScreen =
+      document.querySelector(".screen.active");
+
+    if (
+      bgmEnabled &&
+      activeScreen &&
+      activeScreen.id === returnScreen
+    ) {
+      updateBgmForScreen(returnScreen);
+    }
+  };
+
+  opBgm.play().catch(() => {});
+}
 
 /* =========================================================
    バトル敗北
