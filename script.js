@@ -5894,6 +5894,97 @@ async function showLastUpdate() {
 
 showLastUpdate();
 
+function activateDeveloperMode() {
+
+  monsters.forEach(monster => {
+
+    const data =
+      getMonsterData(monster.id);
+
+    if (!data) return;
+
+    if (
+      !caughtMonsters.includes(
+        monster.id
+      )
+    ) {
+      caughtMonsters.push(
+        monster.id
+      );
+    }
+
+    data.level =
+      monster.maxLevel;
+
+    data.exp = 0;
+
+    data.hp =
+      monster.baseHP +
+      monster.hpGrowth *
+      (monster.maxLevel - 1);
+
+    data.attack =
+      monster.baseAttack +
+      monster.attackGrowth *
+      (monster.maxLevel - 1);
+
+    data.defense =
+      monster.baseDefense +
+      monster.defenseGrowth *
+      (monster.maxLevel - 1);
+  });
+
+  adventureUnlocked = true;
+
+  saveGame();
+
+  alert(
+    "🔧 開発者モードON！\n\n" +
+    "全モンスターを仲間にしました。\n" +
+    "全モンスターをMAXレベルにしました。\n" +
+    "冒険を解放しました。"
+  );
+}
+
+/* =========================================================
+   開発者モード
+   タイトルロゴ5回タップ
+   ========================================================= */
+
+let devTapCount = 0;
+let devTapTimer = null;
+
+const devLogo = document.querySelector(".logo");
+
+if (devLogo) {
+  devLogo.addEventListener("click", () => {
+
+    const titleScreen =
+      document.getElementById("title-screen");
+
+    if (
+      !titleScreen ||
+      !titleScreen.classList.contains("active")
+    ) {
+      return;
+    }
+
+    devTapCount++;
+
+    clearTimeout(devTapTimer);
+
+    devTapTimer = setTimeout(() => {
+      devTapCount = 0;
+    }, 1500);
+
+    if (devTapCount >= 5) {
+      devTapCount = 0;
+      clearTimeout(devTapTimer);
+
+      activateDeveloperMode();
+    }
+  });
+}
 
 /* =========================================================
    起動時の安全処理
