@@ -5283,6 +5283,26 @@ function updateLakeMap() {
   if (progress) progress.textContent = `${lakeProgress} / 6 バトルクリア`;
 }
 
+const goal =
+  document.querySelector(
+    "#lake-screen .goal-node"
+  );
+
+if (goal) {
+  const cleared =
+    lakeProgress >= 6;
+
+  goal.classList.toggle(
+    "locked-node",
+    !cleared
+  );
+
+  goal.classList.toggle(
+    "cleared-node",
+    cleared
+  );
+}
+
 function startLakeBattle(battleNumber) {
 
   const number =
