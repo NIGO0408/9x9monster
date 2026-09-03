@@ -3612,6 +3612,44 @@ if (number === 6) {
    バトル準備
    ========================================================= */
 
+function playBossEntrance() {
+  const enemyImage = el("enemy-image");
+  if (!enemyImage) return;
+
+  const target =
+    enemyImage.querySelector("img") || enemyImage;
+
+  target.animate(
+    [
+      {
+        opacity: 0,
+        transform: "scale(0.2)"
+      },
+      {
+        opacity: 1,
+        transform: "scale(1.15)"
+      },
+      {
+        opacity: 1,
+        transform: "scale(0.95)"
+      },
+      {
+        opacity: 1,
+        transform: "scale(1.05)"
+      },
+      {
+        opacity: 1,
+        transform: "scale(1)"
+      }
+    ],
+    {
+      duration: 900,
+      easing: "ease-out",
+      fill: "forwards"
+    }
+  );
+}
+
 function setupBattle() {
 
   const monster =
@@ -3783,6 +3821,11 @@ function setupBattle() {
 
   }
 
+   if (currentBattleNumber === 6) {
+  setTimeout(() => {
+    playBossEntrance();
+  }, 50);
+}
 
   /*
      味方
