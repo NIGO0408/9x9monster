@@ -3624,23 +3624,27 @@ function showBossWarning() {
     [
       {
         opacity: 0,
-        transform: "scale(0.7)"
+        transform: "translate(-50%, -50%) scale(0.7)"
       },
       {
         opacity: 1,
-        transform: "scale(1.1)"
+        transform: "translate(-50%, -50%) scale(1.1)"
       },
       {
         opacity: 1,
-        transform: "scale(1)"
+        transform: "translate(-50%, -50%) scale(1)"
+      },
+      {
+        opacity: 1,
+        transform: "translate(-50%, -50%) scale(1)"
       },
       {
         opacity: 0,
-        transform: "scale(1)"
+        transform: "translate(-50%, -50%) scale(1)"
       }
     ],
     {
-      duration: 900,
+      duration: 1800,
       easing: "ease-out",
       fill: "forwards"
     }
@@ -3648,7 +3652,7 @@ function showBossWarning() {
 
   setTimeout(() => {
     warning.remove();
-  }, 900);
+  }, 1800);
 }
 
 function playBossEntrance() {
@@ -3871,7 +3875,7 @@ function setupBattle() {
 
   setTimeout(() => {
     playBossEntrance();
-  }, 900);
+  }, 1800);
 }
 
   /*
