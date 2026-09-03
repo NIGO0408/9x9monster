@@ -3643,7 +3643,7 @@ function playBossEntrance() {
       }
     ],
     {
-      duration: 900,
+      duration: 1600,
       easing: "ease-out",
       fill: "forwards"
     }
