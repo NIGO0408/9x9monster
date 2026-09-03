@@ -5289,18 +5289,24 @@ const goal =
   );
 
 if (goal) {
-  const cleared =
-    lakeProgress >= 6;
-
   goal.classList.toggle(
     "locked-node",
-    !cleared
+    lakeProgress < 6
   );
 
-  goal.classList.toggle(
-    "cleared-node",
-    cleared
-  );
+  if (
+    lakeProgress >= 6
+  ) {
+    const icon =
+      goal.querySelector(
+        ".node-icon"
+      );
+
+    if (icon) {
+      icon.textContent =
+        "🏆";
+    }
+  }
 }
 
 function startLakeBattle(battleNumber) {
