@@ -1792,6 +1792,10 @@ button {
   justify-content: center;
 
   margin: 0;
+
+overflow: hidden;
+position: relative;
+  
 }
 
 .battle-monster-image img {
