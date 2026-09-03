@@ -3613,46 +3613,43 @@ if (number === 6) {
    ========================================================= */
 
 function showBossWarning() {
+  const enemyImage = el("enemy-image");
+  if (!enemyImage) return;
+
   const warning = document.createElement("div");
 
   warning.className = "boss-warning";
   warning.textContent = "⚠️ WARNING ⚠️";
 
-  document.body.appendChild(warning);
+  enemyImage.appendChild(warning);
+
+  enemyImage.style.position = "relative";
+
+  warning.style.position = "absolute";
+  warning.style.top = "50%";
+  warning.style.left = "50%";
+  warning.style.transform = "translate(-50%, -50%)";
 
   warning.animate(
     [
-      {
-        opacity: 0,
-        transform: "translate(-50%, -50%) scale(0.7)"
-      },
-      {
-        opacity: 1,
-        transform: "translate(-50%, -50%) scale(1.1)"
-      },
-      {
-        opacity: 1,
-        transform: "translate(-50%, -50%) scale(1)"
-      },
-      {
-        opacity: 1,
-        transform: "translate(-50%, -50%) scale(1)"
-      },
-      {
-        opacity: 0,
-        transform: "translate(-50%, -50%) scale(1)"
-      }
+      { opacity: 0 },
+      { opacity: 1 },
+      { opacity: 0 },
+      { opacity: 1 },
+      { opacity: 0 },
+      { opacity: 1 },
+      { opacity: 0 }
     ],
     {
-      duration: 1800,
-      easing: "ease-out",
+      duration: 3000,
+      easing: "linear",
       fill: "forwards"
     }
   );
 
   setTimeout(() => {
     warning.remove();
-  }, 1800);
+  }, 3000);
 }
 
 function playBossEntrance() {
@@ -3666,27 +3663,39 @@ function playBossEntrance() {
     [
       {
         opacity: 0,
-        transform: "scale(0.2)"
+        transform: "translateY(220px) translateX(0) rotate(0deg)"
       },
       {
         opacity: 1,
-        transform: "scale(1.15)"
+        transform: "translateY(185px) translateX(-14px) rotate(-2deg)"
       },
       {
         opacity: 1,
-        transform: "scale(0.95)"
+        transform: "translateY(145px) translateX(14px) rotate(2deg)"
       },
       {
         opacity: 1,
-        transform: "scale(1.05)"
+        transform: "translateY(105px) translateX(-12px) rotate(-1.8deg)"
       },
       {
         opacity: 1,
-        transform: "scale(1)"
+        transform: "translateY(70px) translateX(10px) rotate(1.5deg)"
+      },
+      {
+        opacity: 1,
+        transform: "translateY(40px) translateX(-7px) rotate(-1deg)"
+      },
+      {
+        opacity: 1,
+        transform: "translateY(15px) translateX(4px) rotate(0.5deg)"
+      },
+      {
+        opacity: 1,
+        transform: "translateY(0) translateX(0) rotate(0deg)"
       }
     ],
     {
-      duration: 2000,
+      duration: 4000,
       easing: "ease-out",
       fill: "forwards"
     }
@@ -3875,7 +3884,7 @@ function setupBattle() {
 
   setTimeout(() => {
     playBossEntrance();
-  }, 1800);
+  }, 3200);
 }
 
   /*
