@@ -49,7 +49,7 @@ function getBgmKeyForScreen(screenId) {
     case "lake-screen": return "lake";
     case "battle-screen":
   if (currentAdventureStage === "lake") {
-    return currentBattleNumber === 5 ? "lakeBoss" : "lakeBattle";
+    return currentBattleNumber === 6 ? "lakeBoss" : "lakeBattle";
   }
   return currentBattleNumber === 6 ? "forestBoss" : "forestBattle";
 
@@ -93,6 +93,30 @@ function playBgm(key) {
 
   opBgm.volume = 0.2;
   opBgm.loop = true;
+  opBgm.play().catch(() => {});
+}
+
+function playOneShotBgm(key, returnToScreen = null) {
+  const opBgm = document.getElementById("op-bgm");
+  if (!opBgm || !bgmEnabled) return;
+
+  const bgmPath = BGM_LIST[key];
+  if (!bgmPath) return;
+
+  opBgm.onended = null;
+  opBgm.src = bgmPath;
+  opBgm.currentTime = 0;
+  opBgm.volume = 0.2;
+  opBgm.loop = false;
+
+  opBgm.onended = () => {
+    opBgm.onended = null;
+
+    if (bgmEnabled && returnToScreen) {
+      updateBgmForScreen(returnToScreen);
+    }
+  };
+
   opBgm.play().catch(() => {});
 }
 
@@ -1836,10 +1860,8 @@ function finishTraining() {
   */
 
   if (rewardIsNew) {
-
-    playBgm("levelup");
-
-  }
+  playOneShotBgm("levelup");
+}
 
 }
 
@@ -2967,6 +2989,8 @@ function showLevelUp(
   showScreen(
     "levelup-screen"
   );
+
+  playOneShotBgm("levelup");
 }
 
 
