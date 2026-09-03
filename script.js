@@ -48,11 +48,13 @@ function getBgmKeyForScreen(screenId) {
     case "forest-screen": return "forest";
     case "lake-screen": return "lake";
     case "battle-screen":
-    case "battle-result-screen":
-      if (currentAdventureStage === "lake") {
-        return currentBattleNumber === 5 ? "lakeBoss" : "lakeBattle";
-      }
-      return currentBattleNumber === 6 ? "forestBoss" : "forestBattle";
+  if (currentAdventureStage === "lake") {
+    return currentBattleNumber === 5 ? "lakeBoss" : "lakeBattle";
+  }
+  return currentBattleNumber === 6 ? "forestBoss" : "forestBattle";
+
+case "battle-result-screen":
+  return null;
     default: return null;
   }
 }
