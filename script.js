@@ -30,7 +30,9 @@ const BGM_LIST = {
   forestBoss: "audio/forest_boss.mp3",
   lake: "audio/lake.mp3",
   lakeBattle: "audio/lake_battle.mp3",
-  lakeBoss: "audio/lake_boss.mp3"
+  lakeBoss: "audio/lake_boss.mp3",
+  levelup: "audio/levelup.mp3",
+  bossClear: "audio/boss_clear.mp3"
 };
 
 let currentBgmKey = null;
@@ -41,7 +43,8 @@ function getBgmKeyForScreen(screenId) {
     case "world-screen": return "world";
     case "training-screen": return "training";    
      case "quiz-screen": return "training";
-   　case "training-monster-screen": return "trainingMonster";  
+   　case "training-monster-screen": return "trainingMonster";
+     case "levelup-screen": return "levelup";   
     case "forest-screen": return "forest";
     case "lake-screen": return "lake";
     case "battle-screen":
