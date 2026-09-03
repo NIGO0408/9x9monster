@@ -1609,24 +1609,19 @@ function finishTraining() {
 
   answering = false;
 
-
   const stars =
     getStars(
       correctCount
     );
 
-
   const resultCorrect =
     el("result-correct");
-
 
   const resultCombo =
     el("result-combo");
 
-
   const resultStars =
     el("result-stars");
-
 
   if (resultCorrect) {
 
@@ -1635,14 +1630,12 @@ function finishTraining() {
 
   }
 
-
   if (resultCombo) {
 
     resultCombo.textContent =
       maxCombo;
 
   }
-
 
   if (resultStars) {
 
@@ -1651,10 +1644,8 @@ function finishTraining() {
 
   }
 
-
   const rewardBox =
     el("reward-box");
-
 
   if (rewardBox) {
 
@@ -1667,10 +1658,10 @@ function finishTraining() {
 
   }
 
-
   const nextButton =
     el("next-stage");
 
+  let rewardIsNew = false;
 
   if (
     correctCount >= 8
@@ -1692,7 +1683,6 @@ function finishTraining() {
 
     }
 
-
     /*
        星評価
     */
@@ -1702,14 +1692,12 @@ function finishTraining() {
         currentStage
       ] || "";
 
-
     const starValue =
       stars === "⭐⭐⭐"
         ? 3
         : stars === "⭐⭐☆"
           ? 2
           : 1;
-
 
     const oldValue =
       oldStars === "⭐⭐⭐"
@@ -1719,7 +1707,6 @@ function finishTraining() {
           : oldStars === "⭐☆☆"
             ? 1
             : 0;
-
 
     if (
       starValue > oldValue
@@ -1731,7 +1718,6 @@ function finishTraining() {
 
     }
 
-
     /*
        モンスターGET
     */
@@ -1741,26 +1727,19 @@ function finishTraining() {
         currentStage
       );
 
-
     if (monster) {
 
-      const isNew =
+      rewardIsNew =
         catchMonster(
           monster.id
         );
 
-
       showReward(
-  monster,
-  isNew
-);
-
-if (isNew) {
-  playBgm("levelup");
-}
+        monster,
+        rewardIsNew
+      );
 
     }
-
 
     /*
        9の段までクリアすると
@@ -1776,14 +1755,11 @@ if (isNew) {
 
     }
 
-
     const title =
       el("result-title");
 
-
     const message =
       el("result-message");
-
 
     if (title) {
 
@@ -1794,7 +1770,6 @@ if (isNew) {
 
     }
 
-
     if (message) {
 
       message.textContent =
@@ -1804,12 +1779,10 @@ if (isNew) {
 
     }
 
-
     if (nextButton) {
 
       nextButton.style.display =
         "inline-block";
-
 
       nextButton.textContent =
         currentStage === 9
@@ -1817,7 +1790,6 @@ if (isNew) {
           : `🥋 ${currentStage + 1}の段へ`;
 
     }
-
 
     saveGame();
 
@@ -1828,10 +1800,8 @@ if (isNew) {
     const title =
       el("result-title");
 
-
     const message =
       el("result-message");
-
 
     if (title) {
 
@@ -1840,14 +1810,12 @@ if (isNew) {
 
     }
 
-
     if (message) {
 
       message.textContent =
         "8問以上正解すると合格だよ！";
 
     }
-
 
     if (nextButton) {
 
@@ -1858,12 +1826,22 @@ if (isNew) {
 
   }
 
-
   showScreen(
     "result-screen"
   );
-}
 
+  /*
+     新しいモンスターをGETしたとき
+     レベルアップ曲を再生
+  */
+
+  if (rewardIsNew) {
+
+    playBgm("levelup");
+
+  }
+
+}
 
 /* =========================================================
    モンスター育成画面
