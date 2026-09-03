@@ -1751,9 +1751,13 @@ function finishTraining() {
 
 
       showReward(
-        monster,
-        isNew
-      );
+  monster,
+  isNew
+);
+
+if (isNew) {
+  playBgm("levelup");
+}
 
     }
 
