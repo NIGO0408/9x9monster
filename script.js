@@ -510,7 +510,7 @@ function isLakeUnlocked() {
 }
 
 function isLakeCleared() {
-  return lakeProgress >= 5;
+  return lakeProgress >= 6;
 }
 
 /* =========================================================
@@ -5272,15 +5272,15 @@ function updateLakeMap() {
     if (!icon) return;
 
     if (cleared) icon.textContent = "⭐";
-    else if (number === 5) icon.textContent = unlocked ? "👑" : "🔒";
+    else if (number === 6) icon.textContent = unlocked ? "👑" : "🔒";
     else icon.textContent = unlocked ? "⚔️" : "🔒";
   });
 
   const fill = el("lake-progress-fill");
-  if (fill) fill.style.width = `${lakeProgress / 5 * 100}%`;
+  if (fill) fill.style.width = `${lakeProgress / 6 * 100}%`;
 
   const progress = el("lake-progress-text");
-  if (progress) progress.textContent = `${lakeProgress} / 5 バトルクリア`;
+  if (progress) progress.textContent = `${lakeProgress} / 6 バトルクリア`;
 }
 
 function startLakeBattle(battleNumber) {
@@ -5357,10 +5357,10 @@ function startLakeBattle(battleNumber) {
 
   /*
      湖の敵を決定。
-     ⑤は湖底の主。
+     ⑥は湖底の主。
   */
   if (
-    number === 5
+    number === 6
   ) {
     currentWildMonster = {
       ...adventureStages.lake.boss
@@ -5954,7 +5954,7 @@ function activateDeveloperMode() {
     adventureUnlocked = true;
     forestProgress = 6;
     forestCurrentHP = 0;
-    lakeProgress = 0;
+    lakeProgress = 6;
 
     saveGame();
 
@@ -5963,7 +5963,7 @@ function activateDeveloperMode() {
       "全モンスター仲間入り\n" +
       "全モンスターMAXレベル\n" +
       "森クリア\n" +
-      "湖解放"
+      "湖クリア"
     );
 
     return;
