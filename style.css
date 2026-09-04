@@ -1206,10 +1206,11 @@ button {
   margin-bottom: 25px;
 }
 
-.forest-header h1 {
+.world-header h1 {
   margin: 0;
-
-  font-size: 26px;
+  font-size: 28px;
+  flex: 1;
+  text-align: center;
 }
 
 .forest-intro {
