@@ -5444,12 +5444,7 @@ function startLakeBattle(battleNumber) {
   }
   else {
     const base =
-      adventureStages.lake.enemies[
-        Math.floor(
-          Math.random() *
-          adventureStages.lake.enemies.length
-        )
-      ];
+  adventureStages.lake.enemies[number - 1];
 
     currentWildMonster = {
   ...base,
