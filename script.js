@@ -3601,31 +3601,28 @@ function playBossEntrance() {
   const target =
     enemyImage.querySelector("img") || enemyImage;
 
-  target.animate(
+ target.animate(
   [
-  { opacity: 0, transform: "translateY(220px) translateX(0) rotate(0deg)" },
-  { opacity: 1, transform: "translateY(205px) translateX(-3px) rotate(-0.4deg)" },
-  { opacity: 1, transform: "translateY(190px) translateX(3px) rotate(0.4deg)" },
-  { opacity: 1, transform: "translateY(175px) translateX(-3px) rotate(-0.4deg)" },
-  { opacity: 1, transform: "translateY(160px) translateX(3px) rotate(0.4deg)" },
-  { opacity: 1, transform: "translateY(145px) translateX(-3px) rotate(-0.4deg)" },
-  { opacity: 1, transform: "translateY(130px) translateX(3px) rotate(0.4deg)" },
-  { opacity: 1, transform: "translateY(115px) translateX(-3px) rotate(-0.4deg)" },
-  { opacity: 1, transform: "translateY(100px) translateX(3px) rotate(0.4deg)" },
-  { opacity: 1, transform: "translateY(85px) translateX(-2px) rotate(-0.3deg)" },
-  { opacity: 1, transform: "translateY(70px) translateX(2px) rotate(0.3deg)" },
-  { opacity: 1, transform: "translateY(55px) translateX(-2px) rotate(-0.3deg)" },
-  { opacity: 1, transform: "translateY(40px) translateX(2px) rotate(0.3deg)" },
-  { opacity: 1, transform: "translateY(25px) translateX(-1px) rotate(-0.2deg)" },
-  { opacity: 1, transform: "translateY(10px) translateX(1px) rotate(0.2deg)" },
-  { opacity: 1, transform: "translateY(0) translateX(0) rotate(0deg)" }
-],
-    {
-      duration: 3000,
-      easing: "ease-out",
-      fill: "forwards"
-    }
-  );
+    { opacity: 0, transform: "translateY(200px) rotate(-1deg) scale(0.95)" },
+    { opacity: 0.4, transform: "translateY(160px) rotate(1deg) scale(0.96)" },
+    { opacity: 0.7, transform: "translateY(125px) rotate(-1.2deg) scale(0.97)" },
+    { opacity: 1, transform: "translateY(95px) rotate(1deg) scale(0.98)" },
+    { opacity: 1, transform: "translateY(75px) rotate(-1deg) scale(0.985)" },
+    { opacity: 1, transform: "translateY(60px) rotate(1.2deg) scale(0.99)" },
+    { opacity: 1, transform: "translateY(45px) rotate(-1.2deg) scale(0.995)" },
+    { opacity: 1, transform: "translateY(32px) rotate(1deg) scale(1)" },
+    { opacity: 1, transform: "translateY(22px) rotate(-1.2deg) scale(1)" },
+    { opacity: 1, transform: "translateY(14px) rotate(1deg) scale(1)" },
+    { opacity: 1, transform: "translateY(8px) rotate(-0.8deg) scale(1)" },
+    { opacity: 1, transform: "translateY(3px) rotate(0.6deg) scale(1)" },
+    { opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" }
+  ],
+  {
+    duration: 3000,
+    easing: "ease-out",
+    fill: "forwards"
+  }
+);
 }
 
 function setupBattle() {
