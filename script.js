@@ -379,7 +379,7 @@ const adventureStages = {
   { name: "レイクシェル", image: "images/lakeshell.png", level: 5, hp: 70, attack: 10 },
   { name: "アクアゾンビ", image: "images/aquazombie.png", level: 6, hp: 100, attack: 12 }
 ],
-boss: { name: "湖底の主 ククッシー", image: "images/kukusshi.png", level: 7, hp: 130, attack: 14 }
+boss: { name: "湖底の主 ククッシー", image: "images/kukusshii.png", level: 7, hp: 130, attack: 14 }
   }
 };
 
