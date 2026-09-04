@@ -417,7 +417,7 @@ const adventureStages = {
       { name: "ドクキノコン", image: "images/warukinoko.png", level: 2, hp: 18, attack: 6 },
       { name: "オバケバーナ", image: "images/obakebana.png", level: 3, hp: 24, attack: 7 },
       { name: "ゴブリーダー", image: "images/goburin_rida.png", level: 4, hp: 30, attack: 9 },
-      { name: "ジュモーク", image: "images/uddora.png", level: 5, hp: 38, attack: 8 }
+      { name: "ジュモーク", image: "images/uddora.png", level: 5, hp: 38, attack: 9 }
     ],
     boss: { name: "森の王ナックルベア", image: "images/morinosyugosya.png", level: 7, hp: 55, attack: 11 }
   },
@@ -431,12 +431,13 @@ const adventureStages = {
     questionMin: 3,
     questionMax: 5,
     enemies: [
-      { name: "あわモン", image: null, level: 3, hp: 27, attack: 8 },
-      { name: "ウォータースライム", image: null, level: 4, hp: 32, attack: 10 },
-      { name: "ツノザカナ", image: null, level: 4, hp: 36, attack: 12 },
-      { name: "シンカイモン", image: null, level: 5, hp: 42, attack: 14 }
-    ],
-    boss: { name: "湖底の主", image: null, level: 7, hp: 65, attack: 17 }
+  { name: "アワモン", image: "images/awamon.png", level: 2, hp: 18, attack: 6 },
+  { name: "ウォータースライム", image: "images/waterslime.png", level: 3, hp: 24, attack: 7 },
+  { name: "トゲフィッシュ", image: "images/togefish.png", level: 4, hp: 30, attack: 9 },
+  { name: "レイクシェル", image: "images/lakeshell.png", level: 5, hp: 38, attack: 10 },
+  { name: "アクアゾンビ", image: "images/aquazombie.png", level: 6, hp: 40, attack: 11 }
+],
+boss: { name: "湖底の主 ククッシー", image: "images/kukusshii.png", level: 7, hp: 65, attack: 13 }
   }
 };
 
