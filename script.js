@@ -405,22 +405,22 @@ let levelupMonsterId = null;
 
 const adventureStages = {
   forest: {
-    id: "forest",
-    name: "はじまりの森",
-    progress: 0,
-    currentHP: 0,
-    battleMonsterId: null,
-    questionMin: 1,
-    questionMax: 3,
-   enemies: [
-      { name: "ノラスライム", image: "images/yasei_slime.png", level: 1, hp: 12, attack: 5 },
-      { name: "ドクキノコン", image: "images/warukinoko.png", level: 2, hp: 18, attack: 7 },
-      { name: "オバケバーナ", image: "images/obakebana.png", level: 3, hp: 24, attack: 8 },
-      { name: "ゴブリーダー", image: "images/goburin_rida.png", level: 4, hp: 30, attack: 10 },
-      { name: "ジュモーク", image: "images/uddora.png", level: 5, hp: 38, attack: 10 }
-    ],
-    boss: { name: "森の王ナックルベア", image: "images/morinosyugosya.png", level: 7, hp: 55, attack: 12 }
-  },
+  id: "forest",
+  name: "はじまりの森",
+  progress: 0,
+  currentHP: 0,
+  battleMonsterId: null,
+  questionMin: 1,
+  questionMax: 3,
+  enemies: [
+    { name: "ノラスライム", image: "images/yasei_slime.png", level: 1, hp: 30, attack: 5 },
+    { name: "ドクキノコン", image: "images/warukinoko.png", level: 2, hp: 42, attack: 7 },
+    { name: "オバケバーナ", image: "images/obakebana.png", level: 3, hp: 55, attack: 8 },
+    { name: "ゴブリーダー", image: "images/goburin_rida.png", level: 4, hp: 70, attack: 10 },
+    { name: "ジュモーク", image: "images/uddora.png", level: 5, hp: 70, attack: 10 }
+  ],
+  boss: { name: "森の王ナックルベア", image: "images/morinosyugosya.png", level: 7, hp: 100, attack: 12 }
+},
 
   lake: {
     id: "lake",
@@ -5496,20 +5496,10 @@ function startLakeBattle(battleNumber) {
       ];
 
     currentWildMonster = {
-      ...base,
-
-      /*
-         後半ほど少しだけ強くする。
-         基本攻撃力は湖の設定値を使用。
-      */
-      hp:
-        base.hp +
-        (number - 1) * 2,
-
-      attack:
-        base.attack +
-        (number - 1)
-    };
+  ...base,
+  hp: base.hp,
+  attack: base.attack
+};
   }
 
   saveAdventureStage("lake");
