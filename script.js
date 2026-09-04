@@ -3589,14 +3589,13 @@ function startForestBattle(
 if (number === 6) {
 
   currentWildMonster = {
-    ...forestBoss,
-    hp: forestBoss.hp
+    ...adventureStages.forest.boss
   };
 
 } else {
 
   const base =
-    forestEnemies[number - 1];
+  adventureStages.forest.enemies[number - 1];
 
   currentWildMonster = {
     ...base,
