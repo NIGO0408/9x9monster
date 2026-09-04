@@ -305,64 +305,6 @@ const monsters = [
   }
 ];
 
-/* =========================================================
-   はじまりの森の敵
-   ========================================================= */
-
-const forestEnemies = [
-  {
-    name: "ノラスライム",
-    image: "images/yasei_slime.png",
-    level: 1,
-    hp: 30,
-    attack: 5
-  },
-
-  {
-    name: "ドクキノコン",
-    image: "images/warukinoko.png",
-    level: 2,
-    hp: 42,
-    attack: 6
-  },
-
-  {
-    name: "オバケバーナ",
-    image: "images/obakebana.png",
-    level: 3,
-    hp: 55,
-    attack: 7
-  },
-
-  {
-    name: "ゴブリーダー",
-    image: "images/goburin_rida.png",
-    level: 4,
-    hp: 70,
-    attack: 8
-  },
-
-  {
-    name: "ジュモーク",
-    image: "images/uddora.png",
-    level: 5,
-    hp: 70,
-    attack: 9
-  }
-];
-
-/* =========================================================
-   はじまりの森 ボス
-   ========================================================= */
-
-const forestBoss = {
-  name: "森の王ナックルベア",
-  image: "images/morinosyugosya.png",
-  level: 7,
-  hp: 100,
-  attack: 10
-};
-
 
 /* =========================================================
    ゲームデータ
