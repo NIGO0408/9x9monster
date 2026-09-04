@@ -4681,10 +4681,12 @@ function battleWin() {
     "battle-result-screen"
   );
 
-  if (currentBattleNumber === 6) {
+ if (currentBattleNumber === 6) {
   playBossClearFanfare();
-} 
-
+} else {
+  playBattleClearFanfare();
+}
+   
   if (leveledUp) {
     setTimeout(
       () => {
@@ -4724,6 +4726,19 @@ function playBossClearFanfare() {
       updateBgmForScreen(returnScreen);
     }
   };
+
+  opBgm.play().catch(() => {});
+}
+
+function playBattleClearFanfare() {
+  const opBgm = document.getElementById("op-bgm");
+  if (!opBgm || !bgmEnabled) return;
+
+  opBgm.onended = null;
+  opBgm.src = "audio/battle_clear.mp3";
+  opBgm.currentTime = 0;
+  opBgm.volume = 0.2;
+  opBgm.loop = false;
 
   opBgm.play().catch(() => {});
 }
