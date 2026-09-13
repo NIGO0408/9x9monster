@@ -3214,10 +3214,32 @@ function updateLakeAreaAvailability() {
   }
 }
 
+function updateVolcanoAreaAvailability() {
+  const area = el("volcano-area");
+
+  if (!area) {
+    return;
+  }
+
+  const unlocked = isLakeCleared();
+
+  area.disabled = !unlocked;
+  area.classList.toggle("locked-area", !unlocked);
+
+  const small = area.querySelector("small");
+
+  if (small) {
+    small.textContent = unlocked
+      ? "山へ挑戦する！"
+      : "九九の湖クリアで解放";
+  }
+}
+
 function openWorld() {
 
   updateWorldStats();
   updateLakeAreaAvailability();
+  updateVolcanoAreaAvailability(); 
   updateLakeMap();
 
   showScreen(
