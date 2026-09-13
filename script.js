@@ -364,7 +364,7 @@ const adventureStages = {
   boss: { name: "森の王ナックルベア", image: "images/morinosyugosya.png", level: 7, hp: 100, attack: 12 }
 },
 
-  lake: {
+ lake: {
     id: "lake",
     name: "九九の湖",
     progress: 0,
@@ -372,14 +372,32 @@ const adventureStages = {
     battleMonsterId: null,
     questionMin: 3,
     questionMax: 5,
-   enemies: [
-  { name: "アワモン", image: "images/awamon.png", level: 2, hp: 42, attack: 7 },
-  { name: "ウォータースライム", image: "images/waterslime.png", level: 3, hp: 55, attack: 8 },
-  { name: "トゲフィッシュ", image: "images/togefish.png", level: 4, hp: 70, attack: 10 },
-  { name: "レイクシェル", image: "images/lakeshell.png", level: 5, hp: 70, attack: 10 },
-  { name: "アクアゾンビ", image: "images/aquazombie.png", level: 6, hp: 100, attack: 12 }
-],
-boss: { name: "湖底の主 ククッシー", image: "images/kukusshii.png", level: 7, hp: 130, attack: 14 }
+    enemies: [
+      { name: "アワモン", image: "images/awamon.png", level: 2, hp: 42, attack: 7 },
+      { name: "ウォータースライム", image: "images/waterslime.png", level: 3, hp: 55, attack: 8 },
+      { name: "トゲフィッシュ", image: "images/togefish.png", level: 4, hp: 70, attack: 10 },
+      { name: "レイクシェル", image: "images/lakeshell.png", level: 5, hp: 70, attack: 10 },
+      { name: "アクアゾンビ", image: "images/aquazombie.png", level: 6, hp: 100, attack: 12 }
+    ],
+    boss: { name: "湖底の主 ククッシー", image: "images/kukusshii.png", level: 7, hp: 130, attack: 14 }
+  },
+
+  volcano: {
+    id: "volcano",
+    name: "炎のカッケ山",
+    progress: 0,
+    currentHP: 0,
+    battleMonsterId: null,
+    questionMin: 5,
+    questionMax: 7,
+    enemies: [
+      { name: "ボウボウ", image: "images/boubou.png", level: 3, hp: 55, attack: 8 },
+      { name: "マグマスライム", image: "images/magumaslime.png", level: 4, hp: 70, attack: 10 },
+      { name: "ベビーデビル", image: "images/babydevil.png", level: 5, hp: 80, attack: 11 },
+      { name: "モクモク魔神", image: "images/mokumokumajin.png", level: 6, hp: 100, attack: 12 },
+      { name: "カエルナイト", image: "images/kaerunaito.png", level: 7, hp: 110, attack: 14 }
+    ],
+    boss: { name: "ボルケーノゴーレム", image: "images/volcanogolem.png", level: 9, hp: 150, attack: 16 }
   }
 };
 
