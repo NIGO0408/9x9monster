@@ -5123,60 +5123,41 @@ function battleReturnAdventure() {
 function battleBackAdventure() {
 
   if (battleTimer) {
-
-    clearTimeout(
-      battleTimer
-    );
-
-    battleTimer =
-      null;
-
+    clearTimeout(battleTimer);
+    battleTimer = null;
   }
 
+  battleAnswering = false;
 
-  battleAnswering =
-    false;
+  if (battlePlayerMaxHP > 0) {
 
-
-  if (
-    battlePlayerMaxHP > 0
-  ) {
-
-    if (
-      currentAdventureStage === "lake"
-    ) {
-      lakeCurrentHP =
-        battlePlayerHP;
+    if (currentAdventureStage === "volcano") {
+      volcanoCurrentHP = battlePlayerHP;
+    }
+    else if (currentAdventureStage === "lake") {
+      lakeCurrentHP = battlePlayerHP;
     }
     else {
-      forestCurrentHP =
-        battlePlayerHP;
+      forestCurrentHP = battlePlayerHP;
     }
 
   }
-
 
   saveGame();
 
-
-  if (
-    currentAdventureStage === "lake"
-  ) {
+  if (currentAdventureStage === "volcano") {
+    updateVolcanoMap();
+    showScreen("volcano-screen");
+  }
+  else if (currentAdventureStage === "lake") {
     updateLakeMap();
-
-    showScreen(
-      "lake-screen"
-    );
+    showScreen("lake-screen");
   }
   else {
     updateForestMap();
-
-    showScreen(
-      "forest-screen"
-    );
+    showScreen("forest-screen");
   }
 }
-
 
 /* =========================================================
    セーブデータリセット
