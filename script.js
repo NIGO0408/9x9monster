@@ -49,6 +49,7 @@ function getBgmKeyForScreen(screenId) {
      case "levelup-screen": return "levelup";   
     case "forest-screen": return "forest";
    case "lake-screen": return "lakeBattle";
+   case "volcano-screen": return "volcanoBattle";     
    case "battle-screen":
       if (currentAdventureStage === "lake") {
         return currentBattleNumber === 6
