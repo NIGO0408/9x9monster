@@ -33,6 +33,8 @@ const BGM_LIST = {
   lakeBoss: "audio/lake_boss.mp3",
   levelup: "audio/levelup.mp3",
   bossClear: "audio/boss_clear.mp3"
+  volcanoBattle: "audio/volcano_battle.mp3",
+  volcanoBoss: "audio/volcano_boss.mp3", 
 };
 
 let currentBgmKey = null;
@@ -47,11 +49,22 @@ function getBgmKeyForScreen(screenId) {
      case "levelup-screen": return "levelup";   
     case "forest-screen": return "forest";
    case "lake-screen": return "lakeBattle";
-    case "battle-screen":
-  if (currentAdventureStage === "lake") {
-    return currentBattleNumber === 6 ? "lakeBoss" : "lakeBattle";
-  }
-  return currentBattleNumber === 6 ? "forestBoss" : "forestBattle";
+   case "battle-screen":
+      if (currentAdventureStage === "lake") {
+        return currentBattleNumber === 6
+          ? "lakeBoss"
+          : "lakeBattle";
+      }
+
+      if (currentAdventureStage === "volcano") {
+        return currentBattleNumber === 6
+          ? "volcanoBoss"
+          : "volcanoBattle";
+      }
+
+      return currentBattleNumber === 6
+        ? "forestBoss"
+        : "forestBattle";
 
 case "battle-result-screen":
   return null;
@@ -4721,18 +4734,23 @@ function battleWin() {
     el("battle-return-forest");
 
   if (returnButton) {
-    returnButton.textContent =
-      isLake
+  returnButton.textContent =
+    currentAdventureStage === "volcano"
+      ? "🌋 カッケ山のマップへ"
+      : isLake
         ? "🌊 湖のマップへ"
         : "🌳 森のマップへ";
-  }
+}
 
-  if (isLake) {
-    updateLakeMap();
-  }
-  else {
-    updateForestMap();
-  }
+  if (currentAdventureStage === "volcano") {
+  updateVolcanoMap();
+}
+else if (isLake) {
+  updateLakeMap();
+}
+else {
+  updateForestMap();
+}
 
   updateWorldStats();
 
