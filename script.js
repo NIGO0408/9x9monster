@@ -5903,6 +5903,11 @@ el("lake-back-button")?.addEventListener(
   openWorld
 );
 
+/* 火山 → ワールド */
+el("volcano-back-button")?.addEventListener(
+  "click",
+  openWorld
+);
 
 /* 森 → ワールド */
 
