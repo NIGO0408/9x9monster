@@ -32,7 +32,7 @@ const BGM_LIST = {
   lakeBattle: "audio/lake_battle.mp3",
   lakeBoss: "audio/lake_boss.mp3",
   levelup: "audio/levelup.mp3",
-  bossClear: "audio/boss_clear.mp3"
+  bossClear: "audio/boss_clear.mp3",
   volcanoBattle: "audio/volcano_battle.mp3",
   volcanoBoss: "audio/volcano_boss.mp3", 
 };
