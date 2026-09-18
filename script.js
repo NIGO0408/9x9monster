@@ -865,7 +865,7 @@ function loadGame() {
         : null;
 
     lakeProgress =
-      Math.max(0, Math.min(5, Number(data.lakeProgress) || 0));
+      Math.max(0, Math.min(6, Number(data.lakeProgress) || 0));
 
     lakeCurrentHP =
       Number(data.lakeCurrentHP) || 0;
