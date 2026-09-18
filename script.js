@@ -429,6 +429,37 @@ let volcanoBattleMonsterId = null;
 
 let currentAdventureStage = "forest";
 
+// 敵図鑑データ
+let enemyDex = {
+  forest: {},
+  lake: {},
+  volcano: {}
+};
+
+// 敵図鑑に討伐記録を登録
+function registerEnemyDefeat() {
+  const stage = currentAdventureStage;
+  const enemy = currentWildMonster;
+
+  if (!enemy || !enemy.name) return;
+
+  if (!enemyDex[stage]) {
+    enemyDex[stage] = {};
+  }
+
+  const enemyName = enemy.name;
+
+  if (!enemyDex[stage][enemyName]) {
+    enemyDex[stage][enemyName] = {
+      discovered: true,
+      defeats: 0
+    };
+  }
+
+  enemyDex[stage][enemyName].discovered = true;
+  enemyDex[stage][enemyName].defeats++;
+}
+
 /* =========================================================
    バトル状態
    ========================================================= */
@@ -733,7 +764,8 @@ function saveGame() {
     lakeBattleMonsterId,
 　　volcanoProgress,
 　　volcanoCurrentHP,
-　　volcanoBattleMonsterId
+　　volcanoBattleMonsterId,
+    enemyDex: { ...enemyDex } 
      
   };
 
@@ -899,6 +931,16 @@ volcanoProgress =
       data.volcanoBattleMonsterId
         ? Number(data.volcanoBattleMonsterId)
         : null;
+    if (
+      data.enemyDex &&
+      typeof data.enemyDex === "object"
+    ) {
+      enemyDex = {
+        forest: data.enemyDex.forest || {},
+        lake: data.enemyDex.lake || {},
+        volcano: data.enemyDex.volcano || {}
+      };
+    } 
      
   }
 
@@ -4614,6 +4656,8 @@ function battleWin() {
   }
 
   battleWins++;
+
+  registerEnemyDefeat(); 
 
   battleExpReward =
     currentBattleNumber === 6
