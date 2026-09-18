@@ -3933,38 +3933,47 @@ function setupBattle() {
   updateBattleHP();
 
 
-  const isLake =
-    currentAdventureStage === "lake";
+  const isVolcano =
+  currentAdventureStage === "volcano";
 
-  battleMessage(
-    currentBattleNumber === 6
-      ? (
-          isLake
+const isLake =
+  currentAdventureStage === "lake";
+
+battleMessage(
+  currentBattleNumber === 6
+    ? (
+        isVolcano
+          ? "⚠️ 火山のボスが現れた！"
+          : isLake
             ? "⚠️ 湖底の主が現れた！"
             : "⚠️ 森のボスが現れた！"
-        )
-      : `⚔️ バトル${currentBattleNumber}！九九で攻撃しよう！`
-  );
+      )
+    : `⚔️ バトル${currentBattleNumber}！九九で攻撃しよう！`
+);
 
-  const battleBackButton =
-    el("battle-back-button");
+const battleBackButton =
+  el("battle-back-button");
 
-  if (battleBackButton) {
-    battleBackButton.textContent =
-      isLake
+if (battleBackButton) {
+  battleBackButton.textContent =
+    isVolcano
+      ? "← カッケ山のマップへ"
+      : isLake
         ? "← 湖のマップへ"
         : "← 森のマップへ";
-  }
+}
 
-  const battleReturnButton =
-    el("battle-return-forest");
+const battleReturnButton =
+  el("battle-return-forest");
 
-  if (battleReturnButton) {
-    battleReturnButton.textContent =
-      isLake
+if (battleReturnButton) {
+  battleReturnButton.textContent =
+    isVolcano
+      ? "🌋 カッケ山のマップへ"
+      : isLake
         ? "🌊 湖のマップへ"
         : "🌳 森のマップへ";
-  }
+}
 
 
   /*
