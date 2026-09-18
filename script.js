@@ -5543,7 +5543,56 @@ function startLakeBattle(battleNumber) {
   );
 }
 
+/* =========================================================
+   炎のカッケ山：マップ更新
+   ========================================================= */
 
+function updateVolcanoMap() {
+  const nodes = document.querySelectorAll(
+    "#volcano-screen .battle-node, #volcano-screen .boss-node"
+  );
+
+  nodes.forEach(node => {
+    const number = Number(node.dataset.battle);
+    const unlocked = number === 1 || volcanoProgress >= number - 1;
+    const cleared = volcanoProgress >= number;
+
+    node.disabled = !unlocked;
+    node.classList.toggle("locked-node", !unlocked);
+    node.classList.toggle("cleared-node", cleared);
+
+    const icon = node.querySelector(".node-icon");
+    if (!icon) return;
+
+    if (cleared) icon.textContent = "⭐";
+    else if (number === 6) icon.textContent = unlocked ? "👑" : "🔒";
+    else icon.textContent = unlocked ? "⚔️" : "🔒";
+  });
+
+  const fill = el("volcano-progress-fill");
+  if (fill) fill.style.width = `${volcanoProgress / 6 * 100}%`;
+
+  const progress = el("volcano-progress-text");
+  if (progress) {
+    progress.textContent = `${volcanoProgress} / 6 バトルクリア`;
+  }
+
+  const goal = document.querySelector(
+    "#volcano-screen .goal-node"
+  );
+
+  if (goal) {
+    goal.classList.toggle(
+      "locked-node",
+      volcanoProgress < 6
+    );
+
+    const icon = goal.querySelector(".node-icon");
+    if (icon) {
+      icon.textContent = volcanoProgress >= 6 ? "🏆" : "🔒";
+    }
+  }
+}
 
 
 /* =========================================================
