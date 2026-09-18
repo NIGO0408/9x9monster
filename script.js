@@ -5432,31 +5432,25 @@ function updateLakeMap() {
   if (fill) fill.style.width = `${lakeProgress / 6 * 100}%`;
 
   const progress = el("lake-progress-text");
-  if (progress) progress.textContent = `${lakeProgress} / 6 バトルクリア`;
-}
+  if (progress) {
+    progress.textContent = `${lakeProgress} / 6 バトルクリア`;
+  }
 
-const goal =
-  document.querySelector(
+  // 湖クリア表示の更新
+  const goal = document.querySelector(
     "#lake-screen .goal-node"
   );
 
-if (goal) {
-  goal.classList.toggle(
-    "locked-node",
-    lakeProgress < 6
-  );
+  if (goal) {
+    const cleared = lakeProgress >= 6;
 
-  if (
-    lakeProgress >= 6
-  ) {
-    const icon =
-      goal.querySelector(
-        ".node-icon"
-      );
+    goal.classList.toggle("locked-node", !cleared);
+    goal.classList.toggle("cleared-node", cleared);
+
+    const icon = goal.querySelector(".node-icon");
 
     if (icon) {
-      icon.textContent =
-        "🏆";
+      icon.textContent = cleared ? "🏆" : "🔒";
     }
   }
 }
