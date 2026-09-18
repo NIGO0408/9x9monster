@@ -4942,6 +4942,7 @@ function nextBattle() {
   ) {
 
     if (isVolcano) {
+       volcanoProgress = 6; 
       volcanoCurrentHP = 0;
       volcanoBattleMonsterId = null;
     }
