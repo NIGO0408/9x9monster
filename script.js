@@ -4890,11 +4890,6 @@ function battleLose() {
   );
 }
 
-
-/* =========================================================
-   次のバトル
-
-
 /* =========================================================
    次のバトル
    ========================================================= */
@@ -4904,6 +4899,9 @@ function nextBattle() {
   const isLake =
     currentAdventureStage === "lake";
 
+  const isVolcano =
+    currentAdventureStage === "volcano";
+
   /*
      敗北後は、そのステージの①から再挑戦。
   */
@@ -4911,7 +4909,14 @@ function nextBattle() {
     battlePlayerHP <= 0
   ) {
 
-    if (isLake) {
+    if (isVolcano) {
+      volcanoProgress = 0;
+      volcanoCurrentHP = 0;
+      volcanoBattleMonsterId = null;
+      saveGame();
+      startVolcanoBattle(1);
+    }
+    else if (isLake) {
       lakeProgress = 0;
       lakeCurrentHP = 0;
       lakeBattleMonsterId = null;
@@ -4936,7 +4941,11 @@ function nextBattle() {
     currentBattleNumber === 6
   ) {
 
-    if (isLake) {
+    if (isVolcano) {
+      volcanoCurrentHP = 0;
+      volcanoBattleMonsterId = null;
+    }
+    else if (isLake) {
       lakeCurrentHP = 0;
       lakeBattleMonsterId = null;
     }
@@ -4955,10 +4964,31 @@ function nextBattle() {
     currentBattleNumber + 1;
 
   /*
-     今のバトル終了時HPを必ず保存してから
+     今のバトル終了時HPを保存してから
      次のバトルを開始する。
   */
-  if (isLake) {
+
+  if (isVolcano) {
+
+    volcanoCurrentHP =
+      battlePlayerHP;
+
+    volcanoBattleMonsterId =
+      Number(selectedMonsterId);
+
+    volcanoProgress =
+      Math.max(
+        volcanoProgress,
+        currentBattleNumber
+      );
+
+    saveAdventureStage("volcano");
+    saveGame();
+
+    startVolcanoBattle(next);
+
+  }
+  else if (isLake) {
 
     lakeCurrentHP =
       battlePlayerHP;
@@ -4966,11 +4996,6 @@ function nextBattle() {
     lakeBattleMonsterId =
       Number(selectedMonsterId);
 
-    /*
-       現在のバトルは勝利済みなので、
-       次の番号をそのまま開始する。
-       進行度の判定に依存しない。
-    */
     lakeProgress =
       Math.max(
         lakeProgress,
@@ -5003,13 +5028,6 @@ function nextBattle() {
     startForestBattle(next);
   }
 }
-
-
-/* =========================================================
-   森へ戻る
-
-
-
 
 /* =========================================================
    森へ戻る
