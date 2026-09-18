@@ -4942,18 +4942,20 @@ function nextBattle() {
   ) {
 
     if (isVolcano) {
-       volcanoProgress = 6; 
-      volcanoCurrentHP = 0;
-      volcanoBattleMonsterId = null;
-    }
-    else if (isLake) {
-      lakeCurrentHP = 0;
-      lakeBattleMonsterId = null;
-    }
-    else {
-      forestCurrentHP = 0;
-      forestBattleMonsterId = null;
-    }
+  volcanoProgress = 6;
+  volcanoCurrentHP = 0;
+  volcanoBattleMonsterId = null;
+}
+else if (isLake) {
+  lakeProgress = 6;
+  lakeCurrentHP = 0;
+  lakeBattleMonsterId = null;
+}
+else {
+  forestProgress = 6;
+  forestCurrentHP = 0;
+  forestBattleMonsterId = null;
+}
 
     saveGame();
     openWorld();
