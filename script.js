@@ -5612,6 +5612,119 @@ function updateVolcanoMap() {
   }
 }
 
+/* =========================================================
+   炎のカッケ山：バトル開始
+   ========================================================= */
+
+function startVolcanoBattle(battleNumber) {
+
+  const number =
+    Number(battleNumber);
+
+  if (
+    number < 1 ||
+    number > 6
+  ) {
+    return;
+  }
+
+  /*
+     前のバトルをクリアしていなければ開始不可
+  */
+  if (
+    number > 1 &&
+    volcanoProgress < number - 1
+  ) {
+    return;
+  }
+
+  /*
+     仲間モンスターの確認
+  */
+  if (
+    caughtMonsters.length === 0
+  ) {
+    openVolcano();
+    return;
+  }
+
+  if (
+    !selectedMonsterId ||
+    !caughtMonsters.includes(
+      Number(selectedMonsterId)
+    )
+  ) {
+    selectedMonsterId =
+      Number(caughtMonsters[0]);
+  }
+
+  const selectedId =
+    Number(selectedMonsterId);
+
+  const data =
+    getMonsterData(selectedId);
+
+  if (!data) {
+    return;
+  }
+
+  currentAdventureStage =
+    "volcano";
+
+  currentBattleNumber =
+    number;
+
+  const monsterChanged =
+    volcanoBattleMonsterId !==
+    selectedId;
+
+  /*
+     ①またはモンスター変更時は満タン。
+     ②～⑤は前戦のHPを持ち越す。
+  */
+  if (
+    number === 1 ||
+    monsterChanged ||
+    volcanoCurrentHP <= 0
+  ) {
+    volcanoCurrentHP =
+      data.hp;
+
+    volcanoBattleMonsterId =
+      selectedId;
+  }
+
+  /*
+     火山の敵を決定。
+     ⑥はボルケーノゴーレム。
+  */
+  if (
+    number === 6
+  ) {
+    currentWildMonster = {
+      ...adventureStages.volcano.boss
+    };
+  }
+  else {
+    const base =
+      adventureStages.volcano.enemies[number - 1];
+
+    currentWildMonster = {
+      ...base,
+      hp: base.hp,
+      attack: base.attack
+    };
+  }
+
+  saveAdventureStage("volcano");
+
+  setupBattle();
+
+  showScreen(
+    "battle-screen"
+  );
+}
+
 
 /* =========================================================
    ボタン接続
