@@ -716,7 +716,7 @@ function saveGame() {
     forestBattleMonsterId,
     lakeProgress,
     lakeCurrentHP,
-    lakeBattleMonsterId
+    lakeBattleMonsterId,
 　　volcanoProgress,
 　　volcanoCurrentHP,
 　　volcanoBattleMonsterId
