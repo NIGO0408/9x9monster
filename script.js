@@ -409,6 +409,10 @@ let lakeProgress = 0;
 let lakeCurrentHP = 0;
 let lakeBattleMonsterId = null;
 
+let volcanoProgress = 0;
+let volcanoCurrentHP = 0;
+let volcanoBattleMonsterId = null;
+
 let currentAdventureStage = "forest";
 
 /* =========================================================
@@ -451,10 +455,14 @@ function syncAdventureState(stageId = currentAdventureStage) {
     stage.progress = forestProgress;
     stage.currentHP = forestCurrentHP;
     stage.battleMonsterId = forestBattleMonsterId;
-  } else {
+  } else if (stageId === "lake") {
     stage.progress = lakeProgress;
     stage.currentHP = lakeCurrentHP;
     stage.battleMonsterId = lakeBattleMonsterId;
+  } else if (stageId === "volcano") {
+    stage.progress = volcanoProgress;
+    stage.currentHP = volcanoCurrentHP;
+    stage.battleMonsterId = volcanoBattleMonsterId;
   }
   return stage;
 }
@@ -675,6 +683,7 @@ function saveGame() {
 
   syncAdventureState("forest");
   syncAdventureState("lake");
+  syncAdventureState("volcano"); 
 
   const data = {
 
@@ -708,6 +717,10 @@ function saveGame() {
     lakeProgress,
     lakeCurrentHP,
     lakeBattleMonsterId
+　　volcanoProgress,
+　　volcanoCurrentHP,
+　　volcanoBattleMonsterId
+     
   };
 
 
@@ -862,6 +875,17 @@ function loadGame() {
         ? Number(data.lakeBattleMonsterId)
         : null;
 
+volcanoProgress =
+      Math.max(0, Math.min(6, Number(data.volcanoProgress) || 0));
+
+    volcanoCurrentHP =
+      Number(data.volcanoCurrentHP) || 0;
+
+    volcanoBattleMonsterId =
+      data.volcanoBattleMonsterId
+        ? Number(data.volcanoBattleMonsterId)
+        : null;
+     
   }
 
   catch (error) {
