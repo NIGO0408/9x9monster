@@ -1854,14 +1854,12 @@ function finishTraining() {
   );
 
   /*
-     新しいモンスターをGETしたとき
-     レベルアップ曲を再生
+     修行合格時は毎回クリアファンファーレを再生
   */
 
-  if (rewardIsNew) {
-  playOneShotBgm("levelup");
-}
-
+  if (correctCount >= 8) {
+    playBattleClearFanfare();
+  }
 }
 
 /* =========================================================
