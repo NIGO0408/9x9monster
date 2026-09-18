@@ -1175,7 +1175,183 @@
 
   </section>
 
+<section
+  id="volcano-screen"
+  class="screen forest-screen"
+>
 
+  <div class="forest-header">
+
+    <button
+      id="volcano-back-button"
+      class="small-button"
+    >
+      ← マップ
+    </button>
+
+    <div>
+      <h1>🌋 炎のカッケ山</h1>
+      <small>全6バトル</small>
+    </div>
+
+  </div>
+
+  <div class="forest-intro">
+
+    <div class="forest-art">
+      🌋🔥🌋
+    </div>
+
+    <h2>炎の山を登ろう！</h2>
+
+    <p>
+      九九を使って<br>
+      炎のモンスターたちを倒しながら<br>
+      火口を目指そう！
+    </p>
+
+  </div>
+
+  <!-- 探索ルート -->
+
+  <div class="forest-route">
+
+    <!-- START -->
+
+    <div class="forest-node start-node">
+      <div class="node-icon">🏕️</div>
+      <div class="node-info">
+        <strong>火山のふもと</strong>
+        <small>START</small>
+      </div>
+    </div>
+
+    <div class="route-line"></div>
+
+    <!-- BATTLE 1 -->
+
+    <button
+      class="forest-node battle-node"
+      data-battle="1"
+    >
+      <div class="node-icon">⚔️</div>
+      <div class="node-info">
+        <strong>火山の入口</strong>
+        <small>バトル①</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+    <!-- BATTLE 2 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="2"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>溶岩の道</strong>
+        <small>バトル②</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+    <!-- BATTLE 3 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="3"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>灼熱の岩場</strong>
+        <small>バトル③</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+    <!-- BATTLE 4 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="4"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>炎の洞窟</strong>
+        <small>バトル④</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+    <!-- BATTLE 5 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="5"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>火口への道</strong>
+        <small>バトル⑤</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+    <!-- BOSS -->
+
+    <button
+      class="forest-node boss-node locked-node"
+      data-battle="6"
+      disabled
+    >
+      <div class="node-icon">👹</div>
+      <div class="node-info">
+        <strong>火口・ボスの間</strong>
+        <small>BOSS BATTLE</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+    <!-- GOAL -->
+
+    <div class="forest-node goal-node locked-node">
+      <div class="node-icon">🏆</div>
+      <div class="node-info">
+        <strong>炎のカッケ山クリア</strong>
+        <small>ボスを倒すと到達！</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 攻略状況 -->
+
+  <div class="forest-progress">
+
+    <strong>カッケ山の攻略状況</strong>
+
+    <div class="forest-progress-bar">
+      <div id="volcano-progress-fill"></div>
+    </div>
+
+    <small id="volcano-progress-text">
+      0 / 6 バトルクリア
+    </small>
+
+  </div>
+
+</section>
 
   <!-- =================================
        バトル
