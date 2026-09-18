@@ -5341,6 +5341,26 @@ function openLake() {
   showScreen("lake-screen");
 }
 
+/* 炎のカッケ山 */
+function openVolcano() {
+  if (!isLakeCleared()) {
+    alert("炎のカッケ山は、九九の湖をクリアすると解放されます！");
+    return;
+  }
+
+  if (caughtMonsters.length === 0) {
+    alert("冒険には仲間が必要です！\nまず修行してモンスターを仲間にしよう！");
+    return;
+  }
+
+  if (!selectedMonsterId || !caughtMonsters.includes(Number(selectedMonsterId))) {
+    selectedMonsterId = Number(caughtMonsters[0]);
+  }
+
+  updateVolcanoMap();
+  showScreen("volcano-screen");
+}
+
 function updateLakeMap() {
   const nodes = document.querySelectorAll(
     "#lake-screen .battle-node, #lake-screen .boss-node"
@@ -5645,6 +5665,12 @@ el("lake-area")?.addEventListener(
   openLake
 );
 
+/* ワールド → 火山 */
+el("volcano-area")?.addEventListener(
+  "click",
+  openVolcano
+);
+
 /* 湖のバトルノード */
 document
   .querySelectorAll(
@@ -5653,6 +5679,17 @@ document
   .forEach(node => {
     node.addEventListener("click", () => {
       startLakeBattle(Number(node.dataset.battle));
+    });
+  });
+
+/* 火山のバトルノード */
+document
+  .querySelectorAll(
+    "#volcano-screen .battle-node, #volcano-screen .boss-node"
+  )
+  .forEach(node => {
+    node.addEventListener("click", () => {
+      startVolcanoBattle(Number(node.dataset.battle));
     });
   });
 
