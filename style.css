@@ -64,6 +64,15 @@ button {
     float 2s infinite ease-in-out;
 }
 
+.logo-monster-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+  margin: 0 auto;
+}
+
 .logo h1 {
   margin: 15px 0;
 
