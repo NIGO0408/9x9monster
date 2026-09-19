@@ -5954,8 +5954,7 @@ el("retry-stage")?.addEventListener(
 el("monster-book-button")?.addEventListener(
   "click",
   () => {
-    renderMonsterBook();
-    openScreen("monster-book-screen");
+    openBook("result-screen");
   }
 );
 
