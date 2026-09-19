@@ -3245,8 +3245,7 @@ function renderEnemyBook() {
       if (discovered) {
         card.innerHTML = `
           <div class="monster-number">
- 　　　　　 ${stage.name}
-　　　　　 </div>
+ 　　　　　</div>
           <div class="monster-icon">
             <img
               src="${enemy.image}"
