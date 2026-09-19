@@ -6409,10 +6409,10 @@ function activateDeveloperMode() {
   const choice = prompt(
     "🔧 開発者メニュー\n\n" +
     "1：全開放＋全員MAX\n" +
-    "2：全モンスター仲間入り\n" +
-    "3：冒険を解放\n" +
-    "4：森をクリア状態にする\n" +
-    "5：湖を解放\n\n" +
+    "2：仲間図鑑開放（全員加入・全員MAX）\n" +
+    "3：敵図鑑全開放\n" +
+    "4：冒険ステージ全開放\n" +
+    "5：育成テスト（個別レベル設定）\n\n" +
     "キャンセル：終了"
   );
 
@@ -6420,142 +6420,246 @@ function activateDeveloperMode() {
     return;
   }
 
-  /* 全開放＋全員MAX */
-  if (choice === "1") {
+  /* 仲間全員加入＋全員MAX */
+  function maxAllMonsters() {
 
     monsters.forEach(monster => {
 
-      const data =
-        getMonsterData(monster.id);
+      const data = getMonsterData(monster.id);
 
       if (!data) return;
 
-      if (
-        !caughtMonsters.includes(
-          monster.id
-        )
-      ) {
-        caughtMonsters.push(
-          monster.id
-        );
+      if (!caughtMonsters.includes(monster.id)) {
+        caughtMonsters.push(monster.id);
       }
 
-      data.level =
-        monster.maxLevel;
-
+      data.level = monster.maxLevel;
       data.exp = 0;
 
       data.hp =
         monster.baseHP +
-        monster.hpGrowth *
-        (monster.maxLevel - 1);
+        monster.hpGrowth * (monster.maxLevel - 1);
 
       data.attack =
         monster.baseAttack +
-        monster.attackGrowth *
-        (monster.maxLevel - 1);
+        monster.attackGrowth * (monster.maxLevel - 1);
 
       data.defense =
         monster.baseDefense +
-        monster.defenseGrowth *
-        (monster.maxLevel - 1);
+        monster.defenseGrowth * (monster.maxLevel - 1);
     });
+  }
+
+  /* 敵図鑑を全開放 */
+  function unlockAllEnemies() {
+
+    ["forest", "lake", "volcano"].forEach(stageId => {
+
+      const stage = adventureStages[stageId];
+      if (!stage) return;
+
+      if (!enemyDex[stageId]) {
+        enemyDex[stageId] = {};
+      }
+
+      const enemies = [
+        ...(stage.enemies || []),
+        ...(stage.boss ? [stage.boss] : [])
+      ];
+
+      enemies.forEach(enemy => {
+
+        if (!enemy || !enemy.name) return;
+
+        if (!enemyDex[stageId][enemy.name]) {
+          enemyDex[stageId][enemy.name] = {
+            discovered: true,
+            defeats: 0
+          };
+        } else {
+          enemyDex[stageId][enemy.name].discovered = true;
+        }
+      });
+    });
+  }
+
+  /* 冒険ステージを全開放 */
+  function unlockAllAdventureStages() {
 
     adventureUnlocked = true;
+
+    // 湖の解放条件を満たす
     forestProgress = 6;
-    forestCurrentHP = 0;
+
+    // 火山の解放条件を満たす
     lakeProgress = 6;
+
+    // 火山の進行状況は変更しない
+  }
+
+  /* 1：全開放＋全員MAX */
+  if (choice === "1") {
+
+    maxAllMonsters();
+    unlockAllEnemies();
+    unlockAllAdventureStages();
+
+    // 全ステージをクリア状態にする
+    volcanoProgress = 6;
+
+    forestCurrentHP = 0;
+    lakeCurrentHP = 0;
+    volcanoCurrentHP = 0;
 
     saveGame();
 
     alert(
       "🚀 全開放しました！\n\n" +
-      "全モンスター仲間入り\n" +
-      "全モンスターMAXレベル\n" +
-      "森クリア\n" +
-      "湖クリア"
+      "・全モンスター加入＆LvMAX\n" +
+      "・敵図鑑全開放\n" +
+      "・冒険ステージ全開放\n" +
+      "・森、湖、火山クリア"
     );
 
     return;
   }
 
-  /* 全モンスター仲間入り */
+  /* 2：仲間図鑑開放 */
   if (choice === "2") {
 
-    monsters.forEach(monster => {
-
-      if (
-        !caughtMonsters.includes(
-          monster.id
-        )
-      ) {
-        caughtMonsters.push(
-          monster.id
-        );
-      }
-
-      getMonsterData(monster.id);
-    });
+    maxAllMonsters();
 
     saveGame();
 
     alert(
-      "🐉 全モンスターを仲間にしました！"
+      "🐉 全モンスターを仲間にして、\n" +
+      "全員をLvMAXにしました！"
     );
 
     return;
   }
 
-  /* 冒険を解放 */
+  /* 3：敵図鑑全開放 */
   if (choice === "3") {
 
-    adventureUnlocked = true;
+    unlockAllEnemies();
 
     saveGame();
 
     alert(
-      "🗺️ 冒険を解放しました！"
+      "👹 敵図鑑を全開放しました！"
     );
 
     return;
   }
 
-  /* 森をクリア状態にする */
+  /* 4：冒険ステージ全開放 */
   if (choice === "4") {
 
-    adventureUnlocked = true;
-    forestProgress = 6;
+    unlockAllAdventureStages();
 
     saveGame();
 
     alert(
-      "🌳 はじまりの森を\n" +
-      "クリア状態にしました！"
+      "🗺️ 冒険ステージを全開放しました！\n\n" +
+      "森・湖をクリア状態にして、\n" +
+      "火山まで進めるようにしました。"
     );
 
     return;
   }
 
-  /* 湖を解放 */
+  /* 5：育成テスト */
   if (choice === "5") {
 
-    adventureUnlocked = true;
-    forestProgress = 6;
+    const monsterList = monsters
+      .map(monster =>
+        `${monster.id}：${monster.name}（Lv上限${monster.maxLevel}）`
+      )
+      .join("\n");
+
+    const monsterInput = prompt(
+      "🧪 育成テスト\n\n" +
+      "レベルを設定する仲間の番号を入力してください。\n\n" +
+      monsterList
+    );
+
+    if (monsterInput === null) return;
+
+    const monsterId = Number(monsterInput);
+
+    const monster = monsters.find(
+      item => item.id === monsterId
+    );
+
+    if (!monster) {
+      alert("❌ モンスター番号が正しくありません。");
+      return;
+    }
+
+    const levelInput = prompt(
+      `${monster.name} の設定レベルを入力してください。\n` +
+      `Lv1 ～ Lv${monster.maxLevel}`
+    );
+
+    if (levelInput === null) return;
+
+    const level = Number(levelInput);
+
+    if (
+      !Number.isInteger(level) ||
+      level < 1 ||
+      level > monster.maxLevel
+    ) {
+      alert(
+        `❌ Lv1～Lv${monster.maxLevel}の整数を入力してください。`
+      );
+      return;
+    }
+
+    const data = getMonsterData(monster.id);
+
+    if (!data) {
+      alert("❌ モンスターのデータを取得できませんでした。");
+      return;
+    }
+
+    // 未加入なら仲間にする
+    if (!caughtMonsters.includes(monster.id)) {
+      caughtMonsters.push(monster.id);
+    }
+
+    // 指定レベルに応じて能力値を更新
+    data.level = level;
+    data.exp = 0;
+
+    data.hp =
+      monster.baseHP +
+      monster.hpGrowth * (level - 1);
+
+    data.attack =
+      monster.baseAttack +
+      monster.attackGrowth * (level - 1);
+
+    data.defense =
+      monster.baseDefense +
+      monster.defenseGrowth * (level - 1);
 
     saveGame();
 
     alert(
-      "🌊 九九の湖を解放しました！"
+      `🧪 育成テスト完了！\n\n` +
+      `${monster.name}：Lv${level}\n` +
+      `HP：${data.hp}\n` +
+      `攻撃：${data.attack}\n` +
+      `防御：${data.defense}`
     );
 
     return;
   }
 
-  alert(
-    "❌ 無効な番号です。"
-  );
+  alert("❌ 無効な番号です。");
 }
-
 /* =========================================================
    開発者モード
    タイトルロゴ5回タップ
