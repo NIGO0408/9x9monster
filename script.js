@@ -5963,7 +5963,7 @@ el("enemy-book-button")?.addEventListener(
   "click",
   () => {
     renderEnemyBook();
-    openScreen("enemy-book-screen");
+    showScreen("enemy-book-screen");
   }
 );
 
