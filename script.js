@@ -484,7 +484,7 @@ let battleExpReward = 0;
 
 let returnScreen = "training-screen";
 
-
+let enemyBookReturnScreen = "result-screen";
 
 /* =========================================================
    冒険ステージ共通ヘルパー
@@ -5951,27 +5951,49 @@ el("retry-stage")?.addEventListener(
 
 /* 修行結果 → 図鑑 */
 
+/* 育成図鑑を開く */
+function openMonsterBook() {
+  const activeScreen = document.querySelector(".screen.active");
+
+  openBook(activeScreen?.id || "result-screen");
+}
+
 el("monster-book-button")?.addEventListener(
   "click",
-  () => {
-    openBook("result-screen");
-  }
+  openMonsterBook
+);
+
+el("menu-monster-book-button")?.addEventListener(
+  "click",
+  openMonsterBook
 );
 
 /* 敵図鑑を開く */
+function openEnemyBook() {
+  const activeScreen = document.querySelector(".screen.active");
+
+  enemyBookReturnScreen =
+    activeScreen?.id || "result-screen";
+
+  renderEnemyBook();
+  showScreen("enemy-book-screen");
+}
+
 el("enemy-book-button")?.addEventListener(
   "click",
-  () => {
-    renderEnemyBook();
-    showScreen("enemy-book-screen");
-  }
+  openEnemyBook
 );
 
-/* 敵図鑑 → 戻る */
+el("menu-enemy-book-button")?.addEventListener(
+  "click",
+  openEnemyBook
+);
+
+/* 敵図鑑 → 開く前の画面へ戻る */
 el("enemy-book-back")?.addEventListener(
   "click",
   () => {
-    showScreen("result-screen");
+    showScreen(enemyBookReturnScreen);
   }
 );
 
