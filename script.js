@@ -5971,7 +5971,7 @@ el("enemy-book-button")?.addEventListener(
 el("enemy-book-back")?.addEventListener(
   "click",
   () => {
-    openScreen("result-screen");
+    showScreen("result-screen");
   }
 );
 
