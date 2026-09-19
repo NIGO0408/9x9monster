@@ -3207,6 +3207,87 @@ function renderMonsterBook() {
   updateWorldStats();
 }
 
+/* =========================================================
+   敵図鑑
+   ========================================================= */
+
+function renderEnemyBook() {
+  const list = el("enemy-list");
+
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  Object.values(adventureStages).forEach(stage => {
+    const enemies = [
+      ...stage.enemies,
+      stage.boss
+    ];
+
+    enemies.forEach(enemy => {
+      const record =
+        enemyDex[stage.id]?.[enemy.name];
+
+      const discovered =
+        record?.discovered === true;
+
+      const defeats =
+        Number(record?.defeats) || 0;
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        `monster-card ${
+          discovered ? "caught" : "unknown"
+        }`;
+
+      if (discovered) {
+        card.innerHTML = `
+          <div class="monster-icon">
+            <img
+              src="${enemy.image}"
+              alt="${enemy.name}"
+              class="book-monster-image"
+            >
+          </div>
+
+          <div class="monster-info">
+            <h2>${enemy.name}</h2>
+
+            <div class="monster-meta">
+              <span>Lv.${enemy.level}</span>
+              <span>HP ${enemy.hp}</span>
+              <span>討伐数 ${defeats}</span>
+            </div>
+
+            <small>${stage.name}</small>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="monster-icon">
+            <div class="unknown-monster">?</div>
+          </div>
+
+          <div class="monster-info">
+            <h2>？？？？</h2>
+
+            <div class="monster-meta">
+              <span>未発見</span>
+            </div>
+
+            <p>冒険でこの敵を倒すと登録される。</p>
+
+            <small>${stage.name}</small>
+          </div>
+        `;
+      }
+
+      list.appendChild(card);
+    });
+  });
+}
 
 /* =========================================================
    図鑑を開く
@@ -5873,14 +5954,27 @@ el("retry-stage")?.addEventListener(
 el("monster-book-button")?.addEventListener(
   "click",
   () => {
-
-    openBook(
-      "result-screen"
-    );
-
+    renderMonsterBook();
+    openScreen("monster-book-screen");
   }
 );
 
+/* 敵図鑑を開く */
+el("enemy-book-button")?.addEventListener(
+  "click",
+  () => {
+    renderEnemyBook();
+    openScreen("enemy-book-screen");
+  }
+);
+
+/* 敵図鑑 → 戻る */
+el("enemy-book-back")?.addEventListener(
+  "click",
+  () => {
+    openScreen("result-screen");
+  }
+);
 
 /* 冒険解禁画面 → ワールド */
 
