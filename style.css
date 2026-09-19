@@ -2320,6 +2320,10 @@ position: relative;
   font-weight: 900;
 }
 
+#enemy-book-screen .monster-icon {
+  transform: translateX(12px);
+}
+
 .monster-info h2 {
   margin: 0 0 5px;
 
