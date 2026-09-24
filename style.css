@@ -48,7 +48,7 @@ button {
 
   background-image: url("images/title_bg.png");
   background-size: cover;
-  background-position: center 65%;
+  background-position: center 80%;
   background-repeat: no-repeat;
 
   min-height: 100vh;
@@ -4082,15 +4082,20 @@ position: relative;
 
 .main-menu-buttons {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 24px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 8px;
+
+  width: 96%;
+  margin: 12px auto 0;
 }
 
 .main-menu-buttons .main-button {
-  width: 90%;
-  max-width: 320px;
+  width: calc((100% - 16px) / 3);
+  max-width: none;
+  padding: 12px 4px;
+  font-size: 17px;
 }
 
 .main-menu-buttons .main-button {
