@@ -75,7 +75,7 @@ button {
 .logo-monster {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: 70px;
   transform: translateX(-50%);
   margin: 0;
   z-index: 2;
@@ -4075,7 +4075,7 @@ position: relative;
 #title-screen .main-menu-buttons {
   position: absolute;
   left: 50%;
-  top: 34%;
+  top: 42%;
   transform: translateX(-50%);
   z-index: 3;
 
