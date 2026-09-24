@@ -75,7 +75,7 @@ button {
 .logo-monster {
   position: absolute;
   left: 50%;
-  bottom: 70px;
+  bottom: 110px;
   transform: translateX(-50%);
   margin: 0;
   z-index: 2;
