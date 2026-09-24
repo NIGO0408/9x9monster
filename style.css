@@ -75,7 +75,7 @@ button {
 .logo-monster {
   position: absolute;
   left: 50%;
-  bottom: 110px;
+  bottom: 125px;
   transform: translateX(-50%);
   margin: 0;
   z-index: 2;
@@ -83,8 +83,8 @@ button {
 
 .logo-monster-image {
   display: block;
-  width: 190px;
-  height: 190px;
+  width: 210px;
+  height: 210px;
   object-fit: contain;
   image-rendering: pixelated;
 
