@@ -1751,6 +1751,11 @@ button {
     background-size: 100% auto;
     background-position: center -110px;
   }
+
+  /* PC版・湖ステージ背景位置 */
+#battle-screen.lake-battle {
+  background-position: center -260px;
+}
 }
 
 /* -------------------------
