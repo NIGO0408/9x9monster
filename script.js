@@ -3913,13 +3913,16 @@ const battleScreen =
 
 if (battleScreen) {
 
-  if (currentAdventureStage === "lake") {
+ if (currentAdventureStage === "lake") {
 
   battleScreen.style.backgroundImage =
     'url("images/battle_lake.png")';
 
   battleScreen.classList.add("lake-battle");
-  battleScreen.classList.remove("volcano-battle");
+  battleScreen.classList.remove(
+    "volcano-battle",
+    "castle-battle"
+  );
 
 }
 else if (currentAdventureStage === "volcano") {
@@ -3927,8 +3930,23 @@ else if (currentAdventureStage === "volcano") {
   battleScreen.style.backgroundImage =
     'url("images/battle_volcano.png")';
 
-  battleScreen.classList.remove("lake-battle");
   battleScreen.classList.add("volcano-battle");
+  battleScreen.classList.remove(
+    "lake-battle",
+    "castle-battle"
+  );
+
+}
+else if (currentAdventureStage === "castle") {
+
+  battleScreen.style.backgroundImage =
+    'url("images/battle_castle.png")';
+
+  battleScreen.classList.add("castle-battle");
+  battleScreen.classList.remove(
+    "lake-battle",
+    "volcano-battle"
+  );
 
 }
 else {
@@ -3936,8 +3954,11 @@ else {
   battleScreen.style.backgroundImage =
     'url("images/battle_forest.png")';
 
-  battleScreen.classList.remove("lake-battle");
-  battleScreen.classList.remove("volcano-battle");
+  battleScreen.classList.remove(
+    "lake-battle",
+    "volcano-battle",
+    "castle-battle"
+  );
 
 }
 }
