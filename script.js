@@ -4770,6 +4770,17 @@ function enemyAttack() {
 
 function battleWin() {
 
+  /* 勝利した瞬間の通常戦BGM位置を保存 */
+  const battleBgm = document.getElementById("op-bgm");
+
+  if (
+    battleBgm &&
+    battleBgmResumeTime[currentBgmKey] !== undefined
+  ) {
+    battleBgmResumeTime[currentBgmKey] =
+      battleBgm.currentTime;
+  }
+
   const data =
     getMonsterData(
       selectedMonsterId
@@ -4988,11 +4999,6 @@ function playBossClearFanfare() {
 function playBattleClearFanfare() {
   const opBgm = document.getElementById("op-bgm");
   if (!opBgm || !bgmEnabled) return;
-
-  /* ファンファーレ前の通常戦BGM再生位置を保存 */
-if (battleBgmResumeTime[currentBgmKey] !== undefined) {
-  battleBgmResumeTime[currentBgmKey] = opBgm.currentTime;
-} 
 
   opBgm.onended = null;
   opBgm.src = "audio/battle_clear.mp3";
