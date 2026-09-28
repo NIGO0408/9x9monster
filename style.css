@@ -1769,7 +1769,7 @@ button {
 
 /* PC版・火山ステージ背景位置 */
 #battle-screen.volcano-battle {
-  background-position: center top;
+  background-position: center -100px;
 }
 
 /* PC版・魔王城ステージ背景位置 */
