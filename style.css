@@ -1745,6 +1745,16 @@ button {
   background-position: center -90px;
 }
 
+/* 火山ステージ・スマホ背景位置 */
+#battle-screen.volcano-battle {
+  background-position: center top;
+}
+
+/* 魔王城ステージ・スマホ背景位置 */
+#battle-screen.castle-battle {
+  background-position: center top;
+}
+
 /* PC版バトル背景調整 */
 @media (min-width: 501px) {
   #battle-screen {
@@ -1756,6 +1766,17 @@ button {
 #battle-screen.lake-battle {
   background-position: center -260px;
 }
+
+/* PC版・火山ステージ背景位置 */
+#battle-screen.volcano-battle {
+  background-position: center top;
+}
+
+/* PC版・魔王城ステージ背景位置 */
+#battle-screen.castle-battle {
+  background-position: center top;
+}
+  
 }
 
 /* -------------------------
