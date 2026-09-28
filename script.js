@@ -39,6 +39,13 @@ const BGM_LIST = {
 
 let currentBgmKey = null;
 
+/* 通常戦BGMの再開位置 */
+const battleBgmResumeTime = {
+  forestBattle: 0,
+  lakeBattle: 0,
+  volcanoBattle: 0
+};
+
 function getBgmKeyForScreen(screenId) {
   switch (screenId) {
     case "title-screen": return "title";
@@ -100,11 +107,16 @@ function playBgm(key) {
   }
 
   const fullPath = new URL(bgmPath, location.href).href;
-  if (opBgm.src !== fullPath) {
-    opBgm.src = bgmPath;
+ if (opBgm.src !== fullPath) {
+  opBgm.src = bgmPath;
+
+  /* 通常戦BGMだけ、ファンファーレ前の位置から再開 */
+  if (battleBgmResumeTime[key] !== undefined) {
+    opBgm.currentTime = battleBgmResumeTime[key];
+  } else {
     opBgm.currentTime = 0;
   }
-
+}
   opBgm.volume = 0.2;
   opBgm.loop = true;
   opBgm.play().catch(() => {});
@@ -3675,6 +3687,13 @@ function startForestBattle(
   currentBattleNumber =
     number;
 
+   /*
+   バトル1から開始するときは
+   通常戦BGMを最初から
+*/
+if (number === 1) {
+  battleBgmResumeTime.forestBattle = 0;
+}
 
   /*
      モンスターが変わった場合は
@@ -4949,6 +4968,11 @@ function playBattleClearFanfare() {
   const opBgm = document.getElementById("op-bgm");
   if (!opBgm || !bgmEnabled) return;
 
+  /* ファンファーレ前の通常戦BGM再生位置を保存 */
+if (battleBgmResumeTime[currentBgmKey] !== undefined) {
+  battleBgmResumeTime[currentBgmKey] = opBgm.currentTime;
+} 
+
   opBgm.onended = null;
   opBgm.src = "audio/battle_clear.mp3";
   opBgm.currentTime = 0;
@@ -5642,6 +5666,14 @@ function startLakeBattle(battleNumber) {
   currentBattleNumber =
     number;
 
+/*
+   バトル1から開始するときは
+   通常戦BGMを最初から
+*/
+if (number === 1) {
+  battleBgmResumeTime.lakeBattle = 0;
+}
+   
   const monsterChanged =
     lakeBattleMonsterId !==
     selectedId;
@@ -5806,6 +5838,14 @@ function startVolcanoBattle(battleNumber) {
   currentBattleNumber =
     number;
 
+/*
+   バトル1から開始するときは
+   通常戦BGMを最初から
+*/
+if (number === 1) {
+  battleBgmResumeTime.volcanoBattle = 0;
+}
+   
   const monsterChanged =
     volcanoBattleMonsterId !==
     selectedId;
