@@ -1795,6 +1795,20 @@ button {
   color: #666;
 }
 
+/* 敵エリア・背景上の文字を見やすくする */
+.enemy-area .battle-name,
+.enemy-area .battle-level,
+.enemy-area .hp-label span,
+#enemy-hp-text {
+  color: #111;
+
+  text-shadow:
+    -2px -2px 0 #fff,
+     2px -2px 0 #fff,
+    -2px  2px 0 #fff,
+     2px  2px 0 #fff,
+     0  2px 3px rgba(0, 0, 0, 0.35);
+}
 
 /* 敵モンスター */
 
