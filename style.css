@@ -1734,12 +1734,10 @@ button {
 #battle-screen {
   padding: 12px;
 
-  background:
-    linear-gradient(
-      #d8f2ff 0%,
-      #eefaff 48%,
-      #f8fbff 100%
-    );
+  background-image: url("images/battle_forest.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
 
 
