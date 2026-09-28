@@ -1740,6 +1740,11 @@ button {
   background-repeat: no-repeat;
 }
 
+/* 湖ステージ・スマホ背景位置 */
+#battle-screen.lake-battle {
+  background-position: center -90px;
+}
+
 /* PC版バトル背景調整 */
 @media (min-width: 501px) {
   #battle-screen {
