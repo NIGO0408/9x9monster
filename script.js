@@ -3905,7 +3905,24 @@ function setupBattle() {
 
   }
 
+ ステージ別バトル背景
+*/
+const battleScreen =
+  document.getElementById("battle-screen");
 
+if (battleScreen) {
+
+  if (currentAdventureStage === "lake") {
+    battleScreen.style.backgroundImage =
+      'url("images/battle_lake.png")';
+  }
+  else {
+    battleScreen.style.backgroundImage =
+      'url("images/battle_forest.png")';
+  }
+
+}
+   
   /*
      味方HP
 
