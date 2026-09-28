@@ -1744,7 +1744,7 @@ button {
 @media (min-width: 501px) {
   #battle-screen {
     background-size: 100% auto;
-    background-position: center top;
+    background-position: center -110px;
   }
 }
 
