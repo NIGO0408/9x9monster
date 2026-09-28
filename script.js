@@ -3914,14 +3914,21 @@ const battleScreen =
 if (battleScreen) {
 
   if (currentAdventureStage === "lake") {
-    battleScreen.style.backgroundImage =
-      'url("images/battle_lake.png")';
-  }
-  else {
-    battleScreen.style.backgroundImage =
-      'url("images/battle_forest.png")';
-  }
 
+  battleScreen.style.backgroundImage =
+    'url("images/battle_lake.png")';
+
+  battleScreen.classList.add("lake-battle");
+
+}
+else {
+
+  battleScreen.style.backgroundImage =
+    'url("images/battle_forest.png")';
+
+  battleScreen.classList.remove("lake-battle");
+
+}
 }
    
   /*
