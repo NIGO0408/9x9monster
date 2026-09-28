@@ -3905,6 +3905,7 @@ function setupBattle() {
 
   }
 
+/*   
  ステージ別バトル背景
 */
 const battleScreen =
