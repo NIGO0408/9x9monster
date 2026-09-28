@@ -3919,6 +3919,16 @@ if (battleScreen) {
     'url("images/battle_lake.png")';
 
   battleScreen.classList.add("lake-battle");
+  battleScreen.classList.remove("volcano-battle");
+
+}
+else if (currentAdventureStage === "volcano") {
+
+  battleScreen.style.backgroundImage =
+    'url("images/battle_volcano.png")';
+
+  battleScreen.classList.remove("lake-battle");
+  battleScreen.classList.add("volcano-battle");
 
 }
 else {
@@ -3927,6 +3937,7 @@ else {
     'url("images/battle_forest.png")';
 
   battleScreen.classList.remove("lake-battle");
+  battleScreen.classList.remove("volcano-battle");
 
 }
 }
