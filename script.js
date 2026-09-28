@@ -107,19 +107,38 @@ function playBgm(key) {
   }
 
   const fullPath = new URL(bgmPath, location.href).href;
- if (opBgm.src !== fullPath) {
+
+opBgm.volume = 0.2;
+opBgm.loop = true;
+
+if (opBgm.src !== fullPath) {
+  const resumeTime =
+    battleBgmResumeTime[key] !== undefined
+      ? battleBgmResumeTime[key]
+      : 0;
+
   opBgm.src = bgmPath;
 
-  /* 通常戦BGMだけ、ファンファーレ前の位置から再開 */
-  if (battleBgmResumeTime[key] !== undefined) {
-    opBgm.currentTime = battleBgmResumeTime[key];
+  const startBgm = () => {
+    opBgm.currentTime = resumeTime;
+    opBgm.play().catch(() => {});
+  };
+
+  if (opBgm.readyState >= 1) {
+    startBgm();
   } else {
-    opBgm.currentTime = 0;
+    opBgm.addEventListener(
+      "loadedmetadata",
+      startBgm,
+      { once: true }
+    );
   }
+
+  return;
 }
-  opBgm.volume = 0.2;
-  opBgm.loop = true;
-  opBgm.play().catch(() => {});
+
+opBgm.play().catch(() => {}); 
+   
 }
 
 function playOneShotBgm(key, returnToScreen = null) {
