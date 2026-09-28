@@ -3897,8 +3897,10 @@ function setupBattle() {
     data.hp;
 
 
-  const currentStageHP =
-    currentAdventureStage === "lake"
+ const currentStageHP =
+  currentAdventureStage === "volcano"
+    ? volcanoCurrentHP
+    : currentAdventureStage === "lake"
       ? lakeCurrentHP
       : forestCurrentHP;
 
