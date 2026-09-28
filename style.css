@@ -1740,6 +1740,13 @@ button {
   background-repeat: no-repeat;
 }
 
+/* PC版バトル背景調整 */
+@media (min-width: 501px) {
+  #battle-screen {
+    background-size: 100% auto;
+    background-position: center top;
+  }
+}
 
 /* -------------------------
    バトルヘッダー
