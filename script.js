@@ -443,8 +443,26 @@ const adventureStages = {
       { name: "カエルナイト", image: "images/kaerunaito.png", level: 7, hp: 110, attack: 14 }
     ],
     boss: { name: "ボルケーノゴーレム", image: "images/volcanogolem.png", level: 9, hp: 150, attack: 16 }
-  }
-};
+  },
+
+   castle: {
+  id: "castle",
+  name: "魔王城",
+  progress: 0,
+  currentHP: 0,
+  battleMonsterId: null,
+  questionMin: 7,
+  questionMax: 9,
+  enemies: [
+    { name: "番犬ケルベロス", image: "images/keruberosu.png", level: 7, hp: 80, attack: 11 },
+    { name: "オーガ料理長", image: "images/oga.png", level: 8, hp: 100, attack: 12 },
+    { name: "ガーゴイル", image: "images/gargoyle.png", level: 8, hp: 110, attack: 14 },
+    { name: "ドクロメイジ", image: "images/dokuro_mage.png", level: 9, hp: 120, attack: 16 },
+    { name: "ダークナイト", image: "images/dark_knight.png", level: 10, hp: 150, attack: 18 }
+  ],
+  boss: { name: "魔王ククデス", image: "images/maou.png", level: 12, hp: 200, attack: 20 }
+}
+};;
 
 let forestProgress = 0;
 let forestCurrentHP = 0;
@@ -458,6 +476,10 @@ let volcanoProgress = 0;
 let volcanoCurrentHP = 0;
 let volcanoBattleMonsterId = null;
 
+let castleProgress = 0;
+let castleCurrentHP = 0;
+let castleBattleMonsterId = null;
+
 let currentAdventureStage = "forest";
 
 // 敵図鑑データ
@@ -465,6 +487,7 @@ let enemyDex = {
   forest: {},
   lake: {},
   volcano: {}
+  castle: {} 
 };
 
 // 敵図鑑に討伐記録を登録
@@ -580,6 +603,10 @@ function isLakeUnlocked() {
 
 function isLakeCleared() {
   return lakeProgress >= 6;
+}
+
+function isVolcanoCleared() {
+  return volcanoProgress >= 6;
 }
 
 /* =========================================================
@@ -5647,6 +5674,25 @@ function openVolcano() {
 
   updateVolcanoMap();
   showScreen("volcano-screen");
+}
+
+function openCastle() {
+  if (!isVolcanoCleared()) {
+    alert("魔王城は、炎のカッケ山をクリアすると解放されます！");
+    return;
+  }
+
+  if (caughtMonsters.length === 0) {
+    alert("冒険には仲間が必要です！\nまず修行してモンスターを仲間にしよう！");
+    return;
+  }
+
+  if (!selectedMonsterId || !caughtMonsters.includes(Number(selectedMonsterId))) {
+    selectedMonsterId = Number(caughtMonsters[0]);
+  }
+
+  updateCastleMap();
+  showScreen("castle-screen");
 }
 
 function updateLakeMap() {
