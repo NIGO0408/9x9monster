@@ -519,15 +519,7 @@ button {
 
 #result-screen {
   text-align: center;
-}
-
-.result-icon {
-  font-size: 100px;
-
-  margin-top: 40px;
-
-  animation:
-    float 2s infinite ease-in-out;
+  padding-top: 20px;
 }
 
 #result-title {
