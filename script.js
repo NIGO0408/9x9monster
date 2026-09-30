@@ -7035,7 +7035,11 @@ function activateDeveloperMode() {
     // 魔王城の解放条件を満たす
 volcanoProgress = 6;
 
-// 魔王城の進行状況は変更しない
+adventureStages.forest.progress = 6;
+adventureStages.lake.progress = 6;
+adventureStages.volcano.progress = 6;
+     
+     // 魔王城の進行状況は変更しない
   }
 
   /* 1：全開放＋全員MAX */
