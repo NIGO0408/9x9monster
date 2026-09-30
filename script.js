@@ -5256,29 +5256,44 @@ function battleLose() {
       "🔄 最初から挑戦";
   }
 
-  const returnButton =
-    el("battle-return-forest");
+ const returnButton =
+  el("battle-return-forest");
 
-  if (returnButton) {
-    returnButton.textContent =
-      currentAdventureStage === "lake"
-        ? "🌊 湖のマップへ"
-        : "🌳 森のマップへ";
-  }
+if (returnButton) {
+  returnButton.textContent =
+    currentAdventureStage === "castle"
+      ? "🏰 魔王城のマップへ"
+      : currentAdventureStage === "volcano"
+        ? "🌋 カッケ山のマップへ"
+        : currentAdventureStage === "lake"
+          ? "🌊 湖のマップへ"
+          : "🌳 森のマップへ";
+}
 
-  if (
-    currentAdventureStage === "lake"
-  ) {
-    lakeCurrentHP = 0;
-    lakeBattleMonsterId = null;
-    updateLakeMap();
-  }
-  else {
-    forestProgress = 0;
-    forestCurrentHP = 0;
-    forestBattleMonsterId = null;
-    updateForestMap();
-  }
+if (currentAdventureStage === "castle") {
+  castleProgress = 0;
+  castleCurrentHP = 0;
+  castleBattleMonsterId = null;
+  updateCastleMap();
+}
+else if (currentAdventureStage === "volcano") {
+  volcanoProgress = 0;
+  volcanoCurrentHP = 0;
+  volcanoBattleMonsterId = null;
+  updateVolcanoMap();
+}
+else if (currentAdventureStage === "lake") {
+  lakeProgress = 0;
+  lakeCurrentHP = 0;
+  lakeBattleMonsterId = null;
+  updateLakeMap();
+}
+else {
+  forestProgress = 0;
+  forestCurrentHP = 0;
+  forestBattleMonsterId = null;
+  updateForestMap();
+}
 
   saveGame();
 
