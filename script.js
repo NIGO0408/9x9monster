@@ -4265,11 +4265,13 @@ const battleBackButton =
 
 if (battleBackButton) {
   battleBackButton.textContent =
-    isVolcano
-      ? "← カッケ山のマップへ"
-      : isLake
-        ? "← 湖のマップへ"
-        : "← 森のマップへ";
+    isCastle
+      ? "← 魔王城のマップへ"
+      : isVolcano
+        ? "← カッケ山のマップへ"
+        : isLake
+          ? "← 湖のマップへ"
+          : "← 森のマップへ";
 }
 
 const battleReturnButton =
@@ -4277,11 +4279,13 @@ const battleReturnButton =
 
 if (battleReturnButton) {
   battleReturnButton.textContent =
-    isVolcano
-      ? "🌋 カッケ山のマップへ"
-      : isLake
-        ? "🌊 湖のマップへ"
-        : "🌳 森のマップへ";
+    isCastle
+      ? "🏰 魔王城のマップへ"
+      : isVolcano
+        ? "🌋 カッケ山のマップへ"
+        : isLake
+          ? "🌊 湖のマップへ"
+          : "🌳 森のマップへ";
 }
 
 
