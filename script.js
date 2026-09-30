@@ -4157,13 +4157,14 @@ const currentStageHP =
     ) {
 
       enemyImage.innerHTML = `
-
-        <img
-          src="${currentWildMonster.image}"
-          alt="${currentWildMonster.name}"
-        >
-
-      `;
+  <img
+    src="${currentWildMonster.image}"
+    alt="${currentWildMonster.name}"
+    ${currentWildMonster.name === "魔王ククデス"
+      ? 'style="width:115px; height:115px;"'
+      : ""}
+  >
+`;
 
     }
 
