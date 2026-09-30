@@ -562,7 +562,12 @@ function syncAdventureState(stageId = currentAdventureStage) {
     stage.progress = volcanoProgress;
     stage.currentHP = volcanoCurrentHP;
     stage.battleMonsterId = volcanoBattleMonsterId;
-  }
+  }else if (stageId === "castle") {
+  stage.progress = castleProgress;
+  stage.currentHP = castleCurrentHP;
+  stage.battleMonsterId = castleBattleMonsterId;
+}
+   
   return stage;
 }
 
@@ -787,6 +792,7 @@ function saveGame() {
   syncAdventureState("forest");
   syncAdventureState("lake");
   syncAdventureState("volcano"); 
+   syncAdventureState("castle");
 
   const data = {
 
@@ -823,6 +829,9 @@ function saveGame() {
 　　volcanoProgress,
 　　volcanoCurrentHP,
 　　volcanoBattleMonsterId,
+    castleProgress,
+castleCurrentHP,
+castleBattleMonsterId, 
     enemyDex: { ...enemyDex } 
      
   };
@@ -989,6 +998,18 @@ volcanoProgress =
       data.volcanoBattleMonsterId
         ? Number(data.volcanoBattleMonsterId)
         : null;
+
+     castleProgress =
+  Math.max(0, Math.min(6, Number(data.castleProgress) || 0));
+
+castleCurrentHP =
+  Number(data.castleCurrentHP) || 0;
+
+castleBattleMonsterId =
+  data.castleBattleMonsterId
+    ? Number(data.castleBattleMonsterId)
+    : null;
+     
     if (
       data.enemyDex &&
       typeof data.enemyDex === "object"
@@ -996,7 +1017,8 @@ volcanoProgress =
       enemyDex = {
         forest: data.enemyDex.forest || {},
         lake: data.enemyDex.lake || {},
-        volcano: data.enemyDex.volcano || {}
+        volcano: data.enemyDex.volcano || {},
+  castle: data.enemyDex.castle || {}
       };
     } 
      
@@ -4212,6 +4234,9 @@ const currentStageHP =
 const isLake =
   currentAdventureStage === "lake";
 
+const isCastle =
+  currentAdventureStage === "castle";  
+
 battleMessage(
   currentBattleNumber === 6
     ? (
@@ -4921,40 +4946,76 @@ function battleWin() {
   const isLake =
     currentAdventureStage === "lake";
 
+   const isVolcano =
+  currentAdventureStage === "volcano";
+
+const isCastle =
+  currentAdventureStage === "castle";
+
   /*
      現在HPと進行状況を
      ステージ別に保存。
   */
-  if (isLake) {
-    lakeCurrentHP =
-      battlePlayerHP;
+ if (isCastle) {
+  castleCurrentHP =
+    battlePlayerHP;
 
-    if (
-      currentBattleNumber >
-      lakeProgress
-    ) {
-      lakeProgress =
-        currentBattleNumber;
-    }
-
-    lakeBattleMonsterId =
-      Number(selectedMonsterId);
+  if (
+    currentBattleNumber >
+    castleProgress
+  ) {
+    castleProgress =
+      currentBattleNumber;
   }
-  else {
-    forestCurrentHP =
-      battlePlayerHP;
 
-    if (
-      currentBattleNumber >
-      forestProgress
-    ) {
-      forestProgress =
-        currentBattleNumber;
-    }
+  castleBattleMonsterId =
+    Number(selectedMonsterId);
+}
+else if (isVolcano) {
+  volcanoCurrentHP =
+    battlePlayerHP;
 
-    forestBattleMonsterId =
-      Number(selectedMonsterId);
+  if (
+    currentBattleNumber >
+    volcanoProgress
+  ) {
+    volcanoProgress =
+      currentBattleNumber;
   }
+
+  volcanoBattleMonsterId =
+    Number(selectedMonsterId);
+}
+else if (isLake) {
+  lakeCurrentHP =
+    battlePlayerHP;
+
+  if (
+    currentBattleNumber >
+    lakeProgress
+  ) {
+    lakeProgress =
+      currentBattleNumber;
+  }
+
+  lakeBattleMonsterId =
+    Number(selectedMonsterId);
+}
+else {
+  forestCurrentHP =
+    battlePlayerHP;
+
+  if (
+    currentBattleNumber >
+    forestProgress
+  ) {
+    forestProgress =
+      currentBattleNumber;
+  }
+
+  forestBattleMonsterId =
+    Number(selectedMonsterId);
+}
 
   const icon =
     el("battle-result-icon");
@@ -4982,31 +5043,39 @@ function battleWin() {
   }
 
   if (title) {
-    title.textContent =
-      currentBattleNumber === 6
-        ? (
-            isLake
-              ? "🌊 九九の湖クリア！"
-              : "🌳 はじまりの森クリア！"
-          )
-        : "🎉 バトル勝利！";
-  }
+  title.textContent =
+    currentBattleNumber === 6
+      ? (
+          isCastle
+            ? "🏰 魔王城クリア！"
+            : isVolcano
+              ? "🌋 炎のカッケ山クリア！"
+              : isLake
+                ? "🌊 九九の湖クリア！"
+                : "🌳 はじまりの森クリア！"
+        )
+      : "🎉 バトル勝利！";
+}
 
   if (message) {
-    if (
-      currentBattleNumber === 6
-    ) {
-      message.textContent =
-        isLake
-          ? "湖底の主を倒した！"
-          : "森のボスを倒した！";
-    }
-    else {
-      message.textContent =
-        `バトル${currentBattleNumber}クリア！\n` +
-        `残りHP ${battlePlayerHP} / ${battlePlayerMaxHP}`;
-    }
+  if (
+    currentBattleNumber === 6
+  ) {
+    message.textContent =
+      isCastle
+        ? "魔王ククデスを倒した！"
+        : isVolcano
+          ? "ボルケーノゴーレムを倒した！"
+          : isLake
+            ? "湖底の主を倒した！"
+            : "森のボスを倒した！";
   }
+  else {
+    message.textContent =
+      `バトル${currentBattleNumber}クリア！\n` +
+      `残りHP ${battlePlayerHP} / ${battlePlayerMaxHP}`;
+  }
+}
 
   if (exp) {
     exp.textContent =
@@ -5028,16 +5097,21 @@ function battleWin() {
   const returnButton =
     el("battle-return-forest");
 
-  if (returnButton) {
+ if (returnButton) {
   returnButton.textContent =
-    currentAdventureStage === "volcano"
-      ? "🌋 カッケ山のマップへ"
-      : isLake
-        ? "🌊 湖のマップへ"
-        : "🌳 森のマップへ";
+    isCastle
+      ? "🏰 魔王城のマップへ"
+      : isVolcano
+        ? "🌋 カッケ山のマップへ"
+        : isLake
+          ? "🌊 湖のマップへ"
+          : "🌳 森のマップへ";
 }
 
-  if (currentAdventureStage === "volcano") {
+  if (isCastle) {
+  updateCastleMap();
+}
+else if (isVolcano) {
   updateVolcanoMap();
 }
 else if (isLake) {
@@ -5407,42 +5481,72 @@ function battleReturnAdventure() {
   */
 
   if (
-    battlePlayerMaxHP > 0
+  battlePlayerMaxHP > 0
+) {
+
+  if (
+    currentAdventureStage === "castle"
   ) {
-
-    if (
-      currentAdventureStage === "lake"
-    ) {
-      lakeCurrentHP =
-        battlePlayerHP;
-    }
-    else {
-      forestCurrentHP =
-        battlePlayerHP;
-    }
-
+    castleCurrentHP =
+      battlePlayerHP;
   }
+  else if (
+    currentAdventureStage === "volcano"
+  ) {
+    volcanoCurrentHP =
+      battlePlayerHP;
+  }
+  else if (
+    currentAdventureStage === "lake"
+  ) {
+    lakeCurrentHP =
+      battlePlayerHP;
+  }
+  else {
+    forestCurrentHP =
+      battlePlayerHP;
+  }
+
+}
 
 
   saveGame();
 
 
-  if (
-    currentAdventureStage === "lake"
-  ) {
-    updateLakeMap();
+ if (
+  currentAdventureStage === "castle"
+) {
+  updateCastleMap();
 
-    showScreen(
-      "lake-screen"
-    );
-  }
-  else {
-    updateForestMap();
+  showScreen(
+    "castle-screen"
+  );
+}
+else if (
+  currentAdventureStage === "volcano"
+) {
+  updateVolcanoMap();
 
-    showScreen(
-      "forest-screen"
-    );
-  }
+  showScreen(
+    "volcano-screen"
+  );
+}
+else if (
+  currentAdventureStage === "lake"
+) {
+  updateLakeMap();
+
+  showScreen(
+    "lake-screen"
+  );
+}
+else {
+  updateForestMap();
+
+  showScreen(
+    "forest-screen"
+  );
+}
 }
 
 
