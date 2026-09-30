@@ -1334,6 +1334,197 @@
 
 </section>
 
+<!-- ==============================
+        魔王城
+============================== -->
+
+<section
+  id="castle-screen"
+  class="screen forest-screen"
+>
+
+  <div class="forest-header">
+
+    <button
+      id="castle-back-button"
+      class="small-button"
+    >
+      ← マップ
+    </button>
+
+    <div>
+      <h1>🏰 魔王城</h1>
+      <small>最終決戦</small>
+    </div>
+
+  </div>
+
+  <div class="forest-intro">
+
+    <div class="forest-art">
+      🏰🌙
+    </div>
+
+    <h2>魔王城へ乗り込め！</h2>
+
+    <p>
+      最後の冒険が始まる！<br>
+      城に待ち受ける強敵を倒しながら<br>
+      魔王ククデスを目指そう！
+    </p>
+
+  </div>
+
+
+  <!-- 探索ルート -->
+
+  <div class="forest-route">
+
+    <!-- START -->
+
+    <div class="forest-node start-node">
+      <div class="node-icon">🏰</div>
+      <div class="node-info">
+        <strong>魔王城入口</strong>
+        <small>START</small>
+      </div>
+    </div>
+
+    <div class="route-line"></div>
+
+
+    <!-- BATTLE 1 -->
+
+    <button
+      class="forest-node battle-node"
+      data-battle="1"
+    >
+      <div class="node-icon">⚔️</div>
+      <div class="node-info">
+        <strong>城門</strong>
+        <small>バトル</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+
+    <!-- BATTLE 2 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="2"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>大広間</strong>
+        <small>バトル</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+
+    <!-- BATTLE 3 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="3"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>地下牢</strong>
+        <small>バトル</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+
+    <!-- BATTLE 4 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="4"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>闇の回廊</strong>
+        <small>バトル</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+
+    <!-- BATTLE 5 -->
+
+    <button
+      class="forest-node battle-node locked-node"
+      data-battle="5"
+      disabled
+    >
+      <div class="node-icon">🔒</div>
+      <div class="node-info">
+        <strong>玉座への階段</strong>
+        <small>バトル</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+
+    <!-- BOSS -->
+
+    <button
+      class="forest-node boss-node locked-node"
+      data-battle="6"
+      disabled
+    >
+      <div class="node-icon">👑</div>
+      <div class="node-info">
+        <strong>魔王の間</strong>
+        <small>BATTLE</small>
+      </div>
+    </button>
+
+    <div class="route-line"></div>
+
+
+    <!-- GOAL -->
+
+    <div class="forest-node goal-node locked-node">
+      <div class="node-icon">🏆</div>
+      <div class="node-info">
+        <strong>魔王城クリア</strong>
+        <small>魔王ククデスを倒せ！</small>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- 攻略状況 -->
+
+  <div class="forest-progress">
+
+    <strong>魔王城の攻略状況</strong>
+
+    <div class="forest-progress-bar">
+      <div id="castle-progress-fill"></div>
+    </div>
+
+    <small id="castle-progress-text">
+      0 / 6 バトルクリア
+    </small>
+
+  </div>
+
+</section>
+  
   <!-- =================================
        バトル
   ================================= -->
