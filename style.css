@@ -1817,7 +1817,7 @@ button {
 
 /* PC版・魔王城ステージ背景位置 */
 #battle-screen.castle-battle {
-  background-position: center top;
+  background-position: center -200px;
 }
   
 }
