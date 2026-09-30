@@ -1209,26 +1209,26 @@ button {
   filter: brightness(0.45);
 }
 
-/* 大きな鍵を中央に重ねる */
+/* 未開放バナー中央の鍵 */
 .stage-banner.locked-area::after {
-  content: "🔒";
+  content: "";
   position: absolute;
 
   left: 50%;
-top: 50%;
-transform: translate(-50%, -50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
 
-font-size: 72px;
-line-height: 1;
+  width: 82px;
+  height: 82px;
 
-opacity: 1;
+  background-image: url("images/lock.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 
-z-index: 10;
+  z-index: 10;
 
-filter:
-  drop-shadow(0 0 2px white)
-  drop-shadow(0 0 2px white)
-  drop-shadow(0 4px 5px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.75));
 
   pointer-events: none;
 }
