@@ -35,6 +35,8 @@ const BGM_LIST = {
   bossClear: "audio/boss_clear.mp3",
   volcanoBattle: "audio/volcano_battle.mp3",
   volcanoBoss: "audio/volcano_boss.mp3", 
+   castleBattle: "audio/castle_battle.mp3",
+castleBoss: "audio/castle_boss.mp3",
 };
 
 let currentBgmKey = null;
@@ -43,7 +45,8 @@ let currentBgmKey = null;
 const battleBgmResumeTime = {
   forestBattle: 0,
   lakeBattle: 0,
-  volcanoBattle: 0
+  volcanoBattle: 0,
+  castleBattle: 0 
 };
 
 function getBgmKeyForScreen(screenId) {
@@ -56,7 +59,8 @@ function getBgmKeyForScreen(screenId) {
      case "levelup-screen": return "levelup";   
     case "forest-screen": return "forest";
    case "lake-screen": return "lakeBattle";
-   case "volcano-screen": return "volcanoBattle";     
+   case "volcano-screen": return "volcanoBattle";
+   case "castle-screen": return "castleBattle";     
    case "battle-screen":
       if (currentAdventureStage === "lake") {
         return currentBattleNumber === 6
@@ -70,6 +74,12 @@ function getBgmKeyForScreen(screenId) {
           : "volcanoBattle";
       }
 
+if (currentAdventureStage === "castle") {
+  return currentBattleNumber === 6
+    ? "castleBoss"
+    : "castleBattle";
+}
+        
       return currentBattleNumber === 6
         ? "forestBoss"
         : "forestBattle";
