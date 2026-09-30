@@ -5725,6 +5725,32 @@ function resetGame() {
   lakeBattleMonsterId =
     null;
 
+   /*
+   火山
+*/
+
+volcanoProgress =
+  0;
+
+volcanoCurrentHP =
+  0;
+
+volcanoBattleMonsterId =
+  null;
+
+
+/*
+   魔王城
+*/
+
+castleProgress =
+  0;
+
+castleCurrentHP =
+  0;
+
+castleBattleMonsterId =
+  null;
 
   /*
      バトル
