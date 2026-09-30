@@ -3455,11 +3455,33 @@ function updateVolcanoAreaAvailability() {
   }
 }
 
+function updateCastleAreaAvailability() {
+  const area = el("castle-area");
+
+  if (!area) {
+    return;
+  }
+
+  const unlocked = isVolcanoCleared();
+
+  area.disabled = !unlocked;
+  area.classList.toggle("locked-area", !unlocked);
+
+  const small = area.querySelector("small");
+
+  if (small) {
+    small.textContent = unlocked
+      ? "魔王城へ挑戦！"
+      : "炎のカッケ山クリアで解放";
+  }
+}
+
 function openWorld() {
 
   updateWorldStats();
   updateLakeAreaAvailability();
   updateVolcanoAreaAvailability(); 
+  updateCastleAreaAvailability(); 
   updateLakeMap();
 
   showScreen(
@@ -4000,12 +4022,14 @@ else {
     data.hp;
 
 
- const currentStageHP =
-  currentAdventureStage === "volcano"
-    ? volcanoCurrentHP
-    : currentAdventureStage === "lake"
-      ? lakeCurrentHP
-      : forestCurrentHP;
+const currentStageHP =
+  currentAdventureStage === "castle"
+    ? castleCurrentHP
+    : currentAdventureStage === "volcano"
+      ? volcanoCurrentHP
+      : currentAdventureStage === "lake"
+        ? lakeCurrentHP
+        : forestCurrentHP;
 
   /*
      ステージ内の連戦ではHPを持ち越す。
@@ -5191,6 +5215,9 @@ function nextBattle() {
   const isVolcano =
     currentAdventureStage === "volcano";
 
+  const isCastle =
+  currentAdventureStage === "castle"; 
+
   /*
      敗北後は、そのステージの①から再挑戦。
   */
@@ -5198,14 +5225,21 @@ function nextBattle() {
     battlePlayerHP <= 0
   ) {
 
-    if (isVolcano) {
-      volcanoProgress = 0;
-      volcanoCurrentHP = 0;
-      volcanoBattleMonsterId = null;
-      saveGame();
-      startVolcanoBattle(1);
-    }
-    else if (isLake) {
+   if (isCastle) {
+  castleProgress = 0;
+  castleCurrentHP = 0;
+  castleBattleMonsterId = null;
+  saveGame();
+  startCastleBattle(1);
+}
+else if (isVolcano) {
+  volcanoProgress = 0;
+  volcanoCurrentHP = 0;
+  volcanoBattleMonsterId = null;
+  saveGame();
+  startVolcanoBattle(1);
+}
+else if (isLake) {
       lakeProgress = 0;
       lakeCurrentHP = 0;
       lakeBattleMonsterId = null;
@@ -5230,7 +5264,12 @@ function nextBattle() {
     currentBattleNumber === 6
   ) {
 
-    if (isVolcano) {
+    if (isCastle) {
+  castleProgress = 6;
+  castleCurrentHP = 0;
+  castleBattleMonsterId = null;
+}
+else if (isVolcano) {
   volcanoProgress = 6;
   volcanoCurrentHP = 0;
   volcanoBattleMonsterId = null;
@@ -5260,7 +5299,27 @@ else {
      次のバトルを開始する。
   */
 
-  if (isVolcano) {
+ if (isCastle) {
+
+  castleCurrentHP =
+    battlePlayerHP;
+
+  castleBattleMonsterId =
+    Number(selectedMonsterId);
+
+  castleProgress =
+    Math.max(
+      castleProgress,
+      currentBattleNumber
+    );
+
+  saveAdventureStage("castle");
+  saveGame();
+
+  startCastleBattle(next);
+
+}
+else if (isVolcano) {
 
     volcanoCurrentHP =
       battlePlayerHP;
@@ -5907,6 +5966,58 @@ function updateVolcanoMap() {
 }
 
 /* =========================================================
+   魔王城：マップ更新
+   ========================================================= */
+
+function updateCastleMap() {
+  const nodes = document.querySelectorAll(
+    "#castle-screen .battle-node, #castle-screen .boss-node"
+  );
+
+  nodes.forEach(node => {
+    const number = Number(node.dataset.battle);
+    const unlocked = number === 1 || castleProgress >= number - 1;
+    const cleared = castleProgress >= number;
+
+    node.disabled = !unlocked;
+    node.classList.toggle("locked-node", !unlocked);
+    node.classList.toggle("cleared-node", cleared);
+
+    const icon = node.querySelector(".node-icon");
+    if (!icon) return;
+
+    if (cleared) icon.textContent = "⭐";
+    else if (number === 6) icon.textContent = unlocked ? "👑" : "🔒";
+    else icon.textContent = unlocked ? "⚔️" : "🔒";
+  });
+
+  const fill = el("castle-progress-fill");
+  if (fill) fill.style.width = `${castleProgress / 6 * 100}%`;
+
+  const progress = el("castle-progress-text");
+  if (progress) {
+    progress.textContent = `${castleProgress} / 6 バトルクリア`;
+  }
+
+  const goal = document.querySelector(
+    "#castle-screen .goal-node"
+  );
+
+  if (goal) {
+    goal.classList.toggle(
+      "locked-node",
+      castleProgress < 6
+    );
+
+    const icon = goal.querySelector(".node-icon");
+    if (icon) {
+      icon.textContent = castleProgress >= 6 ? "🏆" : "🔒";
+    }
+  }
+}
+
+
+/* =========================================================
    炎のカッケ山：バトル開始
    ========================================================= */
 
@@ -6027,6 +6138,126 @@ if (number === 1) {
   );
 }
 
+/* =========================================================
+   魔王城：バトル開始
+   ========================================================= */
+
+function startCastleBattle(battleNumber) {
+
+  const number =
+    Number(battleNumber);
+
+  if (
+    number < 1 ||
+    number > 6
+  ) {
+    return;
+  }
+
+  /*
+     前のバトルをクリアしていなければ開始不可
+  */
+  if (
+    number > 1 &&
+    castleProgress < number - 1
+  ) {
+    return;
+  }
+
+  /*
+     仲間モンスターの確認
+  */
+  if (
+    caughtMonsters.length === 0
+  ) {
+    openCastle();
+    return;
+  }
+
+  if (
+    !selectedMonsterId ||
+    !caughtMonsters.includes(
+      Number(selectedMonsterId)
+    )
+  ) {
+    selectedMonsterId =
+      Number(caughtMonsters[0]);
+  }
+
+  const selectedId =
+    Number(selectedMonsterId);
+
+  const data =
+    getMonsterData(selectedId);
+
+  if (!data) {
+    return;
+  }
+
+  currentAdventureStage =
+    "castle";
+
+  currentBattleNumber =
+    number;
+
+  /*
+     バトル1から開始するときは
+     通常戦BGMを最初から
+  */
+  if (number === 1) {
+    battleBgmResumeTime.castleBattle = 0;
+  }
+
+  const monsterChanged =
+    castleBattleMonsterId !==
+    selectedId;
+
+  /*
+     ①またはモンスター変更時は満タン。
+     ②～⑤は前戦のHPを持ち越す。
+  */
+  if (
+    number === 1 ||
+    monsterChanged ||
+    castleCurrentHP <= 0
+  ) {
+    castleCurrentHP =
+      data.hp;
+
+    castleBattleMonsterId =
+      selectedId;
+  }
+
+  /*
+     魔王城の敵を決定。
+     ⑥は魔王ククデス。
+  */
+  if (
+    number === 6
+  ) {
+    currentWildMonster = {
+      ...adventureStages.castle.boss
+    };
+  }
+  else {
+    const base =
+      adventureStages.castle.enemies[number - 1];
+
+    currentWildMonster = {
+      ...base,
+      hp: base.hp,
+      attack: base.attack
+    };
+  }
+
+  saveAdventureStage("castle");
+
+  setupBattle();
+
+  showScreen(
+    "battle-screen"
+  );
+}
 
 /* =========================================================
    ボタン接続
@@ -6211,6 +6442,12 @@ el("volcano-area")?.addEventListener(
   openVolcano
 );
 
+/* ワールド → 魔王城 */
+el("castle-area")?.addEventListener(
+  "click",
+  openCastle
+);
+
 /* 湖のバトルノード */
 document
   .querySelectorAll(
@@ -6233,6 +6470,17 @@ document
     });
   });
 
+/* 魔王城のバトルノード */
+document
+  .querySelectorAll(
+    "#castle-screen .battle-node, #castle-screen .boss-node"
+  )
+  .forEach(node => {
+    node.addEventListener("click", () => {
+      startCastleBattle(Number(node.dataset.battle));
+    });
+  });
+
 /* 湖 → ワールド */
 el("lake-back-button")?.addEventListener(
   "click",
@@ -6241,6 +6489,12 @@ el("lake-back-button")?.addEventListener(
 
 /* 火山 → ワールド */
 el("volcano-back-button")?.addEventListener(
+  "click",
+  openWorld
+);
+
+/* 魔王城 → ワールド */
+el("castle-back-button")?.addEventListener(
   "click",
   openWorld
 );
