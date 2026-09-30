@@ -6991,7 +6991,7 @@ function activateDeveloperMode() {
   /* 敵図鑑を全開放 */
   function unlockAllEnemies() {
 
-    ["forest", "lake", "volcano"].forEach(stageId => {
+   ["forest", "lake", "volcano", "castle"].forEach(stageId => {
 
       const stage = adventureStages[stageId];
       if (!stage) return;
@@ -7032,7 +7032,10 @@ function activateDeveloperMode() {
     // 火山の解放条件を満たす
     lakeProgress = 6;
 
-    // 火山の進行状況は変更しない
+    // 魔王城の解放条件を満たす
+volcanoProgress = 6;
+
+// 魔王城の進行状況は変更しない
   }
 
   /* 1：全開放＋全員MAX */
@@ -7043,11 +7046,15 @@ function activateDeveloperMode() {
     unlockAllAdventureStages();
 
     // 全ステージをクリア状態にする
-    volcanoProgress = 6;
+forestProgress = 6;
+lakeProgress = 6;
+volcanoProgress = 6;
+castleProgress = 6;
 
-    forestCurrentHP = 0;
-    lakeCurrentHP = 0;
-    volcanoCurrentHP = 0;
+forestCurrentHP = 0;
+lakeCurrentHP = 0;
+volcanoCurrentHP = 0;
+castleCurrentHP = 0;
 
     saveGame();
 
