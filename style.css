@@ -1199,6 +1199,34 @@ button {
   transform: none;
 }
 
+/* 未開放ステージのバナー */
+.stage-banner.locked-area {
+  position: relative;
+}
+
+/* 未開放時はバナーを暗くする */
+.stage-banner.locked-area .stage-banner-image {
+  filter: brightness(0.45);
+}
+
+/* 大きな鍵を中央に重ねる */
+.stage-banner.locked-area::after {
+  content: "🔒";
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: 64px;
+  line-height: 1;
+
+  z-index: 5;
+
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65));
+
+  pointer-events: none;
+}
 
 /* =========================
    はじまりの森
