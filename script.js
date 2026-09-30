@@ -5581,7 +5581,7 @@ else {
 
 
 /* =========================================================
-   バトル画面から森へ
+   バトル画面から冒険マップへ
    ========================================================= */
 
 function battleBackAdventure() {
@@ -5595,7 +5595,10 @@ function battleBackAdventure() {
 
   if (battlePlayerMaxHP > 0) {
 
-    if (currentAdventureStage === "volcano") {
+    if (currentAdventureStage === "castle") {
+      castleCurrentHP = battlePlayerHP;
+    }
+    else if (currentAdventureStage === "volcano") {
       volcanoCurrentHP = battlePlayerHP;
     }
     else if (currentAdventureStage === "lake") {
@@ -5609,7 +5612,11 @@ function battleBackAdventure() {
 
   saveGame();
 
-  if (currentAdventureStage === "volcano") {
+  if (currentAdventureStage === "castle") {
+    updateCastleMap();
+    showScreen("castle-screen");
+  }
+  else if (currentAdventureStage === "volcano") {
     updateVolcanoMap();
     showScreen("volcano-screen");
   }
