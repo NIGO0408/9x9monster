@@ -486,7 +486,7 @@ let currentAdventureStage = "forest";
 let enemyDex = {
   forest: {},
   lake: {},
-  volcano: {}
+  volcano: {},
   castle: {} 
 };
 
