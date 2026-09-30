@@ -7105,6 +7105,8 @@ castleCurrentHP = 0;
 
     saveGame();
 
+     updateCastleAreaAvailability();
+
     alert(
       "🗺️ 冒険ステージを全開放しました！\n\n" +
       "森・湖をクリア状態にして、\n" +
