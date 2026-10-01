@@ -4021,7 +4021,9 @@ else if (currentAdventureStage === "volcano") {
 else if (currentAdventureStage === "castle") {
 
   battleScreen.style.backgroundImage =
-    'url("images/battle_castle.png")';
+  currentBattleNumber === 6
+    ? 'url("images/battle_castle_boss.png")'
+    : 'url("images/battle_castle.png")';
 
   battleScreen.classList.add("castle-battle");
   battleScreen.classList.remove(
