@@ -1800,7 +1800,7 @@ button {
 
 /* ククデス戦・スマホ背景位置 */
 #battle-screen.castle-boss-battle {
-  background-position: center 0px;
+  background-position: center -15px;
 }
 
 /* PC版バトル背景調整 */
@@ -1827,7 +1827,7 @@ button {
 
 /* PC版・ククデス戦背景位置 */
 #battle-screen.castle-boss-battle {
-  background-position: center -90px;
+  background-position: center -50px;
 }
   
 }
