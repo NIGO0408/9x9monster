@@ -1798,6 +1798,11 @@ button {
   background-position: center -80px;
 }
 
+/* ククデス戦・スマホ背景位置 */
+#battle-screen.castle-boss-battle {
+  background-position: center -30px;
+}
+
 /* PC版バトル背景調整 */
 @media (min-width: 501px) {
   #battle-screen {
@@ -1818,6 +1823,11 @@ button {
 /* PC版・魔王城ステージ背景位置 */
 #battle-screen.castle-battle {
   background-position: center -180px;
+}
+
+/* PC版・ククデス戦背景位置 */
+#battle-screen.castle-boss-battle {
+  background-position: center -130px;
 }
   
 }
