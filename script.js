@@ -4260,11 +4260,13 @@ const isCastle =
 battleMessage(
   currentBattleNumber === 6
     ? (
-        isVolcano
-          ? "⚠️ 火山のボスが現れた！"
-          : isLake
-            ? "⚠️ 湖底の主が現れた！"
-            : "⚠️ 森のボスが現れた！"
+        isCastle
+          ? "⚠️ 魔王がその姿を現した！"
+          : isVolcano
+            ? "⚠️ 火山の守護者が現れた！"
+            : isLake
+              ? "⚠️ 湖畔の主が現れた！"
+              : "⚠️ 森のボスが現れた！"
       )
     : `⚔️ バトル${currentBattleNumber}！九九で攻撃しよう！`
 );
