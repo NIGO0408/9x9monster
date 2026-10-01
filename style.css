@@ -4414,3 +4414,8 @@ position: relative;
     position: relative;
     z-index: 1;
 }
+
+/* 湖ステージ：バナーを背景から浮かせる */
+#lake-screen .stage-title-banner {
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+}
