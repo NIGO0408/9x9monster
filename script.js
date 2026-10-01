@@ -4026,10 +4026,17 @@ else if (currentAdventureStage === "castle") {
     : 'url("images/battle_castle.png")';
 
   battleScreen.classList.add("castle-battle");
-  battleScreen.classList.remove(
-    "lake-battle",
-    "volcano-battle"
-  );
+
+if (currentBattleNumber === 6) {
+  battleScreen.classList.add("castle-boss-battle");
+} else {
+  battleScreen.classList.remove("castle-boss-battle");
+}
+
+battleScreen.classList.remove(
+  "lake-battle",
+  "volcano-battle"
+);
 
 }
 else {
