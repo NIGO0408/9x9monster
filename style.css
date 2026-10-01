@@ -1785,17 +1785,17 @@ button {
 
 /* 湖ステージ・スマホ背景位置 */
 #battle-screen.lake-battle {
-  background-position: center -90px;
+  background-position: center top;
 }
 
 /* 火山ステージ・スマホ背景位置 */
 #battle-screen.volcano-battle {
-  background-position: center -130px;
+  background-position: center top;
 }
 
 /* 魔王城ステージ・スマホ背景位置 */
 #battle-screen.castle-battle {
-  background-position: center -140px;
+  background-position: center top;
 }
 
 /* PC版バトル背景調整 */
@@ -1807,17 +1807,17 @@ button {
 
   /* PC版・湖ステージ背景位置 */
 #battle-screen.lake-battle {
-  background-position: center -260px;
+  background-position: center top;
 }
 
 /* PC版・火山ステージ背景位置 */
 #battle-screen.volcano-battle {
-  background-position: center -300px;
+  background-position: center top;
 }
 
 /* PC版・魔王城ステージ背景位置 */
 #battle-screen.castle-battle {
-  background-position: center -360px;
+  background-position: center top;
 }
   
 }
