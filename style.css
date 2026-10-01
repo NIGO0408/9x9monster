@@ -4384,3 +4384,14 @@ position: relative;
          1px  1px 0 #16324a,
          0 2px 3px rgba(0, 0, 0, 0.8);
 }
+
+/* ステージ選択画面：バナーを画面中央に配置 */
+.forest-header {
+    position: relative;
+}
+
+.forest-header .stage-title-area {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
