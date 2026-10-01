@@ -4385,15 +4385,17 @@ position: relative;
          0 2px 3px rgba(0, 0, 0, 0.8);
 }
 
-/* ステージ選択画面：バナーを画面中央に配置 */
-.forest-header {
-    position: relative;
-}
+/* スマホ版：ステージバナーを中央配置 */
+@media (max-width: 510px) {
+    .forest-header {
+        position: relative;
+    }
 
-.forest-header .stage-title-area {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    .forest-header .stage-title-area {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 /* 湖ステージ：背景を少し暗くする */
