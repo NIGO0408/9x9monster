@@ -1807,17 +1807,17 @@ button {
 
   /* PC版・湖ステージ背景位置 */
 #battle-screen.lake-battle {
-  background-position: center top;
+  background-position: center -40px;
 }
 
 /* PC版・火山ステージ背景位置 */
 #battle-screen.volcano-battle {
-  background-position: center top;
+  background-position: center -110px;
 }
 
 /* PC版・魔王城ステージ背景位置 */
 #battle-screen.castle-battle {
-  background-position: center top;
+  background-position: center -120px;
 }
   
 }
