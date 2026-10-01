@@ -1790,12 +1790,12 @@ button {
 
 /* 火山ステージ・スマホ背景位置 */
 #battle-screen.volcano-battle {
-  background-position: center top;
+  background-position: center -100px;
 }
 
 /* 魔王城ステージ・スマホ背景位置 */
 #battle-screen.castle-battle {
-  background-position: center top;
+  background-position: center -80px;
 }
 
 /* PC版バトル背景調整 */
