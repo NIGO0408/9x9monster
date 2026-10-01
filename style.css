@@ -4331,62 +4331,64 @@ position: relative;
   margin: 0 auto 6px;
 }
 
-/* ステージタイトルバナー調整 */
-.stage-title-area {
-    width: 100%;
-    text-align: center;
-}
-
-.stage-title-banner {
-    display: block;
-    width: min(520px, 82vw);
-    max-width: 100%;
-    height: auto;
-    margin: 75px auto 8px;
-}
-
 /* =========================
-   湖ステージ・説明
+   スマホ版：湖ステージレイアウト
 ========================= */
 
-#lake-screen .forest-intro {
-    width: 100%;
-    margin: 170px auto 32px;
-    padding: 0 20px;
-    text-align: center;
-    background: none;
-    border: none;
-    border-radius: 0;
-    box-sizing: border-box;
-}
-
-#lake-screen .forest-intro h2 {
-    margin: 0 0 8px;
-    color: #ffffff;
-    font-size: 22px;
-    text-shadow:
-        -2px -2px 0 #16324a,
-         2px -2px 0 #16324a,
-        -2px  2px 0 #16324a,
-         2px  2px 0 #16324a,
-         0 3px 4px rgba(0, 0, 0, 0.7);
-}
-
-#lake-screen .forest-intro p {
-    margin: 0;
-    color: #ffffff;
-    font-size: 14px;
-    line-height: 1.55;
-    text-shadow:
-        -1px -1px 0 #16324a,
-         1px -1px 0 #16324a,
-        -1px  1px 0 #16324a,
-         1px  1px 0 #16324a,
-         0 2px 3px rgba(0, 0, 0, 0.8);
-}
-
-/* スマホ版：ステージバナーを中央配置 */
 @media (max-width: 510px) {
+
+    /* バナー */
+    .stage-title-area {
+        width: 100%;
+        text-align: center;
+    }
+
+    .stage-title-banner {
+        display: block;
+        width: min(520px, 82vw);
+        max-width: 100%;
+        height: auto;
+        margin: 75px auto 8px;
+    }
+
+    /* 説明文 */
+    #lake-screen .forest-intro {
+        width: 100%;
+        margin: 110px auto 32px;
+        padding: 0 20px;
+        text-align: center;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-sizing: border-box;
+    }
+
+    #lake-screen .forest-intro h2 {
+        margin: 0 0 8px;
+        color: #ffffff;
+        font-size: 22px;
+        text-shadow:
+            -2px -2px 0 #16324a,
+             2px -2px 0 #16324a,
+            -2px  2px 0 #16324a,
+             2px  2px 0 #16324a,
+             0 3px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    #lake-screen .forest-intro p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.55;
+        text-shadow:
+            -1px -1px 0 #16324a,
+             1px -1px 0 #16324a,
+            -1px  1px 0 #16324a,
+             1px  1px 0 #16324a,
+             0 2px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    /* バナーを中央配置 */
     .forest-header {
         position: relative;
     }
@@ -4397,7 +4399,6 @@ position: relative;
         transform: translateX(-50%);
     }
 }
-
 /* 湖ステージ：背景を少し暗くする */
 #lake-screen {
     position: relative;
