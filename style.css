@@ -4395,3 +4395,22 @@ position: relative;
     left: 50%;
     transform: translateX(-50%);
 }
+
+/* 湖ステージ：背景を少し暗くする */
+#lake-screen {
+    position: relative;
+}
+
+#lake-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#lake-screen > * {
+    position: relative;
+    z-index: 1;
+}
