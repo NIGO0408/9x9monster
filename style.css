@@ -4344,3 +4344,35 @@ position: relative;
     height: auto;
     margin: 0 auto 8px;
 }
+
+/* =========================
+   湖ステージ・説明パネル
+========================= */
+
+#lake-screen .forest-intro {
+    width: min(86%, 460px);
+    margin: 28px auto 38px;
+    padding: 22px 24px;
+
+    text-align: center;
+
+    background: rgba(5, 25, 50, 0.72);
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+
+    box-sizing: border-box;
+}
+
+#lake-screen .forest-intro h2 {
+    margin: 0 0 12px;
+    color: #ffffff;
+    font-size: 26px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#lake-screen .forest-intro p {
+    margin: 0;
+    color: #ffffff;
+    line-height: 1.7;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
