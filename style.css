@@ -4330,3 +4330,17 @@ position: relative;
   height: auto;
   margin: 0 auto 6px;
 }
+
+/* ステージタイトルバナー調整 */
+.stage-title-area {
+    width: 100%;
+    text-align: center;
+}
+
+.stage-title-banner {
+    display: block;
+    width: min(320px, 78vw);
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 8px;
+}
