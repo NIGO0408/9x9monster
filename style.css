@@ -4339,7 +4339,7 @@ position: relative;
 
 .stage-title-banner {
     display: block;
-    width: min(320px, 78vw);
+    width: min(520px, 82vw);
     max-width: 100%;
     height: auto;
     margin: 0 auto 8px;
