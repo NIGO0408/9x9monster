@@ -4314,3 +4314,19 @@ position: relative;
 
   pointer-events: none;
 }
+
+/* =========================
+   ステージ選択画面・タイトルバナー
+========================= */
+
+.stage-title-area {
+  text-align: center;
+}
+
+.stage-title-banner {
+  display: block;
+  width: 260px;
+  max-width: 70vw;
+  height: auto;
+  margin: 0 auto 6px;
+}
