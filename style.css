@@ -4336,10 +4336,13 @@ position: relative;
 @media (max-width: 510px) {
 
     /* バナー */
-    .stage-title-area {
-        width: 100%;
-        text-align: center;
-    }
+   .stage-title-area {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    text-align: center;
+}
 
     .stage-title-banner {
         display: block;
