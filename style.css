@@ -4406,6 +4406,10 @@ position: relative;
 
 /* PC版：湖ステージ説明文 */
 @media (min-width: 511px) {
+  #lake-screen .stage-title-area {
+    width: 100%;
+    text-align: center;
+}
     #lake-screen .forest-intro {
         width: 100%;
         margin: 20px auto 28px;
