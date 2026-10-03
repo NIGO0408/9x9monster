@@ -4346,31 +4346,19 @@ position: relative;
         width: min(520px, 82vw);
         max-width: 100%;
         height: auto;
-        margin: 75px auto 8px;
+        margin: 75px auto 0;
     }
 
     /* 説明文 */
     #lake-screen .forest-intro {
         width: 100%;
-        margin: 110px auto 32px;
+        margin: 18px auto 28px;
         padding: 0 20px;
         text-align: center;
         background: none;
         border: none;
         border-radius: 0;
         box-sizing: border-box;
-    }
-
-    #lake-screen .forest-intro h2 {
-        margin: 0 0 8px;
-        color: #ffffff;
-        font-size: 22px;
-        text-shadow:
-            -2px -2px 0 #16324a,
-             2px -2px 0 #16324a,
-            -2px  2px 0 #16324a,
-             2px  2px 0 #16324a,
-             0 3px 4px rgba(0, 0, 0, 0.7);
     }
 
     #lake-screen .forest-intro p {
@@ -4385,19 +4373,8 @@ position: relative;
              1px  1px 0 #16324a,
              0 2px 3px rgba(0, 0, 0, 0.8);
     }
-
- /* スマホ版：バナー位置を固定 */
-    .forest-header {
-        position: relative;
-    }
-
-    .forest-header .stage-title-area {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-  
 }
+
 /* 湖ステージ：背景を少し暗くする */
 #lake-screen {
     position: relative;
