@@ -4398,20 +4398,3 @@ position: relative;
 #lake-screen .stage-title-banner {
     filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
 }
-
-/* スマホ版：湖バナーを画面中央に配置 */
-@media (max-width: 510px) {
-  #lake-screen .stage-title-area {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    text-align: center;
-  }
-
-  #lake-screen .stage-title-banner {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
