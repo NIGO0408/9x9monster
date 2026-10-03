@@ -1234,13 +1234,12 @@ button {
 ========================= */
 
 #forest-screen {
-  text-align: center;
+    text-align: center;
 
-  background:
-    linear-gradient(
-      #e5f8dd,
-      #f7ffe9
-    );
+    background-image: url("images/battle_forest.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
 }
 
 .forest-header {
