@@ -4434,4 +4434,7 @@ position: relative;
              1px  1px 0 #16324a,
              0 2px 3px rgba(0, 0, 0, 0.8);
     }
+  #lake-screen #lake-back-button {
+    white-space: nowrap;
+}
 }
