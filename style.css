@@ -4399,10 +4399,13 @@ position: relative;
     filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
 }
 
-/* スマホ版：ステージバナーを画面中央に固定 */
+/* スマホ版：湖バナーを画面中央に配置 */
 @media (max-width: 510px) {
   #lake-screen .stage-title-area {
-    width: 100%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
     text-align: center;
   }
 
