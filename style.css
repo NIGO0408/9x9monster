@@ -4337,8 +4337,9 @@ position: relative;
 
     /* バナー */
    .stage-title-area {
-      width: 100vw;
+    width: 100%;
     text-align: center;
+    transform: translateX(-45px);
 }
 
     .stage-title-banner {
