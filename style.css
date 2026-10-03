@@ -4386,16 +4386,6 @@ position: relative;
              0 2px 3px rgba(0, 0, 0, 0.8);
     }
 
-    /* バナーを中央配置 */
-    .forest-header {
-        position: relative;
-    }
-
-    .forest-header .stage-title-area {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
 }
 /* 湖ステージ：背景を少し暗くする */
 #lake-screen {
