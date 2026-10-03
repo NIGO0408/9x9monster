@@ -4323,12 +4323,10 @@ position: relative;
   text-align: center;
 }
 
+/* スマホ・PC共通 */
 .stage-title-banner {
-  display: block;
-  width: 120px;
-  max-width: 70vw;
-  height: auto;
-  margin: 0 auto 6px;
+    display: block;
+    height: auto;
 }
 
 /* =========================
