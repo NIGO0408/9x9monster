@@ -4495,9 +4495,3 @@ position: relative;
         border: none;
     }
 }
-/* PC版：森の説明文下余白を湖に合わせる */
-@media (min-width: 511px) {
-    #forest-screen .forest-intro {
-        margin: 20px auto 28px;
-    }
-}
