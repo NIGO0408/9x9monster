@@ -4433,3 +4433,22 @@ position: relative;
     white-space: nowrap;
 }
 }
+
+/* 森ステージ：背景を少し暗くする */
+#forest-screen {
+    position: relative;
+}
+
+#forest-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#forest-screen > * {
+    position: relative;
+    z-index: 1;
+}
