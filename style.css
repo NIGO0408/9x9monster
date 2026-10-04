@@ -4495,3 +4495,9 @@ position: relative;
         border: none;
     }
 }
+/* PC版：はじまりの森 カード開始位置を湖に合わせる */
+@media (min-width: 511px) {
+    #forest-screen .forest-map {
+        margin-top: 40px;
+    }
+}
