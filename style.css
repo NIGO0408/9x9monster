@@ -4480,6 +4480,6 @@ position: relative;
 /* PC版：はじまりの森 バナー位置補正 */
 @media (min-width: 511px) {
     #forest-screen .stage-title-area {
-        transform: translateX(45px);
+        transform: translateX(60px);
     }
 }
