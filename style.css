@@ -4501,3 +4501,12 @@ position: relative;
         padding-top: 20px;
     }
 }
+/* PC版：森の説明文を湖と同じ高さに統一 */
+@media (min-width: 511px) {
+    #forest-screen .forest-intro p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.55;
+        text-align: center;
+    }
+}
