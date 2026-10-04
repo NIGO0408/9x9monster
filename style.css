@@ -4498,6 +4498,6 @@ position: relative;
 /* PC版：森のバトルカード位置調整 */
 @media (min-width: 511px) {
     #forest-screen .forest-route {
-        margin-top: 20px;
+        padding-top: 20px;
     }
 }
