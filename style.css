@@ -4495,3 +4495,33 @@ position: relative;
         border: none;
     }
 }
+/* =========================================
+   PC版：森ステージを湖と同じ縦レイアウトに統一
+========================================= */
+@media (min-width: 511px) {
+
+    #forest-screen .forest-intro,
+    #lake-screen .forest-intro {
+        width: 100%;
+        margin: 20px auto 28px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        text-align: center;
+        background: none;
+        border: none;
+    }
+
+    #forest-screen .forest-intro p,
+    #lake-screen .forest-intro p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.55;
+        text-align: center;
+    }
+
+    #forest-screen .forest-route,
+    #lake-screen .forest-route {
+        margin-top: 0;
+        padding-top: 2px;
+    }
+}
