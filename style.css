@@ -4452,3 +4452,14 @@ position: relative;
     position: relative;
     z-index: 1;
 }
+
+/* 森ステージ：説明文を白文字にする */
+#forest-screen .forest-intro p {
+    color: #ffffff;
+    text-shadow:
+        -1px -1px 0 #16324a,
+         1px -1px 0 #16324a,
+        -1px  1px 0 #16324a,
+         1px  1px 0 #16324a,
+         0 2px 3px rgba(0, 0, 0, 0.8);
+}
