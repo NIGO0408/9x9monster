@@ -4521,3 +4521,38 @@ position: relative;
     background-position: center top;
     background-repeat: no-repeat;
 }
+/* PC版：炎のカッケ山 レイアウト調整 */
+@media (min-width: 511px) {
+
+    /* バナーを森・湖と同じ位置へ */
+    #volcano-screen .stage-title-area {
+        width: 100%;
+        text-align: center;
+        transform: translateX(-40px);
+    }
+
+    /* 説明文を森・湖と同じレイアウトへ */
+    #volcano-screen .forest-intro {
+        width: 100%;
+        margin: 20px auto 28px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        text-align: center;
+        background: none;
+        border: none;
+    }
+
+    #volcano-screen .forest-intro p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.55;
+        text-align: center;
+        text-shadow:
+            -1px -1px 0 #16324a,
+             1px -1px 0 #16324a,
+            -1px  1px 0 #16324a,
+             1px  1px 0 #16324a,
+             0 2px 3px rgba(0, 0, 0, 0.8);
+    }
+}
