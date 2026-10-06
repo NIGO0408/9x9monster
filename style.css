@@ -4605,6 +4605,6 @@ position: relative;
     #castle-screen .stage-title-area {
         width: 100%;
         text-align: center;
-        transform: translateX(-40px);
+        transform: translateX(-45px);
     }
 }
