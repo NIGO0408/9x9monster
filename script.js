@@ -6783,14 +6783,16 @@ el("levelup-button")?.addEventListener(
 );
 
 
-/* 図鑑 → 戻る */
+/* 図鑑 → タイトルへ */
 
 el("book-back")?.addEventListener(
   "click",
   () => {
 
+    saveGame();
+
     showScreen(
-      returnScreen
+      "title-screen"
     );
 
   }
