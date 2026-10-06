@@ -4482,7 +4482,7 @@ position: relative;
     #forest-screen .stage-title-area {
         width: 100%;
         text-align: center;
-      transform: translateX(-50px);
+      transform: translateX(-40px);
       }
 }
 /* PC版：はじまりの森 説明文レイアウト */
