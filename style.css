@@ -4608,3 +4608,56 @@ position: relative;
         transform: translateX(-45px);
     }
 }
+/* =========================================
+   魔王城：ステージ背景
+========================================= */
+#castle-screen {
+    text-align: center;
+    position: relative;
+    background-image: url("images/battle_castle.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+/* 背景を暗くしてUIを見やすくする */
+#castle-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#castle-screen > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* PC版：魔王城 説明文 */
+@media (min-width: 511px) {
+    #castle-screen .forest-intro {
+        width: 100%;
+        margin: 20px auto 28px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        text-align: center;
+        background: none;
+        border: none;
+    }
+
+    #castle-screen .forest-intro p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.55;
+        text-align: center;
+        text-shadow:
+            -1px -1px 0 #16324a,
+             1px -1px 0 #16324a,
+            -1px  1px 0 #16324a,
+             1px  1px 0 #16324a,
+             0 2px 3px rgba(0, 0, 0, 0.8);
+    }
+}
