@@ -6571,11 +6571,14 @@ el("menu-enemy-book-button")?.addEventListener(
   openEnemyBook
 );
 
-/* 敵図鑑 → 開く前の画面へ戻る */
+/* 敵図鑑 → タイトルへ */
 el("enemy-book-back")?.addEventListener(
   "click",
   () => {
-    showScreen(enemyBookReturnScreen);
+    saveGame();
+    showScreen(
+      "title-screen"
+    );
   }
 );
 
