@@ -4574,3 +4574,29 @@ position: relative;
     position: relative;
     z-index: 1;
 }
+/* スマホ版：炎のカッケ山 説明文 */
+@media (max-width: 510px) {
+    #volcano-screen .forest-intro {
+        width: 100%;
+        margin: 20px auto 28px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        text-align: center;
+        background: none;
+        border: none;
+    }
+
+    #volcano-screen .forest-intro p {
+        margin: 0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.55;
+        text-align: center;
+        text-shadow:
+            -1px -1px 0 #16324a,
+             1px -1px 0 #16324a,
+            -1px  1px 0 #16324a,
+             1px  1px 0 #16324a,
+             0 2px 3px rgba(0, 0, 0, 0.8);
+    }
+}
