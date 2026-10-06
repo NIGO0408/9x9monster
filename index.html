@@ -1813,10 +1813,35 @@
     </div>
 
 
-    <div
-      id="monster-list"
-      class="monster-list"
-    ></div>
+    <!-- 図鑑切り替え -->
+<div class="book-tabs">
+  <button
+    id="book-friend-tab"
+    class="book-tab active"
+  >
+    仲間モンスター
+  </button>
+
+  <button
+    id="book-enemy-tab"
+    class="book-tab"
+  >
+    敵モンスター
+  </button>
+</div>
+
+<!-- 仲間モンスター一覧 -->
+<div
+  id="monster-list"
+  class="monster-list"
+></div>
+
+<!-- 敵モンスター一覧（図鑑統合用） -->
+<div
+  id="book-enemy-list"
+  class="monster-list"
+  style="display: none;"
+></div>
 
   </section>
 
