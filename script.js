@@ -6587,16 +6587,14 @@ el("adventure-button")?.addEventListener(
 );
 
 
-/* ワールド → 戻る */
-
+/* ワールド → タイトルへ */
 el("world-back-button")?.addEventListener(
   "click",
   () => {
-
+    saveGame();
     showScreen(
-      "training-screen"
+      "title-screen"
     );
-
   }
 );
 
