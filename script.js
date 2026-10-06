@@ -6598,6 +6598,17 @@ el("world-back-button")?.addEventListener(
   }
 );
 
+/* 修行 → タイトルへ */
+el("training-top-button")?.addEventListener(
+  "click",
+  () => {
+    saveGame();
+    showScreen(
+      "title-screen"
+    );
+  }
+);
+
 
 /* ワールド → 森 */
 
