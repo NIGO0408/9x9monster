@@ -4512,3 +4512,12 @@ position: relative;
         text-align: center;
     }
 }
+/* 炎のカッケ山：ステージ背景 */
+#volcano-screen {
+    text-align: center;
+    position: relative;
+    background-image: url("images/battle_volcano.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
