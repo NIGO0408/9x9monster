@@ -4600,3 +4600,11 @@ position: relative;
              0 2px 3px rgba(0, 0, 0, 0.8);
     }
 }
+/* PC版：魔王城 バナー位置調整 */
+@media (min-width: 511px) {
+    #castle-screen .stage-title-area {
+        width: 100%;
+        text-align: center;
+        transform: translateX(-40px);
+    }
+}
