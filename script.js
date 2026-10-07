@@ -6571,6 +6571,25 @@ el("menu-enemy-book-button")?.addEventListener(
   openEnemyBook
 );
 
+/* 図鑑タブ → 敵モンスター */
+el("book-enemy-tab")?.addEventListener(
+  "click",
+  () => {
+    const friendList = el("monster-list");
+    const enemyList = el("book-enemy-list");
+    const friendTab = el("book-friend-tab");
+    const enemyTab = el("book-enemy-tab");
+
+    friendList.style.display = "none";
+    enemyList.style.display = "";
+
+    friendTab.classList.remove("active");
+    enemyTab.classList.add("active");
+
+    renderEnemyBook("book-enemy-list");
+  }
+);
+
 /* 敵図鑑 → タイトルへ */
 el("enemy-book-back")?.addEventListener(
   "click",
