@@ -4952,6 +4952,13 @@ function playKukudesDefeatAnimation(callback) {
         return;
     }
 
+const lastMessage = el("kukudes-last-message");
+
+/* ククデス最後のセリフを表示 */
+if (lastMessage) {
+    lastMessage.style.display = "block";
+}
+   
     const frames = [
         "images/maou_defeat_1.png",
         "images/maou_defeat_2.png",
