@@ -4740,3 +4740,17 @@ position: relative;
     color: #222222;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
+/* =========================================
+   下部メニュー：4ボタン均等配置
+========================================= */
+
+#menu {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+#menu button {
+    width: 100%;
+    min-width: 0;
+}
