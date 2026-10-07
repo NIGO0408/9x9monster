@@ -4936,10 +4936,6 @@ function enemyAttack() {
    魔王ククデス 撃破アニメーション
 ========================================= */
 
-/* =========================================
-   魔王ククデス 撃破アニメーション
-========================================= */
-
 function playKukudesDefeatAnimation(callback) {
 
     const enemyImage = el("enemy-image");
