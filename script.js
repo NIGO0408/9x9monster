@@ -4936,6 +4936,10 @@ function enemyAttack() {
    魔王ククデス 撃破アニメーション
 ========================================= */
 
+/* =========================================
+   魔王ククデス 撃破アニメーション
+========================================= */
+
 function playKukudesDefeatAnimation(callback) {
 
     const enemyImage = el("enemy-image");
@@ -4961,30 +4965,60 @@ function playKukudesDefeatAnimation(callback) {
         "images/maou_defeat_6.png"
     ];
 
-    let frame = 0;
+    /* ① 倒された直後、一瞬完全に静止 */
+    setTimeout(() => {
 
-    const timer = setInterval(() => {
+        /* ② 小刻みに震え始める */
+        const shake = img.animate(
+            [
+                { transform: "translate(0, 0)" },
+                { transform: "translate(-3px, 1px)" },
+                { transform: "translate(3px, -1px)" },
+                { transform: "translate(-2px, -1px)" },
+                { transform: "translate(2px, 1px)" },
+                { transform: "translate(0, 0)" }
+            ],
+            {
+                duration: 180,
+                iterations: Infinity
+            }
+        );
 
-        img.src = frames[frame];
+        /* ③ 少し震えてから崩壊開始 */
+        setTimeout(() => {
 
-        frame++;
+            let frame = 0;
 
-        if (frame >= frames.length) {
+            const timer = setInterval(() => {
 
-            clearInterval(timer);
+                img.src = frames[frame];
+                frame++;
 
-            setTimeout(() => {
+                if (frame >= frames.length) {
 
-                img.style.visibility = "hidden";
+                    clearInterval(timer);
 
-                setTimeout(() => {
-                    callback();
-                }, 300);
+                    /* 震えを止める */
+                    shake.cancel();
 
-            }, 350);
-        }
+                    /* 最後の粒子を少し残す */
+                    setTimeout(() => {
 
-    }, 220);
+                        img.style.visibility = "hidden";
+
+                        /* 消滅後の余韻 */
+                        setTimeout(() => {
+                            callback();
+                        }, 350);
+
+                    }, 400);
+                }
+
+            }, 220);
+
+        }, 650);
+
+    }, 450);
 }
 
 function battleWin() {
