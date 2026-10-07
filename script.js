@@ -4161,19 +4161,13 @@ const currentStageHP =
     ) {
 
      enemyImage.innerHTML = `
-    <div
-        id="kukudes-last-message"
-        class="kukudes-last-message"
+    <img
+        src="${currentWildMonster.image}"
+        alt="${currentWildMonster.name}"
+        ${currentWildMonster.name === "魔王ククデス"
+            ? 'style="width:115px; height:115px;"'
+            : ""}
     >
-        まだまだ九九の勉強は終わらん・・・
-    </div>
-  <img
-    src="${currentWildMonster.image}"
-    alt="${currentWildMonster.name}"
-    ${currentWildMonster.name === "魔王ククデス"
-      ? 'style="width:115px; height:115px;"'
-      : ""}
-  >
 `;
 
     }
