@@ -714,13 +714,8 @@ function updateBottomMenu(screenId) {
     return;
   }
 
+  menu.classList.remove("hidden");
 
-  if (screenId === "title-screen") {
-    menu.classList.add("hidden");
-  }
-  else {
-    menu.classList.remove("hidden");
-  }
 }
 
 
