@@ -4684,27 +4684,37 @@ function checkBattleAnswer(
        敵撃破
     */
 
-    if (
-      battleEnemyHP <= 0
-    ) {
+   if (
+    battleEnemyHP <= 0
+) {
 
-      battleTimer =
+    battleTimer =
         setTimeout(
-          () => {
+            () => {
 
-            battleTimer =
-              null;
+                battleTimer = null;
 
-            battleWin();
+                /* 魔王ククデスだけ専用撃破アニメーション */
+                if (
+                    currentAdventureStage === "castle" &&
+                    currentBattleNumber === 6
+                ) {
+                    playKukudesDefeatAnimation(() => {
+                        battleWin();
+                    });
+                }
 
-          },
-          500
+                /* それ以外の敵は今まで通り */
+                else {
+                    battleWin();
+                }
+
+            },
+            500
         );
 
-
-      return;
-
-    }
+    return;
+}
 
 
     /*
