@@ -6645,6 +6645,14 @@ el("training-top-button")?.addEventListener(
   }
 );
 
+/* 育成 → トップ */
+el("training-monster-top-button")?.addEventListener(
+  "click",
+  () => {
+    saveGame();
+    showScreen("title-screen");
+  }
+);
 
 /* ワールド → 森 */
 
