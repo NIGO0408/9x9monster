@@ -4922,6 +4922,61 @@ function enemyAttack() {
    バトル勝利
    ========================================================= */
 
+/* =========================================
+   魔王ククデス 撃破アニメーション
+========================================= */
+
+function playKukudesDefeatAnimation(callback) {
+
+    const enemyImage = el("enemy-image");
+
+    if (!enemyImage) {
+        callback();
+        return;
+    }
+
+    const img = enemyImage.querySelector("img");
+
+    if (!img) {
+        callback();
+        return;
+    }
+
+    const frames = [
+        "images/maou_defeat_1.png",
+        "images/maou_defeat_2.png",
+        "images/maou_defeat_3.png",
+        "images/maou_defeat_4.png",
+        "images/maou_defeat_5.png",
+        "images/maou_defeat_6.png"
+    ];
+
+    let frame = 0;
+
+    const timer = setInterval(() => {
+
+        img.src = frames[frame];
+
+        frame++;
+
+        if (frame >= frames.length) {
+
+            clearInterval(timer);
+
+            setTimeout(() => {
+
+                img.style.visibility = "hidden";
+
+                setTimeout(() => {
+                    callback();
+                }, 300);
+
+            }, 350);
+        }
+
+    }, 220);
+}
+
 function battleWin() {
 
   /* 勝利した瞬間の通常戦BGM位置を保存 */
