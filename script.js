@@ -4273,31 +4273,17 @@ battleMessage(
 );
 
 const battleBackButton =
-  el("battle-back-button");
+    el("battle-back-button");
 
 if (battleBackButton) {
-  battleBackButton.textContent =
-    isCastle
-      ? "← 魔王城のマップへ"
-      : isVolcano
-        ? "← カッケ山のマップへ"
-        : isLake
-          ? "← 湖のマップへ"
-          : "← 森のマップへ";
+    battleBackButton.textContent = "← マップへ";
 }
 
 const battleReturnButton =
-  el("battle-return-forest");
+    el("battle-return-forest");
 
 if (battleReturnButton) {
-  battleReturnButton.textContent =
-    isCastle
-      ? "🏰 魔王城のマップへ"
-      : isVolcano
-        ? "🌋 カッケ山のマップへ"
-        : isLake
-          ? "🌊 湖のマップへ"
-          : "🌳 森のマップへ";
+    battleReturnButton.textContent = "← マップへ";
 }
 
 
