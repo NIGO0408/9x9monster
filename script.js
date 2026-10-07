@@ -3879,9 +3879,13 @@ function showBossWarning() {
   warning.className = "boss-warning";
   warning.textContent = "⚠️ WARNING ⚠️";
 
-  enemyImage.appendChild(warning);
+ const enemyWrapper = enemyImage.closest(".battle-enemy-wrapper");
 
-  enemyImage.style.position = "relative";
+if (!enemyWrapper) return;
+
+enemyWrapper.appendChild(warning);
+
+enemyWrapper.style.position = "relative";
 
   warning.style.position = "absolute";
   warning.style.top = "50%";
