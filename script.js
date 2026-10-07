@@ -4936,6 +4936,10 @@ function enemyAttack() {
    魔王ククデス 撃破アニメーション
 ========================================= */
 
+/* =========================================
+   魔王ククデス 撃破アニメーション
+========================================= */
+
 function playKukudesDefeatAnimation(callback) {
 
     const enemyImage = el("enemy-image");
@@ -4980,7 +4984,7 @@ function playKukudesDefeatAnimation(callback) {
             }
         );
 
-        /* ③ しばらく震えてから崩壊開始 */
+        /* ③ 震えたあと、崩壊開始 */
         setTimeout(() => {
 
             let frame = 0;
@@ -4997,7 +5001,7 @@ function playKukudesDefeatAnimation(callback) {
                     /* ④ 崩壊終了と同時に震えを止める */
                     shake.cancel();
 
-                    /* ⑤ 最後の粒子を少し長めに残す */
+                    /* ⑤ 最後の粒子を残す */
                     setTimeout(() => {
 
                         img.style.visibility = "hidden";
@@ -5012,9 +5016,9 @@ function playKukudesDefeatAnimation(callback) {
                     }, 550);
                 }
 
-            }, 300);
+            }, 500);
 
-        }, 900);
+        }, 650);
 
     }, 650);
 }
