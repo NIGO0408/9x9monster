@@ -1901,7 +1901,7 @@ button {
 
   margin: 0;
 
-overflow: visible;
+overflow: hidden;
 position: relative;
   
 }
@@ -4800,4 +4800,13 @@ position: relative;
 
     z-index: 20;
     pointer-events: none;
+}
+
+/* 敵画像と最後のセリフをまとめる */
+.battle-enemy-wrapper {
+    position: relative;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
