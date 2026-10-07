@@ -4756,3 +4756,12 @@ position: relative;
     min-width: 0;
     box-sizing: border-box;
 }
+/* 下部メニュー：専用ドットアイコン */
+#menu .menu-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+    margin: 0 auto 2px;
+}
