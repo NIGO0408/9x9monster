@@ -4753,7 +4753,6 @@ position: relative;
 
 #menu.menu:not(.hidden) button {
     flex: 1 1 0;
-    width: 0;
     min-width: 0;
     box-sizing: border-box;
 }
