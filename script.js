@@ -3301,8 +3301,8 @@ function renderMonsterBook() {
    敵図鑑
    ========================================================= */
 
-function renderEnemyBook() {
-  const list = el("enemy-list");
+function renderEnemyBook(targetId = "enemy-list") {
+  const list = el(targetId);
 
   if (!list) return;
 
