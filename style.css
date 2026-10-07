@@ -4744,13 +4744,16 @@ position: relative;
    下部メニュー：4ボタン均等配置
 ========================================= */
 
-#menu {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+#menu.menu:not(.hidden) {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
     gap: 8px;
 }
 
-#menu button {
-    width: 100%;
+#menu.menu:not(.hidden) button {
+    flex: 1 1 0;
+    width: 0;
     min-width: 0;
+    box-sizing: border-box;
 }
