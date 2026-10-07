@@ -4765,3 +4765,39 @@ position: relative;
     display: block;
     margin: 0 auto -4px;
 }
+/* =========================================
+   魔王ククデス 最後のセリフ
+========================================= */
+
+#enemy-image {
+    position: relative;
+}
+
+.kukudes-last-message {
+    display: none;
+
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    transform: translateX(-50%);
+
+    width: max-content;
+    max-width: 90vw;
+
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+
+    text-shadow:
+        -2px -2px 0 #000,
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         0    2px 0 #000;
+
+    z-index: 20;
+    pointer-events: none;
+}
