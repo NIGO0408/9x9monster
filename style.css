@@ -1901,7 +1901,7 @@ button {
 
   margin: 0;
 
-overflow: hidden;
+overflow: visible;
 position: relative;
   
 }
