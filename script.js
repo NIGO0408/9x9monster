@@ -4160,7 +4160,13 @@ const currentStageHP =
       currentWildMonster.image
     ) {
 
-      enemyImage.innerHTML = `
+     enemyImage.innerHTML = `
+    <div
+        id="kukudes-last-message"
+        class="kukudes-last-message"
+    >
+        まだまだ九九の勉強は終わらん・・・
+    </div>
   <img
     src="${currentWildMonster.image}"
     alt="${currentWildMonster.name}"
