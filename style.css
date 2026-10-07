@@ -4758,10 +4758,10 @@ position: relative;
 }
 /* 下部メニュー：専用ドットアイコン */
 #menu .menu-icon {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
     image-rendering: pixelated;
     display: block;
-    margin: 0 auto -2px;
+    margin: 0 auto -4px;
 }
