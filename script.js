@@ -7602,8 +7602,13 @@ async function startEnding() {
     await endingWait(3500);
 
     if (bgmEnabled) {
-        playBgm("ending");
+    playBgm("ending");
+
+    const endingAudio = el("op-bgm");
+    if (endingAudio) {
+        endingAudio.loop = false;
     }
+}
 
     // スタッフロール終了後
     credits.addEventListener("animationend", () => {
