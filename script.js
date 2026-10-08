@@ -5266,7 +5266,7 @@ if (
     // ボス撃破ファンファーレを再生
     playBossClearFanfare();
 
-    // クリア画面を5秒間表示
+    // クリア画面を6秒間表示
     setTimeout(() => {
         // メッセージ演出に入る前に音を止める
         const bgm = el("op-bgm");
@@ -5276,7 +5276,7 @@ if (
         }
 
         startEnding();
-    }, 5000);
+    }, 6000);
 
     return;
 }
