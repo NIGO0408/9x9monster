@@ -5574,9 +5574,12 @@ else {
     );
 
   saveAdventureStage("castle");
-  saveGame();
+saveGame();
 
-  startCastleBattle(next);
+// 次の戦闘は連戦扱い
+castleContinuingBattle = true;
+
+startCastleBattle(next);
 
 }
 else if (isVolcano) {
@@ -6465,6 +6468,8 @@ if (number === 1) {
    魔王城：バトル開始
    ========================================================= */
 
+let castleContinuingBattle = false;
+
 function startCastleBattle(battleNumber) {
 
   const number =
@@ -6540,16 +6545,17 @@ function startCastleBattle(battleNumber) {
    それ以外は前戦のHPを持ち越す。
 */
   if (
+    !castleContinuingBattle ||
     number === 1 ||
     monsterChanged ||
-    castleCurrentHP <= 0 
-  ) {
-    castleCurrentHP =
-      data.hp;
+    castleCurrentHP <= 0
+) {
+    castleCurrentHP = data.hp;
+    castleBattleMonsterId = selectedId;
+}
 
-    castleBattleMonsterId =
-      selectedId;
-  }
+// 連戦フラグをリセット
+castleContinuingBattle = false;
 
   /*
      魔王城の敵を決定。
