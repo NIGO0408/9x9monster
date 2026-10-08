@@ -5267,16 +5267,34 @@ if (
     playBossClearFanfare();
 
     // クリア画面を6秒間表示
-    setTimeout(() => {
-        // メッセージ演出に入る前に音を止める
-        const bgm = el("op-bgm");
-        if (bgm) {
-            bgm.pause();
-            bgm.onended = null;
-        }
+setTimeout(() => {
 
+    // ファンファーレを停止して無音にする
+    const bgm = el("op-bgm");
+    if (bgm) {
+        bgm.pause();
+        bgm.onended = null;
+    }
+
+    // 暗転用の黒い幕を作成
+    const fade = document.createElement("div");
+    fade.id = "ending-fade-overlay";
+    document.body.appendChild(fade);
+
+    // 描画後に暗転開始
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            fade.classList.add("active");
+        });
+    });
+
+    // 2秒かけて暗転した後、エンディング開始
+    setTimeout(() => {
         startEnding();
-    }, 6000);
+        fade.remove();
+    }, 2100);
+
+}, 6000);
 
     return;
 }
