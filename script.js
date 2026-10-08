@@ -6518,13 +6518,14 @@ function startCastleBattle(battleNumber) {
     selectedId;
 
   /*
-     ①またはモンスター変更時は満タン。
-     ②～⑤は前戦のHPを持ち越す。
+     初回攻略中はHPを持ち越す。
+     クリア済みの戦闘への再挑戦はHP満タン。
   */
   if (
     number === 1 ||
     monsterChanged ||
-    castleCurrentHP <= 0
+    castleCurrentHP <= 0 ||
+    castleProgress >= number
   ) {
     castleCurrentHP =
       data.hp;
