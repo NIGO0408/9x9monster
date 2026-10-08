@@ -7530,7 +7530,7 @@ async function startEnding() {
     ];
 
     // 暗転後の静寂
-    await endingWait(2500);
+    await endingWait(800);
 
     // 3つのメッセージを順番に表示
     for (const text of messages) {
