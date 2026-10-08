@@ -4921,3 +4921,22 @@ position: relative;
     opacity: 0;
     transition: opacity 3s ease-in-out;
 }
+/* ========================================
+   エンディング移行時の暗転
+======================================== */
+
+#ending-fade-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 99999;
+    transition: opacity 2s ease-in-out;
+}
+
+#ending-fade-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
