@@ -7494,3 +7494,78 @@ if (bgmToggle) {
     setBgmEnabled(!bgmEnabled);
   });
 }
+/* ========================================
+   ククモン エンディング
+======================================== */
+
+const endingWait = ms =>
+    new Promise(resolve => setTimeout(resolve, ms));
+
+async function startEnding() {
+
+    // エンディング画面を表示
+    showScreen("ending-screen");
+
+    const message = el("ending-message");
+    const messageArea = el("ending-message-area");
+    const creditsArea = el("ending-credits-area");
+    const credits = el("ending-credits");
+    const theEnd = el("ending-the-end");
+
+    if (!message || !messageArea || !creditsArea ||
+        !credits || !theEnd) return;
+
+    // 再実行時の初期化
+    messageArea.style.display = "flex";
+    message.style.opacity = "0";
+    creditsArea.style.display = "none";
+    credits.style.animation = "none";
+    theEnd.style.display = "none";
+    theEnd.style.opacity = "0";
+
+    const messages = [
+        "勇者と仲間の活躍によって\n魔王ククデスは倒された\n世界に平和が戻ったのだ。",
+        "しかしーー\n勇者の冒険は、まだ終わらない。",
+        "これからも楽しく学び続けよう！"
+    ];
+
+    // 暗転後の静寂
+    await endingWait(2500);
+
+    // 3つのメッセージを順番に表示
+    for (const text of messages) {
+
+        message.textContent = text;
+
+        await endingWait(200);
+
+        message.style.opacity = "1";
+
+        await endingWait(5000);
+
+        message.style.opacity = "0";
+
+        await endingWait(2500);
+    }
+
+    // スタッフロールへ
+    messageArea.style.display = "none";
+    await endingWait(1500);
+
+    creditsArea.style.display = "block";
+
+    // アニメーションを先頭から開始
+    credits.style.animation = "none";
+    void credits.offsetWidth;
+    credits.style.animation = "endingCreditsScroll 95s linear forwards";
+
+    // スタッフロール終了後
+    credits.addEventListener("animationend", () => {
+        creditsArea.style.display = "none";
+        theEnd.style.display = "flex";
+
+        requestAnimationFrame(() => {
+            theEnd.style.opacity = "1";
+        });
+    }, { once: true });
+}
