@@ -5623,9 +5623,12 @@ else if (isVolcano) {
       );
 
     saveAdventureStage("lake");
-    saveGame();
+saveGame();
 
-    startLakeBattle(next);
+// 次の戦闘は連戦扱い
+lakeContinuingBattle = true;
+
+startLakeBattle(next);
 
   }
   else {
@@ -6138,6 +6141,7 @@ function updateLakeMap() {
   }
 }
 
+let lakeContinuingBattle = false;
 function startLakeBattle(battleNumber) {
 
   const number =
@@ -6207,16 +6211,17 @@ if (number === 1) {
      ②～⑤は前戦のHPを持ち越す。
   */
   if (
+    !lakeContinuingBattle ||
     number === 1 ||
     monsterChanged ||
     lakeCurrentHP <= 0
-  ) {
-    lakeCurrentHP =
-      data.hp;
+) {
+    lakeCurrentHP = data.hp;
+    lakeBattleMonsterId = selectedId;
+}
 
-    lakeBattleMonsterId =
-      selectedId;
-  }
+// 連戦フラグをリセット
+lakeContinuingBattle = false;
 
   /*
      湖の敵を決定。
