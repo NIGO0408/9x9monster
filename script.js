@@ -5641,9 +5641,12 @@ else if (isVolcano) {
       );
 
     saveAdventureStage("forest");
-    saveGame();
+saveGame();
 
-    startForestBattle(next);
+// 次のバトルは連戦扱い
+forestContinuingBattle = true;
+
+startForestBattle(next);
   }
 }
 
