@@ -5603,9 +5603,12 @@ else if (isVolcano) {
       );
 
     saveAdventureStage("volcano");
-    saveGame();
+saveGame();
 
-    startVolcanoBattle(next);
+// 次の戦闘は連戦扱い
+volcanoContinuingBattle = true;
+
+startVolcanoBattle(next);
 
   }
   else if (isLake) {
@@ -6360,6 +6363,7 @@ function updateCastleMap() {
 /* =========================================================
    炎のカッケ山：バトル開始
    ========================================================= */
+let volcanoContinuingBattle = false;
 
 function startVolcanoBattle(battleNumber) {
 
@@ -6436,16 +6440,17 @@ if (number === 1) {
      ②～⑤は前戦のHPを持ち越す。
   */
   if (
+    !volcanoContinuingBattle ||
     number === 1 ||
     monsterChanged ||
     volcanoCurrentHP <= 0
-  ) {
-    volcanoCurrentHP =
-      data.hp;
+) {
+    volcanoCurrentHP = data.hp;
+    volcanoBattleMonsterId = selectedId;
+}
 
-    volcanoBattleMonsterId =
-      selectedId;
-  }
+// 連戦フラグをリセット
+volcanoContinuingBattle = false;
 
   /*
      火山の敵を決定。
