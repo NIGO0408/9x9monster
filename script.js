@@ -4697,8 +4697,8 @@ function checkBattleAnswer(
                     currentBattleNumber === 6
                 ) {
                     playKukudesDefeatAnimation(() => {
-                        battleWin();
-                    });
+    startEnding();
+});
                 }
 
                 /* それ以外の敵は今まで通り */
