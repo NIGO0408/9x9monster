@@ -4700,7 +4700,7 @@ function checkBattleAnswer(
                     currentBattleNumber === 6
                 ) {
                     playKukudesDefeatAnimation(() => {
-    startEnding();
+    battleWin();
 });
                 }
 
@@ -5249,14 +5249,43 @@ else {
 
   saveGame();
 
-  showScreen(
-    "battle-result-screen"
-  );
+showScreen("battle-result-screen");
 
- if (currentBattleNumber === 6) {
-  playBossClearFanfare();
+// 魔王ククデス撃破時だけ特別な処理
+if (
+    currentAdventureStage === "castle" &&
+    currentBattleNumber === 6
+) {
+    // クリア画面のボタンを操作できなくする
+    const nextButton = el("battle-next-button");
+    const returnButton = el("battle-return-forest");
+
+    if (nextButton) nextButton.disabled = true;
+    if (returnButton) returnButton.disabled = true;
+
+    // ボス撃破ファンファーレを再生
+    playBossClearFanfare();
+
+    // クリア画面を2秒間表示
+    setTimeout(() => {
+        // メッセージ演出に入る前に音を止める
+        const bgm = el("op-bgm");
+        if (bgm) {
+            bgm.pause();
+            bgm.onended = null;
+        }
+
+        startEnding();
+    }, 2000);
+
+    return;
+}
+
+// 通常の勝利処理（変更なし）
+if (currentBattleNumber === 6) {
+    playBossClearFanfare();
 } else {
-  playBattleClearFanfare();
+    playBattleClearFanfare();
 }
    
   if (leveledUp) {
