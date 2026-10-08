@@ -3723,6 +3723,8 @@ function updateForestMap() {
    森のバトル開始
    ========================================================= */
 
+let forestContinuingBattle = false;
+
 function startForestBattle(
   battleNumber
 ) {
@@ -3817,10 +3819,11 @@ if (number === 1) {
   */
 
   if (
+    !forestContinuingBattle ||
     number === 1 ||
     monsterChanged ||
     forestCurrentHP <= 0
-  ) {
+) {
 
     const data =
       getMonsterData(
@@ -3842,6 +3845,7 @@ if (number === 1) {
 
   }
 
+  forestContinuingBattle = false; 
 
   /*
    敵決定
