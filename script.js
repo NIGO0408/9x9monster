@@ -7557,10 +7557,24 @@ async function startEnding() {
 
     creditsArea.style.display = "block";
 
-    // アニメーションを先頭から開始
+   // アニメーションを先頭から開始
     credits.style.animation = "none";
     void credits.offsetWidth;
     credits.style.animation = "endingCreditsScroll 95s linear forwards";
+
+    // エンディング曲は毎回冒頭から再生
+    const endingAudio = el("op-bgm");
+    if (endingAudio) {
+        endingAudio.pause();
+        endingAudio.currentTime = 0;
+    }
+
+    // スタッフロール開始から少し待ってBGM再生
+    await endingWait(3500);
+
+    if (bgmEnabled) {
+        playBgm("ending");
+    }
 
     // スタッフロール終了後
     credits.addEventListener("animationend", () => {
