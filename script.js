@@ -4141,6 +4141,13 @@ const currentStageHP =
   const enemyImage =
     el("enemy-image");
 
+  /* バトル開始時にククデスのセリフを非表示 */
+const kukudesLastMessage =
+    el("kukudes-last-message");
+
+if (kukudesLastMessage) {
+    kukudesLastMessage.style.display = "none";
+} 
 
   if (enemyName) {
 
