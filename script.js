@@ -4857,16 +4857,18 @@ function enemyAttack() {
      ★HP持ち越し
   */
 
-  if (
-    currentAdventureStage === "lake"
-  ) {
-    lakeCurrentHP =
-      battlePlayerHP;
-  }
-  else {
-    forestCurrentHP =
-      battlePlayerHP;
-  }
+  if (currentAdventureStage === "castle") {
+    castleCurrentHP = battlePlayerHP;
+}
+else if (currentAdventureStage === "volcano") {
+    volcanoCurrentHP = battlePlayerHP;
+}
+else if (currentAdventureStage === "lake") {
+    lakeCurrentHP = battlePlayerHP;
+}
+else {
+    forestCurrentHP = battlePlayerHP;
+}
 
 
   battleMessage(
