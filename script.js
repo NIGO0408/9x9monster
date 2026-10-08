@@ -37,6 +37,7 @@ const BGM_LIST = {
   volcanoBoss: "audio/volcano_boss.mp3", 
    castleBattle: "audio/castle_battle.mp3",
 castleBoss: "audio/castle_boss.mp3",
+ending: "audio/ending.mp3"
 };
 
 let currentBgmKey = null;
@@ -85,8 +86,10 @@ if (currentAdventureStage === "castle") {
         : "forestBattle";
 
 case "battle-result-screen":
-  return null;
-    default: return null;
+    return null;
+case "ending-screen":
+    return null;
+default: return null;
   }
 }
 
