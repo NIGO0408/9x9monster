@@ -1157,6 +1157,11 @@ button {
   border-radius: 25px;
 }
 
+/* 勇者の試練：解放前は非表示 */
+#trial-area[hidden] {
+  display: none !important;
+}
+
 .map-area:hover {
   transform: translateY(-3px);
 }
