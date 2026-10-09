@@ -1682,7 +1682,145 @@
 
   </section>
 
+<!-- =================================
+       勇者の試練：専用バトル
+  ================================= -->
 
+  <section
+    id="trial-battle-screen"
+    class="screen"
+  >
+
+    <!-- ヘッダー -->
+    <div class="battle-header">
+
+      <button
+        id="trial-battle-back-button"
+        class="small-button"
+        type="button"
+      >
+        ← 試練へ戻る
+      </button>
+
+      <span id="trial-battle-number">
+        TRIAL 1
+      </span>
+
+    </div>
+
+
+    <!-- 敵モンスター -->
+    <div class="enemy-area">
+
+      <div
+        id="trial-enemy-name"
+        class="battle-name"
+      >
+        ダークスライム
+      </div>
+
+      <div
+        id="trial-enemy-level"
+        class="battle-level"
+      >
+        1の段
+      </div>
+
+      <div class="battle-enemy-wrapper">
+
+        <div
+          id="trial-enemy-image"
+          class="battle-monster-image"
+        ></div>
+
+      </div>
+
+      <div class="hp-label">
+
+        <span>HP</span>
+
+        <strong id="trial-enemy-hp-text">
+          2 / 2
+        </strong>
+
+      </div>
+
+      <div class="battle-hp">
+
+        <div
+          id="trial-enemy-hp-fill"
+          class="battle-hp-fill"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- バトルメッセージ -->
+    <div
+      id="trial-battle-message"
+      class="battle-message"
+    >
+      勇者の試練に挑戦！
+    </div>
+
+
+    <!-- 勇者 -->
+    <div class="player-battle">
+
+      <div
+        id="trial-hero-image"
+        class="player-monster-image"
+      >
+        <img
+          src="images/top_yousya.png"
+          alt="勇者"
+        >
+      </div>
+
+      <div class="player-battle-info">
+
+        <div class="battle-name">
+          <span>勇者</span>
+          <span>無敵</span>
+        </div>
+
+        <div class="hp-label">
+          <span>HP</span>
+          <strong>∞</strong>
+        </div>
+
+        <div class="battle-hp">
+          <div
+            class="battle-hp-fill"
+            style="width: 100%;"
+          ></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 穴埋め九九問題 -->
+    <div class="battle-question-box">
+
+      <div
+        id="trial-battle-question"
+        class="battle-question"
+      >
+        ？ × 3 = 6
+      </div>
+
+      <div
+        id="trial-battle-answers"
+        class="battle-answers"
+      ></div>
+
+    </div>
+
+  </section>
 
   <!-- =================================
        バトル結果
