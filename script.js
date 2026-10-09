@@ -7719,11 +7719,14 @@ credits.addEventListener("animationend", () => {
     // THE ENDを非表示
     theEnd.style.display = "none";
 
-    // 解放メッセージを表示
-    messageArea.style.display = "flex";
-    messageArea.style.opacity = "1";
-    message.style.opacity = "1";
-    message.textContent = "『勇者の試練』が解放されました！";
+   // 解放メッセージを表示
+messageArea.style.display = "flex";
+messageArea.style.opacity = "1";
+
+// 既存のフェード設定を解除して即時表示
+message.style.transition = "none";
+message.textContent = "『勇者の試練』が解放されました！";
+message.style.opacity = "1";
 
     // 4秒後に冒険マップへ戻る
     setTimeout(() => {
