@@ -4962,7 +4962,7 @@ position: relative;
 #trial-battle-screen {
     background-image: url("images/battle_trial99.png");
     background-size: 110% auto;
-    background-position: center top;
+    background-position: center -30px;
     background-repeat: no-repeat;
 }
 /* 勇者の試練：スマホ版バトル背景 */
