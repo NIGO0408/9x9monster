@@ -493,6 +493,9 @@ let castleProgress = 0;
 let castleCurrentHP = 0;
 let castleBattleMonsterId = null;
 
+// 勇者の試練の解放状態
+let trialUnlocked = false;
+
 let currentAdventureStage = "forest";
 
 // 敵図鑑データ
@@ -795,6 +798,18 @@ function requiredExp(level, stage) {
    セーブ
    ========================================================= */
 
+/* =========================================================
+   勇者の試練：バナー表示制御
+   ========================================================= */
+
+function updateTrialAreaAvailability() {
+  const trialArea = document.getElementById("trial-area");
+
+  if (!trialArea) return;
+
+  trialArea.hidden = !trialUnlocked;
+}
+
 function saveGame() {
 
   syncAdventureState("forest");
@@ -823,6 +838,8 @@ function saveGame() {
     },
 
     adventureUnlocked,
+    
+   trialUnlocked, 
 
     battleWins,
 
@@ -949,7 +966,9 @@ function loadGame() {
     adventureUnlocked =
       data.adventureUnlocked === true;
 
-
+trialUnlocked =
+      data.trialUnlocked === true;
+     
     battleWins =
       Number(
         data.battleWins
@@ -3512,6 +3531,7 @@ function openWorld() {
   updateLakeAreaAvailability();
   updateVolcanoAreaAvailability(); 
   updateCastleAreaAvailability(); 
+   updateTrialAreaAvailability();
   updateLakeMap();
 
   showScreen(
@@ -7680,13 +7700,38 @@ async function startEnding() {
     }
 }
 
-    // スタッフロール終了後
-    credits.addEventListener("animationend", () => {
-        creditsArea.style.display = "none";
-        theEnd.style.display = "flex";
+   // スタッフロール終了後
+credits.addEventListener("animationend", () => {
+  creditsArea.style.display = "none";
+  theEnd.style.display = "flex";
 
-        requestAnimationFrame(() => {
-            theEnd.style.opacity = "1";
-        });
-    }, { once: true });
+  requestAnimationFrame(() => {
+    theEnd.style.opacity = "1";
+  });
+
+  // THE ENDを5秒間表示
+  setTimeout(() => {
+
+    // 勇者の試練を解放
+    trialUnlocked = true;
+    saveGame();
+
+    // THE ENDを非表示
+    theEnd.style.display = "none";
+
+    // 解放メッセージを表示
+    messageArea.style.display = "flex";
+    messageArea.style.opacity = "1";
+    message.style.opacity = "1";
+    message.textContent = "『勇者の試練』が解放されました！";
+
+    // 4秒後に冒険マップへ戻る
+    setTimeout(() => {
+      messageArea.style.display = "none";
+      openWorld();
+    }, 4000);
+
+  }, 5000);
+
+}, { once: true });
 }
