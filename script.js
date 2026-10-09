@@ -7710,31 +7710,51 @@ credits.addEventListener("animationend", () => {
   });
 
   // THE ENDを5秒間表示
+setTimeout(() => {
+
+  // THE ENDを2秒かけてフェードアウト
+  theEnd.style.transition = "opacity 2s ease-in-out";
+  theEnd.style.opacity = "0";
+
+  // フェードアウト完了後
   setTimeout(() => {
 
-    // 勇者の試練を解放
-    trialUnlocked = true;
-    saveGame();
-
-    // THE ENDを非表示
     theEnd.style.display = "none";
 
-   // 解放メッセージを表示
-messageArea.style.display = "flex";
-messageArea.style.opacity = "1";
-
-// 既存のフェード設定を解除して即時表示
-message.style.transition = "none";
-message.textContent = "『勇者の試練』が解放されました！";
-message.style.opacity = "1";
-
-    // 4秒後に冒険マップへ戻る
+    // 真っ暗な状態を2秒間維持
     setTimeout(() => {
-      messageArea.style.display = "none";
-      openWorld();
-    }, 4000);
 
-  }, 5000);
+      // 勇者の試練を解放・保存
+      trialUnlocked = true;
+      saveGame();
+
+      // 解放メッセージを準備
+      messageArea.style.display = "flex";
+      messageArea.style.opacity = "1";
+
+      message.style.transition = "none";
+      message.style.opacity = "0";
+      message.textContent = "『勇者の試練』が解放されました！";
+
+      // 初期状態を描画してからフェードイン
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          message.style.transition = "opacity 1.5s ease-in-out";
+          message.style.opacity = "1";
+        });
+      });
+
+      // メッセージ表示後、冒険マップへ
+      setTimeout(() => {
+        messageArea.style.display = "none";
+        openWorld();
+      }, 5500);
+
+    }, 2000);
+
+  }, 2000);
+
+}, 5000);
 
 }, { once: true });
 }
