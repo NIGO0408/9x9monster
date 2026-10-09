@@ -4954,3 +4954,13 @@ position: relative;
     width: calc((100% - 12px) / 2);
   }
 }
+/* =========================================
+   勇者の試練：専用バトル背景
+========================================= */
+
+#trial-battle-screen {
+  background-image: url("images/battle_trial.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
