@@ -4964,3 +4964,10 @@ position: relative;
   background-position: center top;
   background-repeat: no-repeat;
 }
+/* 勇者の試練：スマホ版バトル背景調整 */
+@media (max-width: 510px) {
+    #trial-battle-screen {
+        background-size: 125% auto;
+        background-position: center 80px;
+    }
+}
