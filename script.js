@@ -7096,6 +7096,19 @@ el("world-button")?.addEventListener(
   openWorld
 );
 
+/* =========================================
+   勇者の試練：バナーから専用画面へ
+========================================= */
+
+el("trial-area")?.addEventListener("click", () => {
+
+  // 未解放の場合は移動しない
+  if (!trialUnlocked) return;
+
+  // 勇者の試練専用バトル画面を表示
+  showScreen("trial-battle-screen");
+
+});
 
 /* 下部メニュー → 育成 */
 
