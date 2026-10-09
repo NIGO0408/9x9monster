@@ -4419,6 +4419,78 @@ function updateBattleHP() {
   }
 }
 
+/* =========================================
+   通常バトル・問題重複防止
+========================================= */
+
+// ステージごとの問題セットと出題位置を保持
+const battleQuestionPools = {};
+
+// 問題の並びをシャッフル
+function shuffleBattleQuestions(questions) {
+  for (let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] =
+      [questions[j], questions[i]];
+  }
+
+  return questions;
+}
+
+// 次に出題する掛け算を取得
+function getNextBattleQuestion() {
+  const stageId = currentAdventureStage;
+  const stage = getAdventureStage(stageId);
+
+  let pool = battleQuestionPools[stageId];
+
+  // 初回、または全問出題済みの場合
+  if (!pool || pool.index >= pool.questions.length) {
+    const previousQuestion = pool?.lastQuestion ?? null;
+    const questions = [];
+
+    for (
+      let a = stage.questionMin;
+      a <= stage.questionMax;
+      a++
+    ) {
+      for (let b = 1; b <= 9; b++) {
+        questions.push({ a, b });
+      }
+    }
+
+    shuffleBattleQuestions(questions);
+
+    // 前の周回の最後と次の周回の最初が
+    // 同じ問題になることを防ぐ
+    if (previousQuestion && questions.length > 1) {
+      const first = questions[0];
+
+      if (
+        first.a === previousQuestion.a &&
+        first.b === previousQuestion.b
+      ) {
+        [questions[0], questions[1]] =
+          [questions[1], questions[0]];
+      }
+    }
+
+    pool = {
+      questions,
+      index: 0,
+      lastQuestion: previousQuestion
+    };
+
+    battleQuestionPools[stageId] = pool;
+  }
+
+  const question = pool.questions[pool.index];
+
+  pool.index++;
+  pool.lastQuestion = question;
+
+  return question;
+}
 
 /* =========================================================
    ★★★ 森の九九問題 ★★★
@@ -4426,75 +4498,30 @@ function updateBattleHP() {
 
 function createBattleQuestion() {
 
-  /*
-     戦闘終了後は問題を出さない
-  */
-
+  // 戦闘終了後は問題を出さない
   if (
     battleEnemyHP <= 0 ||
     battlePlayerHP <= 0
   ) {
-
     return;
-
   }
 
+  battleAnswering = true;
 
-  battleAnswering =
-    true;
+  // 重複しないシャッフル式で問題を取得
+  const { a, b } = getNextBattleQuestion();
 
+  battleAnswer = a * b;
 
-  /*
-     ★重要
-
-     はじまりの森は
-     1～3の段だけ。
-
-     モンスターの段は関係ない。
-  */
-
-  const stage =
-    getAdventureStage(
-      currentAdventureStage
-    );
-
-  const a =
-    Math.floor(
-      Math.random() *
-        (
-          stage.questionMax -
-          stage.questionMin +
-          1
-        )
-    ) +
-    stage.questionMin;
-
-
-  const b =
-    Math.floor(
-      Math.random() * 9
-    ) + 1;
-
-
-  battleAnswer =
-    a * b;
-
-
-  const question =
-    el("battle-question");
-
+  const question = el("battle-question");
 
   if (question) {
-
-    question.textContent =
-      `${a} × ${b} = ?`;
-
+    question.textContent = `${a} × ${b} = ?`;
   }
 
-
+  // 既存の4択生成処理をそのまま使用
   createBattleAnswers();
 }
-
 
 /* =========================================================
    バトル選択肢
