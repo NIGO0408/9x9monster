@@ -4945,3 +4945,12 @@ position: relative;
     opacity: 1;
     visibility: visible;
 }
+
+/* 勇者の試練：PC版のみ中央配置 */
+@media screen and (min-width: 769px) {
+  #trial-area {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 12px) / 2);
+  }
+}
