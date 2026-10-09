@@ -4961,8 +4961,8 @@ position: relative;
 /* 勇者の試練：PC版バトル背景 */
 #trial-battle-screen {
     background-image: url("images/battle_trial.png?v=20261009");
-    background-size: 110% auto;
-    background-position: center 40px;
+    background-size: 100% auto;
+    background-position: center top;
     background-repeat: no-repeat;
 }
 /* 勇者の試練：スマホ版バトル背景調整 */
