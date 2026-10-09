@@ -4959,7 +4959,7 @@ position: relative;
 ========================================= */
 
 #trial-battle-screen {
-  background-image: url("images/battle_trial.png");
+  background-image: url("images/battle_trial.png?v=20261009");
   background-size: 100% auto;
   background-position: center top;
   background-repeat: no-repeat;
