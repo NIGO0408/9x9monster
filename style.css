@@ -4960,7 +4960,7 @@ position: relative;
 
 #trial-battle-screen {
   background-image: url("images/battle_trial.png");
-  background-size: 100% auto;
+  background-size: 80% auto;
   background-position: center top;
   background-repeat: no-repeat;
 }
