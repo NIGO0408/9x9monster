@@ -4615,6 +4615,27 @@ function getNextTrialQuestion(battleNumber) {
 }
 
 /* ========================================
+   勇者の試練：バトル状態管理
+======================================== */
+
+// 現在の戦闘番号
+let trialBattleNumber = 1;
+
+// 現在の問題の正解
+let trialCorrectAnswer = null;
+
+// 現在の敵に対する連続正解数
+let trialConsecutiveCorrect = 0;
+
+// 回答処理中の連打防止
+let trialAnswerLocked = false;
+
+// 各戦闘の撃破に必要な連続正解数
+const trialRequiredCorrect = [
+  3, 3, 3, 5, 5, 5, 5, 5, 8, 10
+];
+
+/* ========================================
    勇者の試練：4択回答ボタン生成
 ======================================== */
 
