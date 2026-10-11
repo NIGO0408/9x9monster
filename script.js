@@ -7211,14 +7211,20 @@ el("trial-area")?.addEventListener("click", () => {
   // 勇者の試練専用バトル画面を表示
   showScreen("trial-battle-screen");
 
+  // 1戦目：ダークスライム
+  const question = getNextTrialQuestion(1);
+
+  if (!question) return;
+
+  const questionElement =
+    document.getElementById("trial-battle-question");
+
+  if (questionElement) {
+    questionElement.textContent =
+      `？ × ${question.b} = ${question.result}`;
+  }
+
 });
-
-/* 下部メニュー → 育成 */
-
-el("monster-button")?.addEventListener(
-  "click",
-  openMonsterScreen
-);
 
 
 /* =========================================================
