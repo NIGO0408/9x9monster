@@ -4709,10 +4709,13 @@ function updateTrialEnemyHearts(maxHP, remainingHP) {
 
     const heart = document.createElement("span");
 
-    // 残りライフは赤、失ったライフは空のハート
-    heart.textContent = i < remainingHP ? "♥" : "♡";
+   // ハートの形は共通で、色だけ切り替える
+heart.textContent = "♥";
 
-    container.appendChild(heart);
+heart.style.color =
+  i < remainingHP ? "#ff2020" : "#ffffff";
+
+container.appendChild(heart);
   }
 
   container.setAttribute(
