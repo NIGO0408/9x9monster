@@ -5084,3 +5084,9 @@ position: relative;
         -2px  0px 0 #000,
          2px  0px 0 #000;
 }
+/* 勇者の試練：スマホ版の敵画像の切れ対策 */
+@media (max-width: 510px) {
+    #trial-battle-screen #trial-enemy-image {
+        overflow: visible;
+    }
+}
