@@ -5052,7 +5052,7 @@ position: relative;
 
 #trial-battle-screen #trial-enemy-hearts {
     position: absolute;
-    top: 125%;
+    top: 85%;
     left: 50%;
     transform: translateX(-50%);
 
