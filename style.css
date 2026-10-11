@@ -4972,3 +4972,49 @@ position: relative;
         background-position: center top;
     }
 }
+
+/* =========================================
+   勇者の試練：敵モンスターとハート表示
+========================================= */
+
+/* 敵モンスター画像 */
+#trial-enemy-image img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* 敵のライフ表示 */
+.trial-enemy-hearts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    margin: 8px auto 12px;
+
+    color: #e60026;
+    font-size: 34px;
+    line-height: 1;
+
+    text-shadow:
+        1px 1px 0 #fff,
+        -1px -1px 0 #fff,
+        0 2px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* スマホ版 */
+@media (max-width: 510px) {
+
+    #trial-enemy-image img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .trial-enemy-hearts {
+        font-size: 30px;
+        gap: 6px;
+    }
+
+}
