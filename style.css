@@ -5046,3 +5046,35 @@ position: relative;
     margin-top: 230px;
     z-index: 3;
 }
+/* =========================================
+   勇者の試練：敵ライフ（ハート表示）
+========================================= */
+
+#trial-battle-screen #trial-enemy-hearts {
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0;
+    width: max-content;
+
+    color: #ff2020;
+    font-size: 28px;
+    line-height: 1;
+
+    z-index: 5;
+}
+
+#trial-battle-screen #trial-enemy-hearts span {
+    color: #ff2020;
+    font-size: inherit;
+    text-shadow:
+        1px 1px 0 #660000,
+        -1px -1px 0 #660000;
+}
