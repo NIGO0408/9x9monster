@@ -5000,3 +5000,21 @@ position: relative;
     object-fit: contain;
     image-rendering: pixelated;
 }
+
+/* =========================================
+   勇者の試練：敵モンスター名の位置調整
+========================================= */
+
+#trial-battle-screen #trial-enemy-name {
+    position: relative;
+    top: -24px;
+}
+
+/* =========================================
+   勇者の試練：敵モンスター画像の位置調整
+========================================= */
+
+#trial-battle-screen #trial-enemy-image {
+    position: relative;
+    top: -20px;
+}
