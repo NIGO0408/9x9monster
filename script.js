@@ -7271,10 +7271,13 @@ el("trial-area")?.addEventListener("click", () => {
   const questionElement =
     document.getElementById("trial-battle-question");
 
-  if (questionElement) {
+   if (questionElement) {
     questionElement.textContent =
       `？ × ${question.b} = ${question.result}`;
   }
+
+  // 問題に対応した4択回答ボタンを表示
+  createTrialBattleAnswers(question.answer);
 
 });
 
