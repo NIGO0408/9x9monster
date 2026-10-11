@@ -4512,6 +4512,108 @@ function getNextBattleQuestion() {
   return question;
 }
 
+/* ========================================
+   勇者の試練：専用九九問題生成
+======================================== */
+
+// 勇者の試練の出題履歴
+let trialQuestionPool = [];
+let trialQuestionIndex = 0;
+let trialLastQuestion = null;
+let trialQuestionBattleNumber = null;
+
+// 次の穴埋め九九問題を取得
+function getNextTrialQuestion(battleNumber) {
+
+  // 戦闘番号は1～10
+  if (
+    !Number.isInteger(battleNumber) ||
+    battleNumber < 1 ||
+    battleNumber > 10
+  ) {
+    return null;
+  }
+
+  // 戦闘が変わったら問題セットを初期化
+  if (trialQuestionBattleNumber !== battleNumber) {
+
+    trialQuestionPool = [];
+    trialQuestionIndex = 0;
+    trialLastQuestion = null;
+    trialQuestionBattleNumber = battleNumber;
+
+  }
+
+  // 全問出題済みなら新しい問題セットを作る
+  if (trialQuestionIndex >= trialQuestionPool.length) {
+
+    const questions = [];
+
+    // 1～9戦目：戦闘番号と同じ段
+    // 10戦目：2～9の段
+    const minDan = battleNumber === 10 ? 2 : battleNumber;
+    const maxDan = battleNumber === 10 ? 9 : battleNumber;
+
+    for (let a = minDan; a <= maxDan; a++) {
+
+      for (let b = 1; b <= 9; b++) {
+
+        questions.push({
+          a: a,
+          b: b,
+          answer: a,
+          result: a * b
+        });
+
+      }
+
+    }
+
+    // 問題をランダムに並べ替える
+    shuffleBattleQuestions(questions);
+
+    // 前の周回の最後と
+    // 次の周回の最初の重複を防ぐ
+    if (trialLastQuestion && questions.length > 1) {
+
+      const first = questions[0];
+
+      if (
+        first.a === trialLastQuestion.a &&
+        first.b === trialLastQuestion.b
+      ) {
+
+        const swapIndex = questions.findIndex(
+          q =>
+            q.a !== trialLastQuestion.a ||
+            q.b !== trialLastQuestion.b
+        );
+
+        if (swapIndex > 0) {
+
+          [questions[0], questions[swapIndex]] =
+            [questions[swapIndex], questions[0]];
+
+        }
+
+      }
+
+    }
+
+    trialQuestionPool = questions;
+    trialQuestionIndex = 0;
+
+  }
+
+  // 次の問題を取り出す
+  const question = trialQuestionPool[trialQuestionIndex];
+
+  trialQuestionIndex++;
+  trialLastQuestion = question;
+
+  return question;
+}
+
 /* =========================================================
    ★★★ 森の九九問題 ★★★
    ========================================================= */
@@ -4635,6 +4737,7 @@ function createBattleAnswers() {
       }
     );
 }
+
 
 
 /* =========================================================
