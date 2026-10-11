@@ -4876,11 +4876,13 @@ const nextEnemyImage =
 
 // 前の敵のアニメーションを解除
 if (nextEnemyImage) {
+
+  // 先に透明状態を固定する
+  nextEnemyImage.style.opacity = "0";
+
+  // その後でアニメーションを解除
   nextEnemyImage.classList.remove("trial-defeat-animation");
   nextEnemyImage.classList.remove("trial-appear-animation");
-
-  // 次の敵を透明な状態にしておく
-  nextEnemyImage.style.opacity = "0";
 }
 
 // 敵の名前・画像・ハートを更新
