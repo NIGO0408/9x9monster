@@ -4852,15 +4852,13 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
   const enemyImage =
     document.querySelector("#trial-enemy-image img");
 
-  if (enemyImage) {
-    enemyImage.classList.remove("trial-appear-animation");
-    enemyImage.classList.remove("trial-defeat-animation");
+ if (enemyImage) {
+  // 前の登場アニメーションを解除
+  enemyImage.classList.remove("trial-appear-animation");
 
-    // アニメーションを最初から再生
-    void enemyImage.offsetWidth;
-
-    enemyImage.classList.add("trial-defeat-animation");
-  }
+  // 撃破アニメーションを開始
+  enemyImage.classList.add("trial-defeat-animation");
+}
    
   // 撃破メッセージを1秒間表示
   setTimeout(() => {
