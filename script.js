@@ -4666,6 +4666,36 @@ function createTrialBattleAnswers(correctAnswer) {
   });
 }
 
+/* ========================================
+   勇者の試練：敵のハート表示更新
+======================================== */
+
+function updateTrialEnemyHearts(maxHP, remainingHP) {
+
+  const container =
+    document.getElementById("trial-enemy-hearts");
+
+  if (!container) return;
+
+  // ハートの表示だけ更新
+  container.innerHTML = "";
+
+  for (let i = 0; i < maxHP; i++) {
+
+    const heart = document.createElement("span");
+
+    // 残りライフは赤、失ったライフは空のハート
+    heart.textContent = i < remainingHP ? "♥" : "♡";
+
+    container.appendChild(heart);
+  }
+
+  container.setAttribute(
+    "aria-label",
+    `敵の残りライフ ${remainingHP}`
+  );
+}
+
 /* =========================================================
    ★★★ 森の九九問題 ★★★
    ========================================================= */
