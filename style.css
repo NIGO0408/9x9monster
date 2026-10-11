@@ -5036,3 +5036,36 @@ position: relative;
     }
 
 }
+/* =========================================
+   勇者の試練：ウィンドウ縦並び
+========================================= */
+
+/* バトルメッセージ */
+#trial-battle-screen #trial-battle-message {
+    display: block;
+    width: 94%;
+    max-width: 680px;
+    margin: 12px auto;
+    box-sizing: border-box;
+    clear: both;
+}
+
+/* 勇者ステータス */
+#trial-battle-screen .player-battle {
+    display: flex;
+    width: 94%;
+    max-width: 680px;
+    margin: 10px auto;
+    box-sizing: border-box;
+    clear: both;
+}
+
+/* 九九問題 */
+#trial-battle-screen .battle-question-box {
+    display: block;
+    width: 94%;
+    max-width: 680px;
+    margin: 12px auto;
+    box-sizing: border-box;
+    clear: both;
+}
