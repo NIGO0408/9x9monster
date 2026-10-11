@@ -4805,8 +4805,7 @@ function checkTrialBattleAnswer(selectedAnswer, correctAnswer) {
     trialConsecutiveCorrect++;
 
     if (messageElement) {
-      messageElement.textContent =
-        "ダークスライムにダメージ！";
+      messageElement.textContent = `${trialMonsters[trialBattleNumber - 1].name}にダメージ！`;
     }
 
   } else {
@@ -4815,8 +4814,7 @@ function checkTrialBattleAnswer(selectedAnswer, correctAnswer) {
     trialConsecutiveCorrect = 0;
 
     if (messageElement) {
-      messageElement.textContent =
-        "ダークスライムは全回復してしまった！";
+      messageElement.textContent = `${trialMonsters[trialBattleNumber - 1].name}は全回復してしまった！`;
     }
 
   }
