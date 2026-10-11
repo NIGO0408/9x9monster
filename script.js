@@ -4677,12 +4677,18 @@ function createTrialBattleAnswers(correctAnswer) {
     button.className = "battle-answer";
     button.textContent = value;
 
-    // 勇者の試練専用の回答判定
+// 勇者の試練専用の回答判定
 button.addEventListener("click", () => {
   if (trialAnswerLocked) return;
 
   checkTrialBattleAnswer(value, correctAnswer);
 });
+
+// 作成したボタンを画面に追加
+container.appendChild(button);
+
+  });
+
 }
 
 /* ========================================
