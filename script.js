@@ -4614,6 +4614,58 @@ function getNextTrialQuestion(battleNumber) {
   return question;
 }
 
+/* ========================================
+   勇者の試練：4択回答ボタン生成
+======================================== */
+
+function createTrialBattleAnswers(correctAnswer) {
+
+  const container =
+    document.getElementById("trial-battle-answers");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  // 正解を除く1～9の数字から不正解候補を作る
+  const wrongAnswers = [];
+
+  for (let n = 1; n <= 9; n++) {
+    if (n !== correctAnswer) {
+      wrongAnswers.push(n);
+    }
+  }
+
+  // 不正解候補をシャッフル
+  shuffleBattleQuestions(wrongAnswers);
+
+  // 正解1つ＋不正解3つ
+  const choices = [
+    correctAnswer,
+    ...wrongAnswers.slice(0, 3)
+  ];
+
+  // 選択肢をシャッフル
+  shuffleBattleQuestions(choices);
+
+  choices.forEach(value => {
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "battle-answer";
+    button.textContent = value;
+
+    // 正誤判定は次の工程で実装
+    button.addEventListener("click", () => {
+      console.log("勇者の試練：選択した答え", value);
+    });
+
+    container.appendChild(button);
+
+  });
+}
+
 /* =========================================================
    ★★★ 森の九九問題 ★★★
    ========================================================= */
