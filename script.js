@@ -4648,6 +4648,45 @@ const trialMonsters = [
 ];
 
 /* ========================================
+   勇者の試練：敵の表示を切り替える
+======================================== */
+
+function updateTrialMonsterDisplay(battleNumber) {
+
+  // 戦闘番号からモンスター情報を取得
+  const monster = trialMonsters[battleNumber - 1];
+
+  if (!monster) return;
+
+  // 敵の名前を変更
+  const nameElement =
+    document.getElementById("trial-enemy-name");
+
+  if (nameElement) {
+    nameElement.textContent = monster.name;
+  }
+
+  // 敵の画像を変更
+  const imageElement =
+    document.querySelector("#trial-enemy-image img");
+
+  if (imageElement) {
+    imageElement.src = monster.image;
+    imageElement.alt = monster.name;
+  }
+
+  // 敵のハート数を設定
+  const requiredCorrect =
+    trialRequiredCorrect[battleNumber - 1];
+
+  updateTrialEnemyHearts(
+    requiredCorrect,
+    requiredCorrect
+  );
+
+}
+
+/* ========================================
    勇者の試練：4択回答ボタン生成
 ======================================== */
 
@@ -4791,16 +4830,68 @@ function checkTrialBattleAnswer(selectedAnswer, correctAnswer) {
   setTimeout(() => {
 
     // 敵を倒した場合
-    if (trialConsecutiveCorrect >= requiredCorrect) {
+if (trialConsecutiveCorrect >= requiredCorrect) {
 
-      if (messageElement) {
-        messageElement.textContent =
-          "ダークスライムを倒した！";
-      }
+  const defeatedMonster =
+    trialMonsters[trialBattleNumber - 1];
 
-      // 次の戦闘への移行は次の工程で実装
+  if (messageElement) {
+    messageElement.textContent =
+      `${defeatedMonster.name}を倒した！`;
+  }
+
+  // 撃破メッセージを1秒間表示
+  setTimeout(() => {
+
+    // 最終戦クリア時はここで停止
+    if (trialBattleNumber >= trialMonsters.length) {
       return;
     }
+
+    // 次の戦闘へ
+    trialBattleNumber++;
+    trialConsecutiveCorrect = 0;
+
+    // 敵の名前・画像・ハートを更新
+    updateTrialMonsterDisplay(trialBattleNumber);
+
+    // 次の段の問題を取得
+    const question =
+      getNextTrialQuestion(trialBattleNumber);
+
+    if (!question) {
+      trialAnswerLocked = false;
+      return;
+    }
+
+    const hideLeft = Math.random() < 0.5;
+
+    const questionElement =
+      document.getElementById("trial-battle-question");
+
+    if (questionElement) {
+      questionElement.textContent = hideLeft
+        ? `？ × ${question.b} = ${question.result}`
+        : `${question.a} × ？ = ${question.result}`;
+    }
+
+    const nextCorrectAnswer = hideLeft
+      ? question.a
+      : question.b;
+
+    createTrialBattleAnswers(nextCorrectAnswer);
+
+    if (messageElement) {
+      messageElement.textContent =
+        "勇者の試練に挑戦！";
+    }
+
+    trialAnswerLocked = false;
+
+  }, 1000);
+
+  return;
+}
 
     // 次の九九問題を取得
     const question =
