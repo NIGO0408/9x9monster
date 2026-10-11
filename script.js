@@ -4850,12 +4850,20 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
   const enemyImage =
     document.querySelector("#trial-enemy-image img");
 
- if (enemyImage) {
+if (enemyImage) {
   // 前の登場アニメーションを解除
   enemyImage.classList.remove("trial-appear-animation");
 
   // 撃破アニメーションを開始
   enemyImage.classList.add("trial-defeat-animation");
+
+  // 撃破アニメーション終了後、敵を完全に非表示にする
+  enemyImage.addEventListener("animationend", function onTrialDefeatEnd(event) {
+    if (event.animationName !== "trialMonsterDefeat") return;
+
+    enemyImage.style.visibility = "hidden";
+    enemyImage.removeEventListener("animationend", onTrialDefeatEnd);
+  });
 }
    
   // 撃破メッセージを1秒間表示
