@@ -4677,14 +4677,12 @@ function createTrialBattleAnswers(correctAnswer) {
     button.className = "battle-answer";
     button.textContent = value;
 
-    // 正誤判定は次の工程で実装
-    button.addEventListener("click", () => {
-      console.log("勇者の試練：選択した答え", value);
-    });
+    // 勇者の試練専用の回答判定
+button.addEventListener("click", () => {
+  if (trialAnswerLocked) return;
 
-    container.appendChild(button);
-
-  });
+  checkTrialBattleAnswer(value, correctAnswer);
+});
 }
 
 /* ========================================
@@ -4717,6 +4715,113 @@ function updateTrialEnemyHearts(maxHP, remainingHP) {
   );
 }
 
+/* ========================================
+   勇者の試練：回答判定
+======================================== */
+
+function checkTrialBattleAnswer(selectedAnswer, correctAnswer) {
+
+  // 連打防止
+  if (trialAnswerLocked) return;
+  trialAnswerLocked = true;
+
+  const messageElement =
+    document.getElementById("trial-battle-message");
+
+  const requiredCorrect =
+    trialRequiredCorrect[trialBattleNumber - 1];
+
+  // 正誤判定
+  if (selectedAnswer === correctAnswer) {
+
+    trialConsecutiveCorrect++;
+
+    if (messageElement) {
+      messageElement.textContent =
+        "ダークスライムにダメージ！";
+    }
+
+  } else {
+
+    // 不正解なら連続正解数をリセット
+    trialConsecutiveCorrect = 0;
+
+    if (messageElement) {
+      messageElement.textContent =
+        "ダークスライムは全回復してしまった！";
+    }
+
+  }
+
+  // ハート表示を更新
+  const remainingHP =
+    Math.max(0, requiredCorrect - trialConsecutiveCorrect);
+
+  updateTrialEnemyHearts(requiredCorrect, remainingHP);
+
+  // 回答ボタンを無効化
+  document
+    .querySelectorAll("#trial-battle-answers button")
+    .forEach(button => {
+      button.disabled = true;
+    });
+
+  // 約1秒後に次の処理
+  setTimeout(() => {
+
+    // 敵を倒した場合
+    if (trialConsecutiveCorrect >= requiredCorrect) {
+
+      if (messageElement) {
+        messageElement.textContent =
+          "ダークスライムを倒した！";
+      }
+
+      // 次の戦闘への移行は次の工程で実装
+      return;
+    }
+
+    // 次の九九問題を取得
+    const question =
+      getNextTrialQuestion(trialBattleNumber);
+
+    if (!question) {
+      trialAnswerLocked = false;
+      return;
+    }
+
+    // 左右ランダム穴埋め
+    const hideLeft = Math.random() < 0.5;
+
+    const questionElement =
+      document.getElementById("trial-battle-question");
+
+    if (questionElement) {
+      questionElement.textContent = hideLeft
+        ? `？ × ${question.b} = ${question.result}`
+        : `${question.a} × ？ = ${question.result}`;
+    }
+
+    // 正解の数字
+    const nextCorrectAnswer = hideLeft
+      ? question.a
+      : question.b;
+
+    // 次の4択を生成
+    createTrialBattleAnswers(nextCorrectAnswer);
+
+    // メッセージを戻す
+    if (messageElement) {
+      messageElement.textContent =
+        "勇者の試練に挑戦！";
+    }
+
+    // 回答受付を再開
+    trialAnswerLocked = false;
+
+  }, 1000);
+}
+   
 /* =========================================================
    ★★★ 森の九九問題 ★★★
    ========================================================= */
