@@ -4848,6 +4848,20 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
       `${defeatedMonster.name}を倒した！`;
   }
 
+// 敵を点滅させながら消す
+  const enemyImage =
+    document.querySelector("#trial-enemy-image img");
+
+  if (enemyImage) {
+    enemyImage.classList.remove("trial-appear-animation");
+    enemyImage.classList.remove("trial-defeat-animation");
+
+    // アニメーションを最初から再生
+    void enemyImage.offsetWidth;
+
+    enemyImage.classList.add("trial-defeat-animation");
+  }
+   
   // 撃破メッセージを1秒間表示
   setTimeout(() => {
 
@@ -4861,7 +4875,22 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
     trialConsecutiveCorrect = 0;
 
     // 敵の名前・画像・ハートを更新
-    updateTrialMonsterDisplay(trialBattleNumber);
+updateTrialMonsterDisplay(trialBattleNumber);
+
+// 次の敵をふわっと登場させる
+const nextEnemyImage =
+  document.querySelector("#trial-enemy-image img");
+
+if (nextEnemyImage) {
+  // 前の敵の撃破アニメーションを解除
+  nextEnemyImage.classList.remove("trial-defeat-animation");
+  nextEnemyImage.classList.remove("trial-appear-animation");
+
+  // アニメーションを最初から再生
+  void nextEnemyImage.offsetWidth;
+
+  nextEnemyImage.classList.add("trial-appear-animation");
+}
 
     // 次の段の問題を取得
     const question =
