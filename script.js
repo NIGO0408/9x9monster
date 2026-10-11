@@ -7271,13 +7271,21 @@ el("trial-area")?.addEventListener("click", () => {
   const questionElement =
     document.getElementById("trial-battle-question");
 
-   if (questionElement) {
-    questionElement.textContent =
-      `？ × ${question.b} = ${question.result}`;
-  }
+   // 左右どちらを穴埋めにするかランダムに決定
+const hideLeft = Math.random() < 0.5;
 
-  // 問題に対応した4択回答ボタンを表示
-  createTrialBattleAnswers(question.answer);
+if (questionElement) {
+  questionElement.textContent = hideLeft
+    ? `？ × ${question.b} = ${question.result}`
+    : `${question.a} × ？ = ${question.result}`;
+}
+
+// 隠した数字を正解として4択を生成
+const correctAnswer = hideLeft
+  ? question.a
+  : question.b;
+
+createTrialBattleAnswers(correctAnswer);
 
 });
 
