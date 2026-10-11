@@ -4870,22 +4870,37 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
     trialBattleNumber++;
     trialConsecutiveCorrect = 0;
 
-    // 敵の名前・画像・ハートを更新
-updateTrialMonsterDisplay(trialBattleNumber);
-
-// 次の敵をふわっと登場させる
+    // 次の敵の画像要素を取得
 const nextEnemyImage =
   document.querySelector("#trial-enemy-image img");
 
+// 前の敵のアニメーションを解除
 if (nextEnemyImage) {
-  // 前の敵の撃破アニメーションを解除
   nextEnemyImage.classList.remove("trial-defeat-animation");
   nextEnemyImage.classList.remove("trial-appear-animation");
 
-  // アニメーションを最初から再生
+  // 次の敵を透明な状態にしておく
+  nextEnemyImage.style.opacity = "0";
+}
+
+// 敵の名前・画像・ハートを更新
+updateTrialMonsterDisplay(trialBattleNumber);
+
+// 次の敵をふわっと登場させる
+if (nextEnemyImage) {
+  // 登場アニメーションを最初から再生
   void nextEnemyImage.offsetWidth;
 
   nextEnemyImage.classList.add("trial-appear-animation");
+
+  // 登場アニメーション終了後は通常表示に戻す
+  nextEnemyImage.addEventListener("animationend", function onTrialAppearEnd(event) {
+    if (event.animationName !== "trialMonsterAppear") return;
+
+    nextEnemyImage.classList.remove("trial-appear-animation");
+    nextEnemyImage.style.opacity = "";
+    nextEnemyImage.removeEventListener("animationend", onTrialAppearEnd);
+  });
 }
 
     // 次の段の問題を取得
