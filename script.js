@@ -4874,19 +4874,23 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
 const nextEnemyImage =
   document.querySelector("#trial-enemy-image img");
 
-// 前の敵のアニメーションを解除
+// 前の敵を完全に非表示にする
 if (nextEnemyImage) {
-
-  // 先に透明状態を固定する
+  nextEnemyImage.style.visibility = "hidden";
   nextEnemyImage.style.opacity = "0";
 
-  // その後でアニメーションを解除
+  // 前のアニメーションを解除
   nextEnemyImage.classList.remove("trial-defeat-animation");
   nextEnemyImage.classList.remove("trial-appear-animation");
 }
 
 // 敵の名前・画像・ハートを更新
 updateTrialMonsterDisplay(trialBattleNumber);
+
+// 次の敵を表示可能な状態に戻す
+if (nextEnemyImage) {
+  nextEnemyImage.style.visibility = "visible";
+}
 
 // 次の敵をふわっと登場させる
 if (nextEnemyImage) {
