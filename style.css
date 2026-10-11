@@ -5037,3 +5037,12 @@ position: relative;
 
 }
 
+/* =========================================
+   勇者の試練：メッセージウィンドウの配置
+========================================= */
+
+#trial-battle-screen #trial-battle-message {
+    position: relative;
+    margin-top: 230px;
+    z-index: 3;
+}
