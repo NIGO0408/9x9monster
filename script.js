@@ -4918,7 +4918,7 @@ if (nextEnemyImage) {
       return;
     }
 
-    const hideLeft = Math.random() < 0.5;
+    const hideLeft = false;
 
     const questionElement =
       document.getElementById("trial-battle-question");
@@ -4957,7 +4957,7 @@ if (nextEnemyImage) {
     }
 
     // 左右ランダム穴埋め
-    const hideLeft = Math.random() < 0.5;
+    const hideLeft = false;
 
     const questionElement =
       document.getElementById("trial-battle-question");
@@ -7611,7 +7611,7 @@ el("trial-area")?.addEventListener("click", () => {
     document.getElementById("trial-battle-question");
 
    // 左右どちらを穴埋めにするかランダムに決定
-const hideLeft = Math.random() < 0.5;
+const hideLeft = false;
 
 if (questionElement) {
   questionElement.textContent = hideLeft
