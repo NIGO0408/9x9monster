@@ -4630,9 +4630,21 @@ let trialConsecutiveCorrect = 0;
 // 回答処理中の連打防止
 let trialAnswerLocked = false;
 
-// 各戦闘の撃破に必要な連続正解数
-const trialRequiredCorrect = [
-  3, 3, 3, 5, 5, 5, 5, 5, 8, 10
+/* ========================================
+   勇者の試練：モンスターデータ
+======================================== */
+
+const trialMonsters = [
+  { name: "ダークスライム", image: "images/dark_slime.png" },
+  { name: "毒アワモン", image: "images/doku_awamon.png" },
+  { name: "マッドゾンビ", image: "images/mud_zombie.png" },
+  { name: "クロベロス", image: "images/keruberosu.png" },
+  { name: "ホワイトナックル", image: "images/white_nakkuru.png" },
+  { name: "魔底のヌシ", image: "images/mateinonushi.png" },
+  { name: "マウンテンゴーレム", image: "images/mountain_golem.png" },
+  { name: "ドクロソーサラー", image: "images/dokuro_Sorcerer.png" },
+  { name: "ネオククデス", image: "images/neo_kukudes.png" },
+  { name: "魔獣ククデーモン", image: "images/kuku_demon.png" }
 ];
 
 /* ========================================
