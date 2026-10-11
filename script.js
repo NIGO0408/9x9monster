@@ -7397,11 +7397,14 @@ adventureStages.volcano.progress = 6;
   }
 
   /* 1：全開放＋全員MAX */
-  if (choice === "1") {
+if (choice === "1") {
 
     maxAllMonsters();
     unlockAllEnemies();
     unlockAllAdventureStages();
+
+    // 勇者の試練も解放
+    trialUnlocked = true;
 
     // 全ステージをクリア状態にする
 forestProgress = 6;
