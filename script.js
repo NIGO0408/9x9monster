@@ -7457,9 +7457,12 @@ castleCurrentHP = 0;
   }
 
   /* 4：冒険ステージ全開放 */
-  if (choice === "4") {
+if (choice === "4") {
 
     unlockAllAdventureStages();
+
+    // 勇者の試練も解放
+    trialUnlocked = true;
 
     saveGame();
 
