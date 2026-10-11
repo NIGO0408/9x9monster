@@ -5018,3 +5018,21 @@ position: relative;
     position: relative;
     top: -20px;
 }
+
+/* =========================================
+   勇者の試練：スマホ版の敵位置調整
+========================================= */
+
+@media (max-width: 510px) {
+
+    /* モンスター名を少し下げる */
+    #trial-battle-screen #trial-enemy-name {
+        top: -45px;
+    }
+
+    /* モンスター画像を少し上げる */
+    #trial-battle-screen #trial-enemy-image {
+        top: -30px;
+    }
+
+}
