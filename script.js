@@ -4882,36 +4882,51 @@ if (enemyImage) {
 const nextEnemyImage =
   document.querySelector("#trial-enemy-image img");
 
+// 次の敵の情報を取得
+const nextMonster = trialMonsters[trialBattleNumber - 1];
+
 // 前の敵を完全に非表示にする
-if (nextEnemyImage) {
+if (nextEnemyImage && nextMonster) {
   nextEnemyImage.style.visibility = "hidden";
   nextEnemyImage.style.opacity = "0";
 
   // 前のアニメーションを解除
   nextEnemyImage.classList.remove("trial-defeat-animation");
   nextEnemyImage.classList.remove("trial-appear-animation");
-}
 
-// 敵の名前・画像・ハートを更新
-updateTrialMonsterDisplay(trialBattleNumber);
+  // 次の敵の画像を先に読み込む
+  const preloadImage = new Image();
 
-// 次の敵をふわっと登場させる
-if (nextEnemyImage) {
-  // 登場アニメーションを最初から再生
-  void nextEnemyImage.offsetWidth;
+  preloadImage.onload = () => {
+    // 読み込み完了後に敵の名前・画像・ハートを更新
+    updateTrialMonsterDisplay(trialBattleNumber);
 
-  nextEnemyImage.classList.add("trial-appear-animation");
+    // 登場アニメーションを最初から再生
+    void nextEnemyImage.offsetWidth;
+    nextEnemyImage.classList.add("trial-appear-animation");
+    nextEnemyImage.style.visibility = "visible";
 
-  nextEnemyImage.style.visibility = "visible"; 
+    // 登場アニメーション終了後は通常表示に戻す
+    nextEnemyImage.addEventListener(
+      "animationend",
+      function onTrialAppearEnd(event) {
+        if (event.animationName !== "trialMonsterAppear") return;
 
-  // 登場アニメーション終了後は通常表示に戻す
-  nextEnemyImage.addEventListener("animationend", function onTrialAppearEnd(event) {
-    if (event.animationName !== "trialMonsterAppear") return;
+        nextEnemyImage.classList.remove("trial-appear-animation");
+        nextEnemyImage.style.opacity = "";
+        nextEnemyImage.removeEventListener(
+          "animationend",
+          onTrialAppearEnd
+        );
+      }
+    );
+  };
 
-    nextEnemyImage.classList.remove("trial-appear-animation");
-    nextEnemyImage.style.opacity = "";
-    nextEnemyImage.removeEventListener("animationend", onTrialAppearEnd);
-  });
+  preloadImage.onerror = () => {
+    console.error("敵画像の読み込みに失敗:", nextMonster.image);
+  };
+
+  preloadImage.src = nextMonster.image;
 }
 
     // 次の段の問題を取得
