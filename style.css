@@ -5102,3 +5102,52 @@ position: relative;
     }
 
 }
+/* ========================================
+   勇者の試練：モンスター撃破・登場演出
+======================================== */
+
+/* 撃破：点滅しながら消える */
+#trial-enemy-image img.trial-defeat-animation {
+  animation: trialMonsterDefeat 0.8s ease-in forwards;
+}
+
+/* 登場：ふわっと姿を現す */
+#trial-enemy-image img.trial-appear-animation {
+  animation: trialMonsterAppear 0.8s ease-out forwards;
+}
+
+/* 撃破アニメーション */
+@keyframes trialMonsterDefeat {
+  0% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+
+  15%, 45%, 75% {
+    opacity: 0.2;
+    filter: brightness(3);
+  }
+
+  30%, 60% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: brightness(3);
+  }
+}
+
+/* 登場アニメーション */
+@keyframes trialMonsterAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
