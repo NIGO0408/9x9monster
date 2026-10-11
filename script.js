@@ -4895,17 +4895,14 @@ if (nextEnemyImage) {
 // 敵の名前・画像・ハートを更新
 updateTrialMonsterDisplay(trialBattleNumber);
 
-// 次の敵を表示可能な状態に戻す
-if (nextEnemyImage) {
-  nextEnemyImage.style.visibility = "visible";
-}
-
 // 次の敵をふわっと登場させる
 if (nextEnemyImage) {
   // 登場アニメーションを最初から再生
   void nextEnemyImage.offsetWidth;
 
   nextEnemyImage.classList.add("trial-appear-animation");
+
+  nextEnemyImage.style.visibility = "visible"; 
 
   // 登場アニメーション終了後は通常表示に戻す
   nextEnemyImage.addEventListener("animationend", function onTrialAppearEnd(event) {
