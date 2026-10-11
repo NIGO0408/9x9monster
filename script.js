@@ -7416,8 +7416,25 @@ el("trial-area")?.addEventListener("click", () => {
   // 未解放の場合は移動しない
   if (!trialUnlocked) return;
 
-  // 勇者の試練専用バトル画面を表示
+ // 勇者の試練専用バトル画面を表示
   showScreen("trial-battle-screen");
+
+  // 1戦目のバトル状態を初期化
+  trialBattleNumber = 1;
+  trialConsecutiveCorrect = 0;
+  trialCorrectAnswer = null;
+  trialAnswerLocked = false;
+
+  // 敵のハートを3つとも赤に戻す
+  updateTrialEnemyHearts(3, 3);
+
+  // バトルメッセージを初期化
+  const trialMessage =
+    document.getElementById("trial-battle-message");
+
+  if (trialMessage) {
+    trialMessage.textContent = "勇者の試練に挑戦！";
+  }
 
   // 1戦目：ダークスライム
   const question = getNextTrialQuestion(1);
