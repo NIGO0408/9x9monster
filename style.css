@@ -4987,6 +4987,13 @@ position: relative;
     z-index: 2;
 }
 
+/* 敵の名前と画像だけを上に移動 */
+#trial-enemy-name,
+#trial-enemy-image {
+    position: relative;
+    top: -35px;
+}
+
 #trial-enemy-image img {
     width: 140px;
     height: 140px;
