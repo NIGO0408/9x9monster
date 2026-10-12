@@ -5159,3 +5159,25 @@ position: relative;
 #trial-gameover-screen {
   text-align: center;
 }
+
+/* ========================================
+   勇者の試練：ゲームオーバー画像
+======================================== */
+
+#trial-gameover-screen .trial-gameover-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 20px auto 25px;
+}
+
+#trial-gameover-screen .trial-gameover-image img {
+  display: block;
+
+  width: 200px;
+  max-width: 80%;
+  height: auto;
+
+  image-rendering: pixelated;
+}
