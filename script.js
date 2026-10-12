@@ -4846,6 +4846,33 @@ function checkTrialBattleAnswer(selectedAnswer, correctAnswer) {
   // 勇者HPの表示を更新
   updateTrialHeroHP();
 
+   // 勇者HPが0になった場合
+if (trialHeroHP <= 0) {
+
+  // 回答受付を停止
+  trialAnswerLocked = true;
+
+  // 勇者の敗北を表示
+  if (messageElement) {
+    messageElement.textContent =
+      "勇者は力尽きた……";
+  }
+
+  // 回答ボタンを無効化
+  document
+    .querySelectorAll("#trial-battle-answers button")
+    .forEach(button => {
+      button.disabled = true;
+    });
+
+  // 1秒後に専用ゲームオーバー画面へ
+  setTimeout(() => {
+    showScreen("trial-gameover-screen");
+  }, 1000);
+
+  return;
+}  
+
   if (messageElement) {
     messageElement.textContent =
       `${trialMonsters[trialBattleNumber - 1].name}は全回復！ 勇者は25ダメージ！`;
@@ -7686,6 +7713,25 @@ createTrialBattleAnswers(correctAnswer);
 
 });
 
+/* ========================================
+   勇者の試練：ゲームオーバー操作
+======================================== */
+
+// もう一度挑戦
+el("trial-retry-button")?.addEventListener("click", () => {
+
+  // 既存の試練開始処理を再利用
+  el("trial-area")?.click();
+
+});
+
+// 試練へ戻る
+el("trial-gameover-back-button")?.addEventListener("click", () => {
+
+  // ワールド画面へ戻る
+  openWorld();
+
+});
 
 /* =========================================================
    ページ終了時セーブ
