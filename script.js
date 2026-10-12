@@ -38,6 +38,7 @@ const BGM_LIST = {
    castleBattle: "audio/castle_battle.mp3",
 castleBoss: "audio/castle_boss.mp3",
 ending: "audio/ending.mp3"
+  trialBattle: "audio/trial_battle.mp3", 
 };
 
 let currentBgmKey = null;
@@ -61,7 +62,9 @@ function getBgmKeyForScreen(screenId) {
     case "forest-screen": return "forest";
    case "lake-screen": return "lakeBattle";
    case "volcano-screen": return "volcanoBattle";
-   case "castle-screen": return "castleBattle";     
+   case "castle-screen": return "castleBattle";
+   case "trial-battle-screen": return "trialBattle";
+case "trial-gameover-screen": return null;     
    case "battle-screen":
       if (currentAdventureStage === "lake") {
         return currentBattleNumber === 6
