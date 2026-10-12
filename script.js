@@ -39,7 +39,9 @@ const BGM_LIST = {
 castleBoss: "audio/castle_boss.mp3",
 ending: "audio/ending.mp3",
   trialBattle: "audio/trial_battle.mp3",
-  trialGameover: "audio/trial_gameover.mp3", 
+  trialGameover: "audio/trial_gameover.mp3",
+  trialNeoKukudes: "audio/trial_neo_kukudes.mp3",
+trialKukuDemon: "audio/trial_kuku_demon.mp3", 
 };
 
 let currentBgmKey = null;
@@ -65,7 +67,16 @@ function getBgmKeyForScreen(screenId) {
    case "volcano-screen": return "volcanoBattle";
    case "castle-screen": return "castleBattle";
    // 勇者の試練：バトルBGM
-case "trial-battle-screen": return "trialBattle";
+case "trial-battle-screen":
+  if (trialBattleNumber === 9) {
+    return "trialNeoKukudes";
+  }
+
+  if (trialBattleNumber === 10) {
+    return "trialKukuDemon";
+  }
+
+  return "trialBattle";
 
 // 勇者の試練：ゲームオーバーBGM
 case "trial-gameover-screen": return "trialGameover";     
@@ -4942,10 +4953,19 @@ if (enemyImage) {
       return;
     }
 
-    // 次の戦闘へ
-    trialBattleNumber++;
-    trialConsecutiveCorrect = 0;
+   // 次の戦闘へ
+trialBattleNumber++;
+trialConsecutiveCorrect = 0;
 
+// 勇者の試練：9戦目・10戦目の専用BGM
+if (trialBattleNumber === 9 || trialBattleNumber === 10) {
+  updateBgmForScreen("trial-battle-screen");
+}
+
+// 勇者の試練：9戦目・10戦目の専用BGMに切り替える
+if (trialBattleNumber === 9 || trialBattleNumber === 10) {
+  updateBgmForScreen("trial-battle-screen");
+}
     // 次の敵の画像要素を取得
 const nextEnemyImage =
   document.querySelector("#trial-enemy-image img");
