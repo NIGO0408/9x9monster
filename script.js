@@ -4631,6 +4631,33 @@ let trialConsecutiveCorrect = 0;
 let trialAnswerLocked = false;
 
 /* ========================================
+   勇者の試練：勇者HP管理
+======================================== */
+
+const trialHeroMaxHP = 100;
+let trialHeroHP = trialHeroMaxHP;
+
+function updateTrialHeroHP() {
+
+  const hpText =
+    document.getElementById("trial-hero-hp-text");
+
+  const hpFill =
+    document.getElementById("trial-hero-hp-fill");
+
+  if (hpText) {
+    hpText.textContent =
+      `${trialHeroHP} / ${trialHeroMaxHP}`;
+  }
+
+  if (hpFill) {
+    hpFill.style.width =
+      `${(trialHeroHP / trialHeroMaxHP) * 100}%`;
+  }
+
+}
+
+/* ========================================
    勇者の試練：撃破に必要な連続正解数
 ======================================== */
 
@@ -4810,14 +4837,21 @@ function checkTrialBattleAnswer(selectedAnswer, correctAnswer) {
 
   } else {
 
-    // 不正解なら連続正解数をリセット
-    trialConsecutiveCorrect = 0;
+  // 不正解なら連続正解数をリセット
+  trialConsecutiveCorrect = 0;
 
-    if (messageElement) {
-      messageElement.textContent = `${trialMonsters[trialBattleNumber - 1].name}は全回復してしまった！`;
-    }
+  // 勇者が25ダメージを受ける
+  trialHeroHP = Math.max(0, trialHeroHP - 25);
 
+  // 勇者HPの表示を更新
+  updateTrialHeroHP();
+
+  if (messageElement) {
+    messageElement.textContent =
+      `${trialMonsters[trialBattleNumber - 1].name}は全回復！ 勇者は25ダメージ！`;
   }
+
+}
 
   // ハート表示を更新
   const remainingHP =
@@ -7610,6 +7644,10 @@ el("trial-area")?.addEventListener("click", () => {
   trialConsecutiveCorrect = 0;
   trialCorrectAnswer = null;
   trialAnswerLocked = false;
+
+  // 勇者HPを満タンにして表示更新
+trialHeroHP = trialHeroMaxHP;
+updateTrialHeroHP(); 
 
   // 敵のハートを3つとも赤に戻す
   updateTrialEnemyHearts(3, 3);
