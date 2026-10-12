@@ -5151,3 +5151,11 @@ position: relative;
     transform: translateY(0) scale(1);
   }
 }
+
+/* ========================================
+   勇者の試練：ゲームオーバー画面
+======================================== */
+
+#trial-gameover-screen {
+  text-align: center;
+}
