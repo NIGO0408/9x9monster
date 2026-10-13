@@ -7987,9 +7987,10 @@ function activateDeveloperMode() {
     "1：全開放＋全員MAX\n" +
     "2：仲間図鑑開放（全員加入・全員MAX）\n" +
     "3：敵図鑑全開放\n" +
-    "4：冒険ステージ全開放\n" +
-    "5：育成テスト（個別レベル設定）\n\n" +
-    "キャンセル：終了"
+   "4：冒険ステージ全開放\n" +
+"5：育成テスト（個別レベル設定）\n" +
+"6：勇者の試練テスト（開始戦闘を選択）\n\n" +
+"キャンセル：終了"
   );
 
   if (choice === null) {
@@ -8252,7 +8253,60 @@ if (choice === "4") {
 
     return;
   }
+ /* ========================================
+     6：勇者の試練テスト
+  ======================================== */
 
+  if (choice === "6") {
+
+    const battleInput = prompt(
+      "⚔️ 勇者の試練・開発テスト\n\n" +
+      "開始する戦闘番号を入力してください。\n" +
+      "1 ～ 10\n\n" +
+      "9：ネオククデス\n" +
+      "10：魔獣ククデーモン\n\n" +
+      "キャンセル：終了"
+    );
+
+    if (battleInput === null) return;
+
+    const battleNumber = Number(battleInput);
+
+    if (
+      !Number.isInteger(battleNumber) ||
+      battleNumber < 1 ||
+      battleNumber > 10
+    ) {
+      alert("❌ 1～10の整数を入力してください。");
+      return;
+    }
+
+    const hpInput = prompt(
+      "❤️ 勇者の開始HPを入力してください。\n\n" +
+      `1 ～ ${trialHeroMaxHP}\n\n` +
+      "キャンセル：終了",
+      String(trialHeroMaxHP)
+    );
+
+    if (hpInput === null) return;
+
+    const startHP = Number(hpInput);
+
+    if (
+      !Number.isInteger(startHP) ||
+      startHP < 1 ||
+      startHP > trialHeroMaxHP
+    ) {
+      alert("❌ HPの入力が正しくありません。");
+      return;
+    }
+
+    // セーブデータを変更せず指定戦闘から開始
+    startTrialBattle(battleNumber, startHP);
+
+    return;
+  }
+   
   alert("❌ 無効な番号です。");
 }
 /* =========================================================
