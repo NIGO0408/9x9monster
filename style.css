@@ -5181,3 +5181,44 @@ position: relative;
 
   image-rendering: pixelated;
 }
+
+/* ========================================
+   勇者の試練：ネオククデス専用登場演出
+======================================== */
+
+#trial-enemy-image img.trial-neo-appear-animation {
+  animation: trialNeoAppear 2s ease-out forwards;
+  transform-origin: center center;
+}
+
+@keyframes trialNeoAppear {
+
+  0%, 12%, 24%, 36%, 48% {
+    opacity: 0;
+    filter: brightness(0)
+      drop-shadow(0 0 12px #6677ff);
+  }
+
+  17%, 29%, 41% {
+    opacity: 1;
+    filter: brightness(0)
+      drop-shadow(0 0 20px #8c8cff);
+  }
+
+  55% {
+    opacity: 1;
+    filter: brightness(5)
+      drop-shadow(0 0 30px #aaaaff);
+  }
+
+  70% {
+    opacity: 1;
+    filter: brightness(2);
+  }
+
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+
+}
