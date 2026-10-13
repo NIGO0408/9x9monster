@@ -5275,3 +5275,11 @@ position: relative;
     filter: brightness(1);
   }
 }
+
+/* ========================================
+   勇者の試練：敵画像の見切れ防止
+======================================== */
+
+#trial-battle-screen #trial-enemy-image {
+  overflow: visible;
+}
