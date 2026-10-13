@@ -5317,8 +5317,8 @@ position: relative;
 
 @keyframes trialDemonBackgroundDark {
   0%   { opacity: 0; }
-  15%  { opacity: 0.85; }
-  50%  { opacity: 0.85; }
-  80%  { opacity: 0.45; }
+  10%  { opacity: 0.90; }
+  85%  { opacity: 0.90; }
+  95%  { opacity: 0.90; }
   100% { opacity: 0; }
 }
