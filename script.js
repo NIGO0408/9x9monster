@@ -4933,6 +4933,7 @@ if (enemyImage) {
   // 前の登場アニメーションを解除
   enemyImage.classList.remove("trial-appear-animation");
   enemyImage.classList.remove("trial-neo-appear-animation"); 
+  enemyImage.classList.remove("trial-demon-appear-animation"); 
 
   // 撃破アニメーションを開始
   enemyImage.classList.add("trial-defeat-animation");
@@ -4978,6 +4979,7 @@ if (nextEnemyImage && nextMonster) {
   nextEnemyImage.classList.remove("trial-defeat-animation");
   nextEnemyImage.classList.remove("trial-appear-animation");
    nextEnemyImage.classList.remove("trial-neo-appear-animation");
+   nextEnemyImage.classList.remove("trial-demon-appear-animation");
 
   // 次の敵の画像を先に読み込む
   const preloadImage = new Image();
@@ -4989,12 +4991,15 @@ if (nextEnemyImage && nextMonster) {
    // 登場アニメーションを最初から再生
 void nextEnemyImage.offsetWidth;
 
-// 9戦目だけネオククデス専用演出
+// 勇者の試練：ボス専用登場モーション
 const isNeoKukudes = trialBattleNumber === 9;
+const isKukuDemon = trialBattleNumber === 10;
 
 const appearClass = isNeoKukudes
   ? "trial-neo-appear-animation"
-  : "trial-appear-animation";
+  : isKukuDemon
+    ? "trial-demon-appear-animation"
+    : "trial-appear-animation";
 
 nextEnemyImage.classList.add(appearClass);
 nextEnemyImage.style.visibility = "visible";
@@ -5005,8 +5010,10 @@ nextEnemyImage.addEventListener(
   function onTrialAppearEnd(event) {
 
     const expectedAnimation = isNeoKukudes
-      ? "trialNeoAppear"
-      : "trialMonsterAppear";
+  ? "trialNeoAppear"
+  : isKukuDemon
+    ? "trialDemonAppear"
+    : "trialMonsterAppear";
 
     if (event.animationName !== expectedAnimation) return;
 
