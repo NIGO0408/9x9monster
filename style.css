@@ -5222,3 +5222,56 @@ position: relative;
   }
 
 }
+
+/* ========================================
+   勇者の試練：魔獣ククデーモン専用登場演出
+======================================== */
+
+#trial-enemy-image img.trial-demon-appear-animation {
+  animation: trialDemonAppear 3s ease-out forwards;
+  transform-origin: center center;
+}
+
+@keyframes trialDemonAppear {
+
+  /* 完全な暗闇 */
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+    filter: brightness(0);
+  }
+
+  /* 黒いシルエットが浮かび上がる */
+  25% {
+    opacity: 0.7;
+    transform: scale(1.3);
+    filter:
+      brightness(0)
+      drop-shadow(0 0 12px #660000);
+  }
+
+  /* 赤黒いオーラをまとう */
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter:
+      brightness(0.15)
+      drop-shadow(0 0 25px #cc0033);
+  }
+
+  /* 徐々に実体化 */
+  75% {
+    opacity: 1;
+    transform: scale(1.08);
+    filter:
+      brightness(0.6)
+      drop-shadow(0 0 18px #ff2244);
+  }
+
+  /* 完全降臨 */
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
