@@ -4932,6 +4932,7 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
 if (enemyImage) {
   // 前の登場アニメーションを解除
   enemyImage.classList.remove("trial-appear-animation");
+  enemyImage.classList.remove("trial-neo-appear-animation"); 
 
   // 撃破アニメーションを開始
   enemyImage.classList.add("trial-defeat-animation");
@@ -4957,11 +4958,6 @@ if (enemyImage) {
 trialBattleNumber++;
 trialConsecutiveCorrect = 0;
 
-// 勇者の試練：9戦目・10戦目の専用BGM
-if (trialBattleNumber === 9 || trialBattleNumber === 10) {
-  updateBgmForScreen("trial-battle-screen");
-}
-
 // 勇者の試練：9戦目・10戦目の専用BGMに切り替える
 if (trialBattleNumber === 9 || trialBattleNumber === 10) {
   updateBgmForScreen("trial-battle-screen");
@@ -4981,6 +4977,7 @@ if (nextEnemyImage && nextMonster) {
   // 前のアニメーションを解除
   nextEnemyImage.classList.remove("trial-defeat-animation");
   nextEnemyImage.classList.remove("trial-appear-animation");
+   nextEnemyImage.classList.remove("trial-neo-appear-animation");
 
   // 次の敵の画像を先に読み込む
   const preloadImage = new Image();
@@ -4989,25 +4986,39 @@ if (nextEnemyImage && nextMonster) {
     // 読み込み完了後に敵の名前・画像・ハートを更新
     updateTrialMonsterDisplay(trialBattleNumber);
 
-    // 登場アニメーションを最初から再生
-    void nextEnemyImage.offsetWidth;
-    nextEnemyImage.classList.add("trial-appear-animation");
-    nextEnemyImage.style.visibility = "visible";
+   // 登場アニメーションを最初から再生
+void nextEnemyImage.offsetWidth;
+
+// 9戦目だけネオククデス専用演出
+const isNeoKukudes = trialBattleNumber === 9;
+
+const appearClass = isNeoKukudes
+  ? "trial-neo-appear-animation"
+  : "trial-appear-animation";
+
+nextEnemyImage.classList.add(appearClass);
+nextEnemyImage.style.visibility = "visible";
 
     // 登場アニメーション終了後は通常表示に戻す
-    nextEnemyImage.addEventListener(
-      "animationend",
-      function onTrialAppearEnd(event) {
-        if (event.animationName !== "trialMonsterAppear") return;
+nextEnemyImage.addEventListener(
+  "animationend",
+  function onTrialAppearEnd(event) {
 
-        nextEnemyImage.classList.remove("trial-appear-animation");
-        nextEnemyImage.style.opacity = "";
-        nextEnemyImage.removeEventListener(
-          "animationend",
-          onTrialAppearEnd
-        );
-      }
+    const expectedAnimation = isNeoKukudes
+      ? "trialNeoAppear"
+      : "trialMonsterAppear";
+
+    if (event.animationName !== expectedAnimation) return;
+
+    nextEnemyImage.classList.remove(appearClass);
+    nextEnemyImage.style.opacity = "";
+
+    nextEnemyImage.removeEventListener(
+      "animationend",
+      onTrialAppearEnd
     );
+  }
+);
   };
 
   preloadImage.onerror = () => {
