@@ -7704,29 +7704,36 @@ el("trial-battle-back-button")?.addEventListener("click", () => {
 });
 
 /* =========================================
-   勇者の試練：バナーから専用画面へ
+   勇者の試練：バトル開始共通処理
 ========================================= */
 
-el("trial-area")?.addEventListener("click", () => {
+function startTrialBattle(startNumber = 1, startHP = trialHeroMaxHP) {
 
-  // 未解放の場合は移動しない
-  if (!trialUnlocked) return;
+  // 開始する戦闘番号を設定
+  trialBattleNumber = Math.max(
+    1,
+    Math.min(trialMonsters.length, startNumber)
+  );
 
- // 勇者の試練専用バトル画面を表示
-  showScreen("trial-battle-screen");
-
-  // 1戦目のバトル状態を初期化
-  trialBattleNumber = 1;
+  // バトル状態を初期化
   trialConsecutiveCorrect = 0;
   trialCorrectAnswer = null;
   trialAnswerLocked = false;
 
-  // 勇者HPを満タンにして表示更新
-trialHeroHP = trialHeroMaxHP;
-updateTrialHeroHP(); 
+  // 勇者HPを設定
+  trialHeroHP = Math.max(
+    1,
+    Math.min(trialHeroMaxHP, startHP)
+  );
 
-  // 敵のハートを3つとも赤に戻す
-  updateTrialEnemyHearts(3, 3);
+  updateTrialHeroHP();
+
+  // 敵の画像・名前・ハートを更新
+  updateTrialMonsterDisplay(trialBattleNumber);
+
+  // 戦闘番号を設定した後で画面を表示
+  // これにより専用BGMも正しく選択される
+  showScreen("trial-battle-screen");
 
   // バトルメッセージを初期化
   const trialMessage =
@@ -7736,31 +7743,45 @@ updateTrialHeroHP();
     trialMessage.textContent = "勇者の試練に挑戦！";
   }
 
-  // 1戦目：ダークスライム
-  const question = getNextTrialQuestion(1);
+  // 指定した戦闘の問題を取得
+  const question = getNextTrialQuestion(trialBattleNumber);
 
   if (!question) return;
 
   const questionElement =
     document.getElementById("trial-battle-question");
 
-   // 左右どちらを穴埋めにするかランダムに決定
-const hideLeft = false;
+  const hideLeft = false;
 
-if (questionElement) {
-  questionElement.textContent = hideLeft
-    ? `？ × ${question.b} = ${question.result}`
-    : `${question.a} × ？ = ${question.result}`;
+  if (questionElement) {
+    questionElement.textContent = hideLeft
+      ? `？ × ${question.b} = ${question.result}`
+      : `${question.a} × ？ = ${question.result}`;
+  }
+
+  const correctAnswer = hideLeft
+    ? question.a
+    : question.b;
+
+  createTrialBattleAnswers(correctAnswer);
 }
 
-// 隠した数字を正解として4択を生成
-const correctAnswer = hideLeft
-  ? question.a
-  : question.b;
 
-createTrialBattleAnswers(correctAnswer);
+/* =========================================
+   勇者の試練：通常開始
+========================================= */
+
+el("trial-area")?.addEventListener("click", () => {
+
+  // 未解放の場合は移動しない
+  if (!trialUnlocked) return;
+
+  // 通常は1戦目から開始
+  startTrialBattle(1);
 
 });
+
+
 
 /* ========================================
    勇者の試練：ゲームオーバー操作
@@ -7794,7 +7815,6 @@ window.addEventListener(
 
   }
 );
-
 
 /* =========================================================
    起動
