@@ -5004,6 +5004,16 @@ const appearClass = isNeoKukudes
 nextEnemyImage.classList.add(appearClass);
 nextEnemyImage.style.visibility = "visible";
 
+   // ククデーモン登場時だけ背景を暗転
+const trialScreen =
+  document.getElementById("trial-battle-screen");
+
+if (isKukuDemon && trialScreen) {
+  trialScreen.classList.remove("trial-demon-darkening");
+  void trialScreen.offsetWidth;
+  trialScreen.classList.add("trial-demon-darkening");
+}  
+
     // 登場アニメーション終了後は通常表示に戻す
 nextEnemyImage.addEventListener(
   "animationend",
@@ -5020,6 +5030,11 @@ nextEnemyImage.addEventListener(
     nextEnemyImage.classList.remove(appearClass);
     nextEnemyImage.style.opacity = "";
 
+// 降臨演出終了後、背景の暗転を解除
+if (isKukuDemon && trialScreen) {
+  trialScreen.classList.remove("trial-demon-darkening");
+}
+     
     nextEnemyImage.removeEventListener(
       "animationend",
       onTrialAppearEnd
