@@ -4961,44 +4961,37 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
     ).then(() => {
        
       // 最後の一撃：元画像を白く激しく点滅させる
-      demonImage.src = "images/kuku_demon.png";
-
       demonImage.animate(
-        [
-          { opacity: 1, filter: "brightness(1)" },
-          { opacity: 1, filter: "brightness(8)" },
-          { opacity: 1, filter: "brightness(1)" },
-          { opacity: 1, filter: "brightness(8)" },
-          { opacity: 1, filter: "brightness(1)" },
-          { opacity: 1, filter: "brightness(8)" },
-          { opacity: 1, filter: "brightness(1)" }
-        ],
-        {
-          duration: 900,
-          easing: "linear",
-          iterations: 1
-        }
-      ).finished.then(() => {
+  [
+    { opacity: 1, filter: "brightness(1)" },
+    { opacity: 1, filter: "brightness(0) invert(1)" }
+  ],
+  {
+    duration: 120,
+    iterations: 7,
+    direction: "alternate",
+    easing: "steps(1, end)"
+  }
+).finished.then(() => {
 
         // 魔力の暴走：左右に激しく震える
         return demonImage.animate(
-          [
-            { transform: "translate(0px, 0px)" },
-            { transform: "translate(-8px, 2px)" },
-            { transform: "translate(7px, -2px)" },
-            { transform: "translate(-10px, 1px)" },
-            { transform: "translate(9px, -3px)" },
-            { transform: "translate(-12px, 2px)" },
-            { transform: "translate(11px, -1px)" },
-            { transform: "translate(-7px, 2px)" },
-            { transform: "translate(0px, 0px)" }
-          ],
-          {
-            duration: 1800,
-            easing: "linear",
-            iterations: 1
-          }
-        ).finished;
+  [
+    { transform: "translate(0px, 0px)" },
+    { transform: "translate(-2px, 1px)" },
+    { transform: "translate(2px, -1px)" },
+    { transform: "translate(-3px, 1px)" },
+    { transform: "translate(3px, -1px)" },
+    { transform: "translate(-2px, 0px)" },
+    { transform: "translate(2px, 1px)" },
+    { transform: "translate(0px, 0px)" }
+  ],
+  {
+    duration: 320,
+    iterations: 5,
+    easing: "steps(8, end)"
+  }
+).finished;
 
       }).then(() => {
 
