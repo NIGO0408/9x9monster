@@ -4925,6 +4925,69 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
       `${defeatedMonster.name}を倒した！`;
   }
 
+// 第10戦：魔獣ククデーモン専用の撃破モーション
+  if (trialBattleNumber === 10) {
+    const demonImage =
+      document.querySelector("#trial-enemy-image img");
+
+    if (!demonImage) return;
+
+    // 既存の登場・撃破アニメーションを解除
+    demonImage.classList.remove(
+      "trial-appear-animation",
+      "trial-neo-appear-animation",
+      "trial-demon-appear-animation",
+      "trial-defeat-animation"
+    );
+
+    demonImage.style.visibility = "visible";
+    demonImage.style.opacity = "1";
+
+    // 撃破モーション全10コマ
+    const defeatFrames = Array.from(
+      { length: 10 },
+      (_, i) =>
+        `images/kuku_demon_defeat_${String(i).padStart(2, "0")}.png`
+    );
+
+    // 画像をすべて先読みしてから再生する
+    Promise.all(
+      defeatFrames.map(src => new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = resolve;
+        image.onerror = () => reject(new Error(src));
+        image.src = src;
+      }))
+    ).then(() => {
+      let frameIndex = 0;
+
+      const defeatTimer = setInterval(() => {
+        demonImage.src = defeatFrames[frameIndex];
+        frameIndex++;
+
+        if (frameIndex >= defeatFrames.length) {
+          clearInterval(defeatTimer);
+
+          // 最後のコマを表示してから完全消滅
+          setTimeout(() => {
+            demonImage.style.visibility = "hidden";
+
+            if (messageElement) {
+              messageElement.textContent =
+                "魔獣ククデーモンを倒した！";
+            }
+          }, 180);
+        }
+      }, 140);
+
+    }).catch(error => {
+      console.error("撃破モーション画像の読み込み失敗:", error);
+    });
+
+    // 通常の撃破演出・次の戦闘処理には進まない
+    return;
+  }
+   
 // 敵を点滅させながら消す
   const enemyImage =
     document.querySelector("#trial-enemy-image img");
