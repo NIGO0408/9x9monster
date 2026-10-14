@@ -4961,33 +4961,29 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
     ).then(() => {
        
       // 最後の一撃：元画像を白く激しく点滅させる
-     
-      // 最後の一撃：高速点滅（約0.8秒）
-      const flashFrames = [
-        { opacity: 1 },
-        { opacity: 0 },
-        { opacity: 1 },
-        { opacity: 0 },
-        { opacity: 1 },
-        { opacity: 0 },
-        { opacity: 1 },
-        { opacity: 0 },
-        { opacity: 1 },
-        { opacity: 0 },
-        { opacity: 1 },
-        { opacity: 0 },
-        { opacity: 1 }
-      ];
 
-      demonImage.animate(flashFrames, {
-        duration: 840,
-        easing: "steps(1, start)",
-        iterations: 1
-      }).finished.then(() => {
+      demonImage.src = "images/kuku_demon.png"; 
+      
+      // 最後の一撃：表示・非表示を直接切り替える高速点滅
+      new Promise(resolve => {
+        let flashCount = 0;
 
-        // 魔力の暴走：左右に激しく震える
+        const flashTimer = setInterval(() => {
+          flashCount++;
 
+          // 画像の表示と非表示を交互に切り替える
+          demonImage.style.visibility =
+            flashCount % 2 === 1 ? "hidden" : "visible";
 
+          // 12回切り替えたら終了（約0.84秒）
+          if (flashCount >= 12) {
+            clearInterval(flashTimer);
+            demonImage.style.visibility = "visible";
+            resolve();
+          }
+        }, 70);
+      }).then(() => {
+        
         // 魔力の暴走：左右に激しく震える
         return demonImage.animate(
   [
