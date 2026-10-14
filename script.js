@@ -4959,36 +4959,44 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
         image.src = src;
       }))
     ).then(() => {
-       // 最初は元のククデーモン画像で撃破の衝撃を表現
+       
+      // 最後の一撃：元画像を白く激しく点滅させる
       demonImage.src = "images/kuku_demon.png";
 
       demonImage.animate(
         [
           { opacity: 1, filter: "brightness(1)" },
-          { opacity: 0.3, filter: "brightness(5)" },
+          { opacity: 1, filter: "brightness(8)" },
           { opacity: 1, filter: "brightness(1)" },
-          { opacity: 0.3, filter: "brightness(5)" },
+          { opacity: 1, filter: "brightness(8)" },
+          { opacity: 1, filter: "brightness(1)" },
+          { opacity: 1, filter: "brightness(8)" },
           { opacity: 1, filter: "brightness(1)" }
         ],
-        { duration: 800, easing: "steps(1, end)" }
+        {
+          duration: 900,
+          easing: "linear",
+          iterations: 1
+        }
       ).finished.then(() => {
 
-        // 震えながら徐々に揺れを大きくする
+        // 魔力の暴走：左右に激しく震える
         return demonImage.animate(
           [
-            { transform: "translate(0, 0)" },
-            { transform: "translate(-2px, 1px)" },
-            { transform: "translate(2px, -1px)" },
-            { transform: "translate(-4px, 2px)" },
-            { transform: "translate(4px, -2px)" },
-            { transform: "translate(-6px, 1px)" },
-            { transform: "translate(6px, -1px)" },
-            { transform: "translate(0, 0)" }
+            { transform: "translate(0px, 0px)" },
+            { transform: "translate(-8px, 2px)" },
+            { transform: "translate(7px, -2px)" },
+            { transform: "translate(-10px, 1px)" },
+            { transform: "translate(9px, -3px)" },
+            { transform: "translate(-12px, 2px)" },
+            { transform: "translate(11px, -1px)" },
+            { transform: "translate(-7px, 2px)" },
+            { transform: "translate(0px, 0px)" }
           ],
           {
-            duration: 1500,
-            easing: "steps(1, end)",
-            iterations: 3
+            duration: 1800,
+            easing: "linear",
+            iterations: 1
           }
         ).finished;
 
