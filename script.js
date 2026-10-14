@@ -4959,26 +4959,62 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
         image.src = src;
       }))
     ).then(() => {
-      let frameIndex = 0;
+       // 最初は元のククデーモン画像で撃破の衝撃を表現
+      demonImage.src = "images/kuku_demon.png";
 
-      const defeatTimer = setInterval(() => {
-        demonImage.src = defeatFrames[frameIndex];
-        frameIndex++;
+      demonImage.animate(
+        [
+          { opacity: 1, filter: "brightness(1)" },
+          { opacity: 0.3, filter: "brightness(5)" },
+          { opacity: 1, filter: "brightness(1)" },
+          { opacity: 0.3, filter: "brightness(5)" },
+          { opacity: 1, filter: "brightness(1)" }
+        ],
+        { duration: 800, easing: "steps(1, end)" }
+      ).finished.then(() => {
 
-        if (frameIndex >= defeatFrames.length) {
-          clearInterval(defeatTimer);
+        // 震えながら徐々に揺れを大きくする
+        return demonImage.animate(
+          [
+            { transform: "translate(0, 0)" },
+            { transform: "translate(-2px, 1px)" },
+            { transform: "translate(2px, -1px)" },
+            { transform: "translate(-4px, 2px)" },
+            { transform: "translate(4px, -2px)" },
+            { transform: "translate(-6px, 1px)" },
+            { transform: "translate(6px, -1px)" },
+            { transform: "translate(0, 0)" }
+          ],
+          {
+            duration: 1500,
+            easing: "steps(1, end)",
+            iterations: 3
+          }
+        ).finished;
 
-          // 最後のコマを表示してから完全消滅
-          setTimeout(() => {
-            demonImage.style.visibility = "hidden";
+      }).then(() => {
 
-            if (messageElement) {
-              messageElement.textContent =
-                "魔獣ククデーモンを倒した！";
-            }
-          }, 180);
-        }
-      }, 140);
+        // 崩壊画像をゆっくり順番に表示
+        let frameIndex = 0;
+
+        const defeatTimer = setInterval(() => {
+          demonImage.src = defeatFrames[frameIndex];
+          frameIndex++;
+
+          if (frameIndex >= defeatFrames.length) {
+            clearInterval(defeatTimer);
+
+            setTimeout(() => {
+              demonImage.style.visibility = "hidden";
+
+              if (messageElement) {
+                messageElement.textContent =
+                  "魔獣ククデーモンを倒した！";
+              }
+            }, 300);
+          }
+        }, 320);
+      });
 
     }).catch(error => {
       console.error("撃破モーション画像の読み込み失敗:", error);
