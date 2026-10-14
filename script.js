@@ -4961,18 +4961,32 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
     ).then(() => {
        
       // 最後の一撃：元画像を白く激しく点滅させる
-      demonImage.animate(
-  [
-    { opacity: 1, filter: "brightness(1)" },
-    { opacity: 1, filter: "brightness(0) invert(1)" }
-  ],
-  {
-    duration: 120,
-    iterations: 7,
-    direction: "alternate",
-    easing: "steps(1, end)"
-  }
-).finished.then(() => {
+     
+      // 最後の一撃：高速点滅（約0.8秒）
+      const flashFrames = [
+        { opacity: 1 },
+        { opacity: 0 },
+        { opacity: 1 },
+        { opacity: 0 },
+        { opacity: 1 },
+        { opacity: 0 },
+        { opacity: 1 },
+        { opacity: 0 },
+        { opacity: 1 },
+        { opacity: 0 },
+        { opacity: 1 },
+        { opacity: 0 },
+        { opacity: 1 }
+      ];
+
+      demonImage.animate(flashFrames, {
+        duration: 840,
+        easing: "steps(1, start)",
+        iterations: 1
+      }).finished.then(() => {
+
+        // 魔力の暴走：左右に激しく震える
+
 
         // 魔力の暴走：左右に激しく震える
         return demonImage.animate(
