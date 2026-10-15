@@ -5023,10 +5023,10 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
       "魔獣ククデーモンを倒した！";
   }
 
-  // 撃破メッセージを表示したあとエンディングへ
-  setTimeout(() => {
-    startEnding();
-  }, 1500);
+ // 撃破メッセージを表示したあと専用VICTORY画面へ
+setTimeout(() => {
+  showScreen("trial-victory-screen");
+}, 1500);
 
 }, 300);
           }
