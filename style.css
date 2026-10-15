@@ -5505,7 +5505,7 @@ position: relative;
 }
 
 #trial-credits-screen.active #trial-credits-content {
-  animation: trialCreditsScroll 82s linear 3s forwards;
+  animation: trialCreditsScroll 83s linear 2s forwards;
 }
 #trial-credits-content h2 {
   font-size: 26px;
