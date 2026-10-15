@@ -5025,7 +5025,7 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
 
  // 撃破メッセージを表示したあと専用VICTORY画面へ
 setTimeout(() => {
-  showScreen("trial-victory-screen");
+  startTrialEnding();
 }, 1500);
 
 }, 300);
@@ -8652,4 +8652,30 @@ setTimeout(() => {
 }, 5000);
 
 }, { once: true });
+}
+
+/* ========================================
+   勇者の試練 専用エンディング
+======================================== */
+
+async function startTrialEnding() {
+  const victoryScreen = el("trial-victory-screen");
+
+  if (!victoryScreen) return;
+
+  // 前回の暗転状態をリセット
+  victoryScreen.classList.remove("trial-fade-out");
+
+  // VICTORY画面を表示
+  showScreen("trial-victory-screen");
+
+  // 4秒間表示
+  await endingWait(4000);
+
+  // 1秒かけて暗転
+  victoryScreen.classList.add("trial-fade-out");
+  await endingWait(1000);
+
+  // 専用スタッフロールへ
+  showScreen("trial-credits-screen");
 }
