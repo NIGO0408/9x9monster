@@ -5375,3 +5375,26 @@ position: relative;
 #trial-victory-next {
   margin-top: 20px;
 }
+
+/* 勇者の試練：画面暗転 */
+#trial-victory-screen {
+  transition: opacity 1s ease-in-out;
+}
+
+#trial-victory-screen.trial-fade-out {
+  opacity: 0;
+}
+
+/* 勇者の試練：専用スタッフロール */
+#trial-credits-screen {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+  min-height: 100dvh;
+}
+
+#trial-credits-content {
+  padding-top: 30vh;
+  line-height: 2.5;
+}
