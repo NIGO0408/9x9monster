@@ -5471,6 +5471,6 @@ position: relative;
   }
 
   to {
-    background-position: -1500px bottom;
+    background-position: 1500px bottom;
   }
 }
