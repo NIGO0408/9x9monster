@@ -5490,3 +5490,57 @@ position: relative;
   height: auto;
   image-rendering: pixelated;
 }
+/* 勇者の試練：スタッフロール文字スクロール */
+
+#trial-credits-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 60px;
+  color: #fff;
+  text-align: center;
+  line-height: normal;
+}
+
+#trial-credits-screen.active #trial-credits-content {
+  animation: trialCreditsScroll 95s linear forwards;
+}
+
+#trial-credits-content h2 {
+  font-size: 26px;
+  margin: 0 0 80px;
+  letter-spacing: 2px;
+}
+
+#trial-credits-content p {
+  font-size: 15px;
+  line-height: 2;
+  margin: 0 0 65px;
+}
+
+#trial-credits-content strong {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+#trial-credits-content small {
+  font-size: 12px;
+  color: #aaa;
+}
+
+#trial-credits-content .ending-special-thanks {
+  margin-top: 90px;
+  margin-bottom: 80px;
+}
+
+@keyframes trialCreditsScroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(calc(-100% - 65dvh));
+  }
+}
