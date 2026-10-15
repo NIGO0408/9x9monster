@@ -8694,6 +8694,6 @@ if (trialEndingBgm) {
         console.warn("エンディングBGMを再生できませんでした:", err);
       });
     }
-  }, 5000);
+  }, 3000);
 }
 }
