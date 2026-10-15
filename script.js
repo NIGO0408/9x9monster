@@ -8677,5 +8677,23 @@ async function startTrialEnding() {
   await endingWait(1000);
 
   // 専用スタッフロールへ
-  showScreen("trial-credits-screen");
+showScreen("trial-credits-screen");
+
+// スタッフロール開始5秒後にエンディングBGMを再生
+const trialEndingBgm = document.getElementById("trial-ending-bgm");
+
+if (trialEndingBgm) {
+  trialEndingBgm.pause();
+  trialEndingBgm.currentTime = 0;
+
+  setTimeout(() => {
+    const creditsScreen = document.getElementById("trial-credits-screen");
+
+    if (creditsScreen && creditsScreen.classList.contains("active")) {
+      trialEndingBgm.play().catch(err => {
+        console.warn("エンディングBGMを再生できませんでした:", err);
+      });
+    }
+  }, 5000);
+}
 }
