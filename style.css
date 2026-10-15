@@ -5459,7 +5459,7 @@ position: relative;
 
   background-image: url("images/ending_background2.png");
   background-repeat: repeat-x;
-  background-position: 0 bottom;
+  background-position: right bottom;
   background-size: auto 100%;
 
   animation: trialLandscapeScroll 45s linear infinite;
@@ -5467,10 +5467,10 @@ position: relative;
 
 @keyframes trialLandscapeScroll {
   from {
-    background-position: 0 bottom;
+    background-position: right bottom;
   }
 
   to {
-    background-position: 1500px bottom;
+    background-position: calc(100% + 1500px) bottom;
   }
 }
