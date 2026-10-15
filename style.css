@@ -5582,7 +5582,7 @@ position: relative;
 /* THE END の文字 */
 #trial-ending-the-end {
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
 
