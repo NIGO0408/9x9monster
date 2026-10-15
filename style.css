@@ -5397,16 +5397,80 @@ position: relative;
   opacity: 1;
 }
 
-/* 勇者の試練：専用スタッフロール */
+/* ========================================
+   勇者の試練：専用スタッフロール
+======================================== */
+
 #trial-credits-screen {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
   background: #000;
   color: #fff;
-  text-align: center;
   overflow: hidden;
-  min-height: 100dvh;
+}
+
+/* スタッフロール画面の上下配置 */
+#trial-credits-screen.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 上部65％：黒背景 */
+#trial-credits-upper {
+  position: relative;
+  flex: 0 0 65%;
+  min-height: 0;
+  background: #000;
+  overflow: hidden;
+  text-align: center;
 }
 
 #trial-credits-content {
-  padding-top: 30vh;
+  padding: 15vh 16px 0;
   line-height: 2.5;
+}
+
+/* 下部35％：風景と黒い余白 */
+#trial-credits-lower {
+  position: relative;
+  flex: 0 0 35%;
+  min-height: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+/* 風景は画面下端から5vh浮かせる */
+#trial-credits-landscape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 5vh);
+  overflow: hidden;
+}
+
+/* 横スクロール背景 */
+#trial-credits-background {
+  position: absolute;
+  inset: 0;
+
+  background-image: url("images/ending_background.png");
+  background-repeat: repeat-x;
+  background-position: 0 bottom;
+  background-size: auto 100%;
+
+  animation: trialLandscapeScroll 45s linear infinite;
+}
+
+@keyframes trialLandscapeScroll {
+  from {
+    background-position: 0 bottom;
+  }
+
+  to {
+    background-position: -1500px bottom;
+  }
 }
