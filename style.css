@@ -5544,3 +5544,13 @@ position: relative;
     transform: translateY(calc(-100% - 65dvh));
   }
 }
+
+/* 勇者の試練：THE END */
+
+#trial-credits-content .trial-credits-the-end {
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 6px;
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
