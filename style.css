@@ -5479,7 +5479,7 @@ position: relative;
 #trial-credits-hero {
   position: absolute;
   left: 50%;
-  bottom: 5vh;
+  bottom: 6.5vh;
   transform: translateX(-50%);
   z-index: 2;
 }
