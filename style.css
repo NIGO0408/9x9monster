@@ -5482,6 +5482,18 @@ position: relative;
   bottom: 6.5vh;
   transform: translateX(-50%);
   z-index: 2;
+
+  animation: trialHeroWalkAway 7s linear 85s forwards;
+}
+
+@keyframes trialHeroWalkAway {
+  from {
+    left: 50%;
+  }
+
+  to {
+    left: -55px;
+  }
 }
 
 #trial-credits-hero img {
