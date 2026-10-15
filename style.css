@@ -5565,3 +5565,66 @@ position: relative;
   margin-top: 100px;
   margin-bottom: 80px;
 }
+
+/* ==================================
+   勇者の試練：THE END 最終演出
+================================== */
+
+/* 最終演出の表示領域 */
+#trial-ending-final {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* THE END の文字 */
+#trial-ending-the-end {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: #fff;
+  font-size: 38px;
+  font-weight: bold;
+  letter-spacing: 6px;
+  white-space: nowrap;
+
+  opacity: 0;
+}
+
+/* スタッフロール画面が表示されたら演出開始 */
+#trial-credits-screen.active #trial-ending-the-end {
+  animation: trialTheEndSequence 100s linear forwards;
+}
+
+@keyframes trialTheEndSequence {
+  0%, 85% {
+    opacity: 0;
+  }
+
+  88%, 94% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 背景を含む画面全体を最後に暗転 */
+#trial-credits-screen.active {
+  animation: trialFinalFadeOut 100s linear forwards;
+}
+
+@keyframes trialFinalFadeOut {
+  0%, 94% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
