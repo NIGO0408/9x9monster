@@ -5322,3 +5322,56 @@ position: relative;
   95%  { opacity: 0.90; }
   100% { opacity: 0; }
 }
+
+/* ========================================
+   勇者の試練 専用VICTORY画面
+======================================== */
+
+#trial-victory-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: radial-gradient(
+    circle at center,
+    #263f75 0%,
+    #10182d 65%,
+    #070a13 100%
+  );
+  color: white;
+  text-align: center;
+}
+
+.trial-victory-content {
+  min-height: calc(100dvh - 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.trial-victory-stars {
+  color: #ffdb6e;
+  font-size: clamp(12px, 3vw, 17px);
+  font-weight: bold;
+}
+
+.trial-victory-content h1 {
+  margin: 0;
+  color: #ffdf70;
+  font-size: clamp(42px, 12vw, 76px);
+  text-shadow: 0 4px 0 #9b6416;
+}
+
+.trial-victory-content h2 {
+  margin: 0;
+  font-size: clamp(20px, 5vw, 30px);
+}
+
+.trial-victory-content p {
+  font-size: clamp(15px, 4vw, 19px);
+  line-height: 2;
+}
+
+#trial-victory-next {
+  margin-top: 20px;
+}
