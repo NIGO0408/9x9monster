@@ -5474,3 +5474,18 @@ position: relative;
     background-position: calc(100% + 1500px) bottom;
   }
 }
+
+/* スタッフロール：歩く勇者 */
+#trial-credits-hero {
+  position: absolute;
+  left: 20%;
+  bottom: 5vh;
+  z-index: 2;
+}
+
+#trial-credits-hero img {
+  display: block;
+  width: 80px;
+  height: auto;
+  image-rendering: pixelated;
+}
