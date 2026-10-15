@@ -5377,12 +5377,24 @@ position: relative;
 }
 
 /* 勇者の試練：画面暗転 */
+/* 勇者の試練：黒い幕による暗転 */
 #trial-victory-screen {
+  position: relative;
+}
+
+#trial-victory-screen::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
   transition: opacity 1s ease-in-out;
 }
 
-#trial-victory-screen.trial-fade-out {
-  opacity: 0;
+#trial-victory-screen.trial-fade-out::after {
+  opacity: 1;
 }
 
 /* 勇者の試練：専用スタッフロール */
