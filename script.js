@@ -5016,13 +5016,19 @@ if (trialConsecutiveCorrect >= requiredCorrect) {
             clearInterval(defeatTimer);
 
             setTimeout(() => {
-              demonImage.style.visibility = "hidden";
+  demonImage.style.visibility = "hidden";
 
-              if (messageElement) {
-                messageElement.textContent =
-                  "魔獣ククデーモンを倒した！";
-              }
-            }, 300);
+  if (messageElement) {
+    messageElement.textContent =
+      "魔獣ククデーモンを倒した！";
+  }
+
+  // 撃破メッセージを表示したあとエンディングへ
+  setTimeout(() => {
+    startEnding();
+  }, 1500);
+
+}, 300);
           }
         }, 320);
       });
