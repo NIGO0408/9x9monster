@@ -5458,11 +5458,11 @@ position: relative;
   inset: 0;
 
   background-image: url("images/ending_background2.png");
-  background-repeat: repeat-x;
-  background-position: right bottom;
+  background-repeat: no-repeat;
   background-size: auto 100%;
+  background-position: right bottom;
 
-  animation: trialLandscapeScroll 90s linear infinite;
+  animation: trialLandscapeScroll 85s linear forwards;
 }
 
 @keyframes trialLandscapeScroll {
@@ -5471,7 +5471,7 @@ position: relative;
   }
 
   to {
-    background-position: calc(100% + 1500px) bottom;
+    background-position: left bottom;
   }
 }
 
