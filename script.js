@@ -8127,7 +8127,8 @@ function activateDeveloperMode() {
     "3：敵図鑑全開放\n" +
    "4：冒険ステージ全開放\n" +
 "5：育成テスト（個別レベル設定）\n" +
-"6：勇者の試練テスト（開始戦闘を選択）\n\n" +
+"6：勇者の試練テスト（開始戦闘を選択）\n" +
+"7：勇者の試練 エンディング確認\n\n" +
 "キャンセル：終了"
   );
 
@@ -8445,6 +8446,47 @@ if (choice === "4") {
     return;
   }
    
+   /* 7：勇者の試練 エンディング確認 */
+  if (choice === "7") {
+
+    // エンディングBGMを初期化
+    const endingBgm = document.getElementById("trial-ending-bgm");
+
+    if (endingBgm) {
+      endingBgm.pause();
+      endingBgm.currentTime = 0;
+    }
+
+    // 一度画面を非表示にしてアニメーションをリセット
+    showScreen("title-screen");
+
+    // 次の描画タイミングでスタッフロールを開始
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+
+        showScreen("trial-credits-screen");
+
+        // スタッフロール開始と同じ2秒後にBGMを再生
+        setTimeout(() => {
+          const creditsScreen = document.getElementById("trial-credits-screen");
+
+          if (
+            endingBgm &&
+            creditsScreen &&
+            creditsScreen.classList.contains("active")
+          ) {
+            endingBgm.play().catch(err => {
+              console.warn("エンディングBGM再生失敗:", err);
+            });
+          }
+        }, 2000);
+
+      });
+    });
+
+    return;
+  }
+
   alert("❌ 無効な番号です。");
 }
 /* =========================================================
