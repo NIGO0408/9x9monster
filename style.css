@@ -5667,3 +5667,19 @@ position: relative;
     transform: translateX(100vw);
   }
 }
+
+/* エンディング：スライムのジャンプ */
+
+#trial-ending-slime img {
+  animation: trialSlimeJump 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes trialSlimeJump {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-10px);
+  }
+}
