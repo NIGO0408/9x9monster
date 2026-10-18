@@ -5628,3 +5628,31 @@ position: relative;
     opacity: 0;
   }
 }
+
+/* 勇者の試練：エンディング登場モンスター（テスト） */
+
+#trial-ending-slime {
+  position: absolute;
+  left: 15%;
+  bottom: 0;
+  z-index: 2;
+
+  animation: trialSlimeScroll 78s linear forwards;
+}
+
+#trial-ending-slime img {
+  display: block;
+  width: 45px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+@keyframes trialSlimeScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100vw);
+  }
+}
