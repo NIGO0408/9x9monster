@@ -5452,29 +5452,42 @@ position: relative;
   overflow: hidden;
 }
 
-/* 横スクロール背景 */
+/* 背景とモンスターをまとめてスクロール */
+
+#trial-credits-scroll-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  aspect-ratio: 1536 / 197;
+  width: auto;
+
+  animation: trialLandscapeScroll 78s linear forwards;
+}
+
+/* 背景画像 */
+
 #trial-credits-background {
   position: absolute;
   inset: 0;
 
   background-image: url("images/ending_background2.png");
   background-repeat: no-repeat;
-  background-size: auto 100%;
-  background-position: right bottom;
-
-  animation: trialLandscapeScroll 78s linear forwards;
+  background-size: 100% 100%;
+  background-position: center;
 }
+
+/* 画像の右端から左端まで移動 */
 
 @keyframes trialLandscapeScroll {
   from {
-    background-position: right bottom;
+    transform: translateX(calc(100vw - 100%));
   }
 
   to {
-    background-position: left bottom;
+    transform: translateX(0);
   }
 }
-
 /* スタッフロール：歩く勇者 */
 #trial-credits-hero {
   position: absolute;
@@ -5636,8 +5649,6 @@ position: relative;
   left: 15%;
   bottom: 20px;
   z-index: 2;
-
-  animation: trialSlimeScroll 78s linear forwards;
 }
 
 #trial-ending-slime img {
