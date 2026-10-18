@@ -5671,7 +5671,7 @@ position: relative;
 /* エンディング：スライムのジャンプ */
 
 #trial-ending-slime img {
-  animation: trialSlimeJump 0.8s ease-in-out infinite alternate;
+  animation: trialSlimeJump 0.4s ease-in-out infinite alternate;
 }
 
 @keyframes trialSlimeJump {
