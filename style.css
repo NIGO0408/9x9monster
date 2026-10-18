@@ -5771,3 +5771,8 @@ position: relative;
 #trial-ending-kinokon {
   margin-left: -20px;
 }
+
+/* エンディング：イエティのジャンプ */
+#trial-ending-yeti img {
+  animation: trialSlimeJump 0.7s ease-in-out infinite alternate;
+}
