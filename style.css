@@ -5683,3 +5683,18 @@ position: relative;
     transform: translateY(-10px);
   }
 }
+
+/* エンディング：羽ばたくドラゴン */
+#trial-ending-dragon {
+  position: absolute;
+  left: 85%;
+  bottom: 38px;
+  z-index: 2;
+}
+
+#trial-ending-dragon img {
+  display: block;
+  width: 65px;
+  height: auto;
+  image-rendering: pixelated;
+}
