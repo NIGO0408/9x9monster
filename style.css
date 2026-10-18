@@ -5713,56 +5713,37 @@ position: relative;
     image-rendering: pixelated;
 }
 
-/* ドラゴンとスライムの間に7体を配置 */
-/* 掛け算・割り算を使わない位置指定 */
+/* ドラゴン47%・スライム33%の間に7体を等間隔配置 */
 
-/* 1：ゴーレム */
 #trial-ending-golem {
-  left: calc(43.75% + 12.5vw - 33.75px);
+  left: 45.25%;
 }
 
-/* 2：ミノタウロス */
 #trial-ending-minotaur {
-  left: calc(37.5% + 25vw - 67.5px);
+  left: 43.5%;
 }
 
-/* 3：イエティ */
 #trial-ending-yeti {
-  left: calc(31.25% + 37.5vw - 101.25px);
+  left: 41.75%;
 }
 
-/* 4：ワーウルフ */
 #trial-ending-werewolf {
-  left: calc(25% + 50vw - 135px);
+  left: 40%;
 }
 
-/* 5：ゴースト */
 #trial-ending-ghost {
-  left: calc(18.75% + 62.5vw - 168.75px);
+  left: 38.25%;
 }
 
-/* 6：ゴブリン */
 #trial-ending-goblin {
-  left: calc(12.5% + 75vw - 202.5px);
+  left: 36.5%;
 }
 
-/* 7：キノコン */
 #trial-ending-kinokon {
-  left: calc(6.25% + 87.5vw - 236.25px);
+  left: 34.75%;
 }
 
 /* エンディング：ゴーレムだけ少し大きく */
 #trial-ending-golem img {
     width: 80px;
-}
-
-/* エンディング：中間7体を左へ20px移動 */
-#trial-ending-golem,
-#trial-ending-minotaur,
-#trial-ending-yeti,
-#trial-ending-werewolf,
-#trial-ending-ghost,
-#trial-ending-goblin,
-#trial-ending-kinokon {
-  margin-left: -20px;
 }
