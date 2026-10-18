@@ -5713,38 +5713,45 @@ position: relative;
     image-rendering: pixelated;
 }
 
-/* ドラゴンとスライムの間を8等分して配置 */
+/* ドラゴンとスライムの位置を基準に8等分 */
 
 #trial-credits-scroll-world {
-  --monster-start: 60%;
-  --monster-end: calc(100vw - 180px);
+  --monster-start: 50%;
+  --monster-end: calc(100vw - 270px);
   --monster-gap: calc((var(--monster-end) - var(--monster-start)) / 8);
 }
 
+/* 1：ゴーレム */
 #trial-ending-golem {
   left: calc(var(--monster-start) + var(--monster-gap) * 1);
 }
 
+/* 2：ミノタウロス */
 #trial-ending-minotaur {
   left: calc(var(--monster-start) + var(--monster-gap) * 2);
 }
 
+/* 3：イエティ */
 #trial-ending-yeti {
   left: calc(var(--monster-start) + var(--monster-gap) * 3);
 }
 
+/* 4：ワーウルフ */
 #trial-ending-werewolf {
   left: calc(var(--monster-start) + var(--monster-gap) * 4);
 }
 
+/* 5：ゴースト */
 #trial-ending-ghost {
   left: calc(var(--monster-start) + var(--monster-gap) * 5);
 }
 
+/* 6：ゴブリン */
 #trial-ending-goblin {
   left: calc(var(--monster-start) + var(--monster-gap) * 6);
 }
 
+/* 7：キノコン */
 #trial-ending-kinokon {
   left: calc(var(--monster-start) + var(--monster-gap) * 7);
 }
