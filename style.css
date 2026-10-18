@@ -5741,3 +5741,8 @@ position: relative;
 #trial-ending-kinokon {
     left: calc(60% + (100vw - 180px - 60%) * 7 / 8);
 }
+
+/* エンディング：ゴーレムだけ少し大きく */
+#trial-ending-golem img {
+    width: 80px;
+}
