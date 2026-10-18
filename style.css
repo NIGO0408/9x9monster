@@ -5671,7 +5671,7 @@ position: relative;
 /* エンディング：スライムのジャンプ */
 
 #trial-ending-slime img {
-  animation: trialSlimeJump 0.4s ease-in-out infinite alternate;
+  animation: trialSlimeJump 0.6s ease-in-out infinite alternate;
 }
 
 @keyframes trialSlimeJump {
@@ -5774,5 +5774,5 @@ position: relative;
 
 /* エンディング：イエティのジャンプ */
 #trial-ending-yeti img {
-  animation: trialSlimeJump 0.7s ease-in-out infinite alternate;
+  animation: trialSlimeJump 0.3s ease-in-out infinite alternate;
 }
