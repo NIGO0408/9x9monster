@@ -5634,7 +5634,7 @@ position: relative;
 #trial-ending-slime {
   position: absolute;
   left: 15%;
-  bottom: 12px;
+  bottom: 20px;
   z-index: 2;
 
   animation: trialSlimeScroll 78s linear forwards;
