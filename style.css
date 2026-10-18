@@ -5714,32 +5714,39 @@ position: relative;
 }
 
 /* ドラゴンとスライムの間を8等分して配置 */
+
+#trial-credits-scroll-world {
+  --monster-start: 60%;
+  --monster-end: calc(100vw - 180px);
+  --monster-gap: calc((var(--monster-end) - var(--monster-start)) / 8);
+}
+
 #trial-ending-golem {
-    left: calc(60% + (100vw - 180px - 60%) * 1.5 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 1);
 }
 
 #trial-ending-minotaur {
-    left: calc(60% + (100vw - 180px - 60%) * 2 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 2);
 }
 
 #trial-ending-yeti {
-    left: calc(60% + (100vw - 180px - 60%) * 3 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 3);
 }
 
 #trial-ending-werewolf {
-    left: calc(60% + (100vw - 180px - 60%) * 4 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 4);
 }
 
 #trial-ending-ghost {
-    left: calc(60% + (100vw - 180px - 60%) * 5 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 5);
 }
 
 #trial-ending-goblin {
-    left: calc(60% + (100vw - 180px - 60%) * 6 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 6);
 }
 
 #trial-ending-kinokon {
-    left: calc(60% + (100vw - 180px - 60%) * 7 / 8);
+  left: calc(var(--monster-start) + var(--monster-gap) * 7);
 }
 
 /* エンディング：ゴーレムだけ少し大きく */
