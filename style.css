@@ -5646,7 +5646,7 @@ position: relative;
 
 #trial-ending-slime {
   position: absolute;
-  left: calc(100vw - 60px);
+  left: calc(100vw - 100px);
   bottom: 20px;
   z-index: 2;
 }
