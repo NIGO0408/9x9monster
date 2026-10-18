@@ -5687,7 +5687,7 @@ position: relative;
 /* エンディング：羽ばたくドラゴン */
 #trial-ending-dragon {
   position: absolute;
-  left: 85%;
+  left: 70%;
   bottom: 38px;
   z-index: 2;
 }
