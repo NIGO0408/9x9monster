@@ -5698,3 +5698,46 @@ position: relative;
   height: auto;
   image-rendering: pixelated;
 }
+
+/* エンディング追加モンスター共通設定 */
+.trial-ending-monster {
+    position: absolute;
+    bottom: 20px;
+    z-index: 2;
+}
+
+.trial-ending-monster img {
+    display: block;
+    width: 45px;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+/* ドラゴンとスライムの間を8等分して配置 */
+#trial-ending-golem {
+    left: calc(60% + (100vw - 180px - 60%) * 1 / 8);
+}
+
+#trial-ending-minotaur {
+    left: calc(60% + (100vw - 180px - 60%) * 2 / 8);
+}
+
+#trial-ending-yeti {
+    left: calc(60% + (100vw - 180px - 60%) * 3 / 8);
+}
+
+#trial-ending-werewolf {
+    left: calc(60% + (100vw - 180px - 60%) * 4 / 8);
+}
+
+#trial-ending-ghost {
+    left: calc(60% + (100vw - 180px - 60%) * 5 / 8);
+}
+
+#trial-ending-goblin {
+    left: calc(60% + (100vw - 180px - 60%) * 6 / 8);
+}
+
+#trial-ending-kinokon {
+    left: calc(60% + (100vw - 180px - 60%) * 7 / 8);
+}
