@@ -5760,3 +5760,14 @@ position: relative;
 #trial-ending-golem img {
     width: 80px;
 }
+
+/* エンディング：中間7体を左へ20px移動 */
+#trial-ending-golem,
+#trial-ending-minotaur,
+#trial-ending-yeti,
+#trial-ending-werewolf,
+#trial-ending-ghost,
+#trial-ending-goblin,
+#trial-ending-kinokon {
+  margin-left: -20px;
+}
