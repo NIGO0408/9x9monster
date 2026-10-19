@@ -5716,31 +5716,31 @@ position: relative;
 /* ドラゴン47%・スライム33%の間に7体を等間隔配置 */
 
 #trial-ending-golem {
-  left: 44.5%;
+  left: 56.625%;
 }
 
 #trial-ending-minotaur {
-  left: 42.8%;
+  left: 53.25%;
 }
 
 #trial-ending-yeti {
-  left: 41.1%;
+  left: 49.875%;
 }
 
 #trial-ending-werewolf {
-  left: 39.4%;
+  left: 46.5%;
 }
 
 #trial-ending-ghost {
-  left: 37.7%;
+  left: 43.125%;
 }
 
 #trial-ending-goblin {
-  left: 36%;
+  left: 39.75%;
 }
 
 #trial-ending-kinokon {
-  left: 34.3%;
+  left: 36.375%;
 }
 
 /* エンディング：ゴーレムだけ少し大きく */
