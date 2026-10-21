@@ -8464,7 +8464,7 @@ if (choice === "4") {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
 
-        showScreen("trial-credits-screen");
+        showTrialCreditsFromStart();
 
         // スタッフロール開始と同じ2秒後にBGMを再生
         setTimeout(() => {
@@ -8489,6 +8489,19 @@ if (choice === "4") {
 
   alert("❌ 無効な番号です。");
 }
+/* 勇者の試練：スタッフロールのアニメーションを毎回先頭から開始 */
+function showTrialCreditsFromStart() {
+  const creditsScreen = document.getElementById("trial-credits-screen");
+  if (!creditsScreen) return;
+
+  // 一度 active を外して描画を確定し、CSSアニメーションを終了させる。
+  creditsScreen.classList.remove("active");
+  void creditsScreen.offsetWidth;
+
+  // 背景・勇者・クレジット・THE END のアニメーションを同時に開始する。
+  showScreen("trial-credits-screen");
+}
+
 /* =========================================================
    開発者モード
    タイトルロゴ5回タップ
@@ -8719,7 +8732,7 @@ async function startTrialEnding() {
   await endingWait(1000);
 
   // 専用スタッフロールへ
-showScreen("trial-credits-screen");
+showTrialCreditsFromStart();
 
 // スタッフロール開始5秒後にエンディングBGMを再生
 const trialEndingBgm = document.getElementById("trial-ending-bgm");
