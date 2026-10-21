@@ -5454,7 +5454,7 @@ position: relative;
 
 /* 背景とモンスターをまとめてスクロール */
 
-#trial-credits-scroll-world {
+#trial-credits-screen.active #trial-credits-scroll-world {
   position: absolute;
   top: 0;
   left: 0;
@@ -5489,7 +5489,7 @@ position: relative;
   }
 }
 /* スタッフロール：歩く勇者 */
-#trial-credits-hero {
+#trial-credits-screen.active #trial-credits-hero {
   position: absolute;
   left: 50%;
   bottom: 6.5vh;
