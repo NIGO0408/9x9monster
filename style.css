@@ -5767,3 +5767,23 @@ position: relative;
   }
 
 }
+
+/* =====================================
+   スマホ版エンディング
+   地上モンスターの足元調整
+===================================== */
+
+@media (max-width: 500px) {
+
+  .trial-ending-monster {
+    bottom: 5px;
+  }
+
+}
+
+/* スマホ版：スライムの接地位置を15px下げる */
+@media (max-width: 500px) {
+  #trial-ending-slime {
+    bottom: 5px;
+  }
+}
