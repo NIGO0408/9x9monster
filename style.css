@@ -5355,16 +5355,32 @@ position: relative;
   font-weight: bold;
 }
 
-.trial-victory-content h1 {
+/* 勇者の試練・完全制覇メインタイトル */
+.trial-victory-content .trial-victory-main-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   margin: 0;
   color: #ffdf70;
-  font-size: clamp(42px, 12vw, 76px);
-  text-shadow: 0 4px 0 #9b6416;
+  font-size: clamp(34px, 8vw, 58px);
+  font-weight: 900;
+  line-height: 1.25;
+  text-shadow:
+    0 4px 0 #9b6416,
+    0 0 22px rgba(255, 210, 80, 0.4);
+  animation: trialVictoryTitleAppear 0.8s ease-out both;
 }
 
-.trial-victory-content h2 {
-  margin: 0;
-  font-size: clamp(20px, 5vw, 30px);
+@keyframes trialVictoryTitleAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .trial-victory-content p {
