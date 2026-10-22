@@ -8741,15 +8741,38 @@ async function startTrialEnding() {
   // 前回の暗転状態をリセット
   victoryScreen.classList.remove("trial-fade-out");
 
-  // VICTORY画面を表示
-  showScreen("trial-victory-screen");
+  // 完全制覇画面を表示
+showScreen("trial-victory-screen");
 
-  // 4秒間表示
-  await endingWait(4000);
+// 専用ファンファーレを最初から再生
+const victoryFanfare = document.getElementById(
+  "trial-victory-fanfare"
+);
 
-  // 1秒かけて暗転
-  victoryScreen.classList.add("trial-fade-out");
-  await endingWait(1000);
+if (victoryFanfare) {
+  victoryFanfare.pause();
+  victoryFanfare.currentTime = 0;
+  victoryFanfare.volume = 0.5;
+
+  if (bgmEnabled) {
+    victoryFanfare.play().catch(err => {
+      console.warn("ファンファーレ再生失敗:", err);
+    });
+  }
+}
+
+// 9秒間表示
+await endingWait(9000);
+
+// 1秒かけて暗転
+victoryScreen.classList.add("trial-fade-out");
+await endingWait(1000);
+
+// 念のためファンファーレを停止
+if (victoryFanfare) {
+  victoryFanfare.pause();
+  victoryFanfare.currentTime = 0;
+}
 
   // 専用スタッフロールへ
 showTrialCreditsFromStart();
