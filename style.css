@@ -5481,7 +5481,7 @@ position: relative;
 
 @keyframes trialLandscapeScroll {
   from {
-  transform: translateX(calc(100vw - 100% - 200px));
+  transform: translateX(calc(100vw - 100% - 320px));
 }
 
   to {
