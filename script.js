@@ -8494,12 +8494,32 @@ function showTrialCreditsFromStart() {
   const creditsScreen = document.getElementById("trial-credits-screen");
   if (!creditsScreen) return;
 
-  // 一度 active を外して描画を確定し、CSSアニメーションを終了させる。
-  creditsScreen.classList.remove("active");
-  void creditsScreen.offsetWidth;
+  // エンディングに属するCSSアニメーションを、前回の途中状態も含めて解除する。
+  // 位置・時間・モンスター設定には一切触れない。
+  const animatedParts = [
+    creditsScreen,
+    document.getElementById("trial-credits-scroll-world"),
+    document.getElementById("trial-credits-hero"),
+    document.getElementById("trial-credits-content"),
+    document.getElementById("trial-ending-the-end")
+  ].filter(Boolean);
 
-  // 背景・勇者・クレジット・THE END のアニメーションを同時に開始する。
+  // アニメーションを明示的に無効化してから画面を表示する。
+  animatedParts.forEach(part => {
+    part.style.animation = "none";
+  });
   showScreen("trial-credits-screen");
+
+  // 「表示中・アニメーションなし」の状態をブラウザに確定させる。
+  void creditsScreen.offsetWidth;
+  animatedParts.forEach(part => {
+    void getComputedStyle(part).animationName;
+  });
+
+  // CSSの元のアニメーションを戻すと、必ず先頭から新規開始する。
+  animatedParts.forEach(part => {
+    part.style.removeProperty("animation");
+  });
 }
 
 /* =========================================================
