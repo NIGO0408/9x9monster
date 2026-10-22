@@ -5747,3 +5747,23 @@ position: relative;
 #trial-ending-golem img {
     width: 80px;
 }
+
+/* ========================================
+   勇者の試練：スマホ版エンディング調整
+   PC版には影響しない
+======================================== */
+
+@media (max-width: 500px) {
+
+  /* スマホ版だけ背景の開始位置を調整 */
+  @keyframes trialLandscapeScroll {
+    from {
+      transform: translateX(calc(100vw - 100%));
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+}
