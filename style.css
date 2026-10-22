@@ -5775,10 +5775,10 @@ position: relative;
 
 @media (max-width: 500px) {
   .trial-ending-monster {
-    bottom: 15px;
+    bottom: 12px;
   }
 
   #trial-ending-slime {
-    bottom: 15px;
+    bottom: 12px;
   }
 }
