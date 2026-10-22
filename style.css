@@ -5774,16 +5774,11 @@ position: relative;
 ===================================== */
 
 @media (max-width: 500px) {
-
   .trial-ending-monster {
-    bottom: 5px;
+    bottom: 15px;
   }
 
-}
-
-/* スマホ版：スライムの接地位置を15px下げる */
-@media (max-width: 500px) {
   #trial-ending-slime {
-    bottom: 5px;
+    bottom: 15px;
   }
 }
