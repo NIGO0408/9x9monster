@@ -5784,11 +5784,11 @@ position: relative;
 
 /* 最終演出：CSSで確実に表示・暗転 */
 #trial-credits-screen.active #trial-ending-the-end {
-  animation: trialFinalShow 1.5s ease 90s forwards !important;
+  animation: trialFinalShow 1.5s ease 96s forwards !important;
 }
 
 #trial-credits-screen.active {
-  animation: trialFinalFade 2s ease 92s forwards;
+  animation: trialFinalFade 2s ease 98s forwards;
 }
 
 @keyframes trialFinalShow {
