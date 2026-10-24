@@ -5626,15 +5626,15 @@ position: relative;
 
 /* スタッフロール画面が表示されたら演出開始 */
 #trial-credits-screen.active #trial-ending-the-end {
-  animation: trialTheEndSequence 100s linear forwards;
+  animation: trialTheEndSequence 90s linear forwards;
 }
 
 @keyframes trialTheEndSequence {
-  0%, 85% {
+  0%, 93% {
     opacity: 0;
   }
 
-  88%, 94% {
+  95%, 99% {
     opacity: 1;
   }
 
@@ -5645,11 +5645,11 @@ position: relative;
 
 /* 背景を含む画面全体を最後に暗転 */
 #trial-credits-screen.active {
-  animation: trialFinalFadeOut 100s linear forwards;
+  animation: trialFinalFadeOut 90s linear forwards;
 }
 
 @keyframes trialFinalFadeOut {
-  0%, 94% {
+  0%, 98% {
     opacity: 1;
   }
 
