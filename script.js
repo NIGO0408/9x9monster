@@ -8752,7 +8752,7 @@ const victoryFanfare = document.getElementById(
 if (victoryFanfare) {
   victoryFanfare.pause();
   victoryFanfare.currentTime = 0;
-  victoryFanfare.volume = 0.5;
+  victoryFanfare.volume = 0.4;
 
   if (bgmEnabled) {
     victoryFanfare.play().catch(err => {
