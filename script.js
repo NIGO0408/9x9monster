@@ -8789,8 +8789,7 @@ if (creditsScreen) {
   let unlockScreenShown = false;
 
   const showInfiniteCorridorUnlock = () => {
-    if (unlockScreenShown) return;
-    if (!creditsScreen.classList.contains("active")) return;
+   if (!creditsScreen) return;
 
     unlockScreenShown = true;
     creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
