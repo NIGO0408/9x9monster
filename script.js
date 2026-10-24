@@ -8787,45 +8787,36 @@ if (trialEndingBgm) {
   const creditsScreen = document.getElementById("trial-credits-screen");
   const theEnd = document.getElementById("trial-ending-the-end");
 
-  if (creditsScreen && theEnd) {
-    creditsScreen.classList.remove(
-      "trial-show-the-end",
-      "trial-ending-fade-out"
-    );
-
-    const showTheEndNearFinish = () => {
-      if (
-        trialEndingBgm.duration &&
-        trialEndingBgm.currentTime >= trialEndingBgm.duration - 5
-      ) {
-        creditsScreen.classList.add("trial-show-the-end");
-      }
-    };
-
-    trialEndingBgm.addEventListener(
-      "timeupdate",
-      showTheEndNearFinish
-    );
-
-    trialEndingBgm.addEventListener("ended", () => {
-      trialEndingBgm.removeEventListener(
-        "timeupdate",
-        showTheEndNearFinish
+ 
+    if (creditsScreen && theEnd) {
+      creditsScreen.classList.remove(
+        "trial-show-the-end",
+        "trial-ending-fade-out"
       );
 
-      creditsScreen.classList.add("trial-ending-fade-out");
-    }, { once: true });
-  }
+      // BGMの再生開始から85秒後にTHE ENDを表示
+      const theEndTimer = setTimeout(() => {
+        if (creditsScreen.classList.contains("active")) {
+          creditsScreen.classList.add("trial-show-the-end");
+        }
+      }, 85000);
 
-  setTimeout(() => {
-    if (
-      creditsScreen &&
-      creditsScreen.classList.contains("active")
-    ) {
-      trialEndingBgm.play().catch(err => {
-        console.warn("エンディングBGMを再生できませんでした:", err);
-      });
+      // BGM終了時に暗転
+      trialEndingBgm.addEventListener("ended", () => {
+        clearTimeout(theEndTimer);
+        creditsScreen.classList.add("trial-ending-fade-out");
+      }, { once: true });
     }
-  }, 2000);
-}
+
+    setTimeout(() => {
+      if (
+        creditsScreen &&
+        creditsScreen.classList.contains("active")
+      ) {
+        trialEndingBgm.play().catch(err => {
+          console.warn("エンディングBGMを再生できませんでした:", err);
+        });
+      }
+    }, 2000);
+  }
 }
