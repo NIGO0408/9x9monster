@@ -8774,25 +8774,26 @@ if (victoryFanfare) {
   victoryFanfare.currentTime = 0;
 }
 
-  // 専用スタッフロールへ
+// 専用スタッフロールへ
 showTrialCreditsFromStart();
 
-// スタッフロール開始5秒後にエンディングBGMを再生
 const trialEndingBgm = document.getElementById("trial-ending-bgm");
 
 if (trialEndingBgm) {
   trialEndingBgm.pause();
   trialEndingBgm.currentTime = 0;
-   trialEndingBgm.volume = 0.4;
+  trialEndingBgm.volume = 0.6;
 
   setTimeout(() => {
     const creditsScreen = document.getElementById("trial-credits-screen");
 
-    if (creditsScreen && creditsScreen.classList.contains("active")) {
+    if (
+      creditsScreen &&
+      creditsScreen.classList.contains("active")
+    ) {
       trialEndingBgm.play().catch(err => {
         console.warn("エンディングBGMを再生できませんでした:", err);
       });
     }
   }, 2000);
-}
 }
