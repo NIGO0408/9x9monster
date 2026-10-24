@@ -8782,15 +8782,29 @@ showTrialCreditsFromStart();
   const theEnd = document.getElementById("trial-ending-the-end");
   const hero = document.getElementById("trial-credits-hero");
 
-  // 既存の暗転アニメーションが完全に終了した後だけ、独立した解放画面へ移動する。
-  // trialFinalFade の設定・既存エンディングの演出や時間は変更しない。
+  // 既存の暗転アニメーション終了後に、独立した解放画面へ移動する。
+  // 既存の trialFinalFade の設定・エンディング演出・時間は変更しない。
   if (creditsScreen) {
-    const onTrialFinalFadeEnd = (event) => {
-      if (event.animationName !== "trialFinalFade") return;
+    let unlockScreenShown = false;
+
+    const showInfiniteCorridorUnlock = () => {
+      if (unlockScreenShown) return;
+      if (!creditsScreen.classList.contains("active")) return;
+      unlockScreenShown = true;
       creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
       showScreen("infinite-corridor-unlock-screen");
     };
+
+    const onTrialFinalFadeEnd = (event) => {
+      if (event.animationName !== "trialFinalFade") return;
+      showInfiniteCorridorUnlock();
+    };
+
     creditsScreen.addEventListener("animationend", onTrialFinalFadeEnd);
+
+    // animationend がブラウザ側で拾われない場合の保険。
+    // 暗転開始98秒＋暗転2秒＝100秒なので、1秒余裕を見て切り替える。
+    setTimeout(showInfiniteCorridorUnlock, 101000);
   }
 
   if (trialEndingBgm) {
