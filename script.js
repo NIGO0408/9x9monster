@@ -8784,28 +8784,29 @@ showTrialCreditsFromStart();
 
   // 既存の暗転アニメーション終了後に、独立した解放画面へ移動する。
   // 既存の trialFinalFade の設定・エンディング演出・時間は変更しない。
-  if (creditsScreen) {
-    let unlockScreenShown = false;
+  
+if (creditsScreen) {
+  let unlockScreenShown = false;
 
-    const showInfiniteCorridorUnlock = () => {
-      if (unlockScreenShown) return;
-      if (!creditsScreen.classList.contains("active")) return;
-      unlockScreenShown = true;
-      creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
-      showScreen("infinite-corridor-unlock-screen");
-    };
+  const showInfiniteCorridorUnlock = () => {
+    if (unlockScreenShown) return;
+    if (!creditsScreen.classList.contains("active")) return;
 
-    const onTrialFinalFadeEnd = (event) => {
-      if (event.animationName !== "trialFinalFade") return;
-      showInfiniteCorridorUnlock();
-    };
+    unlockScreenShown = true;
+    creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
+    showScreen("infinite-corridor-unlock-screen");
+  };
 
-    creditsScreen.addEventListener("animationend", onTrialFinalFadeEnd);
+  const onTrialFinalFadeEnd = (event) => {
+    if (event.animationName !== "trialFinalFade") return;
+    showInfiniteCorridorUnlock();
+  };
 
-    // animationend がブラウザ側で拾われない場合の保険。
-    // 暗転開始98秒＋暗転2秒＝100秒なので、1秒余裕を見て切り替える。
-    setTimeout(showInfiniteCorridorUnlock, 101000);
-  }
+  creditsScreen.addEventListener("animationend", onTrialFinalFadeEnd);
+
+  // 暗転終了イベントが発生しない場合の予備処理
+  setTimeout(showInfiniteCorridorUnlock, 101000);
+}
 
   if (trialEndingBgm) {
     trialEndingBgm.pause();
