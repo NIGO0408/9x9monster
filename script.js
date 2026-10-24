@@ -4828,6 +4828,32 @@ container.appendChild(heart);
   );
 }
 
+  // スマホ向け：ファンファーレ音声の再生を事前に許可しておく
+  const fanfareUnlock = document.getElementById(
+    "trial-victory-fanfare"
+  );
+
+  if (
+    fanfareUnlock &&
+    fanfareUnlock.dataset.mobileUnlocked !== "true"
+  ) {
+    const originalMuted = fanfareUnlock.muted;
+    fanfareUnlock.muted = true;
+
+    const unlockPromise = fanfareUnlock.play();
+
+    if (unlockPromise && typeof unlockPromise.then === "function") {
+      unlockPromise.then(() => {
+        fanfareUnlock.pause();
+        fanfareUnlock.currentTime = 0;
+        fanfareUnlock.muted = originalMuted;
+        fanfareUnlock.dataset.mobileUnlocked = "true";
+      }).catch(() => {
+        fanfareUnlock.muted = originalMuted;
+      });
+    }
+  }
+
 /* ========================================
    勇者の試練：回答判定
 ======================================== */
