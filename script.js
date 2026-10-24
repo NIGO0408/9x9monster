@@ -8783,6 +8783,7 @@ const trialEndingBgm = document.getElementById("trial-ending-bgm");
 if (trialEndingBgm) {
   trialEndingBgm.pause();
   trialEndingBgm.currentTime = 0;
+   trialEndingBgm.volume = 0.8;
 
   setTimeout(() => {
     const creditsScreen = document.getElementById("trial-credits-screen");
