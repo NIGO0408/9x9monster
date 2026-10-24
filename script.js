@@ -8777,46 +8777,38 @@ if (victoryFanfare) {
 // 専用スタッフロールへ
 showTrialCreditsFromStart();
 
-const trialEndingBgm = document.getElementById("trial-ending-bgm");
 
-if (trialEndingBgm) {
-  trialEndingBgm.pause();
-  trialEndingBgm.currentTime = 0;
-  trialEndingBgm.volume = 0.6;
+  const trialEndingBgm = document.getElementById("trial-ending-bgm");
+  if (trialEndingBgm) {
+    trialEndingBgm.pause();
+    trialEndingBgm.currentTime = 0;
+    trialEndingBgm.volume = 0.6;
+  }
 
   const creditsScreen = document.getElementById("trial-credits-screen");
   const theEnd = document.getElementById("trial-ending-the-end");
 
- 
-    if (creditsScreen && theEnd) {
-      creditsScreen.classList.remove(
-        "trial-show-the-end",
-        "trial-ending-fade-out"
-      );
-
-      // BGMの再生開始から85秒後にTHE ENDを表示
-      const theEndTimer = setTimeout(() => {
-        if (creditsScreen.classList.contains("active")) {
-          creditsScreen.classList.add("trial-show-the-end");
-        }
-      }, 85000);
-
-      // BGM終了時に暗転
-      trialEndingBgm.addEventListener("ended", () => {
-        clearTimeout(theEndTimer);
-        creditsScreen.classList.add("trial-ending-fade-out");
-      }, { once: true });
-    }
+  if (creditsScreen && theEnd) {
+    creditsScreen.classList.remove(
+      "trial-show-the-end",
+      "trial-ending-fade-out"
+    );
 
     setTimeout(() => {
-      if (
-        creditsScreen &&
-        creditsScreen.classList.contains("active")
-      ) {
-        trialEndingBgm.play().catch(err => {
-          console.warn("エンディングBGMを再生できませんでした:", err);
-        });
-      }
-    }, 2000);
+      theEnd.style.opacity = "1";
+    }, 87000);
+
+    setTimeout(() => {
+      creditsScreen.style.transition = "opacity 2s ease";
+      creditsScreen.style.opacity = "0";
+    }, 92000);
   }
+
+  setTimeout(() => {
+    if (creditsScreen && trialEndingBgm) {
+      trialEndingBgm.play().catch(err => {
+        console.warn("エンディングBGMを再生できませんでした:", err);
+      });
+    }
+  }, 2000);
 }
