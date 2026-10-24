@@ -8784,9 +8784,40 @@ if (trialEndingBgm) {
   trialEndingBgm.currentTime = 0;
   trialEndingBgm.volume = 0.6;
 
-  setTimeout(() => {
-    const creditsScreen = document.getElementById("trial-credits-screen");
+  const creditsScreen = document.getElementById("trial-credits-screen");
+  const theEnd = document.getElementById("trial-ending-the-end");
 
+  if (creditsScreen && theEnd) {
+    creditsScreen.classList.remove(
+      "trial-show-the-end",
+      "trial-ending-fade-out"
+    );
+
+    const showTheEndNearFinish = () => {
+      if (
+        trialEndingBgm.duration &&
+        trialEndingBgm.currentTime >= trialEndingBgm.duration - 5
+      ) {
+        creditsScreen.classList.add("trial-show-the-end");
+      }
+    };
+
+    trialEndingBgm.addEventListener(
+      "timeupdate",
+      showTheEndNearFinish
+    );
+
+    trialEndingBgm.addEventListener("ended", () => {
+      trialEndingBgm.removeEventListener(
+        "timeupdate",
+        showTheEndNearFinish
+      );
+
+      creditsScreen.classList.add("trial-ending-fade-out");
+    }, { once: true });
+  }
+
+  setTimeout(() => {
     if (
       creditsScreen &&
       creditsScreen.classList.contains("active")
@@ -8796,5 +8827,4 @@ if (trialEndingBgm) {
       });
     }
   }, 2000);
-}
 }
