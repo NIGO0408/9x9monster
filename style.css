@@ -5624,38 +5624,20 @@ position: relative;
   opacity: 0;
 }
 
-/* スタッフロール画面が表示されたら演出開始 */
-#trial-credits-screen.active #trial-ending-the-end {
-  animation: trialTheEndSequence 90s linear forwards;
+/* THE END：BGMの再生位置に合わせて表示 */
+#trial-ending-the-end {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
 }
 
-@keyframes trialTheEndSequence {
-  0%, 93% {
-    opacity: 0;
-  }
-
-  95%, 99% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
+#trial-credits-screen.trial-show-the-end #trial-ending-the-end {
+  opacity: 1;
 }
 
-/* 背景を含む画面全体を最後に暗転 */
-#trial-credits-screen.active {
-  animation: trialFinalFadeOut 90s linear forwards;
-}
-
-@keyframes trialFinalFadeOut {
-  0%, 98% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
+/* BGM終了後に画面を暗転 */
+#trial-credits-screen.trial-ending-fade-out {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
 }
 
 /* 勇者の試練：エンディング登場モンスター（テスト） */
