@@ -8785,30 +8785,35 @@ showTrialCreditsFromStart();
     trialEndingBgm.volume = 0.6;
   }
 
+ 
   const creditsScreen = document.getElementById("trial-credits-screen");
   const theEnd = document.getElementById("trial-ending-the-end");
+  const hero = document.getElementById("trial-credits-hero");
 
-  if (creditsScreen && theEnd) {
+  if (creditsScreen && theEnd && hero) {
     creditsScreen.classList.remove(
       "trial-show-the-end",
       "trial-ending-fade-out"
     );
 
-    setTimeout(() => {
+    // 前回の演出状態をリセット
+    creditsScreen.style.opacity = "1";
+    creditsScreen.style.transition = "";
+    theEnd.style.opacity = "0";
+
+    // 勇者が歩き終わった瞬間にTHE ENDを表示
+    hero.addEventListener("animationend", function onHeroWalkEnd(event) {
+      if (event.animationName !== "trialHeroWalkAway") return;
+
+      hero.removeEventListener("animationend", onHeroWalkEnd);
+
+      theEnd.style.transition = "opacity 1.5s ease-in-out";
       theEnd.style.opacity = "1";
-    }, 87000);
 
-    setTimeout(() => {
-      creditsScreen.style.transition = "opacity 2s ease";
-      creditsScreen.style.opacity = "0";
-    }, 92000);
+      // THE END表示後、2秒かけて暗転
+      setTimeout(() => {
+        creditsScreen.style.transition = "opacity 2s ease-in-out";
+        creditsScreen.style.opacity = "0";
+      }, 2000);
+    });
   }
-
-  setTimeout(() => {
-    if (creditsScreen && trialEndingBgm) {
-      trialEndingBgm.play().catch(err => {
-        console.warn("エンディングBGMを再生できませんでした:", err);
-      });
-    }
-  }, 2000);
-}
