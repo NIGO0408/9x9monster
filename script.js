@@ -8782,6 +8782,17 @@ showTrialCreditsFromStart();
   const theEnd = document.getElementById("trial-ending-the-end");
   const hero = document.getElementById("trial-credits-hero");
 
+  // 既存の暗転アニメーションが完全に終了した後だけ、独立した解放画面へ移動する。
+  // trialFinalFade の設定・既存エンディングの演出や時間は変更しない。
+  if (creditsScreen) {
+    const onTrialFinalFadeEnd = (event) => {
+      if (event.animationName !== "trialFinalFade") return;
+      creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
+      showScreen("infinite-corridor-unlock-screen");
+    };
+    creditsScreen.addEventListener("animationend", onTrialFinalFadeEnd);
+  }
+
   if (trialEndingBgm) {
     trialEndingBgm.pause();
     trialEndingBgm.currentTime = 0;
