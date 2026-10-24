@@ -8797,3 +8797,4 @@ if (trialEndingBgm) {
     }
   }, 2000);
 }
+}
