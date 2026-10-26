@@ -8782,30 +8782,36 @@ showTrialCreditsFromStart();
   const theEnd = document.getElementById("trial-ending-the-end");
   const hero = document.getElementById("trial-credits-hero");
 
-  // 既存の暗転アニメーション終了後に、独立した解放画面へ移動する。
-  // 既存の trialFinalFade の設定・エンディング演出・時間は変更しない。
-  
-if (creditsScreen) {
-  let unlockScreenShown = false;
+  // スタッフロール開始から98秒後に暗転開始、100秒後に暗転完了。
+  // animationend に依存せず、暗転が終わってから一度だけ解放画面へ切り替える。
+  if (creditsScreen) {
+    const creditsStartTime = performance.now();
+    const unlockDelayMs = 100500; // 暗転完了（100秒）＋表示安定用0.5秒
 
-  const showInfiniteCorridorUnlock = () => {
-   if (!creditsScreen) return;
+    setTimeout(() => {
+      // エンディングから別画面へ移動していた場合は割り込まない。
+      if (!creditsScreen.classList.contains("active")) return;
 
-    unlockScreenShown = true;
-    creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
-    showScreen("infinite-corridor-unlock-screen");
-  };
+      const unlockScreen = document.getElementById("infinite-corridor-unlock-screen");
+      if (!unlockScreen) {
+        console.error("無限回廊の解放画面が見つかりません");
+        return;
+      }
 
-  const onTrialFinalFadeEnd = (event) => {
-    if (event.animationName !== "trialFinalFadeOut") return;
-    showInfiniteCorridorUnlock();
-  };
+      // 次の画面を表示する前に、エンディングBGMを停止する。
+      const endingBgm = document.getElementById("trial-ending-bgm");
+      if (endingBgm) {
+        endingBgm.pause();
+        endingBgm.currentTime = 0;
+      }
 
-  creditsScreen.addEventListener("animationend", onTrialFinalFadeEnd);
-
-  // 暗転終了イベントが発生しない場合の予備処理
-  setTimeout(showInfiniteCorridorUnlock, 101000);
-}
+      showScreen("infinite-corridor-unlock-screen");
+      console.info("無限回廊解放画面へ切り替えました", {
+        elapsedMs: Math.round(performance.now() - creditsStartTime),
+        active: unlockScreen.classList.contains("active")
+      });
+    }, unlockDelayMs);
+  }
 
   if (trialEndingBgm) {
     trialEndingBgm.pause();
