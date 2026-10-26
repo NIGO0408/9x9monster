@@ -8782,35 +8782,29 @@ showTrialCreditsFromStart();
   const theEnd = document.getElementById("trial-ending-the-end");
   const hero = document.getElementById("trial-credits-hero");
 
-  // スタッフロール開始から98秒後に暗転開始、100秒後に暗転完了。
-  // animationend に依存せず、暗転が終わってから一度だけ解放画面へ切り替える。
+  // 無限回廊への遷移は、CSSアニメーション名ではなく、
+  // 実際にTHE ENDを表示して暗転させる処理を基準に実行する。
+  // 予備タイマーも残し、二重実行を防ぐ。
+  let unlockScreenShown = false;
+  const showInfiniteCorridorUnlock = () => {
+    if (unlockScreenShown) return;
+    unlockScreenShown = true;
+
+    if (creditsScreen) {
+      creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
+    }
+    showScreen("infinite-corridor-unlock-screen");
+  };
+
+  const onTrialFinalFadeEnd = (event) => {
+    if (event.animationName !== "trialFinalFade") return;
+    showInfiniteCorridorUnlock();
+  };
+
   if (creditsScreen) {
-    const creditsStartTime = performance.now();
-    const unlockDelayMs = 100500; // 暗転完了（100秒）＋表示安定用0.5秒
-
-    setTimeout(() => {
-      // エンディングから別画面へ移動していた場合は割り込まない。
-      if (!creditsScreen.classList.contains("active")) return;
-
-      const unlockScreen = document.getElementById("infinite-corridor-unlock-screen");
-      if (!unlockScreen) {
-        console.error("無限回廊の解放画面が見つかりません");
-        return;
-      }
-
-      // 次の画面を表示する前に、エンディングBGMを停止する。
-      const endingBgm = document.getElementById("trial-ending-bgm");
-      if (endingBgm) {
-        endingBgm.pause();
-        endingBgm.currentTime = 0;
-      }
-
-      showScreen("infinite-corridor-unlock-screen");
-      console.info("無限回廊解放画面へ切り替えました", {
-        elapsedMs: Math.round(performance.now() - creditsStartTime),
-        active: unlockScreen.classList.contains("active")
-      });
-    }, unlockDelayMs);
+    creditsScreen.addEventListener("animationend", onTrialFinalFadeEnd);
+    // 最終フェードのCSSイベントが届かない場合の予備処理
+    setTimeout(showInfiniteCorridorUnlock, 101000);
   }
 
   if (trialEndingBgm) {
@@ -8838,6 +8832,10 @@ showTrialCreditsFromStart();
       setTimeout(() => {
         creditsScreen.style.transition = "opacity 2s ease-in-out";
         creditsScreen.style.opacity = "0";
+
+        // インラインの暗転が完了した時点で解放画面へ切り替える。
+        // CSSのanimationendが発火しない環境でも白画面を残さない。
+        setTimeout(showInfiniteCorridorUnlock, 2100);
       }, 2000);
     });
   }
