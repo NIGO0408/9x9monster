@@ -8465,6 +8465,10 @@ if (choice === "4") {
       requestAnimationFrame(() => {
 
         showTrialCreditsFromStart();
+         // 開発者モード専用：スタッフロール終了後に無限回廊を表示
+setTimeout(() => {
+  showScreen("infinite-corridor-unlock-screen");
+}, 101000);
 
         // スタッフロール開始と同じ2秒後にBGMを再生
         setTimeout(() => {
