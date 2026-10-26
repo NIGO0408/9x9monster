@@ -661,6 +661,82 @@ function el(id) {
    画面切り替え
    ========================================================= */
 
+// 無限回廊解放時の短い魔法音（Web Audio API）
+let infiniteCorridorAudioContext = null;
+
+function playInfiniteCorridorMagicSound() {
+  try {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    if (!infiniteCorridorAudioContext) {
+      infiniteCorridorAudioContext = new AudioContextClass();
+    }
+
+    const ctx = infiniteCorridorAudioContext;
+
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
+
+    const now = ctx.currentTime;
+
+    // 神秘的に上昇する魔法音
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(520, now);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      1250, now + 0.45
+    );
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(
+      0.12, now + 0.08
+    );
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001, now + 0.75
+    );
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.8);
+
+    // 最後にキラリン音を重ねる
+    const sparkle = ctx.createOscillator();
+    const sparkleGain = ctx.createGain();
+
+    sparkle.type = "sine";
+    sparkle.frequency.setValueAtTime(1600, now + 0.35);
+    sparkle.frequency.exponentialRampToValueAtTime(
+      2200, now + 0.65
+    );
+
+    sparkleGain.gain.setValueAtTime(0.0001, now);
+    sparkleGain.gain.setValueAtTime(0.0001, now + 0.35);
+    sparkleGain.gain.exponentialRampToValueAtTime(
+      0.07, now + 0.42
+    );
+    sparkleGain.gain.exponentialRampToValueAtTime(
+      0.0001, now + 0.9
+    );
+
+    sparkle.connect(sparkleGain);
+    sparkleGain.connect(ctx.destination);
+
+    sparkle.start(now + 0.35);
+    sparkle.stop(now + 0.95);
+
+  } catch (error) {
+    console.warn("魔法効果音の再生に失敗しました:", error);
+  }
+}
+
 function showScreen(id) {
 
   /*
@@ -696,6 +772,10 @@ function showScreen(id) {
 
 
   target.classList.add("active");
+
+   if (id === "infinite-corridor-unlock-screen") {
+  playInfiniteCorridorMagicSound();
+}
 
 updateBgmForScreen(id)
  
