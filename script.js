@@ -8797,7 +8797,7 @@ if (creditsScreen) {
   };
 
   const onTrialFinalFadeEnd = (event) => {
-    if (event.animationName !== "trialFinalFade") return;
+    if (event.animationName !== "trialFinalFadeOut") return;
     showInfiniteCorridorUnlock();
   };
 
