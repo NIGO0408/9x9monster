@@ -5926,13 +5926,3 @@ position: relative;
     font-size: 18px;
   }
 }
-/* =========================================
-   通常4ステージ：背景の下部表示領域を統一
-   上部の位置・拡大率・勇者の試練には影響させない
-========================================= */
-@media (max-width: 500px) {
-  #battle-screen:not(.trial-battle) {
-    min-height: 100vh;
-    padding-bottom: 10px;
-  }
-}
