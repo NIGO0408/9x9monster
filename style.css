@@ -5528,7 +5528,7 @@ position: relative;
   transform: translateX(-50%);
   z-index: 2;
 
- animation: trialHeroWalkAway 7s linear 83s forwards;
+ animation: trialHeroWalkAway 7s linear 0s paused forwards;
 }
 
 @keyframes trialHeroWalkAway {
