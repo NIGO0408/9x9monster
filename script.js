@@ -514,6 +514,9 @@ let castleBattleMonsterId = null;
 // 勇者の試練の解放状態
 let trialUnlocked = false;
 
+// 無限回廊の解放状態
+let infiniteCorridorUnlocked = false;
+
 let currentAdventureStage = "forest";
 
 // 敵図鑑データ
