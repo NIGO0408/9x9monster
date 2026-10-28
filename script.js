@@ -4065,64 +4065,66 @@ const battleScreen =
 
 if (battleScreen) {
 
- if (currentAdventureStage === "lake") {
 
-  battleScreen.style.backgroundImage =
-    'url("images/battle_lake.png")';
+if (battleScreen) {
+  const isMobileBackground =
+    window.matchMedia("(max-width: 500px)").matches;
 
-  battleScreen.classList.add("lake-battle");
-  battleScreen.classList.remove(
-    "volcano-battle",
-    "castle-battle"
-  );
+  if (currentAdventureStage === "lake") {
+    battleScreen.style.backgroundImage =
+      'url("images/battle_lake.png")';
 
+    battleScreen.classList.add("lake-battle");
+    battleScreen.classList.remove(
+      "volcano-battle",
+      "castle-battle"
+    );
+  }
+  else if (currentAdventureStage === "volcano") {
+    battleScreen.style.backgroundImage = isMobileBackground
+      ? 'url("images/battle_volcano_sp.png")'
+      : 'url("images/battle_volcano.png")';
+
+    battleScreen.classList.add("volcano-battle");
+    battleScreen.classList.remove(
+      "lake-battle",
+      "castle-battle"
+    );
+  }
+  else if (currentAdventureStage === "castle") {
+    if (currentBattleNumber === 6) {
+      battleScreen.style.backgroundImage = isMobileBackground
+        ? 'url("images/battle_castle_boss_sp.png")'
+        : 'url("images/battle_castle_boss.png")';
+
+      battleScreen.classList.add("castle-boss-battle");
+    } else {
+      battleScreen.style.backgroundImage = isMobileBackground
+        ? 'url("images/battle_castle_sp.png")'
+        : 'url("images/battle_castle.png")';
+
+      battleScreen.classList.remove("castle-boss-battle");
+    }
+
+    battleScreen.classList.add("castle-battle");
+    battleScreen.classList.remove(
+      "lake-battle",
+      "volcano-battle"
+    );
+  }
+  else {
+    battleScreen.style.backgroundImage =
+      'url("images/battle_forest.png")';
+
+    battleScreen.classList.remove(
+      "lake-battle",
+      "volcano-battle",
+      "castle-battle",
+      "castle-boss-battle"
+    );
+  }
 }
-else if (currentAdventureStage === "volcano") {
 
-  battleScreen.style.backgroundImage =
-    'url("images/battle_volcano.png")';
-
-  battleScreen.classList.add("volcano-battle");
-  battleScreen.classList.remove(
-    "lake-battle",
-    "castle-battle"
-  );
-
-}
-else if (currentAdventureStage === "castle") {
-
-  battleScreen.style.backgroundImage =
-  currentBattleNumber === 6
-    ? 'url("images/battle_castle_boss.png")'
-    : 'url("images/battle_castle.png")';
-
-  battleScreen.classList.add("castle-battle");
-
-if (currentBattleNumber === 6) {
-  battleScreen.classList.add("castle-boss-battle");
-} else {
-  battleScreen.classList.remove("castle-boss-battle");
-}
-
-battleScreen.classList.remove(
-  "lake-battle",
-  "volcano-battle"
-);
-
-}
-else {
-
-  battleScreen.style.backgroundImage =
-    'url("images/battle_forest.png")';
-
-  battleScreen.classList.remove(
-    "lake-battle",
-    "volcano-battle",
-    "castle-battle"
-  );
-
-}
-}
    
   /*
      味方HP
