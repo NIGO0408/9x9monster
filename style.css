@@ -4954,6 +4954,22 @@ position: relative;
     width: calc((100% - 12px) / 2);
   }
 }
+
+
+/* 無限回廊：解放前は非表示 */
+#infinite-corridor-area[hidden] {
+  display: none !important;
+}
+
+/* 無限回廊：PC版も中央配置 */
+@media screen and (min-width: 769px) {
+  #infinite-corridor-area {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 12px) / 2);
+  }
+}
+
 /* =========================================
    勇者の試練：専用バトル背景
 ========================================= */
