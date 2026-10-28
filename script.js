@@ -8491,51 +8491,12 @@ if (choice === "4") {
     return;
   }
    
-   /* 7：勇者の試練 エンディング確認 */
+     /* 7：勇者の試練 エンディング確認 */
   if (choice === "7") {
-
-    // エンディングBGMを初期化
-    const endingBgm = document.getElementById("trial-ending-bgm");
-
-    if (endingBgm) {
-      endingBgm.pause();
-      endingBgm.currentTime = 0;
-    }
-
-    // 一度画面を非表示にしてアニメーションをリセット
-    showScreen("title-screen");
-
-    // 次の描画タイミングでスタッフロールを開始
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-
-        showTrialCreditsFromStart();
-         // 開発者モード専用：スタッフロール終了後に無限回廊を表示
-setTimeout(() => {
-  showScreen("infinite-corridor-unlock-screen");
-}, 101000);
-
-        // スタッフロール開始と同じ2秒後にBGMを再生
-        setTimeout(() => {
-          const creditsScreen = document.getElementById("trial-credits-screen");
-
-          if (
-            endingBgm &&
-            creditsScreen &&
-            creditsScreen.classList.contains("active")
-          ) {
-            endingBgm.play().catch(err => {
-              console.warn("エンディングBGM再生失敗:", err);
-            });
-          }
-        }, 2000);
-
-      });
-    });
-
+    startTrialEnding();
     return;
   }
-
+     
   alert("❌ 無効な番号です。");
 }
 /* 勇者の試練：スタッフロールのアニメーションを毎回先頭から開始 */
