@@ -8837,21 +8837,25 @@ async function startTrialEnding() {
   };
 
   const startHeroWalk = () => {
-    if (heroWalkStarted) return;
-    heroWalkStarted = true;
-    if (heroWalkTimer) clearTimeout(heroWalkTimer);
-    if (!hero) return;
+  if (heroWalkStarted || !hero) return;
+  heroWalkStarted = true;
 
-    // 既存CSSの83秒ディレイを確実に上書きし、スクロール終了時に即移動。
-    hero.style.setProperty("animation", "none", "important");
-    hero.style.left = "50%";
-    void hero.offsetWidth;
-    hero.style.setProperty(
-      "animation",
-      "trialHeroWalkAway 3.5s linear 0s forwards",
-      "important"
-    );
-  };
+  if (heroWalkTimer) {
+    clearTimeout(heroWalkTimer);
+    heroWalkTimer = null;
+  }
+
+  // 歩行アニメーションを再設定して、すぐに開始する
+  hero.style.setProperty("animation", "none", "important");
+  hero.style.left = "50%";
+  void hero.offsetWidth;
+
+  hero.style.setProperty(
+    "animation",
+    "trialHeroWalkAway 3.5s linear 0s forwards",
+    "important"
+  );
+};
 
   if (trialEndingBgm) {
     trialEndingBgm.pause();
