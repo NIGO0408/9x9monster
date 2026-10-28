@@ -5926,3 +5926,10 @@ position: relative;
     font-size: 18px;
   }
 }
+
+/* スマホ版：魔王城バトルの背景領域を延長 */
+@media (max-width: 500px) {
+  #battle-screen.castle-battle {
+    min-height: calc(100vh + 250px);
+  }
+}
