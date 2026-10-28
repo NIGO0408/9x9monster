@@ -3595,6 +3595,7 @@ function openWorld() {
   updateVolcanoAreaAvailability(); 
   updateCastleAreaAvailability(); 
    updateTrialAreaAvailability();
+   updateInfiniteCorridorAreaAvailability();
   updateLakeMap();
 
   showScreen(
@@ -8837,6 +8838,9 @@ showTrialCreditsFromStart();
   const showInfiniteCorridorUnlock = () => {
     if (unlockScreenShown) return;
     unlockScreenShown = true;
+
+     infiniteCorridorUnlocked = true;
+saveGame();
 
     if (creditsScreen) {
       creditsScreen.removeEventListener("animationend", onTrialFinalFadeEnd);
