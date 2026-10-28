@@ -8890,8 +8890,7 @@ async function startTrialEnding() {
       startHeroWalk();
     });
   }
-  heroWalkTimer = setTimeout(startHeroWalk, 85000);
-
+ 
   if (trialEndingBgm && bgmEnabled) {
     // 最後の「ジャーン」の立ち上がりに合わせる。終端の3.5秒前を基準にする。
     trialEndingBgm.ontimeupdate = () => {
