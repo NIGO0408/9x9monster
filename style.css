@@ -5926,13 +5926,10 @@ position: relative;
     font-size: 18px;
   }
 }
-/* ==================================================
-   スマホ版：通常バトル背景の高さを統一
-   ステージ別の背景位置は現状維持
-================================================== */
+/* スマホ版：通常バトル背景 */
 @media (max-width: 500px) {
   #battle-screen {
-    background-size: auto 100vh;
+    background-size: auto 100%;
     background-repeat: no-repeat;
   }
 }
