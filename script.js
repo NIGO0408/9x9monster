@@ -858,6 +858,18 @@ function updateTrialAreaAvailability() {
   trialArea.hidden = !trialUnlocked;
 }
 
+
+/* 無限回廊：バナー表示制御 */
+function updateInfiniteCorridorAreaAvailability() {
+  const area = document.getElementById(
+    "infinite-corridor-area"
+  );
+
+  if (!area) return;
+
+  area.hidden = !infiniteCorridorUnlocked;
+}
+
 function saveGame() {
 
   syncAdventureState("forest");
@@ -887,8 +899,9 @@ function saveGame() {
 
     adventureUnlocked,
     
-   trialUnlocked, 
-
+   trialUnlocked,      
+infiniteCorridorUnlocked,
+     
     battleWins,
 
     forestProgress,
@@ -1016,6 +1029,8 @@ function loadGame() {
 
 trialUnlocked =
       data.trialUnlocked === true;
+ infiniteCorridorUnlocked =
+      data.infiniteCorridorUnlocked === true;
      
     battleWins =
       Number(
