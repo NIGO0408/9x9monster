@@ -8747,20 +8747,14 @@ async function startTrialEnding() {
   const victoryScreen = el("trial-victory-screen");
   if (!victoryScreen) return;
 
-  // 前回の暗転状態をリセット
   victoryScreen.classList.remove("trial-fade-out");
-
-  // 完全制覇画面を表示
   showScreen("trial-victory-screen");
 
-  // 専用ファンファーレを最初から再生
   const victoryFanfare = document.getElementById("trial-victory-fanfare");
-
   if (victoryFanfare) {
     victoryFanfare.pause();
     victoryFanfare.currentTime = 0;
     victoryFanfare.volume = 0.4;
-
     if (bgmEnabled) {
       victoryFanfare.play().catch(err => {
         console.warn("ファンファーレ再生失敗:", err);
@@ -8768,104 +8762,95 @@ async function startTrialEnding() {
     }
   }
 
-  // 9秒間表示
   await endingWait(9000);
-
-  // 1秒かけて暗転
   victoryScreen.classList.add("trial-fade-out");
   await endingWait(1000);
 
-  // 念のためファンファーレを停止
   if (victoryFanfare) {
     victoryFanfare.pause();
     victoryFanfare.currentTime = 0;
   }
 
-  // 専用スタッフロールへ
+  // スタッフロールを先頭から開始
   showTrialCreditsFromStart();
 
   const trialEndingBgm = document.getElementById("trial-ending-bgm");
   const creditsScreen = document.getElementById("trial-credits-screen");
   const theEnd = document.getElementById("trial-ending-the-end");
   const hero = document.getElementById("trial-credits-hero");
+  const creditsContent = document.getElementById("trial-credits-content");
 
   let unlockScreenShown = false;
   let heroWalkStarted = false;
-  let heroWalkFinished = false;
   let theEndStarted = false;
-  let fallbackTimer = null;
-
-  const creditsContent = document.getElementById("trial-credits-content");
+  let whiteOverlay = null;
+  let heroWalkTimer = null;
+  let theEndFallbackTimer = null;
 
   const showInfiniteCorridorUnlock = () => {
     if (unlockScreenShown) return;
     unlockScreenShown = true;
-
     infiniteCorridorUnlocked = true;
     saveGame();
-
     showScreen("infinite-corridor-unlock-screen");
+    if (whiteOverlay) {
+      setTimeout(() => {
+        whiteOverlay.remove();
+        whiteOverlay = null;
+      }, 100);
+    }
+  };
 
+  const startWhiteFade = () => {
+    // THE ENDを十分に見せてから白くフェード
     setTimeout(() => {
-      const whiteOverlay = document.getElementById("trial-ending-white-overlay");
-      if (whiteOverlay) whiteOverlay.remove();
-    }, 100);
+      whiteOverlay = document.createElement("div");
+      whiteOverlay.id = "trial-ending-white-overlay";
+      Object.assign(whiteOverlay.style, {
+        position: "fixed",
+        inset: "0",
+        backgroundColor: "#fff",
+        opacity: "0",
+        transition: "opacity 2.5s ease-in-out",
+        zIndex: "999999",
+        pointerEvents: "none"
+      });
+      document.body.appendChild(whiteOverlay);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (whiteOverlay) whiteOverlay.style.opacity = "1";
+        });
+      });
+
+      // 白くなった画面を2秒見せてからバナーを出す
+      setTimeout(showInfiniteCorridorUnlock, 4500);
+    }, 3500);
   };
 
   const showTheEnd = () => {
     if (theEndStarted || !theEnd) return;
     theEndStarted = true;
-
-    // BGMの最後の「ジャーン」に合わせてTHE ENDを表示する。
+    if (theEndFallbackTimer) clearTimeout(theEndFallbackTimer);
     theEnd.style.transition = "opacity 1.5s ease-in-out";
     theEnd.style.opacity = "1";
-
-    // THE ENDを見せてから画面全体を白くフェードする。
-    setTimeout(() => {
-      let whiteOverlay = document.getElementById("trial-ending-white-overlay");
-
-      if (!whiteOverlay) {
-        whiteOverlay = document.createElement("div");
-        whiteOverlay.id = "trial-ending-white-overlay";
-        whiteOverlay.style.position = "fixed";
-        whiteOverlay.style.inset = "0";
-        whiteOverlay.style.backgroundColor = "#fff";
-        whiteOverlay.style.opacity = "0";
-        whiteOverlay.style.transition = "opacity 2s ease-in-out";
-        whiteOverlay.style.zIndex = "999999";
-        whiteOverlay.style.pointerEvents = "none";
-        document.body.appendChild(whiteOverlay);
-      }
-
-      requestAnimationFrame(() => {
-        whiteOverlay.style.opacity = "1";
-      });
-
-      setTimeout(showInfiniteCorridorUnlock, 2100);
-    }, 2000);
+    startWhiteFade();
   };
 
   const startHeroWalk = () => {
     if (heroWalkStarted) return;
     heroWalkStarted = true;
+    if (heroWalkTimer) clearTimeout(heroWalkTimer);
+    if (!hero) return;
 
-    if (!hero) {
-      heroWalkFinished = true;
-      return;
-    }
-
-    hero.style.animation = "none";
+    // 既存CSSの83秒ディレイを確実に上書きし、スクロール終了時に即移動。
+    hero.style.setProperty("animation", "none", "important");
+    hero.style.left = "50%";
     void hero.offsetWidth;
-    // スクロール終了直後に歩き出し、最後のBGM音に合わせて退場する。
-    // BGMはスタッフロール開始2秒後に始まり、終端の約1.5秒前が最後の音。
-    hero.style.animation = "trialHeroWalkAway 5.5s linear forwards";
-
-    const onHeroWalkEnd = event => {
-      if (event.animationName !== "trialHeroWalkAway") return;
-      hero.removeEventListener("animationend", onHeroWalkEnd);
-      heroWalkFinished = true;
-    };
-    hero.addEventListener("animationend", onHeroWalkEnd);
+    hero.style.setProperty(
+      "animation",
+      "trialHeroWalkAway 3.5s linear 0s forwards",
+      "important"
+    );
   };
 
   if (trialEndingBgm) {
@@ -8881,7 +8866,6 @@ async function startTrialEnding() {
     creditsScreen.classList.remove("trial-show-the-end", "trial-ending-fade-out");
     creditsScreen.style.opacity = "1";
     creditsScreen.style.transition = "";
-    // CSSの固定タイマーによるTHE END表示・暗転を無効化する。
     creditsScreen.style.setProperty("animation", "none", "important");
   }
 
@@ -8892,48 +8876,38 @@ async function startTrialEnding() {
   }
 
   if (hero) {
-    hero.style.animation = "none";
+    hero.style.setProperty("animation", "none", "important");
+    hero.style.left = "50%";
   }
 
-  // スクロールのanimationendを直接検知して、足踏み時間なしで勇者を歩かせる。
+  // CSSのスクロールは「2秒ディレイ + 83秒」。イベント名やブラウザ差で
+  // 足踏み時間が生じないよう、開始時点から85秒で歩行を開始する。
+  // animationendも併用し、実際のスクロール終了時に先に発火した方を採用。
   if (creditsContent) {
-    const onCreditsScrollEnd = event => {
+    creditsContent.addEventListener("animationend", function onCreditsScrollEnd(event) {
       if (event.animationName !== "trialCreditsScroll") return;
       creditsContent.removeEventListener("animationend", onCreditsScrollEnd);
       startHeroWalk();
-    };
-    creditsContent.addEventListener("animationend", onCreditsScrollEnd);
-  } else {
-    // 万一スクロール要素が見つからない場合の保険。
-    setTimeout(startHeroWalk, 85000);
+    });
   }
+  heroWalkTimer = setTimeout(startHeroWalk, 85000);
 
   if (trialEndingBgm && bgmEnabled) {
-    // ファイル末尾の無音部分を待たず、終端約1.5秒前にTHE ENDを出す。
+    // 最後の「ジャーン」の立ち上がりに合わせる。終端の3.5秒前を基準にする。
     trialEndingBgm.ontimeupdate = () => {
       const duration = trialEndingBgm.duration;
       if (!Number.isFinite(duration) || duration <= 0) return;
-      if (duration - trialEndingBgm.currentTime <= 1.5) {
+      if (duration - trialEndingBgm.currentTime <= 3.5) {
         trialEndingBgm.ontimeupdate = null;
         showTheEnd();
       }
     };
-
-    trialEndingBgm.onended = () => {
-      // timeupdateが間に合わなかった場合だけの保険。
-      showTheEnd();
-    };
-
-    fallbackTimer = setTimeout(() => {
-      showTheEnd();
-    }, 95000);
+    trialEndingBgm.onended = () => showTheEnd();
+    // timeupdateが不安定な環境向けの保険（再生開始2秒後 + 約86.5秒）
+    theEndFallbackTimer = setTimeout(showTheEnd, 88500);
   } else {
-    // BGM OFF時は、勇者の退場後に演出を進める。
-    const waitForWalk = setInterval(() => {
-      if (!heroWalkFinished && hero) return;
-      clearInterval(waitForWalk);
-      showTheEnd();
-    }, 100);
+    // BGM OFF時は勇者が歩き始めて3.5秒後にTHE ENDを表示
+    setTimeout(showTheEnd, 88500);
   }
 
   // スタッフロール開始から2秒後に専用BGMを再生
