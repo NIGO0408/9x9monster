@@ -4064,9 +4064,6 @@ const battleScreen =
   document.getElementById("battle-screen");
 
 if (battleScreen) {
-
-
-if (battleScreen) {
   const isMobileBackground =
     window.matchMedia("(max-width: 500px)").matches;
 
