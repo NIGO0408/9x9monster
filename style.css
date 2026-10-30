@@ -4990,6 +4990,17 @@ position: relative;
 }
 
 /* =========================================
+   無限回廊：専用バトル背景
+========================================= */
+
+#infinite-corridor-battle-screen {
+    background-image: url("images/infinite_corridor_battle.png");
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* =========================================
    勇者の試練：敵モンスター配置
 ========================================= */
 
