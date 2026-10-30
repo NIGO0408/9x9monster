@@ -8891,7 +8891,7 @@ async function startTrialEnding() {
     trialEndingBgm.ontimeupdate = () => {
       const duration = trialEndingBgm.duration;
       if (!Number.isFinite(duration) || duration <= 0) return;
-      if (duration - trialEndingBgm.currentTime <= 0.8) {
+      if (duration - trialEndingBgm.currentTime <= 0.2) {
         trialEndingBgm.ontimeupdate = null;
         showTheEnd();
       }
