@@ -8845,10 +8845,9 @@ async function startTrialEnding() {
     heroWalkTimer = null;
   }
 
-   // スクロール終了と同時に勇者を表示して歩かせる
+  // 歩行アニメーションを再設定して、すぐに開始する
   hero.style.setProperty("animation", "none", "important");
   hero.style.left = "50%";
-  hero.style.opacity = "1";
   void hero.offsetWidth;
 
   hero.style.setProperty(
@@ -8883,7 +8882,6 @@ async function startTrialEnding() {
    if (hero) {
     hero.style.setProperty("animation", "none", "important");
     hero.style.left = "50%";
-    hero.style.opacity = "0";
   }
 
   // CSSのスクロールは「2秒ディレイ + 83秒」。イベント名やブラウザ差で
