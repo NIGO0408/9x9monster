@@ -80,7 +80,10 @@ case "trial-battle-screen":
   return "trialBattle";
 
 // 勇者の試練：ゲームオーバーBGM
-case "trial-gameover-screen": return "trialGameover";     
+case "trial-gameover-screen": return "trialGameover"; 
+        // 無限回廊：バトルBGM
+case "infinite-corridor-battle-screen":
+  return "infiniteCorridorBattle";
    case "battle-screen":
       if (currentAdventureStage === "lake") {
         return currentBattleNumber === 6
