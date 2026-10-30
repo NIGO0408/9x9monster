@@ -8896,7 +8896,7 @@ async function startTrialEnding() {
         showTheEnd();
       }
     };
-    trialEndingBgm.onended = () => showTheEnd();
+    trialEndingBgm.onended = () => startWhiteFade();
     // timeupdateが不安定な環境向けの保険（再生開始2秒後 + 約86.5秒）
     theEndFallbackTimer = setTimeout(showTheEnd, 88500);
   } else {
