@@ -8898,7 +8898,6 @@ async function startTrialEnding() {
     };
     trialEndingBgm.onended = () => startWhiteFade();
     // timeupdateが不安定な環境向けの保険（再生開始2秒後 + 約86.5秒）
-    theEndFallbackTimer = setTimeout(showTheEnd, 88500);
   } else {
     // BGM OFF時は勇者が歩き始めて3.5秒後にTHE ENDを表示
     setTimeout(showTheEnd, 88500);
