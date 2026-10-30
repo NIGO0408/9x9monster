@@ -7968,7 +7968,17 @@ el("trial-area")?.addEventListener("click", () => {
 
 });
 
+/* =========================================
+   無限回廊：バトル画面を開く
+========================================= */
 
+el("infinite-corridor-area")?.addEventListener("click", () => {
+
+  if (!infiniteCorridorUnlocked) return;
+
+  showScreen("infinite-corridor-battle-screen");
+
+});
 
 /* ========================================
    勇者の試練：ゲームオーバー操作
