@@ -42,6 +42,7 @@ ending: "audio/ending.mp3",
   trialGameover: "audio/trial_gameover.mp3",
   trialNeoKukudes: "audio/trial_neo_kukudes.mp3",
 trialKukuDemon: "audio/trial_kuku_demon.mp3", 
+infiniteCorridorBattle: "audio/infinite_corridor_bgm.mp3",   
 };
 
 let currentBgmKey = null;
