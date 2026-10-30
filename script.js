@@ -8836,26 +8836,14 @@ async function startTrialEnding() {
     startWhiteFade();
   };
 
-  const startHeroWalk = () => {
-  if (heroWalkStarted || !hero) return;
-  heroWalkStarted = true;
+    const startHeroWalk = () => {
+    if (heroWalkStarted || !hero) return;
 
-  if (heroWalkTimer) {
-    clearTimeout(heroWalkTimer);
-    heroWalkTimer = null;
-  }
+    heroWalkStarted = true;
 
-  // 歩行アニメーションを再設定して、すぐに開始する
-  hero.style.setProperty("animation", "none", "important");
-  hero.style.left = "50%";
-  void hero.offsetWidth;
-
-  hero.style.setProperty(
-    "animation",
-    "trialHeroWalkAway 3.5s linear 0s forwards",
-    "important"
-  );
-};
+    // CSSで設定済みの7秒間の歩行アニメーションを再開
+    hero.style.animationPlayState = "running";
+  };
 
   if (trialEndingBgm) {
     trialEndingBgm.pause();
@@ -8880,17 +8868,21 @@ async function startTrialEnding() {
   }
 
    if (hero) {
-    hero.style.setProperty("animation", "none", "important");
+    hero.style.removeProperty("animation");
+    hero.style.stylePlayState = "";
     hero.style.left = "50%";
   }
 
   // CSSのスクロールは「2秒ディレイ + 83秒」。イベント名やブラウザ差で
   // 足踏み時間が生じないよう、開始時点から85秒で歩行を開始する。
   // animationendも併用し、実際のスクロール終了時に先に発火した方を採用。
-  if (creditsContent) {
-    creditsContent.addEventListener("animationend", function onCreditsScrollEnd(event) {
-      if (event.animationName !== "trialCreditsScroll") return;
-      creditsContent.removeEventListener("animationend", onCreditsScrollEnd);
+    const scrollWorld = document.getElementById("trial-credits-scroll-world");
+
+  if (scrollWorld) {
+    scrollWorld.addEventListener("animationend", function onLandscapeScrollEnd(event) {
+      if (event.animationName !== "trialLandscapeScroll") return;
+
+      scrollWorld.removeEventListener("animationend", onLandscapeScrollEnd);
       startHeroWalk();
     });
   }
