@@ -8824,7 +8824,7 @@ async function startTrialEnding() {
 
       // 白くなった画面を2秒見せてからバナーを出す
       setTimeout(showInfiniteCorridorUnlock, 4500);
-    }, 2000);
+    }, 1000);
   };
 
   const showTheEnd = () => {
