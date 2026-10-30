@@ -8823,7 +8823,7 @@ async function startTrialEnding() {
       });
 
       // 白くなった画面を2秒見せてからバナーを出す
-      setTimeout(showInfiniteCorridorUnlock, 4500);
+      setTimeout(showInfiniteCorridorUnlock, 3000);
     }, 1000);
   };
 
