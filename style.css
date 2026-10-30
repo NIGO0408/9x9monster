@@ -5001,6 +5001,65 @@ position: relative;
 }
 
 /* =========================================
+   無限回廊：敵モンスター配置
+========================================= */
+
+#infinite-corridor-battle-screen .enemy-area {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 0;
+    z-index: 2;
+}
+
+/* 敵の名前と画像 */
+#infinite-corridor-enemy-name {
+    position: relative;
+    top: -60px;
+}
+
+#infinite-corridor-enemy-image {
+    position: relative;
+    top: -20px;
+    overflow: visible;
+}
+
+#infinite-corridor-enemy-image img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* バトルメッセージ */
+#infinite-corridor-battle-screen
+#infinite-corridor-battle-message {
+    position: relative;
+    margin-top: 230px;
+    z-index: 3;
+}
+
+/* スマホ版 */
+@media (max-width: 510px) {
+
+    #infinite-corridor-enemy-name {
+        top: -45px;
+    }
+
+    #infinite-corridor-enemy-image {
+        top: -30px;
+    }
+
+    #infinite-corridor-battle-screen
+    #infinite-corridor-battle-message {
+        margin-top: 205px;
+    }
+
+}
+
+/* =========================================
    勇者の試練：敵モンスター配置
 ========================================= */
 
