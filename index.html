@@ -1838,6 +1838,117 @@
   </section>
 
 <!-- =================================
+     無限回廊：専用バトル
+================================= -->
+
+<section
+  id="infinite-corridor-battle-screen"
+  class="screen"
+>
+
+  <!-- ヘッダー -->
+  <div class="battle-header">
+
+    <button
+      id="infinite-corridor-back-button"
+      class="small-button"
+      type="button"
+    >
+      ← 中断して戻る
+    </button>
+
+    <span id="infinite-corridor-floor">
+      FLOOR 1
+    </span>
+
+  </div>
+
+  <!-- 敵モンスター -->
+  <div class="enemy-area">
+
+    <div
+      id="infinite-corridor-enemy-name"
+      class="battle-name"
+    >
+      モンスター
+    </div>
+
+    <div class="battle-enemy-wrapper">
+
+      <div
+        id="infinite-corridor-enemy-image"
+        class="battle-monster-image"
+      >
+        <img
+          src="images/dark_slime.png"
+          alt="モンスター"
+        >
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- バトルメッセージ -->
+  <div
+    id="infinite-corridor-battle-message"
+    class="battle-message"
+  >
+    無限回廊に挑戦！
+  </div>
+
+  <!-- 勇者 -->
+  <div class="player-battle">
+
+    <div
+      id="infinite-corridor-hero-image"
+      class="player-monster-image"
+    >
+      <img
+        src="images/top_yousya.png"
+        alt="勇者"
+      >
+    </div>
+
+    <div class="player-battle-info">
+
+      <div class="battle-name">
+        <span>勇者</span>
+      </div>
+
+      <div class="trial-hero-message">
+        正解して階層を進め！
+      </div>
+
+      <div class="hp-label">
+        <span>不正解</span>
+        <strong id="infinite-corridor-miss-count">0 / 3</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 穴埋め九九問題 -->
+  <div class="battle-question-box">
+
+    <div
+      id="infinite-corridor-question"
+      class="battle-question"
+    >
+      ？ × 3 = 6
+    </div>
+
+    <div
+      id="infinite-corridor-answers"
+      class="battle-answers"
+    ></div>
+
+  </div>
+
+</section>
+  
+<!-- =================================
      勇者の試練：ゲームオーバー
 ================================= -->
 
