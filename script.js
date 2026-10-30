@@ -8868,10 +8868,10 @@ async function startTrialEnding() {
   }
 
    if (hero) {
-    hero.style.removeProperty("animation");
-    hero.style.stylePlayState = "";
-    hero.style.left = "50%";
-  }
+  hero.style.removeProperty("animation");
+  hero.style.animationPlayState = "paused";
+  hero.style.left = "50%";
+}
 
   // CSSのスクロールは「2秒ディレイ + 83秒」。イベント名やブラウザ差で
   // 足踏み時間が生じないよう、開始時点から85秒で歩行を開始する。
