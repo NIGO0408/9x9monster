@@ -4993,11 +4993,20 @@ position: relative;
    無限回廊：専用バトル背景
 ========================================= */
 
+/* PC版 */
 #infinite-corridor-battle-screen {
     background-image: url("images/infinite_corridor_battle.png");
-    background-size: 100% 100%;
-    background-position: center center;
+    background-size: 110% auto;
+    background-position: center -30px;
     background-repeat: no-repeat;
+}
+
+/* スマホ版 */
+@media (max-width: 510px) {
+    #infinite-corridor-battle-screen {
+        background-size: 130% auto;
+        background-position: center top;
+    }
 }
 
 /* =========================================
