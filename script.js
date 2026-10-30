@@ -8833,7 +8833,6 @@ async function startTrialEnding() {
     if (theEndFallbackTimer) clearTimeout(theEndFallbackTimer);
     theEnd.style.transition = "opacity 1.5s ease-in-out";
     theEnd.style.opacity = "1";
-    startWhiteFade();
   };
 
     const startHeroWalk = () => {
