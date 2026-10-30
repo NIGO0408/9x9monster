@@ -8188,6 +8188,8 @@ function activateDeveloperMode() {
 "5：育成テスト（個別レベル設定）\n" +
 "6：勇者の試練テスト（開始戦闘を選択）\n" +
 "7：勇者の試練 エンディング確認\n\n" +
+    "7：勇者の試練 エンディング確認\n" +
+"8：無限回廊へ直行\n\n" + 
 "キャンセル：終了"
   );
 
@@ -8510,7 +8512,11 @@ if (choice === "4") {
     startTrialEnding();
     return;
   }
-     
+  /* 8：無限回廊へ直行 */
+if (choice === "8") {
+  showScreen("infinite-corridor-battle-screen");
+  return;
+}   
   alert("❌ 無効な番号です。");
 }
 /* 勇者の試練：スタッフロールのアニメーションを毎回先頭から開始 */
