@@ -4697,6 +4697,39 @@ let trialConsecutiveCorrect = 0;
 // 回答処理中の連打防止
 let trialAnswerLocked = false;
 
+/* =========================================
+   無限回廊：バトル状態管理
+========================================= */
+
+// 現在の階層
+let infiniteCorridorFloor = 1;
+
+// 不正解数
+let infiniteCorridorMissCount = 0;
+
+// 回答処理中の連打防止
+let infiniteCorridorAnswerLocked = false;
+
+function updateInfiniteCorridorStatus() {
+    const floorElement = document.getElementById(
+        "infinite-corridor-floor"
+    );
+
+    const missElement = document.getElementById(
+        "infinite-corridor-miss-count"
+    );
+
+    if (floorElement) {
+        floorElement.textContent =
+            `FLOOR ${infiniteCorridorFloor}`;
+    }
+
+    if (missElement) {
+        missElement.textContent =
+            `${infiniteCorridorMissCount} / 3`;
+    }
+}
+
 /* ========================================
    勇者の試練：勇者HP管理
 ======================================== */
@@ -7977,6 +8010,7 @@ el("infinite-corridor-area")?.addEventListener("click", () => {
   if (!infiniteCorridorUnlocked) return;
 
   showScreen("infinite-corridor-battle-screen");
+   updateInfiniteCorridorStatus();
 
 });
 
