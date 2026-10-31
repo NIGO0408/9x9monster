@@ -4878,6 +4878,62 @@ container.appendChild(button);
 }
 
 /* ========================================
+   無限回廊：4択回答ボタン生成
+======================================== */
+
+function createInfiniteCorridorAnswers(correctAnswer) {
+
+  const container =
+    document.getElementById("infinite-corridor-answers");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  // 正解を除く1～9の数字から不正解候補を作る
+  const wrongAnswers = [];
+
+  for (let n = 1; n <= 9; n++) {
+    if (n !== correctAnswer) {
+      wrongAnswers.push(n);
+    }
+  }
+
+  // 不正解候補をシャッフル
+  shuffleBattleQuestions(wrongAnswers);
+
+  // 正解1つ＋不正解3つ
+  const choices = [
+    correctAnswer,
+    ...wrongAnswers.slice(0, 3)
+  ];
+
+  // 選択肢をシャッフル
+  shuffleBattleQuestions(choices);
+
+  choices.forEach(value => {
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "battle-answer";
+    button.textContent = value;
+
+    // 無限回廊専用の回答判定
+    button.addEventListener("click", () => {
+      if (infiniteCorridorAnswerLocked) return;
+
+      checkInfiniteCorridorAnswer(value, correctAnswer);
+    });
+
+    // 作成したボタンを画面に追加
+    container.appendChild(button);
+
+  });
+
+}
+
+/* ========================================
    勇者の試練：敵のハート表示更新
 ======================================== */
 
