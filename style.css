@@ -6029,3 +6029,16 @@ position: relative;
     align-items: center;
     gap: 5px;
 }
+
+/* 無限回廊：現在階層表示 */
+#infinite-corridor-floor {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-shadow: 1px 1px 2px #000;
+}
