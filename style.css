@@ -6059,7 +6059,7 @@ position: relative;
   background: rgba(255, 0, 0, 0.4);
   pointer-events: none;
   z-index: 9999;
-  animation: damageFlash 0.35s ease-out;
+  animation: damageFlash 0.2s ease-out;
 }
 
 /* 画面の揺れ */
