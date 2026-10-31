@@ -4994,11 +4994,13 @@ if (infiniteCorridorMissCount >= 3) {
       button.disabled = true;
     });
 
-  // 1秒後にゲームオーバー画面へ
-  setTimeout(() => {
-    showScreen("trial-gameover-screen");
-  }, 1000);
+  // 無限回廊からのゲームオーバーであることを記録
+isInfiniteCorridorGameOver = true;
 
+// 1秒後にゲームオーバー画面へ
+setTimeout(() => {
+  showScreen("trial-gameover-screen");
+}, 1000);
   return;
 }
 
