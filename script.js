@@ -4946,18 +4946,31 @@ function startInfiniteCorridorQuestion() {
   const a = Math.floor(Math.random() * 9) + 1;
   const b = Math.floor(Math.random() * 9) + 1;
 
-  // 左側を隠す
-  const correctAnswer = a;
-
   const questionElement =
-    document.getElementById("infinite-corridor-question");
+  document.getElementById("infinite-corridor-question");
 
-  if (!questionElement) return;
+if (!questionElement) return;
 
-  // 問題を表示
+// 左右どちらを隠すかランダムに決定
+const hideLeft = Math.random() < 0.5;
+
+let correctAnswer;
+
+if (hideLeft) {
+
+  // 左側を隠す
+  correctAnswer = a;
   questionElement.textContent =
     `？ × ${b} ＝ ${a * b}`;
 
+} else {
+
+  // 右側を隠す
+  correctAnswer = b;
+  questionElement.textContent =
+    `${a} × ？ ＝ ${a * b}`;
+
+}
   // 回答ボタンを生成
   createInfiniteCorridorAnswers(correctAnswer);
 }
