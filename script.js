@@ -4981,11 +4981,14 @@ function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
     infiniteCorridorMissCount++;
   }
 
-  // 画面の表示を更新
-  updateInfiniteCorridorStatus();
+ // 画面の表示を更新
+updateInfiniteCorridorStatus();
 
-  // 一旦ロック解除
-  infiniteCorridorAnswerLocked = false;
+// 次の問題を表示
+startInfiniteCorridorQuestion();
+
+// ロック解除
+infiniteCorridorAnswerLocked = false;
 }
 
 /* ========================================
