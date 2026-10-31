@@ -4710,6 +4710,9 @@ let infiniteCorridorMissCount = 0;
 // 回答処理中の連打防止
 let infiniteCorridorAnswerLocked = false;
 
+// 無限回廊からのゲームオーバー判定
+let isInfiniteCorridorGameOver = false;
+
 function updateInfiniteCorridorStatus() {
     const floorElement = document.getElementById(
         "infinite-corridor-floor"
@@ -8156,7 +8159,24 @@ el("infinite-corridor-area")?.addEventListener("click", () => {
 // もう一度挑戦
 el("trial-retry-button")?.addEventListener("click", () => {
 
-  // 既存の試練開始処理を再利用
+  // 無限回廊からゲームオーバーになった場合
+  if (isInfiniteCorridorGameOver) {
+
+    // 状態をリセット
+    infiniteCorridorFloor = 1;
+    infiniteCorridorMissCount = 0;
+    infiniteCorridorAnswerLocked = false;
+    isInfiniteCorridorGameOver = false;
+
+    // 無限回廊を再開
+    showScreen("infinite-corridor-battle-screen");
+    updateInfiniteCorridorStatus();
+    startInfiniteCorridorQuestion();
+
+    return;
+  }
+
+  // 通常は勇者の試練を再開
   el("trial-area")?.click();
 
 });
