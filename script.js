@@ -4993,9 +4993,29 @@ function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
 
   } else {
 
-    // 不正解：ミスを1つ追加
-    infiniteCorridorMissCount++;
+  // 不正解：ミスを1つ追加
+  infiniteCorridorMissCount++;
+
+  // ダメージ演出
+  const battleScreen =
+    document.getElementById("infinite-corridor-battle-screen");
+
+  if (battleScreen) {
+    battleScreen.classList.remove(
+      "damage-flash",
+      "damage-shake"
+    );
+
+    // 毎回アニメーションを確実に再生
+    void battleScreen.offsetWidth;
+
+    battleScreen.classList.add(
+      "damage-flash",
+      "damage-shake"
+    );
   }
+
+}
 
  // 画面の表示を更新
 updateInfiniteCorridorStatus();
