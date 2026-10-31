@@ -8630,9 +8630,11 @@ if (choice === "4") {
   }
   /* 8：無限回廊へ直行 */
 if (choice === "8") {
-  showScreen("infinite-corridor-battle-screen");
-  return;
-}   
+    showScreen("infinite-corridor-battle-screen");
+    updateInfiniteCorridorStatus();
+    startInfiniteCorridorQuestion();
+    return;
+}
   alert("❌ 無効な番号です。");
 }
 /* 勇者の試練：スタッフロールのアニメーションを毎回先頭から開始 */
