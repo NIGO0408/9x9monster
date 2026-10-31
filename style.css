@@ -6022,3 +6022,10 @@ position: relative;
   }
 }
 
+/* 無限回廊：不正解表示を右寄せ */
+#infinite-corridor-battle-screen .infinite-corridor-miss-label {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+}
