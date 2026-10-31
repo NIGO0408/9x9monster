@@ -8093,6 +8093,7 @@ el("infinite-corridor-area")?.addEventListener("click", () => {
 
   showScreen("infinite-corridor-battle-screen");
    updateInfiniteCorridorStatus();
+   startInfiniteCorridorQuestion();
 
 });
 
