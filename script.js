@@ -4960,6 +4960,35 @@ function startInfiniteCorridorQuestion() {
 }
 
 /* ========================================
+   無限回廊：回答判定
+======================================== */
+
+function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
+
+  // 回答処理中は連打を防止
+  if (infiniteCorridorAnswerLocked) return;
+
+  infiniteCorridorAnswerLocked = true;
+
+  if (selectedAnswer === correctAnswer) {
+
+    // 正解：1階層進む
+    infiniteCorridorFloor++;
+
+  } else {
+
+    // 不正解：ミスを1つ追加
+    infiniteCorridorMissCount++;
+  }
+
+  // 画面の表示を更新
+  updateInfiniteCorridorStatus();
+
+  // 一旦ロック解除
+  infiniteCorridorAnswerLocked = false;
+}
+
+/* ========================================
    勇者の試練：敵のハート表示更新
 ======================================== */
 
