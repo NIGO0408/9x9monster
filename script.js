@@ -5020,7 +5020,7 @@ function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
       "damage-flash",
       "damage-shake"
     );
-  }, 400);
+  }, 250);
 }
 
 }
