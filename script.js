@@ -4984,6 +4984,12 @@ function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
  // 画面の表示を更新
 updateInfiniteCorridorStatus();
 
+// 不正解が3回に達したら、次の問題へ進まない
+if (infiniteCorridorMissCount >= 3) {
+  infiniteCorridorAnswerLocked = false;
+  return;
+}
+
 // 次の問題を表示
 startInfiniteCorridorQuestion();
 
