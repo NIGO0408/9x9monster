@@ -4984,9 +4984,21 @@ function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
  // 画面の表示を更新
 updateInfiniteCorridorStatus();
 
-// 不正解が3回に達したら、次の問題へ進まない
+// 不正解が3回に達したらゲームオーバー
 if (infiniteCorridorMissCount >= 3) {
-  infiniteCorridorAnswerLocked = false;
+
+  // 回答ボタンを無効化
+  document
+    .querySelectorAll("#infinite-corridor-answers button")
+    .forEach(button => {
+      button.disabled = true;
+    });
+
+  // 1秒後にゲームオーバー画面へ
+  setTimeout(() => {
+    showScreen("trial-gameover-screen");
+  }, 1000);
+
   return;
 }
 
