@@ -4934,6 +4934,32 @@ function createInfiniteCorridorAnswers(correctAnswer) {
 }
 
 /* ========================================
+   無限回廊：問題生成・表示
+======================================== */
+
+function startInfiniteCorridorQuestion() {
+
+  // 1～9の段からランダムに問題を作成
+  const a = Math.floor(Math.random() * 9) + 1;
+  const b = Math.floor(Math.random() * 9) + 1;
+
+  // 左側を隠す
+  const correctAnswer = a;
+
+  const questionElement =
+    document.getElementById("infinite-corridor-question");
+
+  if (!questionElement) return;
+
+  // 問題を表示
+  questionElement.textContent =
+    `？ × ${b} ＝ ${a * b}`;
+
+  // 回答ボタンを生成
+  createInfiniteCorridorAnswers(correctAnswer);
+}
+
+/* ========================================
    勇者の試練：敵のハート表示更新
 ======================================== */
 
