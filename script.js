@@ -4707,6 +4707,34 @@ let infiniteCorridorFloor = 1;
 // 不正解数
 let infiniteCorridorMissCount = 0;
 
+// 直前に出現した通常モンスター
+let infiniteCorridorLastMonster = null;
+
+// 無限回廊の固定ボス名
+const infiniteCorridorBossNames = [
+  "ナックルベア",
+  "ククッシー",
+  "ボルケーノゴーレム",
+  "魔王ククデス",
+  "ホワイトナックル",
+  "魔底のヌシ",
+  "マウンテンゴーレム",
+  "ネオククデス",
+  "魔獣ククデーモン",
+  "にごちゃん"
+];
+
+// 無限回廊：通常モンスター候補
+const infiniteCorridorMonsters = [
+  ...stages.forest.enemies,
+  ...stages.lake.enemies,
+  ...stages.volcano.enemies,
+  ...stages.castle.enemies,
+  ...trialMonsters
+].filter(monster =>
+  !infiniteCorridorBossNames.includes(monster.name)
+);
+
 // 回答処理中の連打防止
 let infiniteCorridorAnswerLocked = false;
 
