@@ -4725,6 +4725,15 @@ const infiniteCorridorBossNames = [
 ];
 
 // 無限回廊：通常モンスター候補
+const infiniteCorridorMonsters = [
+  ...adventureStages.forest.enemies,
+  ...adventureStages.lake.enemies,
+  ...adventureStages.volcano.enemies,
+  ...adventureStages.castle.enemies,
+  ...trialMonsters
+].filter(monster =>
+  !infiniteCorridorBossNames.includes(monster.name)
+);
 
 // 無限回廊：通常モンスターをランダム選択
 function getInfiniteCorridorRandomMonster() {
