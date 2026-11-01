@@ -4735,6 +4735,24 @@ const infiniteCorridorMonsters = [
   !infiniteCorridorBossNames.includes(monster.name)
 );
 
+// 無限回廊：通常モンスターをランダム選択
+function getInfiniteCorridorRandomMonster() {
+
+  // 直前と同じモンスターを候補から除外
+  const candidates = infiniteCorridorMonsters.filter(
+    monster => monster.name !== infiniteCorridorLastMonster?.name
+  );
+
+  // 候補からランダムに1体選択
+  const randomMonster =
+    candidates[Math.floor(Math.random() * candidates.length)];
+
+  // 今回のモンスターを記録
+  infiniteCorridorLastMonster = randomMonster;
+
+  return randomMonster;
+}
+
 // 回答処理中の連打防止
 let infiniteCorridorAnswerLocked = false;
 
@@ -4970,6 +4988,28 @@ function createInfiniteCorridorAnswers(correctAnswer) {
 
 function startInfiniteCorridorQuestion() {
 
+  // 通常モンスターをランダムに選択
+  const monster = getInfiniteCorridorRandomMonster();
+
+  // モンスター名を更新
+  const nameElement =
+    document.getElementById("infinite-corridor-enemy-name");
+
+  if (nameElement) {
+    nameElement.textContent = monster.name;
+  }
+
+  // モンスター画像を更新
+  const imageElement =
+    document.querySelector(
+      "#infinite-corridor-enemy-image img"
+    );
+
+  if (imageElement) {
+    imageElement.src = monster.image;
+    imageElement.alt = monster.name;
+  }
+   
   // 1～9の段からランダムに問題を作成
   const a = Math.floor(Math.random() * 9) + 1;
   const b = Math.floor(Math.random() * 9) + 1;
