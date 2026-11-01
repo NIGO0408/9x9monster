@@ -4729,8 +4729,7 @@ const infiniteCorridorMonsters = [
   ...adventureStages.forest.enemies,
   ...adventureStages.lake.enemies,
   ...adventureStages.volcano.enemies,
-  ...adventureStages.castle.enemies,
-  ...trialMonsters
+  ...adventureStages.castle.enemies
 ].filter(monster =>
   !infiniteCorridorBossNames.includes(monster.name)
 );
