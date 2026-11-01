@@ -4710,6 +4710,9 @@ let infiniteCorridorMissCount = 0;
 // 直前に出現した通常モンスター
 let infiniteCorridorLastMonster = null;
 
+// 直前に出現したランダムボス
+let infiniteCorridorLastBoss = null;
+
 // 無限回廊の固定ボス名
 const infiniteCorridorBossNames = [
   "ナックルベア",
@@ -4723,6 +4726,50 @@ const infiniteCorridorBossNames = [
   "魔獣ククデーモン",
   "にごちゃん"
 ];
+
+// 無限回廊：固定ボスデータ
+const infiniteCorridorBosses = {
+  10: {
+    name: "ナックルベア",
+    image: "images/morinosyugosya.png"
+  },
+  20: {
+    name: "ククッシー",
+    image: "images/kukusshii.png"
+  },
+  30: {
+    name: "ボルケーノゴーレム",
+    image: "images/volcanogolem.png"
+  },
+  40: {
+    name: "魔王ククデス",
+    image: "images/maou.png"
+  },
+  50: {
+    name: "ホワイトナックル",
+    image: "images/white_nakkuru.png"
+  },
+  60: {
+    name: "魔底のヌシ",
+    image: "images/mateinonushi.png"
+  },
+  70: {
+    name: "マウンテンゴーレム",
+    image: "images/mountain_golem.png"
+  },
+  80: {
+    name: "ネオククデス",
+    image: "images/neo_kukudes.png"
+  },
+  90: {
+    name: "魔獣ククデーモン",
+    image: "images/kuku_demon.png"
+  },
+  100: {
+    name: "にごちゃん",
+    image: "images/nigochan.png"
+  }
+};
 
 // 無限回廊：通常モンスター候補
 const infiniteCorridorMonsters = [
@@ -4750,6 +4797,45 @@ function getInfiniteCorridorRandomMonster() {
   infiniteCorridorLastMonster = randomMonster;
 
   return randomMonster;
+}
+
+// 無限回廊：階層に応じたモンスターを選択
+function getInfiniteCorridorMonsterForFloor() {
+
+  const floor = infiniteCorridorFloor;
+
+  // 10階以外は通常モンスター
+  if (floor % 10 !== 0) {
+    return getInfiniteCorridorRandomMonster();
+  }
+
+  // 100階ごとは必ず「にごちゃん」
+  if (floor % 100 === 0) {
+    return infiniteCorridorBosses[100];
+  }
+
+  // 100階未満は決められた固定ボス
+  if (floor < 100) {
+    return infiniteCorridorBosses[floor];
+  }
+
+  // 110階以降の10階ごとは歴代ボスからランダム
+  const bossCandidates = Object.entries(infiniteCorridorBosses)
+    .filter(([key]) => Number(key) !== 100)
+    .map(([, boss]) => boss)
+    .filter(boss =>
+      boss.name !== infiniteCorridorLastBoss?.name
+    );
+
+  const randomBoss =
+    bossCandidates[
+      Math.floor(Math.random() * bossCandidates.length)
+    ];
+
+  // 今回のボスを記録
+  infiniteCorridorLastBoss = randomBoss;
+
+  return randomBoss;
 }
 
 // 回答処理中の連打防止
@@ -4987,8 +5073,8 @@ function createInfiniteCorridorAnswers(correctAnswer) {
 
 function startInfiniteCorridorQuestion() {
 
-  // 通常モンスターをランダムに選択
-  const monster = getInfiniteCorridorRandomMonster();
+  // 現在の階層に応じたモンスターを選択
+const monster = getInfiniteCorridorMonsterForFloor();
 
   // モンスター名を更新
   const nameElement =
