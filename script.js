@@ -908,6 +908,8 @@ infiniteCorridorUnlocked,
      
     battleWins,
 
+     infiniteCorridorBestFloor,
+
     forestProgress,
 
     forestCurrentHP,
