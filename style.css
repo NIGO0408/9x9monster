@@ -1852,16 +1852,6 @@ button {
   font-weight: bold;
 }
 
-.battle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 5px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
 /* ← ここに追加 */
 .infinite-corridor-header-buttons {
   display: flex;
