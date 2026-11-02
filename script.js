@@ -1043,6 +1043,11 @@ trialUnlocked =
         data.battleWins
       ) || 0;
 
+     // 無限回廊：最高到達階を読み込む
+infiniteCorridorBestFloor =
+  Number(
+    data.infiniteCorridorBestFloor
+  ) || 1;
 
     forestProgress =
       Number(
