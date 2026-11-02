@@ -1852,6 +1852,27 @@ button {
   font-weight: bold;
 }
 
+.battle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* ← ここに追加 */
+.infinite-corridor-header-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* 無限回廊：階層・最高到達階表示 */
+.infinite-corridor-floor-info {
+
 /* 無限回廊：階層・最高到達階表示 */
 .infinite-corridor-floor-info {
   display: flex;
