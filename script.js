@@ -4865,6 +4865,10 @@ function updateInfiniteCorridorStatus() {
         "infinite-corridor-floor"
     );
 
+const bestFloorElement = document.getElementById(
+  "infinite-corridor-best-floor"
+);
+   
     const missElement = document.getElementById(
         "infinite-corridor-miss-count"
     );
@@ -4874,6 +4878,11 @@ function updateInfiniteCorridorStatus() {
             `FLOOR ${infiniteCorridorFloor}`;
     }
 
+if (bestFloorElement) {
+  bestFloorElement.textContent =
+    `BEST ${infiniteCorridorBestFloor}`;
+}
+   
     if (missElement) {
         missElement.textContent =
             `${infiniteCorridorMissCount} / 3`;
