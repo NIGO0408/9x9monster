@@ -4704,6 +4704,15 @@ let trialAnswerLocked = false;
 // 現在の階層
 let infiniteCorridorFloor = 1;
 
+// 現在の階層
+let infiniteCorridorFloor = 1;
+
+// 無限回廊：最高到達階
+let infiniteCorridorBestFloor = 1;
+
+// 不正解数
+let infiniteCorridorMissCount = 0;
+
 // 不正解数
 let infiniteCorridorMissCount = 0;
 
@@ -5143,6 +5152,11 @@ function checkInfiniteCorridorAnswer(selectedAnswer, correctAnswer) {
 
     // 正解：1階層進む
     infiniteCorridorFloor++;
+
+     // 最高到達階を更新
+  if (infiniteCorridorFloor > infiniteCorridorBestFloor) {
+    infiniteCorridorBestFloor = infiniteCorridorFloor;
+  }  
 
   } else {
 
