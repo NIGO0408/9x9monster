@@ -924,6 +924,10 @@ infiniteCorridorUnlocked,
     castleProgress,
 castleCurrentHP,
 castleBattleMonsterId, 
+
+infiniteCorridorFloor,
+infiniteCorridorMissCount,
+     
     enemyDex: { ...enemyDex } 
      
   };
