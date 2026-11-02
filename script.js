@@ -4711,14 +4711,8 @@ let trialAnswerLocked = false;
 // 現在の階層
 let infiniteCorridorFloor = 1;
 
-// 現在の階層
-let infiniteCorridorFloor = 1;
-
 // 無限回廊：最高到達階
 let infiniteCorridorBestFloor = 1;
-
-// 不正解数
-let infiniteCorridorMissCount = 0;
 
 // 不正解数
 let infiniteCorridorMissCount = 0;
