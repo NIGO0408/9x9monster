@@ -1852,6 +1852,13 @@ button {
   font-weight: bold;
 }
 
+.infinite-corridor-header-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
 /* 無限回廊：階層・最高到達階表示 */
 .infinite-corridor-floor-info {
   display: flex;
