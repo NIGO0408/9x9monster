@@ -1838,18 +1838,15 @@ button {
 
 .battle-header {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   gap: 8px;
-
   margin-bottom: 5px;
-
   font-size: 13px;
-
   font-weight: bold;
+
+  position: relative;
+  z-index: 10;
 }
 
 .infinite-corridor-header-buttons {
