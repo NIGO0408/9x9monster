@@ -8392,6 +8392,9 @@ el("infinite-corridor-back-button").addEventListener("click", () => {
 
   // 冒険画面へ戻る
   showScreen("world-screen");
+updateTrialAreaAvailability();
+updateInfiniteCorridorAreaAvailability();
+   
 });
 
 /* ========================================
