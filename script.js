@@ -1114,6 +1114,13 @@ castleBattleMonsterId =
   data.castleBattleMonsterId
     ? Number(data.castleBattleMonsterId)
     : null;
+
+// 無限回廊：中断データを読み込む
+infiniteCorridorFloor =
+  Number(data.infiniteCorridorFloor) || 1;
+
+infiniteCorridorMissCount =
+  Number(data.infiniteCorridorMissCount) || 0;
      
     if (
       data.enemyDex &&
