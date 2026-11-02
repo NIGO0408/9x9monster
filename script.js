@@ -8400,6 +8400,40 @@ el("infinite-corridor-back-button").addEventListener("click", () => {
   updateInfiniteCorridorAreaAvailability();
 });
 
+/* =========================================
+   無限回廊：最初から挑戦
+========================================= */
+
+el("infinite-corridor-restart-button").addEventListener("click", () => {
+
+  // 誤操作防止の確認
+  const confirmed = confirm(
+    "無限回廊を1階からやり直しますか？\n現在の挑戦状況はリセットされます。"
+  );
+
+  if (!confirmed) return;
+
+  // 挑戦状況をリセット
+  infiniteCorridorFloor = 1;
+  infiniteCorridorMissCount = 0;
+
+  // 直前のモンスター情報をリセット
+  infiniteCorridorLastMonster = null;
+  infiniteCorridorLastBoss = null;
+
+  // ゲームオーバー状態も解除
+  isInfiniteCorridorGameOver = false;
+
+  // 画面表示を更新
+  updateInfiniteCorridorStatus();
+
+  // 保存
+  saveGame();
+
+  // 1階から新しく問題を開始
+  startInfiniteCorridorQuestion();
+});
+
 /* ========================================
    勇者の試練：ゲームオーバー操作
 ======================================== */
