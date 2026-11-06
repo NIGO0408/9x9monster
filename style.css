@@ -3998,6 +3998,14 @@ position: relative;
     font-size: 26px !important;
   }
 
+.pc-button-text {
+  display: none;
+}
+
+.mobile-button-text {
+  display: inline;
+}
+  
 }
 /* =========================================================
    モンスター特訓 親レイアウト修正
@@ -6102,4 +6110,8 @@ position: relative;
   40% { transform: translateX(8px); }
   60% { transform: translateX(-5px); }
   80% { transform: translateX(5px); }
+}
+
+.mobile-button-text {
+  display: none;
 }
