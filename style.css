@@ -3999,11 +3999,11 @@ position: relative;
   }
 
 .pc-button-text {
-  display: none;
+  display: none !important;
 }
 
 .mobile-button-text {
-  display: inline;
+  display: inline !important;
 }
   
 }
