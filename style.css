@@ -6117,16 +6117,17 @@ position: relative;
 }
 
 /* 無限回廊：階層・最高到達階層 */
-#infinite-corridor-battle-screen {
-    position: relative;
-}
-
 .infinite-corridor-status {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: 0;
-    margin-bottom: 8px;
+
+    /* モンスター名の下・右側に配置 */
+    position: absolute;
+    top: 165px;
+    right: 16px;
+
+    z-index: 10;
 }
 
 #infinite-corridor-floor,
