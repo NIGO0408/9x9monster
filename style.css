@@ -6115,3 +6115,30 @@ position: relative;
 .mobile-button-text {
   display: none;
 }
+
+/* 無限回廊：階層・最高到達階層 */
+#infinite-corridor-battle-screen {
+    position: relative;
+}
+
+.infinite-corridor-status {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: -4px;
+    margin-bottom: 8px;
+}
+
+#infinite-corridor-floor,
+#infinite-corridor-best-floor {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(20, 20, 40, 0.85);
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    white-space: nowrap;
+}
