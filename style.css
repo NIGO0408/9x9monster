@@ -6125,8 +6125,9 @@ position: relative;
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: -4px;
-    margin-bottom: 8px;
+    margin-bottom: -48px;
+    position: relative;
+    z-index: 1;
 }
 
 #infinite-corridor-floor,
