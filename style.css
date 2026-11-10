@@ -6122,9 +6122,8 @@ position: relative;
     justify-content: flex-end;
     gap: 8px;
 
-    /* モンスター名の下・右側に配置 */
     position: absolute;
-    top: 305px;
+    top: 270px;
     right: 16px;
 
     z-index: 10;
