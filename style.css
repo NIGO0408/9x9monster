@@ -6121,7 +6121,14 @@ position: relative;
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-  }
+}
+
+@media (max-width: 510px) {
+    .infinite-corridor-status {
+        justify-content: flex-end;
+        margin-bottom: 8px;
+    }
+}
    
 
 #infinite-corridor-floor,
