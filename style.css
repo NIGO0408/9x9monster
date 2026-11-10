@@ -5097,6 +5097,20 @@ position: relative;
         margin-top: 205px;
     }
 
+    #infinite-corridor-battle-screen
+    #infinite-corridor-battle-message {
+        margin-top: 205px;
+    }
+
+    .infinite-corridor-status {
+        position: relative;
+        justify-content: flex-end;
+        margin-top: -70px;
+        margin-bottom: 20px;
+        z-index: 10;
+    }
+}
+  
 }
 
 /* =========================================
