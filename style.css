@@ -5026,7 +5026,6 @@ position: relative;
 
 /* PC版 */
 #infinite-corridor-battle-screen {
-    position: relative;
     background-image: url("images/infinite_corridor_battle.png");
     background-size: 110% auto;
     background-position: center -30px;
