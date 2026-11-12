@@ -5106,6 +5106,8 @@ position: relative;
 }
 #infinite-corridor-battle-screen .player-battle {
     margin-top: 65px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 }
