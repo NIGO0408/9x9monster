@@ -5093,9 +5093,11 @@ position: relative;
     }
 
     #infinite-corridor-battle-screen
-    #infinite-corridor-battle-message {
-        margin-top: 185px;
-    }
+#infinite-corridor-battle-message {
+    margin-top: 185px;
+    position: relative;
+    top: -10px;
+}
 
     .infinite-corridor-status {
     position: relative;
