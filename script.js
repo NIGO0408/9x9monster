@@ -5980,6 +5980,32 @@ function checkBattleAnswer(
       "wrong"
     );
 
+        // ダメージ演出
+    const battleScreen =
+      document.getElementById("battle-screen");
+
+    if (battleScreen) {
+      battleScreen.classList.remove(
+        "damage-flash",
+        "damage-shake"
+      );
+
+      // 毎回アニメーションを確実に再生
+      void battleScreen.offsetWidth;
+
+      battleScreen.classList.add(
+        "damage-flash",
+        "damage-shake"
+      );
+
+      // 演出終了後にクラスを外す
+      setTimeout(() => {
+        battleScreen.classList.remove(
+          "damage-flash",
+          "damage-shake"
+        );
+      }, 250);
+    } 
 
     battleCombo =
       0;
