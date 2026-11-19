@@ -672,6 +672,8 @@ function el(id) {
 let infiniteCorridorUnlockAudio = null;
 
 function playInfiniteCorridorMagicSound() {
+  if (!bgmEnabled) return;
+
   try {
     if (!infiniteCorridorUnlockAudio) {
       infiniteCorridorUnlockAudio = new Audio(
