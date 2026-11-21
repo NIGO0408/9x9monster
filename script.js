@@ -22,6 +22,7 @@ let bgmEnabled = false;
 
 const BGM_LIST = {
   title: "audio/op.mp3",
+   monsterBook: "audio/monster_book.mp3",
    training: "audio/training.mp3",
    trainingMonster: "audio/training_monster.mp3",
   world: "audio/world.mp3",
@@ -58,6 +59,7 @@ const battleBgmResumeTime = {
 function getBgmKeyForScreen(screenId) {
   switch (screenId) {
     case "title-screen": return "title";
+    case "monster-book-screen": return "monsterBook";    
     case "world-screen": return "world";
     case "training-screen": return "training";    
      case "quiz-screen": return "training";
