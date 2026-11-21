@@ -912,6 +912,8 @@ infiniteCorridorUnlocked,
 
      infiniteCorridorBestFloor,
 
+     infiniteCorridorTitles: [...infiniteCorridorTitles],
+
     forestProgress,
 
     forestCurrentHP,
@@ -1054,6 +1056,12 @@ infiniteCorridorBestFloor =
   Number(
     data.infiniteCorridorBestFloor
   ) || 1;
+
+     // 無限回廊：獲得済み称号を読み込む
+infiniteCorridorTitles =
+  Array.isArray(data.infiniteCorridorTitles)
+    ? data.infiniteCorridorTitles
+    : [];
 
     forestProgress =
       Number(
@@ -4724,6 +4732,9 @@ let trialAnswerLocked = false;
 // 現在の階層
 let infiniteCorridorFloor = 1;
 
+// 無限回廊：獲得済み称号
+let infiniteCorridorTitles = [];
+
 // 無限回廊：最高到達階
 let infiniteCorridorBestFloor = 1;
 
@@ -7138,6 +7149,7 @@ function resetGame() {
   stageStars = {};
   caughtMonsters = [];
   monsterData = {};
+  infiniteCorridorTitles = []; 
 
   adventureUnlocked =
     false;
