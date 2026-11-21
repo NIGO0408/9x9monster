@@ -874,6 +874,10 @@ function updateInfiniteCorridorAreaAvailability() {
   if (!area) return;
 
   area.hidden = !infiniteCorridorUnlocked;
+     const titlesButton = document.getElementById(
+    "infinite-corridor-titles-button"
+  );
+  if (titlesButton) titlesButton.hidden = !infiniteCorridorUnlocked;
 }
 
 function saveGame() {
