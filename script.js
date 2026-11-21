@@ -8861,18 +8861,17 @@ showLastUpdate();
 
 function activateDeveloperMode() {
 
+  
   const choice = prompt(
     "🔧 開発者メニュー\n\n" +
-    "1：全開放＋全員MAX\n" +
-    "2：仲間図鑑開放（全員加入・全員MAX）\n" +
-    "3：敵図鑑全開放\n" +
-   "4：冒険ステージ全開放\n" +
-"5：育成テスト（個別レベル設定）\n" +
-"6：勇者の試練テスト（開始戦闘を選択）\n" +
-    "7：勇者の試練 エンディング確認\n" +
-"8：無限回廊へ直行\n\n" + 
-"キャンセル：終了"
+    "1：ステージ全開放＋全員MAX\n" +
+    "2：仲間解放（全員加入・全員MAX）\n" +
+    "3：図鑑解放（仲間・敵ともに）\n" +
+    "4：育成テスト（個別レベル設定）\n" +
+    "5：エンディング再生\n\n" +
+    "キャンセル：終了"
   );
+
 
   if (choice === null) {
     return;
@@ -8972,11 +8971,14 @@ if (choice === "1") {
     // 勇者の試練も解放
     trialUnlocked = true;
 
-    // 全ステージをクリア状態にする
+   // 全ステージをクリア状態にする
 forestProgress = 6;
 lakeProgress = 6;
 volcanoProgress = 6;
 castleProgress = 6;
+
+adventureStages.castle.progress = 6;
+infiniteCorridorUnlocked = true;
 
 forestCurrentHP = 0;
 lakeCurrentHP = 0;
