@@ -9179,11 +9179,11 @@ castleCurrentHP = 0;
     return;
   }
    
-     /* 7：勇者の試練 エンディング確認 */
-  if (choice === "7") {
-    startTrialEnding();
-    return;
-  }
+   /* 5：エンディング再生 */
+if (choice === "5") {
+  startTrialEnding(true);
+  return;
+}
   /* 8：無限回廊へ直行 */
 if (choice === "8") {
     showScreen("infinite-corridor-battle-screen");
@@ -9438,31 +9438,33 @@ setTimeout(() => {
 ======================================== */
 
 async function startTrialEnding(skipVictory = false) {
-  const victoryScreen = el("trial-victory-screen");
-  if (!victoryScreen) return;
+    if (!skipVictory) {
+    const victoryScreen = el("trial-victory-screen");
+    if (!victoryScreen) return;
 
-  victoryScreen.classList.remove("trial-fade-out");
-  showScreen("trial-victory-screen");
+    victoryScreen.classList.remove("trial-fade-out");
+    showScreen("trial-victory-screen");
 
-  const victoryFanfare = document.getElementById("trial-victory-fanfare");
-  if (victoryFanfare) {
-    victoryFanfare.pause();
-    victoryFanfare.currentTime = 0;
-    victoryFanfare.volume = 0.4;
-    if (bgmEnabled) {
-      victoryFanfare.play().catch(err => {
-        console.warn("ファンファーレ再生失敗:", err);
-      });
+    const victoryFanfare = document.getElementById("trial-victory-fanfare");
+    if (victoryFanfare) {
+      victoryFanfare.pause();
+      victoryFanfare.currentTime = 0;
+      victoryFanfare.volume = 0.4;
+      if (bgmEnabled) {
+        victoryFanfare.play().catch(err => {
+          console.warn("ファンファーレ再生失敗:", err);
+        });
+      }
     }
-  }
 
-  await endingWait(9000);
-  victoryScreen.classList.add("trial-fade-out");
-  await endingWait(1000);
+    await endingWait(9000);
+    victoryScreen.classList.add("trial-fade-out");
+    await endingWait(1000);
 
-  if (victoryFanfare) {
-    victoryFanfare.pause();
-    victoryFanfare.currentTime = 0;
+    if (victoryFanfare) {
+      victoryFanfare.pause();
+      victoryFanfare.currentTime = 0;
+    }
   }
 
   // スタッフロールを先頭から開始
