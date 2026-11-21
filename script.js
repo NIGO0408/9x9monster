@@ -9037,29 +9037,8 @@ castleCurrentHP = 0;
     return;
   }
 
-  /* 4：冒険ステージ全開放 */
-if (choice === "4") {
-
-    unlockAllAdventureStages();
-
-    // 勇者の試練も解放
-    trialUnlocked = true;
-
-    saveGame();
-
-     updateCastleAreaAvailability();
-
-    alert(
-      "🗺️ 冒険ステージを全開放しました！\n\n" +
-      "森・湖をクリア状態にして、\n" +
-      "火山まで進めるようにしました。"
-    );
-
-    return;
-  }
-
   /* 5：育成テスト */
-  if (choice === "5") {
+  if (choice === "4") {
 
     const monsterList = monsters
       .map(monster =>
@@ -9458,7 +9437,7 @@ setTimeout(() => {
    勇者の試練 専用エンディング
 ======================================== */
 
-async function startTrialEnding() {
+async function startTrialEnding(skipVictory = false) {
   const victoryScreen = el("trial-victory-screen");
   if (!victoryScreen) return;
 
