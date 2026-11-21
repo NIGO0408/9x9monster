@@ -4991,6 +4991,9 @@ position: relative;
 #infinite-corridor-area[hidden] {
   display: none !important;
 }
+#infinite-corridor-titles-button[hidden] {
+    display: none !important;
+}
 
 /* 無限回廊：PC版も中央配置 */
 @media screen and (min-width: 769px) {
