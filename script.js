@@ -9019,15 +9019,19 @@ castleCurrentHP = 0;
     return;
   }
 
-  /* 3：敵図鑑全開放 */
+    /* 3：図鑑解放（仲間・敵ともに） */
   if (choice === "3") {
 
+    maxAllMonsters();
     unlockAllEnemies();
 
     saveGame();
 
     alert(
-      "👹 敵図鑑を全開放しました！"
+      "📚 図鑑を全開放しました！\n\n" +
+      "・全モンスター加入＆LvMAX\n" +
+      "・仲間図鑑全開放\n" +
+      "・敵図鑑全開放"
     );
 
     return;
