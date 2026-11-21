@@ -9037,7 +9037,7 @@ castleCurrentHP = 0;
     return;
   }
 
-  /* 5：育成テスト */
+  /* 4：育成テスト */
   if (choice === "4") {
 
     const monsterList = monsters
@@ -9125,72 +9125,13 @@ castleCurrentHP = 0;
 
     return;
   }
- /* ========================================
-     6：勇者の試練テスト
-  ======================================== */
 
-  if (choice === "6") {
-
-    const battleInput = prompt(
-      "⚔️ 勇者の試練・開発テスト\n\n" +
-      "開始する戦闘番号を入力してください。\n" +
-      "1 ～ 10\n\n" +
-      "9：ネオククデス\n" +
-      "10：魔獣ククデーモン\n\n" +
-      "キャンセル：終了"
-    );
-
-    if (battleInput === null) return;
-
-    const battleNumber = Number(battleInput);
-
-    if (
-      !Number.isInteger(battleNumber) ||
-      battleNumber < 1 ||
-      battleNumber > 10
-    ) {
-      alert("❌ 1～10の整数を入力してください。");
-      return;
-    }
-
-    const hpInput = prompt(
-      "❤️ 勇者の開始HPを入力してください。\n\n" +
-      `1 ～ ${trialHeroMaxHP}\n\n` +
-      "キャンセル：終了",
-      String(trialHeroMaxHP)
-    );
-
-    if (hpInput === null) return;
-
-    const startHP = Number(hpInput);
-
-    if (
-      !Number.isInteger(startHP) ||
-      startHP < 1 ||
-      startHP > trialHeroMaxHP
-    ) {
-      alert("❌ HPの入力が正しくありません。");
-      return;
-    }
-
-    // セーブデータを変更せず指定戦闘から開始
-    startTrialBattle(battleNumber, startHP);
-
-    return;
-  }
-   
    /* 5：エンディング再生 */
 if (choice === "5") {
   startTrialEnding(true);
   return;
 }
-  /* 8：無限回廊へ直行 */
-if (choice === "8") {
-    showScreen("infinite-corridor-battle-screen");
-    updateInfiniteCorridorStatus();
-    startInfiniteCorridorQuestion();
-    return;
-}
+
   alert("❌ 無効な番号です。");
 }
 /* 勇者の試練：スタッフロールのアニメーションを毎回先頭から開始 */
