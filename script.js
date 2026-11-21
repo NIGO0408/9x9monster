@@ -7217,6 +7217,8 @@ function resetGame() {
   battleWins =
     0;
 
+   trialUnlocked = false;
+infiniteCorridorUnlocked = false;
 
   /*
      修行
