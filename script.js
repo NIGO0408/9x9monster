@@ -3410,9 +3410,7 @@ function renderMonsterBook() {
 
     }
   );
-
-
-  updateWorldStats();
+ 
 }
 
 /* =========================================================
@@ -3518,46 +3516,6 @@ function openBook(fromScreen) {
   );
 }
 
-
-/* =========================================================
-   ワールド情報
-   ========================================================= */
-
-function updateWorldStats() {
-
-  const playerLevel =
-    el("player-level");
-
-
-  if (playerLevel) {
-
-    /*
-       現段階では
-       クリア段数を冒険レベルとして表示
-    */
-
-    playerLevel.textContent =
-      `Lv.${Math.max(
-        1,
-        clearedStages.length
-      )}`;
-
-  }
-
-
-  const coins =
-    el("player-coins");
-
-
-  if (coins) {
-
-    coins.textContent =
-      battleWins * 5;
-
-  }
-}
-
-
 /* =========================================================
    ワールドマップ
    ========================================================= */
@@ -3628,7 +3586,6 @@ function updateCastleAreaAvailability() {
 
 function openWorld() {
 
-  updateWorldStats();
   updateLakeAreaAvailability();
   updateVolcanoAreaAvailability(); 
   updateCastleAreaAvailability(); 
@@ -6612,9 +6569,7 @@ else {
   updateForestMap();
 }
 
-  updateWorldStats();
-
-  saveGame();
+   saveGame();
 
 showScreen("battle-result-screen");
 
@@ -7380,9 +7335,6 @@ castleBattleMonsterId =
   createStageList();
 
   updateForestMap();
-
-  updateWorldStats();
-
 
   alert(
     "✨ セーブデータをリセットしました！\n\n" +
@@ -8713,9 +8665,6 @@ updateLakeAreaAvailability();
 createStageList();
 
 updateForestMap();
-
-updateWorldStats();
-
 
 /*
    最初はタイトル
