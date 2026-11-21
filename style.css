@@ -6250,3 +6250,100 @@ position: relative;
     }
 }
 
+/* =========================================
+   無限回廊：獲得称号一覧
+========================================= */
+
+#infinite-corridor-titles-button {
+    display: block;
+    width: min(90%, 360px);
+    margin: 25px auto;
+}
+
+#infinite-corridor-titles-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#infinite-corridor-titles-popup[hidden] {
+    display: none !important;
+}
+
+.infinite-corridor-titles-card {
+    width: min(100%, 400px);
+    max-height: 85vh;
+    overflow-y: auto;
+
+    padding: 25px 20px;
+
+    border: 4px solid #ffd75a;
+    border-radius: 22px;
+
+    background: linear-gradient(
+        145deg,
+        #fff9d8,
+        #ffffff
+    );
+
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.infinite-corridor-titles-card h2 {
+    margin: 0 0 12px;
+    color: #d18b00;
+    font-size: 23px;
+    font-weight: 900;
+}
+
+#infinite-corridor-titles-count {
+    margin: 10px 0 18px;
+    color: #555;
+    font-weight: bold;
+}
+
+#infinite-corridor-titles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.infinite-corridor-title-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+
+    padding: 13px 14px;
+
+    border: 2px solid #ccc;
+    border-radius: 12px;
+
+    background: #eeeeee;
+    color: #888;
+    font-weight: bold;
+}
+
+.infinite-corridor-title-item.earned {
+    border-color: #e5b72e;
+    background: #fff1b8;
+    color: #9a6900;
+}
+
+.infinite-corridor-title-item .title-status {
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+#infinite-corridor-titles-close {
+    width: 100%;
+}
