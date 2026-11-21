@@ -4735,6 +4735,58 @@ let infiniteCorridorFloor = 1;
 // 無限回廊：獲得済み称号
 let infiniteCorridorTitles = [];
 
+// 無限回廊：称号の獲得条件
+const infiniteCorridorTitleMilestones = [
+  { floor: 10, title: "九九の挑戦者" },
+  { floor: 30, title: "九九の探究者" },
+  { floor: 50, title: "九九の熟練者" },
+  { floor: 80, title: "九九の覇者" },
+  { floor: 100, title: "九九マスター" }
+];
+
+// 無限回廊：称号獲得ポップアップを表示
+function showInfiniteCorridorTitlePopup(titleData) {
+
+  const popup = document.getElementById(
+    "infinite-corridor-title-popup"
+  );
+
+  const name = document.getElementById(
+    "infinite-corridor-title-name"
+  );
+
+  const floor = document.getElementById(
+    "infinite-corridor-title-floor"
+  );
+
+  if (!popup || !name || !floor) return;
+
+  name.textContent = titleData.title;
+  floor.textContent = `${titleData.floor}階到達！`;
+
+  popup.hidden = false;
+}
+
+// 無限回廊：新しい称号を獲得
+function checkInfiniteCorridorTitle() {
+
+  const titleData = infiniteCorridorTitleMilestones.find(
+    item =>
+      item.floor === infiniteCorridorFloor &&
+      !infiniteCorridorTitles.includes(item.floor)
+  );
+
+  if (!titleData) return false;
+
+  infiniteCorridorTitles.push(titleData.floor);
+
+  saveGame();
+
+  showInfiniteCorridorTitlePopup(titleData);
+
+  return true;
+}
+
 // 無限回廊：最高到達階
 let infiniteCorridorBestFloor = 1;
 
@@ -5246,6 +5298,14 @@ isInfiniteCorridorGameOver = true;
 setTimeout(() => {
   showScreen("trial-gameover-screen");
 }, 1000);
+  return;
+}
+
+// 新しい称号を獲得した場合はポップアップを表示して停止
+if (
+  selectedAnswer === correctAnswer &&
+  checkInfiniteCorridorTitle()
+) {
   return;
 }
 
@@ -8445,6 +8505,24 @@ el("infinite-corridor-area")?.addEventListener("click", () => {
   showScreen("infinite-corridor-battle-screen");
    updateInfiniteCorridorStatus();
    startInfiniteCorridorQuestion();
+
+});
+
+// 無限回廊：称号獲得ポップアップの確認ボタン
+el("infinite-corridor-title-confirm")?.addEventListener("click", () => {
+
+  const popup = el("infinite-corridor-title-popup");
+
+  if (!popup) return;
+
+  // ポップアップを閉じる
+  popup.hidden = true;
+
+  // 次の問題を表示
+  startInfiniteCorridorQuestion();
+
+  // 回答ロックを解除
+  infiniteCorridorAnswerLocked = false;
 
 });
 
