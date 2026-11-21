@@ -8526,6 +8526,72 @@ el("infinite-corridor-title-confirm")?.addEventListener("click", () => {
 
 });
 
+// 無限回廊：獲得称号一覧を表示
+function renderInfiniteCorridorTitles() {
+
+  const list = el("infinite-corridor-titles-list");
+  const count = el("infinite-corridor-titles-count");
+
+  if (!list || !count) return;
+
+  const earnedCount = infiniteCorridorTitleMilestones.filter(
+    item => infiniteCorridorTitles.includes(item.floor)
+  ).length;
+
+  count.textContent = `獲得数：${earnedCount}／${infiniteCorridorTitleMilestones.length}`;
+
+  list.innerHTML = "";
+
+  infiniteCorridorTitleMilestones.forEach(item => {
+
+    const earned = infiniteCorridorTitles.includes(item.floor);
+
+    const row = document.createElement("div");
+
+    row.className = earned
+      ? "infinite-corridor-title-item earned"
+      : "infinite-corridor-title-item";
+
+    row.innerHTML = `
+      <span>
+        ${earned ? "🏆" : "🔒"}
+        ${item.floor}階　${item.title}
+      </span>
+      <span class="title-status">
+        ${earned ? "獲得済み" : "未獲得"}
+      </span>
+    `;
+
+    list.appendChild(row);
+
+  });
+}
+
+// 獲得称号一覧を開く
+el("infinite-corridor-titles-button")?.addEventListener("click", () => {
+
+  renderInfiniteCorridorTitles();
+
+  const popup = el("infinite-corridor-titles-popup");
+
+  if (popup) {
+    popup.hidden = false;
+  }
+
+});
+
+// 獲得称号一覧を閉じる
+el("infinite-corridor-titles-close")?.addEventListener("click", () => {
+
+  const popup = el("infinite-corridor-titles-popup");
+
+  if (popup) {
+    popup.hidden = true;
+  }
+
+});
+
+
 /* ==================================
    無限回廊：中断して戻る
 ================================== */
